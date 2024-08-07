@@ -13,12 +13,21 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Run",
+                    "type": "Button",
+                    "id": "74147a4f-7f9b-4ab1-aa32-b5d8bfa4acc2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
                     "name": "2D Vector",
-                    "id": "5865c783-a53d-4ebd-a82e-5674158bc034",
+                    "id": "c55e7c01-e48c-4ef8-9bc1-214589c25224",
                     "path": "2DVector",
                     "interactions": "",
                     "processors": "",
@@ -29,47 +38,58 @@
                 },
                 {
                     "name": "up",
-                    "id": "0e358ad7-be84-4659-ae16-3f66740c982d",
-                    "path": "",
+                    "id": "ccd06e9b-9343-4bef-b5e1-55886b8b0763",
+                    "path": "<Keyboard>/#(W)",
                     "interactions": "",
                     "processors": "",
-                    "groups": "PC",
+                    "groups": "",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "down",
-                    "id": "c4e5ddf3-a8d8-4d71-b141-438408ada708",
-                    "path": "",
+                    "id": "83a1c619-768f-42fc-8f24-29c4f02a729d",
+                    "path": "<Keyboard>/#(S)",
                     "interactions": "",
                     "processors": "",
-                    "groups": "PC",
+                    "groups": "",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "left",
-                    "id": "45ec4d1c-4354-4ac5-b108-0a0a58a83cba",
-                    "path": "",
+                    "id": "87366f21-0a00-4812-a866-23d97d691a89",
+                    "path": "<Keyboard>/#(A)",
                     "interactions": "",
                     "processors": "",
-                    "groups": "PC",
+                    "groups": "",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "right",
-                    "id": "9e87a6f8-dba0-4aeb-882d-24c112e5eb67",
-                    "path": "",
+                    "id": "b8b7bfe7-8317-4d7a-8fdf-a400a6cb8fac",
+                    "path": "<Keyboard>/#(D)",
                     "interactions": "",
                     "processors": "",
-                    "groups": "PC",
+                    "groups": "",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "395baf26-6a46-47a7-aaa1-93f622e1a0e1",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "Press(behavior=2)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
