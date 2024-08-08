@@ -14,8 +14,6 @@ public class PlayerDash : PlayerState
 
     private int _dashAnimation = Animator.StringToHash("Dash");
 
-    private bool _canDash = true;
-
     //광클 못하게 해야함 
     public override void StateEnter()
     {
@@ -34,19 +32,13 @@ public class PlayerDash : PlayerState
 
     private void InitializeDash()
     {
-        if (_canDash)
-        {
-            _canDash = false;
+        _animator.SetBool(_dashAnimation, true);
 
-            _animator.SetBool(_dashAnimation, true);
+        _previousState = _state.PreviousState;
 
-            _previousState = _state.PreviousState;
+        _rigidBody.velocity = Vector3.zero;
 
-            _rigidBody.velocity = Vector3.zero;
-
-            Dash();
-        }
-
+        Dash();
     }
 
     private void OnUpdateDash()
@@ -83,7 +75,6 @@ public class PlayerDash : PlayerState
     {
         _dashTime = 0f;
         _rigidBody.useGravity = true;
-        _canDash = true;
         _animator.SetBool(_dashAnimation, false);
     }
 

@@ -26,6 +26,11 @@ public class PlayerIdle : PlayerState
 
     private void OnUpdateIdle()
     {
+        ChangeBehaviour();
+    }
+
+    private void ChangeBehaviour()
+    {
         if (_inputSystem.Input != Vector2.zero)
         {
             _state.ChangeState(State.Run);
@@ -37,6 +42,10 @@ public class PlayerIdle : PlayerState
         else if (_inputSystem.IsDrain == true)
         {
             _state.ChangeState(State.Drain);
+        }
+        else if (_inputSystem.IsAttack)
+        {
+            _state.ChangeState(State.FirstComboAttack);
         }
     }
 
