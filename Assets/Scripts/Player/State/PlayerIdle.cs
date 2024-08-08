@@ -2,17 +2,8 @@ using UnityEngine;
 
 public class PlayerIdle : PlayerState
 {
-    public PlayerIdle(Player player) : base(player)
-    {
-        _animator = player.GetComponent<Animator>();
-        _inputSystem = player.GetComponent<PlayerInputSystem>();
-        _state = player.GetComponent<PlayerStateMachine>();
-    }
-
-    private Animator _animator;
-    private PlayerInputSystem _inputSystem;
-    private PlayerStateMachine _state;
-
+    public PlayerIdle(Player player) : base(player) { }
+    
     public override void StateEnter()
     {
         InitializeIdle();
@@ -38,6 +29,11 @@ public class PlayerIdle : PlayerState
         if (_inputSystem.Input != Vector2.zero)
         {
             _state.ChangeState(State.Run);
+        }
+
+        if (_inputSystem.IsDash)
+        {
+            ChangeDash();
         }
     }
 
