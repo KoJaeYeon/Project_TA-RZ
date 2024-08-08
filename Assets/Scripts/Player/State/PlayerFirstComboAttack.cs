@@ -3,21 +3,18 @@ using UnityEngine;
 public class PlayerFirstComboAttack : PlayerState
 {
     public PlayerFirstComboAttack(Player player) : base(player) { }
-    
-    private int _fristAttack = Animator.StringToHash("ComboAttack1");
-    private int _comboFail = Animator.StringToHash("ComboFail");
-
+   
     public override void StateEnter()
     {
         _player.IsNext = false;
-        _animator.SetBool(_fristAttack, true);
+        _animator.SetBool(_firstCombo, true);
     }
 
     public override void StateUpdate()
     {
         var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
 
-        if(animatorStateInfo.IsName("Attack1") && animatorStateInfo.normalizedTime >= 1f)
+        if(animatorStateInfo.IsName("Attack1") && animatorStateInfo.normalizedTime >= 0.99f)
         {
             _animator.SetTrigger(_comboFail);
             _state.ChangeState(State.Idle);
@@ -33,7 +30,7 @@ public class PlayerFirstComboAttack : PlayerState
 
     public override void StateExit()
     {
-        _animator.SetBool(_fristAttack, false);
+        _animator.SetBool(_firstCombo, false);
     }
 }
 
@@ -41,20 +38,17 @@ public class PlayerSecondComboAttack : PlayerState
 {
     public PlayerSecondComboAttack(Player player) : base(player) { }
 
-    private int _secondAttack = Animator.StringToHash("ComboAttack2");
-    private int _comboFail = Animator.StringToHash("ComboFail");
-
     public override void StateEnter()
     {
         _player.IsNext = false;
-        _animator.SetBool(_secondAttack, true);
+        _animator.SetBool(_secondCombo, true);
     }
 
     public override void StateUpdate()
     {
         var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
 
-        if (animatorStateInfo.IsName("Attack2") && animatorStateInfo.normalizedTime >= 1f)
+        if (animatorStateInfo.IsName("Attack2") && animatorStateInfo.normalizedTime >= 0.99f)
         {
             _animator.SetTrigger(_comboFail);
             _state.ChangeState(State.Idle);
@@ -70,28 +64,25 @@ public class PlayerSecondComboAttack : PlayerState
 
     public override void StateExit()
     {
-        _animator.SetBool(_secondAttack, false);
+        _animator.SetBool(_secondCombo, false);
     }
 }
 
 public class PlayerThirdComboAttack : PlayerState
 {
     public PlayerThirdComboAttack(Player player) : base(player) { }
-    
-    private int _thirdAttack = Animator.StringToHash("ComboAttack3");
-    private int _comboFail = Animator.StringToHash("ComboFail");
-
+   
     public override void StateEnter()
     {
         _player.IsNext = false;
-        _animator.SetBool(_thirdAttack, true);
+        _animator.SetBool(_thirdCombo, true);
     }
 
     public override void StateUpdate()
     {
         var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
 
-        if(animatorStateInfo.IsName("Attack3") && animatorStateInfo.normalizedTime >= 1f)
+        if(animatorStateInfo.IsName("Attack3") && animatorStateInfo.normalizedTime >= 0.99f)
         {
             _animator.SetTrigger(_comboFail);
             _state.ChangeState(State.Idle);
@@ -106,7 +97,7 @@ public class PlayerThirdComboAttack : PlayerState
 
     public override void StateExit()
     {
-        _animator.SetBool(_thirdAttack, false);
+        _animator.SetBool(_thirdCombo, false);
     }
 }
 
@@ -114,19 +105,17 @@ public class PlayerFourthComboAttack : PlayerState
 {
     public PlayerFourthComboAttack(Player player) : base(player) { }
 
-    private int _fourthAttack = Animator.StringToHash("ComboAttack4");
-
     public override void StateEnter()
     {
         _player.IsNext = false;
-        _animator.SetBool(_fourthAttack, true);
+        _animator.SetBool(_fourthCombo, true);
     }
 
     public override void StateUpdate()
     {
         var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
 
-        if (animatorStateInfo.IsName("Attack3") && animatorStateInfo.normalizedTime >= 1f)
+        if (animatorStateInfo.IsName("Attack4") && animatorStateInfo.normalizedTime >= 0.99f)
         {
             _state.ChangeState(State.Idle);
             return;
@@ -135,6 +124,6 @@ public class PlayerFourthComboAttack : PlayerState
 
     public override void StateExit()
     {
-        _animator.SetBool(_fourthAttack, false);
+        _animator.SetBool(_fourthCombo, false);
     }
 }

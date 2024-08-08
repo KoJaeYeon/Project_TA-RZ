@@ -10,9 +10,7 @@ public class PlayerDash : PlayerState
 
     private Vector3 _dashDirection;
 
-    private State _previousState;
-
-    private int _dashAnimation = Animator.StringToHash("Dash");
+    private State _previousState;    
 
     //광클 못하게 해야함 
     public override void StateEnter()
