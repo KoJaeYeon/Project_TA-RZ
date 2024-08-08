@@ -12,6 +12,13 @@ public class PlayerStateMachine : MonoBehaviour
 {
     private Dictionary<State, PlayerBaseState> _stateDic = new Dictionary<State, PlayerBaseState>();
     private PlayerBaseState _currentState;
+    private State _previousState;
+
+    public State PreviousState
+    {
+        get { return _previousState; }
+        set { _previousState = value; }
+    }
 
     private void Start()
     {
