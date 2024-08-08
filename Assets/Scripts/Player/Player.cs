@@ -11,8 +11,13 @@ public class Player : MonoBehaviour
     private PlayerStateMachine _state;
     private Camera _camera;
 
-    public Camera MainCamera { get { return _camera; } }    
-    
+    public Camera MainCamera { get { return _camera; } }
+
+    #region PlayerValue
+    public int currentAmmo { get; set; }
+    #endregion
+
+
     private void Awake()
     {
         InitializeComponent();

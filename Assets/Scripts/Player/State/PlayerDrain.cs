@@ -87,7 +87,6 @@ public class PlayerDrain : PlayerState
         if (_currentDrainRadius < _maxDrainRadius)
         {
             _currentDrainRadius += _drainSpeed * Time.deltaTime;
-            Debug.Log(_currentDrainRadius);
             _sphereCollider.radius = _currentDrainRadius;
         }
     }
