@@ -8,6 +8,7 @@ public class PlayerInputSystem : MonoBehaviour
 
     [Header("Run")]
     [SerializeField] private bool isRun;
+    [Header("Drain")]
     [SerializeField] private bool isDrain;
 
     public Vector2 Input { get { return _input; } }

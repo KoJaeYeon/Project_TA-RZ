@@ -134,8 +134,6 @@ public class PlayerRun : PlayerState
 
         Vector3 targetDirection = Quaternion.Euler(0f, _targetRotation, 0f) * Vector3.forward;
 
-        _animator.SetFloat("Speed", _currentSpeed);
-
         Vector3 movement = targetDirection.normalized * _currentSpeed;
 
         movement.y = _rigidBody.velocity.y;

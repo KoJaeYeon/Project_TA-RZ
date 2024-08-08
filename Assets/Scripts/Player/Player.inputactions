@@ -104,7 +104,7 @@
                     "name": "",
                     "id": "34ef5f4e-1fc9-4877-9df1-38e98af2b930",
                     "path": "<Keyboard>/leftCtrl",
-                    "interactions": "",
+                    "interactions": "Press(behavior=2)",
                     "processors": "",
                     "groups": "",
                     "action": "Drain",
