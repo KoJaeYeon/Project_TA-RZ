@@ -6,7 +6,7 @@ public class PlayerDash : PlayerState
     
     private float _dashPower = 10f;
     private float _dashTime;
-    private float _maxTime = 1.5f;
+    private float _maxTime = 0.5f;
 
     private Vector3 _dashDirection;
 
@@ -33,7 +33,6 @@ public class PlayerDash : PlayerState
 
         _rigidBody.velocity = Vector3.zero;
 
-        _rigidBody.useGravity = false;
 
         Dash();
     }
@@ -69,8 +68,13 @@ public class PlayerDash : PlayerState
         _rigidBody.AddForce(dash, ForceMode.Impulse);
     }
 
-    //private bool IsImpact()
-    //{
-    //    Collider[] colliders = Physics.OverlapBox()
-    //}
+    private void Ray()
+    {
+        RaycastHit hit;
+
+        Vector3 downDirection = Vector3.down;
+
+
+    }
+
 }
