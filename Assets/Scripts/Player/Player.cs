@@ -7,8 +7,8 @@ public class Player : MonoBehaviour
 {
     [Inject]
     private PlayerManager _playerManager;
-    private PlayerStateMachine _state;
     private PlayerInputSystem _inputSystem;
+    private PlayerStateMachine _state;
     private Camera _camera;
 
     public Camera MainCamera { get { return _camera; } }    
@@ -23,7 +23,6 @@ public class Player : MonoBehaviour
     private void InitializePlayer()
     {
         _playerManager.SetPlayerObject(gameObject);
-        
     }
 
     private void InitializeComponent()
@@ -37,5 +36,12 @@ public class Player : MonoBehaviour
     {
         _state.AddState(State.Idle, new PlayerIdle(this));
         _state.AddState(State.Run, new PlayerRun(this));
+    }
+
+    //checkGround 
+    private void OnDrawGizmos()
+    {
+        Vector3 GizmoPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        Gizmos.DrawWireSphere(GizmoPosition, 0.2f);
     }
 }
