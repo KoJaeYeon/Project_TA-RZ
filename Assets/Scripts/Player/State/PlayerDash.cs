@@ -4,14 +4,19 @@ public class PlayerDash : PlayerState
 {
     public PlayerDash(Player player) : base(player) { }
     
-    private float _dashPower = 10f;
+    private float _dashPower = 15f;
     private float _dashTime;
-    private float _maxTime = 1.5f;
+    private float _maxTime = 0.3f;
 
     private Vector3 _dashDirection;
 
     private State _previousState;
 
+    private int _dashAnimation = Animator.StringToHash("Dash");
+
+    private bool _canDash = true;
+
+    //광클 못하게 해야함 
     public override void StateEnter()
     {
         InitializeDash();
@@ -29,13 +34,19 @@ public class PlayerDash : PlayerState
 
     private void InitializeDash()
     {
-        _previousState = _state.PreviousState;
+        if (_canDash)
+        {
+            _canDash = false;
 
-        _rigidBody.velocity = Vector3.zero;
+            _animator.SetBool(_dashAnimation, true);
 
-        _rigidBody.useGravity = false;
+            _previousState = _state.PreviousState;
 
-        Dash();
+            _rigidBody.velocity = Vector3.zero;
+
+            Dash();
+        }
+
     }
 
     private void OnUpdateDash()
@@ -44,13 +55,27 @@ public class PlayerDash : PlayerState
         {
             _dashTime += Time.deltaTime;
 
-            if(_dashTime >= _maxTime)
+            if (_dashTime >= _maxTime)
             {
                 _rigidBody.velocity = Vector3.zero;
+
                 _rigidBody.angularVelocity = Vector3.zero;
 
                 _state.ChangeState(_previousState);
             }
+
+            //var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+
+            //bool stopDash = animatorStateInfo.normalizedTime >= 1f;
+
+            //if(stopDash)
+            //{
+            //    _rigidBody.velocity = Vector3.zero;
+
+            //    _rigidBody.angularVelocity = Vector3.zero;
+
+            //    _state.ChangeState(_previousState);
+            //}
         }
     }
 
@@ -58,6 +83,8 @@ public class PlayerDash : PlayerState
     {
         _dashTime = 0f;
         _rigidBody.useGravity = true;
+        _canDash = true;
+        _animator.SetBool(_dashAnimation, false);
     }
 
     private void Dash()
@@ -69,8 +96,5 @@ public class PlayerDash : PlayerState
         _rigidBody.AddForce(dash, ForceMode.Impulse);
     }
 
-    //private bool IsImpact()
-    //{
-    //    Collider[] colliders = Physics.OverlapBox()
-    //}
+    
 }

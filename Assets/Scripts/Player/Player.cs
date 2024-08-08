@@ -51,9 +51,5 @@ public class Player : MonoBehaviour
     {
         Vector3 GizmoPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         Gizmos.DrawWireSphere(GizmoPosition, 0.2f);
-
-        Vector3 BoxGizomPosition = transform.position + new Vector3(0f,0.7f,0.2f);
-        Gizmos.DrawWireCube(BoxGizomPosition, new Vector3(1f, 1f, 1f));
-
     }
 }
