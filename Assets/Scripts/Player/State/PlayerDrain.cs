@@ -11,10 +11,9 @@ public class PlayerDrain : PlayerState
         _state = player.GetComponent<PlayerStateMachine>();
         _drainSystem = player.GetComponentInChildren<DrainSystem>();
         _sphereCollider = _drainSystem.GetComponent<SphereCollider>();
-        _drainSystem.gameObject.SetActive(false);
     }
 
-    #region RunComponent
+    #region DrainComponent
     private Animator _animator;
     private Rigidbody _rigidBody;
     private PlayerInputSystem _inputSystem;
@@ -27,7 +26,7 @@ public class PlayerDrain : PlayerState
     #region DrainValue
     private float _currentDrainRadius;
     private float _maxDrainRadius = 5;
-    private float _drainSpeed = 1;
+    private float _drainSpeed = 2;
     #endregion
 
     #region AnimatorStringToHash
@@ -52,8 +51,8 @@ public class PlayerDrain : PlayerState
     void StartDrain()
     {
         _animator.SetBool(_drain, true);
-        _drainSystem.gameObject.SetActive(true);
-        _currentDrainRadius = 0;
+        _currentDrainRadius = 1;
+        //_drainSystem.gameObject.SetActive(true);
     }
 
     void UpdateDrain()
@@ -65,7 +64,8 @@ public class PlayerDrain : PlayerState
     void EndDrain()
     {
         _animator.SetBool(_drain, false);
-        _drainSystem.gameObject.SetActive(false);
+        _currentDrainRadius = 1;
+        //_drainSystem.gameObject.SetActive(false);
     }
 
     /// <summary>
