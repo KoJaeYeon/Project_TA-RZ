@@ -30,10 +30,13 @@ public class PlayerIdle : PlayerState
         {
             _state.ChangeState(State.Run);
         }
-
-        if (_inputSystem.IsDash)
+        else if (_inputSystem.IsDash)
         {
             ChangeDash();
+        }
+        else if (_inputSystem.IsDrain == true)
+        {
+            _state.ChangeState(State.Drain);
         }
     }
 

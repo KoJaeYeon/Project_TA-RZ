@@ -7,7 +7,8 @@ public enum State
 {
     Idle,
     Run,
-    Dash
+    Dash,
+    Drain
 }
 
 public class PlayerStateMachine : MonoBehaviour
