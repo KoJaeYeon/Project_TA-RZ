@@ -41,6 +41,7 @@ public class Player : MonoBehaviour
     {
         _state.AddState(State.Idle, new PlayerIdle(this));
         _state.AddState(State.Run, new PlayerRun(this));
+        _state.AddState(State.Dash, new PlayerDash(this));  
         _state.AddState(State.Drain, new PlayerDrain(this));
     }
 
@@ -49,5 +50,9 @@ public class Player : MonoBehaviour
     {
         Vector3 GizmoPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         Gizmos.DrawWireSphere(GizmoPosition, 0.2f);
+
+        Vector3 BoxGizomPosition = transform.position + new Vector3(0f,0.7f,0.2f);
+        Gizmos.DrawWireCube(BoxGizomPosition, new Vector3(1f, 1f, 1f));
+
     }
 }

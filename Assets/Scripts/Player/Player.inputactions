@@ -15,9 +15,9 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Run",
+                    "name": "Dash",
                     "type": "Button",
-                    "id": "74147a4f-7f9b-4ab1-aa32-b5d8bfa4acc2",
+                    "id": "15baa3aa-a5f2-49c6-8aa6-9eecf608f025",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -91,12 +91,12 @@
                 },
                 {
                     "name": "",
-                    "id": "395baf26-6a46-47a7-aaa1-93f622e1a0e1",
-                    "path": "<Keyboard>/leftShift",
+                    "id": "d2ca7c87-5e38-469d-bdfb-0cbd7bac7c2d",
+                    "path": "<Keyboard>/space",
                     "interactions": "Press(behavior=2)",
                     "processors": "",
                     "groups": "",
-                    "action": "Run",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

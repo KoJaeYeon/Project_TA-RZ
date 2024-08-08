@@ -3,21 +3,8 @@ using UnityEngine;
 
 public class PlayerRun : PlayerState
 {
-    public PlayerRun(Player player) : base(player)
-    {
-        _animator = player.GetComponentInChildren<Animator>();
-        _rigidBody = player.GetComponent<Rigidbody>();
-        _inputSystem = player.GetComponent<PlayerInputSystem>();
-        _state = player.GetComponent<PlayerStateMachine>();
-    }
-
-    #region RunComponent
-    private Animator _animator;
-    private Rigidbody _rigidBody;
-    private PlayerInputSystem _inputSystem;
-    private PlayerStateMachine _state;
-    #endregion
-
+    public PlayerRun(Player player) : base(player) { }
+   
     #region RunValue
     private float _runSpeed = 5f;
     private float _targetSpeed;
@@ -40,19 +27,18 @@ public class PlayerRun : PlayerState
     private readonly int _move = Animator.StringToHash("Walk");
     #endregion
 
-    //상태 진입 시 1번 호출되는 메서드
     public override void StateEnter()
     {
         InitializeRun();
     }
 
-    //상태 업데이트
+    
     public override void StateUpdate()
     {
         OnUpdateRun();
     }
 
-    //상태 종료 시 1번 호출되는 메서드
+    
     public override void StateExit()
     {
         Exit();

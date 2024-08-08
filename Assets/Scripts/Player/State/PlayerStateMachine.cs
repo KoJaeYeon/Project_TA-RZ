@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public enum State
 {
     Idle,
     Run,
+    Dash,
     Drain
 }
 
@@ -50,7 +52,6 @@ public class PlayerStateMachine : MonoBehaviour
     {
         _stateDic.Add(newState, state);
     }
-
 }
 
 public abstract class PlayerBaseState
