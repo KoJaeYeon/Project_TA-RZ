@@ -11,8 +11,13 @@ public class Player : MonoBehaviour
     private PlayerStateMachine _state;
     private Camera _camera;
 
-    public Camera MainCamera { get { return _camera; } }    
-    
+    public Camera MainCamera { get { return _camera; } }
+
+    #region PlayerValue
+    public int currentAmmo { get; set; }
+    #endregion
+
+
     private void Awake()
     {
         InitializeComponent();
@@ -37,6 +42,8 @@ public class Player : MonoBehaviour
         _state.AddState(State.Idle, new PlayerIdle(this));
         _state.AddState(State.Run, new PlayerRun(this));
         _state.AddState(State.Dash, new PlayerDash(this));  
+        _state.AddState(State.Drain, new PlayerDrain(this));
+
     }
 
     //checkGround 
