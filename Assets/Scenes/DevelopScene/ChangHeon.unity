@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 62376402}
   - component: {fileID: 62376401}
   - component: {fileID: 62376400}
+  - component: {fileID: 62376405}
   m_Layer: 0
   m_Name: CommonEnemy
   m_TagString: Untagged
@@ -163,20 +164,20 @@ MonoBehaviour:
   resetValuesOnRestart: 0
   externalBehavior: {fileID: 0}
   mBehaviorSource:
-    behaviorName: Behavior
+    behaviorName: EnemyBehavior
     behaviorDescription: 
     mTaskData:
       types: []
       parentIndex: 
       startIndex: 
       variableStartIndex: 
-      JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(318,22)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Repeater","NodeData":{"Offset":"(2,99.86048)"},"ID":1,"Name":"Repeater","Instant":true,"SharedIntcount":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":null,"Int32mValue":0},"SharedBoolrepeatForever":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"SharedBoolendOnFailure":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-1,98.48838)"},"ID":2,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-220,200)"},"ID":3,"Name":"
+      JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(318,22)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Repeater","NodeData":{"Offset":"(2,99.86048)"},"ID":1,"Name":"Repeater","Instant":true,"SharedIntcount":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":null,"Int32mValue":0},"SharedBoolrepeatForever":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedBoolendOnFailure":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-1,98.48838)"},"ID":2,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-220,200)"},"ID":3,"Name":"
         Idle Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Monster_Idle","NodeData":{"Offset":"(-1,158)"},"ID":4,"Name":"Monster  
         Idle","Instant":true,"SharedTransformTargetTransform":{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"TargetTransform","IsShared":true,"TransformmValue":0},"SharedFloatTrackDistance":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"TrackDistance","IsShared":true,"SinglemValue":5}}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-60,200)"},"ID":5,"Name":"Track
         Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Monster_Track","NodeData":{"Offset":"(0.0538330078,164.59375)"},"ID":6,"Name":"Monster  
-        Track","Instant":true,"SharedTransformTargetTransform":{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"TargetTransform","IsShared":true,"TransformmValue":1},"SharedFloatMoveSpeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"MoveSpeed","IsShared":true,"SinglemValue":0},"SharedFloatAtkDistance":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"AtkDistance","IsShared":true,"SinglemValue":1}}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(100,200)"},"ID":7,"Name":"Atk
+        Track","Instant":true,"SharedTransformTargetTransform":{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"TargetTransform","IsShared":true,"TransformmValue":1},"SharedFloatMoveSpeed":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"MoveSpeed","IsShared":true,"SinglemValue":5},"SharedFloatAtkDistance":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"AtkDistance","IsShared":true,"SinglemValue":2}}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(100,200)"},"ID":7,"Name":"Atk
         Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Monster_Atk","NodeData":{"Offset":"(-1.43548584,159.2746)"},"ID":8,"Name":"Monster  
-        Atk","Instant":true}]}]}]},"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"TargetTransform","IsShared":true,"TransformmValue":2},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"MoveSpeed","IsShared":true,"SinglemValue":0},{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"Hp","IsShared":true,"Int32mValue":0},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"AtkSpeed","IsShared":true,"SinglemValue":0},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Atk","IsShared":true,"SinglemValue":0},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"AtkDistance","IsShared":true,"SinglemValue":1},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"AtkRange","IsShared":true,"SinglemValue":0},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"TrackDistance","IsShared":true,"SinglemValue":5}]}'
+        Atk","Instant":true}]}]}]},"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"TargetTransform","IsShared":true,"TransformmValue":2},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"MoveSpeed","IsShared":true,"SinglemValue":5},{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"Hp","IsShared":true,"Int32mValue":10},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"AtkSpeed","IsShared":true,"SinglemValue":0},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Atk","IsShared":true,"SinglemValue":0},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"AtkDistance","IsShared":true,"SinglemValue":2},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"AtkRange","IsShared":true,"SinglemValue":0},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"TrackDistance","IsShared":true,"SinglemValue":5}]}'
       fieldSerializationData:
         typeName: []
         fieldNameHash: 
@@ -277,6 +278,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &62376405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62376399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66c5f187acb52704d8a2f05b00e941af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Bt: {fileID: 62376400}
 --- !u!1 &423763805
 GameObject:
   m_ObjectHideFlags: 0
