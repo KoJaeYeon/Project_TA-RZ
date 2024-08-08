@@ -91,22 +91,22 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1895578842208605229}
-    m_Position: {x: 30, y: 170, z: 0}
+    m_Position: {x: 290, y: 90, z: 0}
   m_ChildStateMachines:
   - serializedVersion: 1
     m_StateMachine: {fileID: -1965513655535327914}
-    m_Position: {x: 330, y: 170, z: 0}
+    m_Position: {x: 530, y: 20, z: 0}
   - serializedVersion: 1
     m_StateMachine: {fileID: 5005283439150572296}
-    m_Position: {x: 330, y: 230, z: 0}
+    m_Position: {x: 530, y: 90, z: 0}
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions:
+  - first: {fileID: -1965513655535327914}
+    second: []
   - first: {fileID: 5005283439150572296}
     second:
     - {fileID: 8057634111141340384}
-  - first: {fileID: -1965513655535327914}
-    second: []
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 50, y: 20, z: 0}
   m_EntryPosition: {x: 50, y: 90, z: 0}
@@ -297,7 +297,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.8026316
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -347,7 +347,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.6875
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -372,7 +372,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.7115385
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -574,8 +574,8 @@ AnimatorStateMachine:
   - {fileID: -2808748182968001805}
   m_AnyStatePosition: {x: 50, y: -150, z: 0}
   m_EntryPosition: {x: -40, y: -40, z: 0}
-  m_ExitPosition: {x: 800, y: 120, z: 0}
-  m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
+  m_ExitPosition: {x: 760, y: 110, z: 0}
+  m_ParentStateMachinePosition: {x: 740, y: -40, z: 0}
   m_DefaultState: {fileID: -7752781111468264155}
 --- !u!1102 &5486363523763451374
 AnimatorState:
