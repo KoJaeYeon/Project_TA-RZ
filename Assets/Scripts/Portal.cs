@@ -18,8 +18,15 @@ public class Portal : MonoBehaviour
 
     private void Update()
     {
-        if(player == null) return;
-        SpritePlayerLook();
+        if(player != null)
+        {
+            SpritePlayerLook();
+        }
+        else
+        {
+            Debug.LogError("Jenject 오류! 플레이어가 없음! Context 확인 필요!");
+        }
+        
     }
 
     /// <summary>
