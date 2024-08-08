@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
 
     #region PlayerValue
     public int currentAmmo { get; set; }
+    public bool IsNext {  get; set; }   
     #endregion
 
 
@@ -43,7 +44,10 @@ public class Player : MonoBehaviour
         _state.AddState(State.Run, new PlayerRun(this));
         _state.AddState(State.Dash, new PlayerDash(this));  
         _state.AddState(State.Drain, new PlayerDrain(this));
-
+        _state.AddState(State.FirstComboAttack, new PlayerFirstComboAttack(this));
+        _state.AddState(State.SecondComboAttack, new PlayerSecondComboAttack(this));
+        _state.AddState(State.ThirdComboAttack, new PlayerThirdComboAttack(this));
+        _state.AddState(State.FourthComboAttack, new PlayerFourthComboAttack(this));
     }
 
     //checkGround 

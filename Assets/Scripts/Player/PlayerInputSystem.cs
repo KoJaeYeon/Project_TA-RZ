@@ -12,11 +12,14 @@ public class PlayerInputSystem : MonoBehaviour
     [SerializeField] private bool isDash;
     [Header("Drain")]
     [SerializeField] private bool isDrain;
+    [Header("Attack")]
+    [SerializeField] private bool isAttack;
 
     public Vector2 Input { get { return _input; } }
     public bool IsRun { get { return isRun; } }
     public bool IsDrain { get { return isDrain; } }
     public bool IsDash { get { return isDash; } }
+    public bool IsAttack { get {  return isAttack; } }
 
     private void OnMove(InputValue input)
     {
@@ -36,6 +39,13 @@ public class PlayerInputSystem : MonoBehaviour
         SetDrain(isPressed);
     }
 
+    private void OnAttack(InputValue input)
+    {
+        bool isPressed = input.isPressed;
+
+        SetAttack(isPressed);
+    }
+
     private void SetMove(Vector2 value)
     {
         _input = value;
@@ -49,5 +59,10 @@ public class PlayerInputSystem : MonoBehaviour
     private void SetDrain(bool isPressed)
     {
         isDrain = isPressed;
+    }
+
+    private void SetAttack(bool isPressed)
+    {
+        isAttack = isPressed;
     }
 }

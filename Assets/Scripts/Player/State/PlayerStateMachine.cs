@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+
 
 public enum State
 {
     Idle,
     Run,
     Dash,
-    Drain
+    Drain,
+    FirstComboAttack,
+    SecondComboAttack,
+    ThirdComboAttack,
+    FourthComboAttack
 }
 
 public class PlayerStateMachine : MonoBehaviour
