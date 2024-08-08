@@ -6,22 +6,22 @@ public class PlayerInputSystem : MonoBehaviour
     [Header("InputSystem")]
     [SerializeField] private Vector2 _input;
 
-    [Header("Run")]
-    [SerializeField] private bool isRun;
+    [Header("Dash")]
+    [SerializeField] private bool isDash;
 
     public Vector2 Input { get { return _input; } }
-    public bool IsRun { get { return isRun; } }
+    public bool IsDash { get { return isDash; } }
 
     private void OnMove(InputValue input)
     {
         SetMove(input.Get<Vector2>());  
     }
 
-    private void OnRun(InputValue input)
+    private void OnDash(InputValue input)
     {
         bool isPressed = input.isPressed;
 
-        SetRun(isPressed);
+        SetDash(isPressed);
     }
 
     private void SetMove(Vector2 value)
@@ -29,8 +29,8 @@ public class PlayerInputSystem : MonoBehaviour
         _input = value;
     }
 
-    private void SetRun(bool isPressed)
+    private void SetDash(bool isPressed)
     {
-        isRun = isPressed;  
+        isDash = isPressed; 
     }
 }
