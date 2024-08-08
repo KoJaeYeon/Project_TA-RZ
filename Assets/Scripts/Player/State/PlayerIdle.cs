@@ -24,6 +24,10 @@ public class PlayerIdle : PlayerState
         {
             _state.ChangeState(State.Run);
         }
+        else if(_inputSystem.IsDrain == true)
+        {
+            _state.ChangeState(State.Drain);
+        }
     }
 
     public override void StateExit()

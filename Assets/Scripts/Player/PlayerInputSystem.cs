@@ -10,9 +10,11 @@ public class PlayerInputSystem : MonoBehaviour
 
     [Header("Run")]
     [SerializeField] private bool isRun;
+    [SerializeField] private bool isDrain;
 
     public Vector2 Input { get { return _input; } }
     public bool IsRun { get { return isRun; } }
+    public bool IsDrain { get { return isDrain; } }
 
     private void OnMove(InputValue input)
     {
@@ -26,6 +28,12 @@ public class PlayerInputSystem : MonoBehaviour
         SetRun(isPressed);
     }
 
+    private void OnDrain(InputValue input)
+    {
+        bool isPressed = input.isPressed;
+        SetDrain(isPressed);
+    }
+
     private void SetMove(Vector2 value)
     {
         _input = value;
@@ -34,5 +42,10 @@ public class PlayerInputSystem : MonoBehaviour
     private void SetRun(bool isPressed)
     {
         isRun = isPressed;  
+    }
+
+    private void SetDrain(bool isPressed)
+    {
+        isDrain = isPressed;
     }
 }

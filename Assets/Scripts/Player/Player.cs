@@ -37,5 +37,6 @@ public class Player : MonoBehaviour
     {
         _state.AddState(State.Idle, new PlayerIdle(this));
         _state.AddState(State.Run, new PlayerRun(this));
+        _state.AddState(State.Drain, new PlayerDrain(this));
     }
 }

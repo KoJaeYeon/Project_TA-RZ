@@ -5,7 +5,8 @@ using UnityEngine;
 public enum State
 {
     Idle,
-    Run
+    Run,
+    Drain
 }
 
 public class PlayerStateMachine : MonoBehaviour
