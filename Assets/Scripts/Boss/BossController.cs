@@ -42,10 +42,11 @@ public class BossController : MonoBehaviour
         _nav = GetComponent<NavMeshAgent>();
         _bt = GetComponent<BehaviorTree>();
 
-        //_playerTr = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        _playerTr = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
 
         _bt.SetVariableValue("Phase1_Per", _phaseOnePer);
         _bt.SetVariableValue("Phase2_Per", _phaseTwoPer);
+        _bt.SetVariableValue("Attack_Distance", _attackRange);
 
         #region 테스트
 
