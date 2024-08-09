@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class CameraRoot : MonoBehaviour
     {
         rotation = transform.rotation;
         _input = player.GetComponent<PlayerInputSystem>();
+        SetPlayerCamera();
     }
 
     private void Update()
@@ -28,5 +30,13 @@ public class CameraRoot : MonoBehaviour
         rotation.eulerAngles = currentEulerAngles;
 
         _input.DeltaLook = 0;
+    }
+
+    void SetPlayerCamera()
+    {
+        CinemachineBrain cineBrain = Camera.main.GetComponent<CinemachineBrain>();
+        var virutalCamera = cineBrain.ActiveVirtualCamera;
+        virutalCamera.Follow = transform;
+        virutalCamera.LookAt = transform;
     }
 }
