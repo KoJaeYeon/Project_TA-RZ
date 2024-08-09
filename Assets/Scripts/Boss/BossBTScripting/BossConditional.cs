@@ -1,6 +1,7 @@
 using UnityEngine;
 using BehaviorDesigner.Runtime.Tasks;
 
+[TaskCategory("Boss")]
 public class BossConditional : Conditional
 {
     public BossController _owner;

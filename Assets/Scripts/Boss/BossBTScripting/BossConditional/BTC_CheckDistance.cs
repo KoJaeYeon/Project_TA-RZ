@@ -18,7 +18,7 @@ public class BTC_CheckDistance : BossConditional
 
         if (_owner.CheckDistance(_range.Value))
         {
-            return TaskStatus.Success;
+            return TaskStatus.Running;
         }
 
         return TaskStatus.Failure;
