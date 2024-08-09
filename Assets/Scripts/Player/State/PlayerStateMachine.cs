@@ -7,35 +7,35 @@ public enum State
 {
     Idle,
     Run,
-    Dash,
     Drain,
     FirstComboAttack,
     SecondComboAttack,
     ThirdComboAttack,
-    FourthComboAttack
+    FourthComboAttack,
+    Dash,
 }
 
 public class PlayerStateMachine : MonoBehaviour
 {
     private Dictionary<State, PlayerBaseState> _stateDic = new Dictionary<State, PlayerBaseState>();
-    private PlayerBaseState _currentState;
-    private State _previousState;
+    private PlayerBaseState _state;
+    private State _currentState;
 
-    public State PreviousState
+    public State CurrentState
     {
-        get { return _previousState; }
-        set { _previousState = value; }
+        get { return _currentState; }
+        set { _currentState = value; }
     }
 
     private void Start()
     {
-        _currentState = _stateDic[State.Idle];
-        _currentState.StateEnter();
+        _state = _stateDic[State.Idle];
+        _state.StateEnter();
     }
 
     private void Update()
     {
-       _currentState.StateUpdate();
+        _state.StateUpdate();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -45,11 +45,11 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void ChangeState(State changeState)
     {
-        _currentState.StateExit();
+        _state.StateExit();
 
-        _currentState = _stateDic[changeState];
+        _state = _stateDic[changeState];
 
-        _currentState.StateEnter();
+        _state.StateEnter();
     }
 
     public void AddState(State newState, PlayerBaseState state)

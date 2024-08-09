@@ -11,5 +11,4 @@ public class PlayerAnimationEvent : MonoBehaviour
     {
         _player.IsNext = true;
     }
-
 }

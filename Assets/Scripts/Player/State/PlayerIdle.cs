@@ -21,7 +21,12 @@ public class PlayerIdle : PlayerState
 
     private void InitializeIdle()
     {
+        if(_state.CurrentState == State.Dash)
+        {
+            _animator.SetInteger(_dashChange, (int)State.Idle);
+        }
 
+        _state.CurrentState = State.Idle;
     }
 
     private void OnUpdateIdle()
@@ -51,6 +56,6 @@ public class PlayerIdle : PlayerState
 
     private void Exit()
     {
-        _state.PreviousState = State.Idle;
+        
     }
 }
