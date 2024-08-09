@@ -11,12 +11,15 @@ public class GoogleSheetManager : MonoBehaviour
     const string URL = "https://script.google.com/macros/s/AKfycbxmrx_IStXECtqe-zd6LgsRpVkkw6_u-5NXWVThH-RBNl6YrCIK8IabP6Xnh_JU3w/exec";
     string data = string.Empty;
 
+    [SerializeField] bool TryConnectSheet;
+
     [Inject]
     private Dictionary<int, Stat> _statDictionary;
 
     void Start()
     {
-        Debug.Log("Start Manager");
+        if (TryConnectSheet == false) return;
+
         StartCoroutine(RequestSJsonAPI(PlayerDT));
         //StartCoroutine(RequestSJsonAPI(URL));
     }
@@ -73,10 +76,10 @@ public class GoogleSheetManager : MonoBehaviour
         }
 
         Debug.Log("Stat Dictionary Updated:");
-        foreach (var kvp in _statDictionary)
-        {
-            Debug.Log(kvp.Value);
-        }
+        //foreach (var kvp in _statDictionary)
+        //{
+        //    Debug.Log(kvp.Value);
+        //}
     }
 }
 
