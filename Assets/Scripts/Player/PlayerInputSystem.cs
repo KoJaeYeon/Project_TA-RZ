@@ -14,12 +14,15 @@ public class PlayerInputSystem : MonoBehaviour
     [SerializeField] private bool isDrain;
     [Header("Attack")]
     [SerializeField] private bool isAttack;
+    [Header("Look")]
+    [SerializeField] private float deltaLook;
 
     public Vector2 Input { get { return _input; } }
     public bool IsRun { get { return isRun; } }
     public bool IsDrain { get { return isDrain; } }
     public bool IsDash { get { return isDash; } }
     public bool IsAttack { get {  return isAttack; } }
+    public float DeltaLook { get { return deltaLook; } set { deltaLook = value; } }
 
     private void OnMove(InputValue input)
     {
@@ -46,6 +49,13 @@ public class PlayerInputSystem : MonoBehaviour
         SetAttack(isPressed);
     }
 
+    private void OnLook(InputValue input)
+    {
+        float delta = input.Get<float>();
+
+        SetLook(delta);
+    }
+
     private void SetMove(Vector2 value)
     {
         _input = value;
@@ -64,5 +74,10 @@ public class PlayerInputSystem : MonoBehaviour
     private void SetAttack(bool isPressed)
     {
         isAttack = isPressed;
+    }
+
+    private void SetLook(float delta)
+    {
+        deltaLook += delta;
     }
 }
