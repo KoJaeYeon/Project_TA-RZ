@@ -6,8 +6,6 @@ public class PlayerInputSystem : MonoBehaviour
     [Header("InputSystem")]
     [SerializeField] private Vector2 _input;
 
-    [Header("Run")]
-    [SerializeField] private bool isRun;
     [Header("Dash")]
     [SerializeField] private bool isDash;
     [Header("Drain")]
@@ -18,7 +16,6 @@ public class PlayerInputSystem : MonoBehaviour
     [SerializeField] private float deltaLook;
 
     public Vector2 Input { get { return _input; } }
-    public bool IsRun { get { return isRun; } }
     public bool IsDrain { get { return isDrain; } }
     public bool IsDash { get { return isDash; } }
     public bool IsAttack { get {  return isAttack; } }
@@ -39,6 +36,7 @@ public class PlayerInputSystem : MonoBehaviour
     private void OnDrain(InputValue input)
     {
         bool isPressed = input.isPressed;
+
         SetDrain(isPressed);
     }
 

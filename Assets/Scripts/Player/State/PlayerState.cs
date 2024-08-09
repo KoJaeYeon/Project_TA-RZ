@@ -43,4 +43,17 @@ public abstract class PlayerState : PlayerBaseState
             _state.ChangeState(State.Dash);
         }
     }
+
+    protected void ReturnToPreviousAnimation(State previousState, State currentState)
+    {
+        if(previousState != currentState)
+        {
+            _animator.SetInteger(_dashChange, (int)currentState);
+
+            return;
+        }
+
+        _animator.SetInteger(_dashChange, (int)previousState);
+
+    }
 }

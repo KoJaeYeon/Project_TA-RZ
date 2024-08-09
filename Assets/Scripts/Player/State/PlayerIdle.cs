@@ -21,6 +21,8 @@ public class PlayerIdle : PlayerState
 
     private void InitializeIdle()
     {
+        ReturnToPreviousAnimation(_state.CurrentState, State.Idle);
+
         _state.CurrentState = State.Idle;
     }
 
@@ -31,6 +33,7 @@ public class PlayerIdle : PlayerState
 
     private void ChangeBehaviour()
     {
+
         if (_inputSystem.Input != Vector2.zero)
         {
             _state.ChangeState(State.Run);
