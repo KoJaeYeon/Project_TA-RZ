@@ -59,4 +59,11 @@ public class BossController : MonoBehaviour
 
         return false;
     }
+
+    public bool CheckPhase(float standard)
+    {
+        if (standard <= _hpPercent) return true;
+
+        return false;
+    }
 }
