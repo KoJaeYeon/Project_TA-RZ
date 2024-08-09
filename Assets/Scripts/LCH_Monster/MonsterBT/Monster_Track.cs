@@ -21,7 +21,7 @@ public class Monster_Track : Action
         {
             Owner.transform.position += direction * MoveSpeed.Value * Time.deltaTime;
             return TaskStatus.Success;
-        }
+        } 
         else return TaskStatus.Failure;
     }
 }

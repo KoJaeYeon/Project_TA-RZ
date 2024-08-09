@@ -10,21 +10,15 @@ public class Monster_Atk : Action
     [SerializeField] Animator animator;
     [SerializeField] SharedFloat AtkSpeed;
     [SerializeField] SharedTransform TargetTransform;
+    [SerializeField] SharedFloat LastAtkTime;
     public override TaskStatus OnUpdate()
     {
-        Vector3 ownerPos = Owner.transform.position;
-        var targetTrans = TargetTransform.Value;
-        Vector3 targetPos = targetTrans.position;
-        float atkRange = Vector3.Distance(ownerPos,targetPos);
-
         
-        StartCoroutine(WaitForNextAtk());
+
+        LastAtkTime.Value = Time.time;
+        Debug.Log(LastAtkTime.Value);
         return TaskStatus.Success;
     }
 
-    IEnumerator WaitForNextAtk()
-    {
-        Debug.Log("ㅎㅇ");
-        yield return new WaitForSeconds(AtkSpeed.Value);
-    }
+  
 }
