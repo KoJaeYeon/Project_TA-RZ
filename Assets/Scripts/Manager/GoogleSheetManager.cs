@@ -1,15 +1,18 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
+using Newtonsoft.Json.Linq;
 
 public class GoogleSheetManager : MonoBehaviour
 {
+    const string PlayerDT = "https://script.google.com/macros/s/AKfycbwMq-9nTThTop6vAkoyyr5O7Hib2uMMmsrVtXkBH8sGU6ipDDW5Yk-vvDk7dgx4fuENvQ/exec";
     const string URL = "https://script.google.com/macros/s/AKfycbxmrx_IStXECtqe-zd6LgsRpVkkw6_u-5NXWVThH-RBNl6YrCIK8IabP6Xnh_JU3w/exec";
     string data = string.Empty;
 
     void Start()
     {
         Debug.Log("Start Manager");
+        StartCoroutine(RequestSJsonAPI(PlayerDT));
         StartCoroutine(RequestSJsonAPI(URL));
     }
 
@@ -25,8 +28,23 @@ public class GoogleSheetManager : MonoBehaviour
         else
         {
             data = www.downloadHandler.text;
-            Debug.Log(data); // 받은 데이터를 로그로 출력
+            Debug.Log(FormatJson(data)); // 받은 데이터를 보기 좋게 포맷하여 로그로 출력
             ProcessData(data);
+        }
+    }
+
+    string FormatJson(string json)
+    {
+        try
+        {
+            JArray jsonArray = JArray.Parse(json);
+            string formattedJson = jsonArray.ToString(Newtonsoft.Json.Formatting.Indented);
+            return formattedJson;
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError("Failed to format JSON: " + ex.Message);
+            return json;
         }
     }
 
@@ -44,8 +62,6 @@ public class GoogleSheetManager : MonoBehaviour
         }
     }
 }
-
-
 
 #region WebCode
 /*
@@ -68,7 +84,5 @@ function doGet(e) {
   var result = JSON.stringify(data);
   return ContentService.createTextOutput(result).setMimeType(ContentService.MimeType.JSON);
 }
-
-
  */
 #endregion
