@@ -41,8 +41,6 @@ public class PlayerDash : PlayerState
 
     private void InitializeDash()
     {
-        _state.CurrentState = State.Dash;
-
         _canDash = false;
 
         _animator.SetTrigger(_dashAnimation);
@@ -65,8 +63,6 @@ public class PlayerDash : PlayerState
                 _rigidBody.velocity = Vector3.zero;
 
                 _rigidBody.angularVelocity = Vector3.zero;
-
-                _animator.SetInteger(_dashChange, (int)_previousState);
 
                 _state.ChangeState(_previousState);
             }

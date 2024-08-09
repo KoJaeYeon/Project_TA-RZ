@@ -42,6 +42,8 @@ public class PlayerRun : PlayerState
 
     private void InitializeRun()
     {
+        ReturnToPreviousAnimation(_state.CurrentState, State.Run);
+
         _state.CurrentState = State.Run;
 
         _animator.SetBool(_moveAnimation, true);
