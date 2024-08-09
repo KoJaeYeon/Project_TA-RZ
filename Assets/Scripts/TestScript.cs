@@ -5,7 +5,7 @@ using UnityEngine;
 public class TestScript : MonoBehaviour
 {
     // Start is called before the first frame update
-    // 한글테스트
+    // 한글테스트 
     void Start()
     {
         
