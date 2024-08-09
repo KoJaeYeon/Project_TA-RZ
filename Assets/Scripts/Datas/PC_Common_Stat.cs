@@ -1,6 +1,4 @@
-using System;
-
-public struct PC_Common_Stat
+public class PC_Common_Stat : Stat
 {
     public int Id { get; set; }
     public string Type { get; set; }

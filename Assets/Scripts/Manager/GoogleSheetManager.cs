@@ -1,7 +1,9 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using Newtonsoft.Json.Linq;
+using Zenject;
 
 public class GoogleSheetManager : MonoBehaviour
 {
@@ -9,11 +11,14 @@ public class GoogleSheetManager : MonoBehaviour
     const string URL = "https://script.google.com/macros/s/AKfycbxmrx_IStXECtqe-zd6LgsRpVkkw6_u-5NXWVThH-RBNl6YrCIK8IabP6Xnh_JU3w/exec";
     string data = string.Empty;
 
+    [Inject]
+    private Dictionary<int, Stat> _statDictionary;
+
     void Start()
     {
         Debug.Log("Start Manager");
         StartCoroutine(RequestSJsonAPI(PlayerDT));
-        StartCoroutine(RequestSJsonAPI(URL));
+        //StartCoroutine(RequestSJsonAPI(URL));
     }
 
     IEnumerator RequestSJsonAPI(string url)
@@ -50,18 +55,32 @@ public class GoogleSheetManager : MonoBehaviour
 
     void ProcessData(string data)
     {
-        if (data == "임시제이슨")
+        JArray jsonArray = JArray.Parse(data);
+
+        foreach (var item in jsonArray)
         {
-            // 특정행동
-            Debug.Log("임시제이슨을 받았습니다.");
+            string idStr = item["ID"].ToString().Replace("P", "");
+            int id = int.Parse(idStr);
+            string type = item["타입"].ToString();
+            float attackPower = item["공격력"].ToObject<float>();
+            float health = item["체력"].ToObject<float>();
+            float moveSpeed = item["이동속도"].ToObject<float>();
+            int ammoCapacity = item["자원 보유 총량"].ToObject<int>();
+            float staminaRecoveryRate = item["스테미너 회복속도"].ToObject<float>();
+
+            PC_Common_Stat stat = new PC_Common_Stat(id, type, attackPower, health, moveSpeed, ammoCapacity, staminaRecoveryRate);
+            _statDictionary[id] = stat;
         }
-        else
+
+        Debug.Log("Stat Dictionary Updated:");
+        foreach (var kvp in _statDictionary)
         {
-            // 특정행동
-            Debug.Log("임시제이슨이 아닙니다.");
+            Debug.Log(kvp.Value);
         }
     }
 }
+
+
 
 #region WebCode
 /*
