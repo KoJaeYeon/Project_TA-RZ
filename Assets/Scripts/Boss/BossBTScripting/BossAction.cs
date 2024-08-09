@@ -1,6 +1,7 @@
 using UnityEngine;
 using BehaviorDesigner.Runtime.Tasks;
 
+[TaskCategory("Boss")]
 public class BossAction : Action
 {
     public BossController _owner;
