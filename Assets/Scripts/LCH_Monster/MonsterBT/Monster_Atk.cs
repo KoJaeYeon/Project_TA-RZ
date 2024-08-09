@@ -9,8 +9,15 @@ public class Monster_Atk : Action
 {
     [SerializeField] Animator animator;
     [SerializeField] SharedFloat AtkSpeed;
+    [SerializeField] SharedTransform TargetTransform;
     public override TaskStatus OnUpdate()
     {
+        Vector3 ownerPos = Owner.transform.position;
+        var targetTrans = TargetTransform.Value;
+        Vector3 targetPos = targetTrans.position;
+        float atkRange = Vector3.Distance(ownerPos,targetPos);
+
+        
         StartCoroutine(WaitForNextAtk());
         return TaskStatus.Success;
     }

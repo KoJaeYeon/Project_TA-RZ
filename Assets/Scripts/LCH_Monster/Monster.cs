@@ -12,16 +12,38 @@ public enum MonsterType
 }
 public class Monster : MonoBehaviour
 {
-    [SerializeField] BehaviorTree Bt;
     [Header("적 타입")]
     [SerializeField] MonsterType Type;
 
+    [SerializeField] BehaviorTree Bt;
+    [SerializeField] int MonsterHp;
+
     void Start()
     {
-        var monsterhp = Bt.GetVariable("Hp");
-        Debug.Log(monsterhp);
-        //Bt의 변수값을 가져올 수 있음. 굳
+        switch (Type)
+        {
+            case MonsterType.CommonType:
+                
+                Debug.Log("Common");
+                break;
+            case MonsterType.LongRangeType:
+                Debug.Log("LongRange");
+                break;
+            case MonsterType.ExplosionType:
+                Debug.Log("ExplosionType");
+                break;
+            case MonsterType.RushType:
+
+                break;
+        }
+        
+        
+        
+    }
+    private void Update()
+    {
+
+       
     }
 
-   
 }

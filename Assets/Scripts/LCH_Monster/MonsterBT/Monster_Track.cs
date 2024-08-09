@@ -8,8 +8,6 @@ public class Monster_Track : Action
 {
     [SerializeField] SharedTransform TargetTransform;
     [SerializeField] SharedFloat MoveSpeed;
-    [SerializeField] SharedFloat AtkDistance;
-
     public override TaskStatus OnUpdate()
     {
         if(TargetTransform == null)
@@ -18,16 +16,12 @@ public class Monster_Track : Action
         }
 
         Vector3 direction = (TargetTransform.Value.position - Owner.transform.position).normalized;
-        float distance = Vector3.Distance(TargetTransform.Value.position,Owner.transform.position);
 
-        if (distance >= AtkDistance.Value)
+        if (TargetTransform != null)
         {
             Owner.transform.position += direction * MoveSpeed.Value * Time.deltaTime;
             return TaskStatus.Success;
         }
-        else
-        {
-            return TaskStatus.Failure;
-        }
+        else return TaskStatus.Failure;
     }
 }
