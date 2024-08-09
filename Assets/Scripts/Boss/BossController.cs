@@ -48,4 +48,15 @@ public class BossController : MonoBehaviour
 
         _hp = _maxHp;
     }
+
+    public bool CheckDistance(float range)
+    {
+        if (_playerTr == null) return false;
+        
+        float distance = Vector3.Distance(transform.position, _playerTr.position);
+
+        if (distance <= range) return true;
+
+        return false;
+    }
 }
