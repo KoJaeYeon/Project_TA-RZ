@@ -16,7 +16,6 @@ public class PlayerDash : PlayerState
     private Vector3 _dashDirection;
 
     private State _previousState;
-    private State _currentState;
 
     public override void StateEnter()
     {
@@ -66,6 +65,8 @@ public class PlayerDash : PlayerState
                 _rigidBody.velocity = Vector3.zero;
 
                 _rigidBody.angularVelocity = Vector3.zero;
+
+                _animator.SetInteger(_dashChange, (int)_previousState);
 
                 _state.ChangeState(_previousState);
             }

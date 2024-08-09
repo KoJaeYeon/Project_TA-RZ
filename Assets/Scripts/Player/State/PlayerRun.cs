@@ -42,11 +42,6 @@ public class PlayerRun : PlayerState
 
     private void InitializeRun()
     {
-        if(_state.CurrentState == State.Dash)
-        {
-            _animator.SetInteger(_dashChange, (int)State.Run);
-        }
-
         _state.CurrentState = State.Run;
 
         _animator.SetBool(_moveAnimation, true);
