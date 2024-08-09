@@ -6,7 +6,6 @@ public class PlayerDrain : PlayerState
     public PlayerDrain(Player player) : base(player)
     {
         _animator = player.GetComponentInChildren<Animator>();
-        _controller = player.GetComponent<CharacterController>();
         _inputSystem = player.GetComponent<PlayerInputSystem>();
         _state = player.GetComponent<PlayerStateMachine>();
         _drainSystem = player.GetComponentInChildren<DrainSystem>();
@@ -14,11 +13,6 @@ public class PlayerDrain : PlayerState
     }
 
     #region DrainComponent
-    private Animator _animator;
-    private Rigidbody _rigidBody;
-    private PlayerInputSystem _inputSystem;
-    private PlayerStateMachine _state;
-    private CharacterController _controller;
     private DrainSystem _drainSystem;
     private SphereCollider _sphereCollider;
     #endregion
@@ -27,10 +21,6 @@ public class PlayerDrain : PlayerState
     private float _currentDrainRadius;
     private float _maxDrainRadius = 5;
     private float _drainSpeed = 2;
-    #endregion
-
-    #region AnimatorStringToHash
-    private readonly int _drain = Animator.StringToHash("Drain");
     #endregion
 
     public override void StateEnter()

@@ -17,7 +17,9 @@ public abstract class PlayerState : PlayerBaseState
     protected readonly int _fourthCombo = Animator.StringToHash("ComboAttack4");
     protected readonly int _comboFail = Animator.StringToHash("ComboFail");
     protected readonly int _dashAnimation = Animator.StringToHash("Dash");
+    protected readonly int _dashChange = Animator.StringToHash("DashChange");
     protected readonly int _moveAnimation = Animator.StringToHash("Walk");
+    protected readonly int _drain = Animator.StringToHash("Drain");
     #endregion
 
     public PlayerState(Player player)
