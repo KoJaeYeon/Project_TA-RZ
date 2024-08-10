@@ -14,12 +14,15 @@ public class PlayerInputSystem : MonoBehaviour
     [SerializeField] private bool isAttack;
     [Header("Look")]
     [SerializeField] private float deltaLook;
+    [Header("LockOn")]
+    [SerializeField] private bool isLockOn;
 
     public Vector2 Input { get { return _input; } }
     public bool IsDrain { get { return isDrain; } }
     public bool IsDash { get { return isDash; } }
     public bool IsAttack { get {  return isAttack; } }
     public float DeltaLook { get { return deltaLook; } set { deltaLook = value; } }
+    public bool IsLockOn { get { return isLockOn; } }
 
     private void OnMove(InputValue input)
     {
@@ -54,6 +57,19 @@ public class PlayerInputSystem : MonoBehaviour
         SetLook(delta);
     }
 
+    private void OnLockOn(InputValue input)
+    {
+        bool isPressed = input.isPressed;
+
+        SetLockOn(isPressed);
+    }
+
+    private void OnLockOnFix(InputValue input)
+    {
+        //Button입력으로 True값만 받음
+        SetLockOn(!isLockOn);
+    }
+
     private void SetMove(Vector2 value)
     {
         _input = value;
@@ -77,5 +93,10 @@ public class PlayerInputSystem : MonoBehaviour
     private void SetLook(float delta)
     {
         deltaLook += delta;
+    }
+
+    public void SetLockOn(bool isPressed)
+    {
+        isLockOn = isPressed;
     }
 }
