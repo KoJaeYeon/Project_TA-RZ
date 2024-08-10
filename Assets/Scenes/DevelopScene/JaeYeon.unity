@@ -198,16 +198,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 147207716783241615, guid: e44852ff32c7ef14687c01b75dca3779,
-        type: 3}
-      propertyPath: Target
-      value: 
-      objectReference: {fileID: 1602517989}
-    - target: {fileID: 1076989326154692801, guid: e44852ff32c7ef14687c01b75dca3779,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3740475152086547784, guid: e44852ff32c7ef14687c01b75dca3779,
         type: 3}
       propertyPath: m_Name
@@ -386,9 +376,9 @@ GameObject:
   - component: {fileID: 1038979931}
   - component: {fileID: 1038979930}
   - component: {fileID: 1038979929}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DummyMonster
-  m_TagString: Monster
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -684,9 +674,9 @@ GameObject:
   - component: {fileID: 1393795896}
   - component: {fileID: 1393795895}
   - component: {fileID: 1393795894}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DummyMonster
-  m_TagString: Monster
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -791,9 +781,9 @@ GameObject:
   - component: {fileID: 1563548401}
   - component: {fileID: 1563548400}
   - component: {fileID: 1563548399}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DummyMonster
-  m_TagString: Monster
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -886,12 +876,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1602517989 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4231939912280197847, guid: 1c6127be647f6f14c95ab2d7e19a1feb,
-    type: 3}
-  m_PrefabInstance: {fileID: 727769014554619794}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1632966035
 GameObject:
   m_ObjectHideFlags: 0
