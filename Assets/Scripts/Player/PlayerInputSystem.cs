@@ -95,7 +95,7 @@ public class PlayerInputSystem : MonoBehaviour
         deltaLook += delta;
     }
 
-    private void SetLockOn(bool isPressed)
+    public void SetLockOn(bool isPressed)
     {
         isLockOn = isPressed;
     }
