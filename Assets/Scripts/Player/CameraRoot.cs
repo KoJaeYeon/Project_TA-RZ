@@ -11,17 +11,46 @@ public class CameraRoot : MonoBehaviour
     PlayerInputSystem _input;
 
     [SerializeField] Transform Target;
-    // Start is called before the first frame update
+    bool beforeLockOnMode;
     void Start()
-    {
-        rotation = transform.rotation;
+    {        
         _input = player.GetComponent<PlayerInputSystem>();
-        SetPlayerCamera();
+        beforeLockOnMode = _input.IsLockOn;
+        SetCameraToPlayer();
     }
 
     private void Update()
     {
-        if(_input.IsLockOn)
+        CheckLockOnModeChange();
+        UpdateCameraRootTransform();
+    }
+
+    /// <summary>
+    /// LockOnMode가 변화했으면 타겟을 설정
+    /// </summary>
+    void CheckLockOnModeChange()
+    {
+        if (beforeLockOnMode != _input.IsLockOn)
+        {
+            if (_input.IsLockOn)
+            {
+                SetCameraToTarget();
+            }
+            else
+            {
+                SetCameraToPlayer();
+            }
+
+            //카메라 입력값 초기화
+            _input.DeltaLook = 0;
+
+            beforeLockOnMode = _input.IsLockOn;
+        }
+    }
+
+    void UpdateCameraRootTransform()
+    {
+        if (_input.IsLockOn)
         {
             transform.LookAt(Target);
         }
@@ -30,7 +59,6 @@ public class CameraRoot : MonoBehaviour
             CalculateTargetRotate();
             transform.rotation = rotation;
         }
-
     }
 
     /// <summary>
@@ -45,11 +73,25 @@ public class CameraRoot : MonoBehaviour
         _input.DeltaLook = 0;
     }
 
-    void SetPlayerCamera()
+    /// <summary>
+    /// 플레이어에게 카메라 전환하는 함수
+    /// </summary>
+    void SetCameraToPlayer()
     {
+        rotation = transform.rotation;
         CinemachineBrain cineBrain = Camera.main.GetComponent<CinemachineBrain>();
         var virutalCamera = cineBrain.ActiveVirtualCamera;
         virutalCamera.Follow = transform;
         virutalCamera.LookAt = transform;
+    }
+
+    /// <summary>
+    ///타켓에게 카메라 전환하는 함수
+    /// </summary>
+    void SetCameraToTarget()
+    {
+        CinemachineBrain cineBrain = Camera.main.GetComponent<CinemachineBrain>();
+        var virutalCamera = cineBrain.ActiveVirtualCamera;
+        virutalCamera.LookAt = Target.transform;
     }
 }
