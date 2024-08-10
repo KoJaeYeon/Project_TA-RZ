@@ -9,6 +9,8 @@ public class CameraRoot : MonoBehaviour
     Quaternion rotation;
     [Inject] Player player;
     PlayerInputSystem _input;
+
+    [SerializeField] Transform Target;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,10 +21,21 @@ public class CameraRoot : MonoBehaviour
 
     private void Update()
     {
-        CalculateTargetRotate();
-        transform.rotation = rotation;
+        if(_input.IsLockOn)
+        {
+            transform.LookAt(Target);
+        }
+        else
+        {
+            CalculateTargetRotate();
+            transform.rotation = rotation;
+        }
+
     }
 
+    /// <summary>
+    /// 마우스 Delta값을 받아 카메라를 회전시키는 함수
+    /// </summary>
     void CalculateTargetRotate()
     {
         Vector3 currentEulerAngles = rotation.eulerAngles;
