@@ -6,8 +6,7 @@ using Zenject;
 
 public class GoogleSheetManager : MonoBehaviour
 {
-    const string PlayerDT = "https://script.google.com/macros/s/AKfycbwMq-9nTThTop6vAkoyyr5O7Hib2uMMmsrVtXkBH8sGU6ipDDW5Yk-vvDk7dgx4fuENvQ/exec";
-    const string URL = "https://script.google.com/macros/s/AKfycbxmrx_IStXECtqe-zd6LgsRpVkkw6_u-5NXWVThH-RBNl6YrCIK8IabP6Xnh_JU3w/exec";
+    const string _PCStat_URL = "https://script.google.com/macros/s/AKfycbwMq-9nTThTop6vAkoyyr5O7Hib2uMMmsrVtXkBH8sGU6ipDDW5Yk-vvDk7dgx4fuENvQ/exec";
     string data = string.Empty;
 
     [SerializeField] bool TryConnectSheet;
@@ -18,11 +17,11 @@ public class GoogleSheetManager : MonoBehaviour
     {
         if (TryConnectSheet == false) return;
 
-        StartCoroutine(RequestSJsonAPI(PlayerDT));
+        StartCoroutine(RequestSJsonAPI(nameof(_PCStat_URL), _PCStat_URL));
         //StartCoroutine(RequestSJsonAPI(URL));
     }
 
-    public IEnumerator RequestSJsonAPI(string url)
+    public IEnumerator RequestSJsonAPI(string urlName ,string url)
     {
         UnityWebRequest www = UnityWebRequest.Get(url);
         yield return www.SendWebRequest();
@@ -35,6 +34,7 @@ public class GoogleSheetManager : MonoBehaviour
         {
             data = www.downloadHandler.text;
             Debug.Log(FormatJson(data)); // 받은 데이터를 보기 좋게 포맷하여 로그로 출력
+            dataManager.ProcessData(urlName, data);
         }
     }
 
