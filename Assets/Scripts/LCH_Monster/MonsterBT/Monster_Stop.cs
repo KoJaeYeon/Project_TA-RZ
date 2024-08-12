@@ -6,7 +6,7 @@ using UnityEngine;
 [TaskCategory("Monster/General")]
 public class Monster_Stop : Action
 {
-    [SerializeField] SharedTransform TargetTransform;
+    [SerializeField] SharedMonster Monster;
     [SerializeField] NavMeshAgent Nav;
     [SerializeField] SharedFloat AtkRange;
 
@@ -18,7 +18,7 @@ public class Monster_Stop : Action
         }
 
         // 몬스터와 목표 사이의 거리 계산
-        float distanceToTarget = Vector3.Distance(TargetTransform.Value.position, Owner.transform.position);
+        float distanceToTarget = Vector3.Distance(Monster.Value.Player.transform.position, Owner.transform.position);
 
         // 목표가 공격 범위 안에 있을 때 NavMeshAgent 멈추기
         if (distanceToTarget <= AtkRange.Value)

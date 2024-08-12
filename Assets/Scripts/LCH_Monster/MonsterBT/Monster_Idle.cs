@@ -6,13 +6,13 @@ using BehaviorDesigner.Runtime.Tasks;
 [TaskCategory("Monster/General")]
 public class Monster_Idle : Action
 {
-    [SerializeField] SharedTransform TargetTransform;
+    [SerializeField] SharedMonster Monster;
     [SerializeField] SharedFloat TrackDistance;
 
     public override TaskStatus OnUpdate()
     {
         Vector3 ownerPos = Owner.transform.position;
-        var targetTrans = TargetTransform.Value;
+        var targetTrans = Monster.Value.Player.transform;
         Vector3 targetPos = targetTrans.position;
 
         float distance = Vector3.Distance(ownerPos, targetPos);

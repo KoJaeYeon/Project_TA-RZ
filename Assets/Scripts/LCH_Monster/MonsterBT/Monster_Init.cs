@@ -5,12 +5,13 @@ using Zenject;
 [TaskCategory("Monster/General")]
 public class Monster_Init : Action
 {
-    [SerializeField] SharedTransform targetTransform;
-    [Inject] Player player;
+    [SerializeField] SharedTransform _transform;
+    [SerializeField] SharedMonster monster;
+    
     public override TaskStatus OnUpdate()
     {
-        //targetTransform.Value = player.transform;
-
+        monster.Value = GetComponent<Monster>();
+        _transform.Value = monster.Value.Player.transform;
         return TaskStatus.Success;
     }
 }

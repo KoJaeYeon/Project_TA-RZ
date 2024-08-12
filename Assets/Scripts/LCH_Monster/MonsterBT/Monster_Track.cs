@@ -7,13 +7,13 @@ using UnityEngine.AI;
 [TaskCategory("Monster/General")]
 public class Monster_Track : Action
 {
-    [SerializeField] SharedTransform TargetTransform;
+    [SerializeField] SharedMonster Monster;
     [SerializeField] SharedFloat MoveSpeed;
     [SerializeField] NavMeshAgent Nav;
     [SerializeField] SharedFloat DetectArea;
     public override TaskStatus OnUpdate()
     {
-        if(TargetTransform == null)
+        if(Monster.Value.Player.transform == null)
         {
             return TaskStatus.Failure;
         }
@@ -22,9 +22,9 @@ public class Monster_Track : Action
             Nav = GetComponent<NavMeshAgent>();
         }
 
-        if (TargetTransform != null)
+        if (Monster.Value.Player.transform != null)
         {
-            Nav.SetDestination(TargetTransform.Value.position);
+            Nav.SetDestination(Monster.Value.Player.transform.position);
             return TaskStatus.Success;
         } 
         else return TaskStatus.Failure;

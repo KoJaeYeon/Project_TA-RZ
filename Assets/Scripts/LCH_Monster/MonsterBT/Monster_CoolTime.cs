@@ -4,11 +4,11 @@ using UnityEngine;
 [TaskCategory("Monster/General")]
 public class Monster_CoolTime : Conditional
 {
-    [SerializeField] SharedTransform TargetTransform;
+    [SerializeField] SharedMonster Monster;
     [SerializeField] SharedFloat AtkDistance;
     public override TaskStatus OnUpdate()
     {
-        float distance = Vector3.Distance(TargetTransform.Value.position, Owner.transform.position);
+        float distance = Vector3.Distance(Monster.Value.Player.transform.position, Owner.transform.position);
         if (distance >= AtkDistance.Value)
         {
             return TaskStatus.Success;

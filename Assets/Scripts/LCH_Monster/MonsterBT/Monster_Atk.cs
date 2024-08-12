@@ -9,7 +9,7 @@ public class Monster_Atk : Action
 {
     [SerializeField] Animator animator;
     [SerializeField] SharedFloat AtkSpeed;
-    [SerializeField] SharedTransform TargetTransform;
+    [SerializeField] SharedMonster Monster;
     [SerializeField] SharedInt CoolTime;
     public override TaskStatus OnUpdate()
     {
@@ -17,7 +17,7 @@ public class Monster_Atk : Action
         {
             animator = GetComponent<Animator>();
         }
-        if(TargetTransform!= null)
+        if(Monster.Value.Player.transform != null)
         {
             StartCoroutine(WaitNextAtk());
             animator.SetTrigger("Atk");
