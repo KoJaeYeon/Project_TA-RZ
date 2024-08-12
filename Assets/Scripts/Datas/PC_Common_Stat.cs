@@ -19,6 +19,11 @@ public class PC_Common_Stat : Stat
         StaminaRecoveryRate = staminaRecoveryRate;
     }
 
+    public override Stat DeepCopy()
+    {
+        return new PC_Common_Stat(Id, Type, AttackPower, Health, MoveSpeed, AmmoCapacity, StaminaRecoveryRate);
+    }
+
     public override string ToString()
     {
         return $"ID: {Id}, Type: {Type}, Attack Power: {AttackPower}, Health: {Health}, Move Speed: {MoveSpeed}, Ammo Capacity: {AmmoCapacity}, Stamina Recovery Rate: {StaminaRecoveryRate}";
