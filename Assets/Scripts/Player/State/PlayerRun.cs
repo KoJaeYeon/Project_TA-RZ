@@ -19,14 +19,15 @@ public class PlayerRun : PlayerState
     private Vector3 _spherePosition;
     
     private bool _isGround;
+    private bool _isAction = false;
     #endregion
 
+    #region State
     public override void StateEnter()
     {
         InitializeRun();
     }
 
-    
     public override void StateUpdate()
     {
         OnUpdateRun();
@@ -36,20 +37,17 @@ public class PlayerRun : PlayerState
     {
         Exit();
     }
+    #endregion
 
     private void InitializeRun()
     {
         _state.CurrentState = State.Run;
+        _isAction = false;
     }
 
     private void OnUpdateRun()
     {
-        if (_inputSystem.IsDash)
-        {
-            _state.ChangeState(State.Dash);
-            return;
-        }
-
+        ChangeStateBehaviour(_inputSystem);
         PlayerMove();
     }
 
@@ -66,71 +64,80 @@ public class PlayerRun : PlayerState
         if (!_isGround)
             return;
 
-        _targetSpeed = _runSpeed;
-
-        if (_inputSystem.Input == Vector2.zero)
+        if (!_isAction)
         {
-            _targetSpeed = 0f;
+            _targetSpeed = _runSpeed;
 
-            _speedChangevalue = 5f;
-
-            if (_currentSpeed == _targetSpeed)
+            if (_inputSystem.Input == Vector2.zero)
             {
-                _state.ChangeState(State.Idle);
+                _targetSpeed = 0f;
 
-                return;
+                _speedChangevalue = 5f;
+
+                if (_currentSpeed == _targetSpeed)
+                {
+                    _state.ChangeState(State.Idle);
+
+                    return;
+                }
+
+            }
+            else
+            {
+                if (_speedChangevalue != 100f)
+                {
+                    _speedChangevalue = Mathf.Lerp(_speedChangevalue, 100f, Time.deltaTime);
+                }
             }
 
+
+            float currentHorizontalSpeed = new Vector3(_rigidBody.velocity.x, 0f, _rigidBody.velocity.z).magnitude;
+
+            bool speedCorrection = currentHorizontalSpeed < _targetSpeed - _speedOffset
+                || currentHorizontalSpeed > _targetSpeed + _speedOffset;
+
+            if (speedCorrection)
+            {
+                _currentSpeed = Mathf.Lerp(currentHorizontalSpeed, _targetSpeed, _speedChangevalue * Time.deltaTime);
+
+                _currentSpeed = Mathf.Round(_currentSpeed * 1000f) / 1000f;
+            }
+            else
+            {
+                _currentSpeed = _targetSpeed;
+            }
+
+            Vector3 inputDirection = new Vector3(_inputSystem.Input.x, 0f, _inputSystem.Input.y).normalized;
+
+            if (_inputSystem.Input != Vector2.zero)
+            {
+                _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
+                    _player.MainCamera.transform.eulerAngles.y;
+
+                float smoothAngle = Mathf.SmoothDampAngle(_player.transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, _rotationChangevalue);
+
+                _player.transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
+            }
+
+            Vector3 targetDirection = Quaternion.Euler(0f, _targetRotation, 0f) * Vector3.forward;
+
+            Vector3 movement = targetDirection.normalized * _currentSpeed;
+
+            movement.y = _rigidBody.velocity.y;
+
+            _rigidBody.velocity = movement;
+
+            _animator.SetFloat("Speed", _currentSpeed);
         }
         else
         {
-            if(_speedChangevalue != 100f)
-            {
-                _speedChangevalue = Mathf.Lerp(_speedChangevalue, 100f, Time.deltaTime);
-            }
+            _animator.SetFloat("Speed", 0f);
+
+            _rigidBody.velocity = Vector3.zero;
         }
             
-
-        float currentHorizontalSpeed = new Vector3(_rigidBody.velocity.x, 0f, _rigidBody.velocity.z).magnitude;
-
-        bool speedCorrection = currentHorizontalSpeed < _targetSpeed - _speedOffset
-            || currentHorizontalSpeed > _targetSpeed + _speedOffset;
-
-        if(speedCorrection)
-        {
-            _currentSpeed = Mathf.Lerp(currentHorizontalSpeed, _targetSpeed, _speedChangevalue * Time.deltaTime);
-
-            _currentSpeed = Mathf.Round(_currentSpeed * 1000f) / 1000f;
-        }
-        else
-        {
-            _currentSpeed = _targetSpeed;
-        }
-
-        Vector3 inputDirection = new Vector3(_inputSystem.Input.x, 0f, _inputSystem.Input.y).normalized;
-
-        if(_inputSystem.Input != Vector2.zero)
-        {
-            _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
-                _player.MainCamera.transform.eulerAngles.y;
-
-            float smoothAngle = Mathf.SmoothDampAngle(_player.transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, _rotationChangevalue);
-
-            _player.transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
-        }
-
-        Vector3 targetDirection = Quaternion.Euler(0f, _targetRotation, 0f) * Vector3.forward;
-
-        Vector3 movement = targetDirection.normalized * _currentSpeed;
-
-        movement.y = _rigidBody.velocity.y;
-
-        _rigidBody.velocity = movement;
-
-        _animator.SetFloat("Speed", _currentSpeed);
+        
     }
-
-
 
     private void CheckGround()
     {
@@ -138,5 +145,25 @@ public class PlayerRun : PlayerState
             _player.transform.position.y, _player.transform.position.z);
 
         _isGround = Physics.CheckSphere(_spherePosition, _sphereRadius, LayerMask.GetMask("Ground"), QueryTriggerInteraction.Ignore);
+    }
+
+    protected override void ChangeStateBehaviour(PlayerInputSystem input)
+    {
+        if (input.IsDash)
+        {
+            _state.ChangeState(State.Dash);
+        }
+        else if (input.IsAttack)
+        {
+            _isAction = true;
+            _state.ChangeState(State.FirstComboAttack);
+        }
+        else if (input.IsDrain)
+        {
+            _isAction = true;
+            _state.ChangeState(State.Drain);    
+        }
+
+        //스킬, 피격추가.
     }
 }

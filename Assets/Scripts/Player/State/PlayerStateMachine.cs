@@ -43,6 +43,18 @@ public class PlayerStateMachine : MonoBehaviour
         
     }
 
+    public void OnDamagedStateChange()
+    {
+        if(_state is PlayerFirstComboAttack)
+        {
+
+        }
+        else
+        {
+
+        }
+    }
+
     public void ChangeState(State changeState)
     {
         _state.StateExit();
