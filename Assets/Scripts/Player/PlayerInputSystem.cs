@@ -75,7 +75,7 @@ public class PlayerInputSystem : MonoBehaviour
         _input = value;
     }
 
-    private void SetDash(bool isPressed)
+    public void SetDash(bool isPressed)
     {
         isDash = isPressed; 
     }

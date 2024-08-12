@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerDash : PlayerState
 {
     public PlayerDash(Player player) : base(player) { }
-    private WaitForSeconds _coolTime = new WaitForSeconds(0.7f);
+    private WaitForSeconds _coolTime = new WaitForSeconds(0.5f);
 
     private float _dashPower = 15f;
     private float _dashTime;
@@ -70,6 +70,7 @@ public class PlayerDash : PlayerState
 
     private void Exit()
     {
+        _inputSystem.SetDash(false);
         _dashTime = 0f;
     }
 
