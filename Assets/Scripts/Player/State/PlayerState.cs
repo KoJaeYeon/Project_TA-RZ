@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class PlayerState : PlayerBaseState
@@ -10,12 +12,7 @@ public abstract class PlayerState : PlayerBaseState
     protected PlayerStateMachine _state;
     #endregion
 
-    #region AnimationStringToHash
-    protected readonly int _firstCombo = Animator.StringToHash("ComboAttack1");
-    protected readonly int _secondCombo = Animator.StringToHash("ComboAttack2");
-    protected readonly int _thirdCombo = Animator.StringToHash("ComboAttack3");
-    protected readonly int _fourthCombo = Animator.StringToHash("ComboAttack4");
-    protected readonly int _comboFail = Animator.StringToHash("ComboFail");
+    #region AnimatorStringToHash
     protected readonly int _dashAnimation = Animator.StringToHash("Dash");
     protected readonly int _dashChange = Animator.StringToHash("DashChange");
     protected readonly int _moveAnimation = Animator.StringToHash("Walk");
@@ -36,11 +33,23 @@ public abstract class PlayerState : PlayerBaseState
         _state = player.GetComponent<PlayerStateMachine>();
     }
 
-    protected void ChangeDash()
+    protected virtual void ChangeStateBehaviour(PlayerInputSystem input)
     {
-        if (_inputSystem.IsDash)
+        if (input.Input != Vector2.zero)
+        {
+            _state.ChangeState(State.Run);
+        }
+        else if (input.IsDash)
         {
             _state.ChangeState(State.Dash);
+        }
+        else if (input.IsAttack)
+        {
+            _state.ChangeState(State.FirstComboAttack);
+        }
+        else if (input.IsDrain)
+        {
+            _state.ChangeState(State.Drain);
         }
     }
 }

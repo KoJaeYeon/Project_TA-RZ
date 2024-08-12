@@ -11,16 +11,23 @@ public enum BossPhase
 
 public class BossController : MonoBehaviour
 {
+    [Header("기본 스탯")]
     [SerializeField] private float _maxHp;
     [SerializeField] private float _hp;
     [SerializeField] private float _speed;
     [SerializeField] private float _damage;
     [SerializeField] private float _attackSpeed;
     [SerializeField] private float _attackRange;
+
+    [Header("페이즈 체력")]
     [SerializeField] private float _phaseOnePer;
     [SerializeField] private float _phaseTwoPer;
     private float _hpPercent;
 
+    [Header("2페이즈 돌진공격")]
+    [SerializeField] private float _dashSpeed;
+    [SerializeField] private float _dashRange;
+        
     private Rigidbody _rb;
     private Animator _anim;
     private NavMeshAgent _nav;
@@ -48,6 +55,9 @@ public class BossController : MonoBehaviour
         _bt.SetVariableValue("Phase2_Per", _phaseTwoPer);
         _bt.SetVariableValue("Attack_Distance", _attackRange);
 
+        _bt.SetVariableValue("DashSpeed", _dashSpeed);
+        _bt.SetVariableValue("DashRange", _dashRange);
+
         #region 테스트
 
         _maxHp = 3000;
@@ -72,6 +82,18 @@ public class BossController : MonoBehaviour
 
     #endregion
 
+    #region BTA
+
+    public void DashAttack(float speed)
+    {
+        Vector3 direction = (_playerTr.position - transform.position).normalized;
+        _rb.AddForce(direction * speed, ForceMode.Impulse);
+    }
+
+    #endregion
+
+    #region BTC
+
     public bool CheckDistance(float range)
     {
         if (_playerTr == null) return false;
@@ -89,4 +111,6 @@ public class BossController : MonoBehaviour
 
         return false;
     }
+
+    #endregion
 }
