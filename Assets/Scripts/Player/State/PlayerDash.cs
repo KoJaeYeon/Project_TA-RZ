@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerDash : PlayerState
@@ -19,7 +18,6 @@ public class PlayerDash : PlayerState
 
     public override void StateEnter()
     {
-
         _previousState = _state.CurrentState;
 
         if (_canDash)
@@ -84,7 +82,6 @@ public class PlayerDash : PlayerState
         _rigidBody.AddForce(dash, ForceMode.Impulse);
     }
 
-
     public void StartCoolTime()
     {
         _player.StartCoroutine(DashCoolTime());
@@ -95,5 +92,10 @@ public class PlayerDash : PlayerState
         yield return _coolTime;
 
         _canDash = true;
+    }
+
+    protected override void ChangeStateBehaviour(PlayerInputSystem input)
+    {
+        //스킬, 피격
     }
 }
