@@ -80,7 +80,7 @@ public class PlayerInputSystem : MonoBehaviour
         isDash = isPressed; 
     }
 
-    private void SetDrain(bool isPressed)
+    public void SetDrain(bool isPressed)
     {
         isDrain = isPressed;
     }

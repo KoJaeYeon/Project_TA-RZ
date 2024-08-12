@@ -42,7 +42,7 @@ public class PlayerDrain : PlayerState
     {
         _animator.SetBool(_drain, true);
         _currentDrainRadius = 1;
-        //_drainSystem.gameObject.SetActive(true);
+        _drainSystem.OnSetActiveDraintEffect(true);
     }
 
     void UpdateDrain()
@@ -55,7 +55,8 @@ public class PlayerDrain : PlayerState
     {
         _animator.SetBool(_drain, false);
         _currentDrainRadius = 1;
-        //_drainSystem.gameObject.SetActive(false);
+        _drainSystem.OnSetActiveDraintEffect(false);
+        _inputSystem.SetDrain(false);
     }
 
     /// <summary>
@@ -67,6 +68,14 @@ public class PlayerDrain : PlayerState
         {
             _state.ChangeState(State.Idle);
         }
+        else if(_inputSystem.IsDash == true)
+        {
+            _state.ChangeState(State.Dash);
+        }
+        //else if(_inputSystem.IsSkill == true)
+        //{
+        //    _state.ChangeState(State.Skill);
+        //}
     }
 
     /// <summary>
