@@ -8,6 +8,7 @@ public class DrainSystem : MonoBehaviour
     List<Rigidbody> DrainItemList = new List<Rigidbody>();
     List<Rigidbody> DrainedItemList = new List<Rigidbody>();
     [Inject] Player player;
+    [SerializeField] GameObject[] DrainEffect;
 
     private float _pull_speed = 1;
 
@@ -38,6 +39,14 @@ public class DrainSystem : MonoBehaviour
                 DrainItemList.Remove(item);
             }
             DrainedItemList.Clear();
+        }
+    }
+
+    public void OnSetActiveDraintEffect(bool isAcitve)
+    {
+        foreach (var item in DrainEffect)
+        {
+            item.SetActive(isAcitve);
         }
     }
 
