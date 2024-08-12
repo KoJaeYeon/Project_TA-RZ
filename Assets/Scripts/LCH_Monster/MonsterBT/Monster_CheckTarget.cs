@@ -11,7 +11,7 @@ public class Monster_CheckTarget : Conditional
     public override TaskStatus OnUpdate()
     {
         float distance = Vector3.Distance(TargetTransform.Value.position, Owner.transform.position);
-        if(distance>= AtkDistance.Value)
+        if (distance >= AtkDistance.Value)
         {
             return TaskStatus.Success;
         }

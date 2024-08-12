@@ -20,4 +20,5 @@ public class Monster_CoolTime : Conditional
             return TaskStatus.Failure;  // 쿨타임이 아직 끝나지 않았으므로 실패 반환
         }
     }
+    
 }
