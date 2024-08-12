@@ -12,17 +12,10 @@ public class PlayerIdle : PlayerState
     public override void StateUpdate()
     {
         OnUpdateIdle();
-    }
-
-    public override void StateExit()
-    {
-        Exit();
-    }
+    }    
 
     private void InitializeIdle()
     {
-        ReturnToPreviousAnimation(_state.CurrentState, State.Idle);
-
         _state.CurrentState = State.Idle;
     }
 
@@ -50,10 +43,5 @@ public class PlayerIdle : PlayerState
         {
             _state.ChangeState(State.FirstComboAttack);
         }
-    }
-
-    private void Exit()
-    {
-        
     }
 }

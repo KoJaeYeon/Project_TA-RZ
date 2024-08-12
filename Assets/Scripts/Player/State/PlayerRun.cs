@@ -10,14 +10,12 @@ public class PlayerRun : PlayerState
     private float _targetSpeed;
     private float _speedOffset = 0.1f;
     private float _currentSpeed;
-    private float _speedChangevalue = 10f;
+    private float _speedChangevalue = 100f;
     private float _rotationChangevalue = 0.12f;
     private float _rotationVelocity;
     private float _targetRotation;
     private float _sphereRadius = 0.2f;
-    private float _noInputTime;
-    private float _maxNoInputTime = 0.08f;
-
+    
     private Vector3 _spherePosition;
     
     private bool _isGround;
@@ -34,7 +32,6 @@ public class PlayerRun : PlayerState
         OnUpdateRun();
     }
 
-    
     public override void StateExit()
     {
         Exit();
@@ -42,11 +39,7 @@ public class PlayerRun : PlayerState
 
     private void InitializeRun()
     {
-        ReturnToPreviousAnimation(_state.CurrentState, State.Run);
-
         _state.CurrentState = State.Run;
-
-        _animator.SetBool(_moveAnimation, true);
     }
 
     private void OnUpdateRun()
@@ -54,6 +47,7 @@ public class PlayerRun : PlayerState
         if (_inputSystem.IsDash)
         {
             _state.ChangeState(State.Dash);
+            return;
         }
 
         PlayerMove();
@@ -61,8 +55,9 @@ public class PlayerRun : PlayerState
 
     private void Exit()
     {
-        
+        _speedChangevalue = 5f;
     }
+
 
     private void PlayerMove()
     {
@@ -73,27 +68,28 @@ public class PlayerRun : PlayerState
 
         _targetSpeed = _runSpeed;
 
-        if(_inputSystem.Input == Vector2.zero)
+        if (_inputSystem.Input == Vector2.zero)
         {
-            _noInputTime += Time.deltaTime;
+            _targetSpeed = 0f;
 
-            if(_noInputTime >= _maxNoInputTime)
+            _speedChangevalue = 5f;
+
+            if (_currentSpeed == _targetSpeed)
             {
-                _targetSpeed = 0f;
-
-                _rigidBody.velocity = new Vector3(0f, _rigidBody.velocity.y, 0f);
-
-                _animator.SetBool(_moveAnimation, false);
-
                 _state.ChangeState(State.Idle);
 
                 return;
             }
+
         }
         else
         {
-            _noInputTime = 0f;
+            if(_speedChangevalue != 100f)
+            {
+                _speedChangevalue = Mathf.Lerp(_speedChangevalue, 100f, Time.deltaTime);
+            }
         }
+            
 
         float currentHorizontalSpeed = new Vector3(_rigidBody.velocity.x, 0f, _rigidBody.velocity.z).magnitude;
 
@@ -130,7 +126,11 @@ public class PlayerRun : PlayerState
         movement.y = _rigidBody.velocity.y;
 
         _rigidBody.velocity = movement;
+
+        _animator.SetFloat("Speed", _currentSpeed);
     }
+
+
 
     private void CheckGround()
     {
