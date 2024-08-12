@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BTC_CheckDistance : BossConditional
+public class BTC_Boss_CheckDistance : BossConditional
 {
     [SerializeField] private SharedFloat _range;
 
