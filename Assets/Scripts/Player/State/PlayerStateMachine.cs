@@ -13,6 +13,7 @@ public enum State
     ThirdComboAttack,
     FourthComboAttack,
     Dash,
+    Skill
 }
 
 public class PlayerStateMachine : MonoBehaviour

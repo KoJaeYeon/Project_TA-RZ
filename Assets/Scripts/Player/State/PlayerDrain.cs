@@ -67,6 +67,10 @@ public class PlayerDrain : PlayerState
         {
             _state.ChangeState(State.Idle);
         }
+        //else if(_inputSystem.IsSkill == true)
+        //{
+        //    _state.ChangeState(State.Skill);
+        //}
     }
 
     /// <summary>

@@ -9,6 +9,8 @@ public class DrainSystem : MonoBehaviour
     List<Rigidbody> DrainedItemList = new List<Rigidbody>();
     [Inject] Player player;
 
+    private float _pull_speed = 1;
+
     private void OnEnable()
     {
         DrainItemList.Clear();
@@ -19,7 +21,7 @@ public class DrainSystem : MonoBehaviour
         foreach (var item in DrainItemList)
         {
             Vector3 drainDir = transform.position - item.transform.position;
-            item.AddForce(drainDir * Time.deltaTime *1000);
+            item.AddForce(drainDir * Time.deltaTime * 1000 * _pull_speed);
             float distance = Vector3.Distance(transform.position, item.position);
             if(distance < 1.5f)
             {
@@ -55,6 +57,5 @@ public class DrainSystem : MonoBehaviour
             var itemRigid = other.GetComponent<Rigidbody>();
             DrainItemList.Remove(itemRigid);
         }
-    }
-    
+    }    
 }
