@@ -11,13 +11,14 @@ public enum BossPhase
 
 public class BossController : MonoBehaviour
 {
-    [Header("기본 스탯")]
+    [Header("기본 정보")]
     [SerializeField] private float _maxHp;
     [SerializeField] private float _hp;
     [SerializeField] private float _speed;
     [SerializeField] private float _damage;
     [SerializeField] private float _attackSpeed;
     [SerializeField] private float _attackRange;
+    [SerializeField] private float _rotSpeed;
 
     [Header("페이즈 체력")]
     [SerializeField] private float _phaseOnePer;
@@ -83,6 +84,23 @@ public class BossController : MonoBehaviour
     #endregion
 
     #region BTA
+
+    public void LookAtPlayer()
+    {
+        Vector3 direction = (_playerTr.position - transform.position);
+        direction.y = 0;
+        direction.Normalize();
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, _rotSpeed * Time.deltaTime);
+    }
+    public Quaternion PlayerRot()
+    {
+        Vector3 direction = (_playerTr.position - transform.position);
+        direction.y = 0;
+        direction.Normalize();
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        return rotation;
+    }
 
     public void DashAttack(float speed)
     {
