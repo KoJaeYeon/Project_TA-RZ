@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine;
 public class PlayerComboAttack : PlayerState
 {
     public PlayerComboAttack(Player player) : base(player) { }
-
+    
     #region AnimatorStringToHash
     protected AnimatorStateInfo _animatorStateInfo;
 
@@ -28,6 +29,7 @@ public class PlayerComboAttack : PlayerState
         }
         else
             AttackRotation();
+        
 
         if (_inputSystem.IsAttack && _player.IsNext)
         {
@@ -38,15 +40,6 @@ public class PlayerComboAttack : PlayerState
     protected void ComboAnimation(int hashValue, bool isPlay)
     {
         _animator.SetBool(hashValue, isPlay);
-    }
-
-    protected void ChangeBehaviour()
-    {
-        if (_inputSystem.IsDash)
-        {
-            _animator.SetTrigger(_comboFail);
-            _state.ChangeState(State.Dash);
-        }
     }
 
     protected void AttackRotation()
@@ -67,5 +60,7 @@ public class PlayerComboAttack : PlayerState
 
         //스킬, 피격
     }
+
+    
 
 }
