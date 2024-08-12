@@ -23,10 +23,6 @@ public class PlayerRun : PlayerState
     private bool _isGround;
     #endregion
 
-    #region AnimatorStringToHash
-    private readonly int _move = Animator.StringToHash("Walk");
-    #endregion
-
     public override void StateEnter()
     {
         InitializeRun();
@@ -46,17 +42,26 @@ public class PlayerRun : PlayerState
 
     private void InitializeRun()
     {
-        _animator.SetBool(_move, true);
+        ReturnToPreviousAnimation(_state.CurrentState, State.Run);
+
+        _state.CurrentState = State.Run;
+
+        _animator.SetBool(_moveAnimation, true);
     }
 
     private void OnUpdateRun()
     {
+        if (_inputSystem.IsDash)
+        {
+            _state.ChangeState(State.Dash);
+        }
+
         PlayerMove();
     }
 
     private void Exit()
     {
-        _state.PreviousState = State.Run;
+        
     }
 
     private void PlayerMove()
@@ -78,7 +83,7 @@ public class PlayerRun : PlayerState
 
                 _rigidBody.velocity = new Vector3(0f, _rigidBody.velocity.y, 0f);
 
-                _animator.SetBool(_move, false);
+                _animator.SetBool(_moveAnimation, false);
 
                 _state.ChangeState(State.Idle);
 

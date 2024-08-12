@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 8d3c2a0457e682c4d850932b5b797b9e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - googleSheetManagerPrefab: {fileID: 3678523159022688931, guid: 3e3f1a7f5cc8291438a61e2a215bee22,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

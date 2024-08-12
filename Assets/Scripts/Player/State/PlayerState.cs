@@ -10,6 +10,18 @@ public abstract class PlayerState : PlayerBaseState
     protected PlayerStateMachine _state;
     #endregion
 
+    #region AnimationStringToHash
+    protected readonly int _firstCombo = Animator.StringToHash("ComboAttack1");
+    protected readonly int _secondCombo = Animator.StringToHash("ComboAttack2");
+    protected readonly int _thirdCombo = Animator.StringToHash("ComboAttack3");
+    protected readonly int _fourthCombo = Animator.StringToHash("ComboAttack4");
+    protected readonly int _comboFail = Animator.StringToHash("ComboFail");
+    protected readonly int _dashAnimation = Animator.StringToHash("Dash");
+    protected readonly int _dashChange = Animator.StringToHash("DashChange");
+    protected readonly int _moveAnimation = Animator.StringToHash("Walk");
+    protected readonly int _drain = Animator.StringToHash("Drain");
+    #endregion
+
     public PlayerState(Player player)
     {
         InitializePlayerState(player);
@@ -30,5 +42,18 @@ public abstract class PlayerState : PlayerBaseState
         {
             _state.ChangeState(State.Dash);
         }
+    }
+
+    protected void ReturnToPreviousAnimation(State previousState, State currentState)
+    {
+        if(previousState != currentState)
+        {
+            _animator.SetInteger(_dashChange, (int)currentState);
+
+            return;
+        }
+
+        _animator.SetInteger(_dashChange, (int)previousState);
+
     }
 }
