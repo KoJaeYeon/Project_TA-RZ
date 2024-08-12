@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BTA_Die : BossAction
+public class BTA_Boss_Die : BossAction
 {
     private readonly int _hashDie = Animator.StringToHash("Die");
 

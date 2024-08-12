@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BTC_StandartPhaseHp : BossConditional
+public class BTC_Boss_StandartPhaseHp : BossConditional
 {
     [SerializeField] private SharedFloat _standardHp;
 
