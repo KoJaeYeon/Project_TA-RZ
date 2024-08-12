@@ -43,4 +43,14 @@ public abstract class PlayerState : PlayerBaseState
             _state.ChangeState(State.Dash);
         }
     }
+
+    protected void AttackRotation()
+    {
+
+        float targetRotation = _player.MainCamera.transform.rotation.eulerAngles.y;
+
+        Quaternion rotation = Quaternion.Euler(0, targetRotation, 0);
+
+        _player.transform.rotation = Quaternion.Slerp(_player.transform.rotation, rotation, 10f * Time.deltaTime);
+    }
 }

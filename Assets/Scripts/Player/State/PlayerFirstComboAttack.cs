@@ -12,9 +12,21 @@ public class PlayerFirstComboAttack : PlayerState
 
     public override void StateUpdate()
     {
+
+        if (_inputSystem.IsDash)
+        {
+            _animator.SetTrigger(_comboFail);
+            _state.ChangeState(State.Dash);
+        }
+
         var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
 
-        if(animatorStateInfo.IsName("Attack1") && animatorStateInfo.normalizedTime >= 0.99f)
+        if (animatorStateInfo.normalizedTime < 0.99f)
+        {
+            AttackRotation();
+        }
+
+        if (animatorStateInfo.IsName("Attack1") && animatorStateInfo.normalizedTime >= 0.99f)
         {
             _animator.SetTrigger(_comboFail);
             _state.ChangeState(State.Idle);
@@ -39,14 +51,21 @@ public class PlayerSecondComboAttack : PlayerState
     public PlayerSecondComboAttack(Player player) : base(player) { }
 
     public override void StateEnter()
-    {
+    {   
         _player.IsNext = false;
+
         _animator.SetBool(_secondCombo, true);
     }
 
     public override void StateUpdate()
     {
+        
         var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+
+        if (animatorStateInfo.normalizedTime < 0.99f)
+        {
+            AttackRotation();
+        }
 
         if (animatorStateInfo.IsName("Attack2") && animatorStateInfo.normalizedTime >= 0.99f)
         {
@@ -66,6 +85,7 @@ public class PlayerSecondComboAttack : PlayerState
     {
         _animator.SetBool(_secondCombo, false);
     }
+
 }
 
 public class PlayerThirdComboAttack : PlayerState
@@ -80,9 +100,15 @@ public class PlayerThirdComboAttack : PlayerState
 
     public override void StateUpdate()
     {
+
         var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
 
-        if(animatorStateInfo.IsName("Attack3") && animatorStateInfo.normalizedTime >= 0.99f)
+        if (animatorStateInfo.normalizedTime < 0.99f)
+        {
+            AttackRotation();
+        }
+
+        if (animatorStateInfo.IsName("Attack3") && animatorStateInfo.normalizedTime >= 0.99f)
         {
             _animator.SetTrigger(_comboFail);
             _state.ChangeState(State.Idle);
@@ -113,7 +139,13 @@ public class PlayerFourthComboAttack : PlayerState
 
     public override void StateUpdate()
     {
+       
         var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+
+        if(animatorStateInfo.normalizedTime < 0.99f)
+        {
+            AttackRotation();
+        }
 
         if (animatorStateInfo.IsName("Attack4") && animatorStateInfo.normalizedTime >= 0.99f)
         {
