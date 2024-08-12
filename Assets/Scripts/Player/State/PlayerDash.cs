@@ -19,6 +19,7 @@ public class PlayerDash : PlayerState
 
     public override void StateEnter()
     {
+
         _previousState = _state.CurrentState;
 
         if (_canDash)
