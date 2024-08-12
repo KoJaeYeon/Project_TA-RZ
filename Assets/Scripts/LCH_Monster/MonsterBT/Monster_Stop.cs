@@ -27,11 +27,12 @@ public class Monster_Stop : Action
             Debug.Log("멈춤");
             return TaskStatus.Success;  
         }
+
         else
         {
             Debug.Log("안멈춤");
             Nav.isStopped = false;  // NavMeshAgent 다시 움직이기
-            return TaskStatus.Running;  
+            return TaskStatus.Failure;  
         }
     }
 }
