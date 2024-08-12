@@ -37,6 +37,7 @@ public class BossController : MonoBehaviour
     private BossPhase _phase;
 
     private Transform _playerTr;
+    private TrailRenderer _trail;
 
     private readonly int _hashPhase = Animator.StringToHash("");
     private readonly int _hashAttack = Animator.StringToHash("");
@@ -51,6 +52,8 @@ public class BossController : MonoBehaviour
         _bt = GetComponent<BehaviorTree>();
 
         _playerTr = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        _trail = GetComponentInChildren<TrailRenderer>();
+        _trail.gameObject.SetActive(false);
 
         _bt.SetVariableValue("Phase1_Per", _phaseOnePer);
         _bt.SetVariableValue("Phase2_Per", _phaseTwoPer);
@@ -77,7 +80,10 @@ public class BossController : MonoBehaviour
 
     private void Update()
     {
-        _hp -= 30 * Time.deltaTime;
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _hp = 1000;
+        }
         _hpPercent = _hp / _maxHp * 100;
     }
 
@@ -102,6 +108,10 @@ public class BossController : MonoBehaviour
         return rotation;
     }
 
+    public void DrawDashTrail()
+    {
+        _trail.gameObject.SetActive(true);
+    }
     public void DashAttack(float speed)
     {
         Vector3 direction = (_playerTr.position - transform.position).normalized;
