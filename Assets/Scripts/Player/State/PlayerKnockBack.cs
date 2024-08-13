@@ -13,14 +13,20 @@ public class PlayerKnockBack : PlayerState
     public override void StateEnter()
     {
         _player.StartCoroutine(KnockBack());
+
         _animator.SetTrigger(_knockBack);
+
         _animator.speed = 2.6f / Pc_Knock_Back_Time;
+
         _animator.SetFloat("Speed", 0f);
 
         _player.transform.LookAt(_knockBackPosition);
+
         Vector3 rot = _player.transform.eulerAngles;
+
         rot.x = 0;
         rot.z = 0;
+
         _player.transform.eulerAngles = rot;
     }
 
