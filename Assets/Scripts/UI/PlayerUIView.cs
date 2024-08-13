@@ -35,7 +35,7 @@ public class PlayerUIView : MonoBehaviour
         HPSlider.value = player.CurrentHP / player.HP;
         StaminaSlider.value = player.CurrentStamina / 100f;
         SkillSlider.value = player.CurrentSkill / 100f;
-        CurrenAmmoText.text = player.CurrentAmmo.ToString();
+        CurrenAmmoText.text = player.CurrentAmmo.ToString("000");
     }
 
     private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -53,7 +53,7 @@ public class PlayerUIView : MonoBehaviour
                 SkillSlider.value = player.CurrentSkill / 100f;
                 break;
             case nameof(player.CurrentAmmo):
-                CurrenAmmoText.text = player.CurrentAmmo.ToString();
+                CurrenAmmoText.text = player.CurrentAmmo.ToString("000");
                 break;
 
         }
