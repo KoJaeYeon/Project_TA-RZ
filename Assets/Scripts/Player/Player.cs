@@ -5,13 +5,14 @@ using System.ComponentModel;
 using UnityEngine;
 using Zenject;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IHit
 {
     [Inject]
     private PlayerManager _playerManager;
     [Inject] DataManager dataManager;
     private PlayerInputSystem _inputSystem;
     private PlayerStateMachine _state;
+    private Rigidbody _rigidBody;
     private Camera _camera;
     private Action<float, float, float, int, float> _statChangeCallback;
 
@@ -20,10 +21,12 @@ public class Player : MonoBehaviour
     public Camera MainCamera { get { return _camera; } }
 
     #region PlayerValue
+ 
     float _currentHP;
     float _currentSkill;
     float _currentStamina;
     int _currentAmmo;
+    public bool IsImmunitActive { get; set; }
     public bool IsActiveStaminaRecovery { get; set; } = true;
 
     public float CurrentHP
@@ -123,6 +126,10 @@ public class Player : MonoBehaviour
     private void Update()
     {
         StaminaRecovery();
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            ApplyKnockback(-transform.forward);
+        }
     }
 
     private void InitializePlayer()
@@ -135,6 +142,7 @@ public class Player : MonoBehaviour
     {
         _state = gameObject.AddComponent<PlayerStateMachine>();
         _inputSystem = gameObject.AddComponent<PlayerInputSystem>();
+        _rigidBody = GetComponent<Rigidbody>();
         _camera = Camera.main;
     }
 
@@ -149,7 +157,8 @@ public class Player : MonoBehaviour
         _state.AddState(State.ThirdComboAttack, new PlayerThirdComboAttack(this));
         _state.AddState(State.FourthComboAttack, new PlayerFourthComboAttack(this));
         _state.AddState(State.Skill, new PlayerSkill(this));
-        _state.OnDamagedStateChange();
+        _state.AddState(State.Hit, new PlayerHit(this));    
+        _state.AddState(State.KnockBack, new PlayerKnockBack(this));
     }
 
     IEnumerator StaminaDelay()
@@ -203,4 +212,24 @@ public class Player : MonoBehaviour
         Vector3 GizmoPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         Gizmos.DrawWireSphere(GizmoPosition, 0.2f);
     }
+
+    #region Hit
+
+    public void Hit(float damage)
+    {
+        CurrentHP -= damage;
+        _state.OnDamagedStateChange();
+    }
+
+    public void ApplyKnockback(Vector3 otherPosition)
+    {
+        if (IsImmunitActive)
+            return;
+
+        PlayerKnockBack._knockBackPosition = otherPosition;
+
+        _state.ChangeState(State.KnockBack);
+    }
+
+    #endregion
 }

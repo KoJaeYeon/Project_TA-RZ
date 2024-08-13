@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Windows;
 
 
 public class PlayerRun : PlayerState
@@ -30,6 +31,7 @@ public class PlayerRun : PlayerState
 
     public override void StateUpdate()
     {
+        base.StateUpdate();
         OnUpdateRun();
     }
 
@@ -41,13 +43,11 @@ public class PlayerRun : PlayerState
 
     private void InitializeRun()
     {
-        _state.CurrentState = State.Run;
         _isAction = false;
     }
 
     private void OnUpdateRun()
     {
-        ChangeStateBehaviour(_inputSystem);
         PlayerMove();
     }
 
@@ -89,7 +89,6 @@ public class PlayerRun : PlayerState
                     _speedChangevalue = Mathf.Lerp(_speedChangevalue, 100f, Time.deltaTime);
                 }
             }
-
 
             float currentHorizontalSpeed = new Vector3(_rigidBody.velocity.x, 0f, _rigidBody.velocity.z).magnitude;
 
@@ -147,23 +146,21 @@ public class PlayerRun : PlayerState
         _isGround = Physics.CheckSphere(_spherePosition, _sphereRadius, LayerMask.GetMask("Ground"), QueryTriggerInteraction.Ignore);
     }
 
-    protected override void ChangeStateBehaviour(PlayerInputSystem input)
+    public override void InputCheck()
     {
-        if (input.IsDash && _player.StaminaCheck())
+        if (_inputSystem.IsDash && _player.StaminaCheck())
         {
             _state.ChangeState(State.Dash);
         }
-        else if (input.IsAttack)
+        else if (_inputSystem.IsAttack)
         {
             _isAction = true;
             _state.ChangeState(State.FirstComboAttack);
         }
-        else if (input.IsDrain && _player.StaminaCheck())
+        else if (_inputSystem.IsDrain && _player.StaminaCheck())
         {
             _isAction = true;
-            _state.ChangeState(State.Drain);    
+            _state.ChangeState(State.Drain);
         }
-
-        //스킬, 피격추가.
     }
 }
