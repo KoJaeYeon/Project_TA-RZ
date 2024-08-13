@@ -3,7 +3,8 @@ using UnityEngine;
 public class PlayerIdle : PlayerState
 {
     public PlayerIdle(Player player) : base(player) { }
-    
+
+    #region State
     public override void StateEnter()
     {
         InitializeIdle();
@@ -13,47 +14,20 @@ public class PlayerIdle : PlayerState
     {
         OnUpdateIdle();
     }
-
-    public override void StateExit()
-    {
-        Exit();
-    }
+    #endregion 
 
     private void InitializeIdle()
     {
-        ReturnToPreviousAnimation(_state.CurrentState, State.Idle);
-
         _state.CurrentState = State.Idle;
     }
 
     private void OnUpdateIdle()
     {
-        ChangeBehaviour();
+        ChangeStateBehaviour(_inputSystem);
     }
 
-    private void ChangeBehaviour()
+    protected override void ChangeStateBehaviour(PlayerInputSystem input)
     {
-
-        if (_inputSystem.Input != Vector2.zero)
-        {
-            _state.ChangeState(State.Run);
-        }
-        else if (_inputSystem.IsDash)
-        {
-            ChangeDash();
-        }
-        else if (_inputSystem.IsDrain == true)
-        {
-            _state.ChangeState(State.Drain);
-        }
-        else if (_inputSystem.IsAttack)
-        {
-            _state.ChangeState(State.FirstComboAttack);
-        }
-    }
-
-    private void Exit()
-    {
-        
+        base.ChangeStateBehaviour(input);
     }
 }

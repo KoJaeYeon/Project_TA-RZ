@@ -54,7 +54,7 @@ MonoBehaviour:
   HPSlider: {fileID: 7515255678617599883}
   SkillSlider: {fileID: 8087937600239446592}
   StaminaSlider: {fileID: 28431827830448704}
-  NowBullets: {fileID: 2015997371177917765}
+  CurrenAmmoText: {fileID: 2015997371177917765}
 --- !u!1 &8859380290338745518
 GameObject:
   m_ObjectHideFlags: 0
@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.40392157}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -224,6 +224,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3609169704219244471}
     m_Modifications:
+    - target: {fileID: 181777907865406265, guid: 6e0d4bc4da7d02b4ca0dcbad4680d70c,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.19215688
+      objectReference: {fileID: 0}
+    - target: {fileID: 181777907865406265, guid: 6e0d4bc4da7d02b4ca0dcbad4680d70c,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.7137255
+      objectReference: {fileID: 0}
+    - target: {fileID: 181777907865406265, guid: 6e0d4bc4da7d02b4ca0dcbad4680d70c,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.8078432
+      objectReference: {fileID: 0}
     - target: {fileID: 1247547590075328425, guid: 6e0d4bc4da7d02b4ca0dcbad4680d70c,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -233,17 +248,63 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2396150027741877320, guid: 6e0d4bc4da7d02b4ca0dcbad4680d70c,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.39215687
+      objectReference: {fileID: 0}
+    - target: {fileID: 2396150027741877320, guid: 6e0d4bc4da7d02b4ca0dcbad4680d70c,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.39215687
+      objectReference: {fileID: 0}
+    - target: {fileID: 2396150027741877320, guid: 6e0d4bc4da7d02b4ca0dcbad4680d70c,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.39215687
+      objectReference: {fileID: 0}
+    - target: {fileID: 2723708422808346188, guid: 6e0d4bc4da7d02b4ca0dcbad4680d70c,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1169
+      objectReference: {fileID: 0}
+    - target: {fileID: 2723708422808346188, guid: 6e0d4bc4da7d02b4ca0dcbad4680d70c,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 83
+      objectReference: {fileID: 0}
+    - target: {fileID: 2723708422808346188, guid: 6e0d4bc4da7d02b4ca0dcbad4680d70c,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.34
+      objectReference: {fileID: 0}
+    - target: {fileID: 2723708422808346188, guid: 6e0d4bc4da7d02b4ca0dcbad4680d70c,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.34
+      objectReference: {fileID: 0}
+    - target: {fileID: 2723708422808346188, guid: 6e0d4bc4da7d02b4ca0dcbad4680d70c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 103
+      objectReference: {fileID: 0}
+    - target: {fileID: 2723708422808346188, guid: 6e0d4bc4da7d02b4ca0dcbad4680d70c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 3624554627524640675, guid: 6e0d4bc4da7d02b4ca0dcbad4680d70c,
         type: 3}
       propertyPath: m_Name
       value: StatusBar
       objectReference: {fileID: 0}
-    - target: {fileID: 5296861856665011074, guid: 6e0d4bc4da7d02b4ca0dcbad4680d70c,
+    - target: {fileID: 4267171682078865528, guid: 6e0d4bc4da7d02b4ca0dcbad4680d70c,
         type: 3}
-      propertyPath: m_Name
-      value: HPSlider
-      objectReference: {fileID: 0}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f9e73d5c545251e47a8718ce87fe4d91,
+        type: 3}
     - target: {fileID: 6223410200816761277, guid: 6e0d4bc4da7d02b4ca0dcbad4680d70c,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -253,11 +314,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6790545312471201544, guid: 6e0d4bc4da7d02b4ca0dcbad4680d70c,
-        type: 3}
-      propertyPath: m_Name
-      value: StaminaSlider
       objectReference: {fileID: 0}
     - target: {fileID: 7146789289654891362, guid: 6e0d4bc4da7d02b4ca0dcbad4680d70c,
         type: 3}
@@ -368,11 +424,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614177748652834566, guid: 6e0d4bc4da7d02b4ca0dcbad4680d70c,
-        type: 3}
-      propertyPath: m_Name
-      value: SkillSlider
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

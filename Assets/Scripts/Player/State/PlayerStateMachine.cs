@@ -13,6 +13,7 @@ public enum State
     ThirdComboAttack,
     FourthComboAttack,
     Dash,
+    Skill
 }
 
 public class PlayerStateMachine : MonoBehaviour
@@ -41,6 +42,18 @@ public class PlayerStateMachine : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         
+    }
+
+    public void OnDamagedStateChange()
+    {
+        if(_state is PlayerFirstComboAttack)
+        {
+
+        }
+        else
+        {
+
+        }
     }
 
     public void ChangeState(State changeState)

@@ -11,16 +11,24 @@ public enum BossPhase
 
 public class BossController : MonoBehaviour
 {
+    [Header("기본 정보")]
     [SerializeField] private float _maxHp;
     [SerializeField] private float _hp;
     [SerializeField] private float _speed;
     [SerializeField] private float _damage;
     [SerializeField] private float _attackSpeed;
     [SerializeField] private float _attackRange;
+    [SerializeField] private float _rotSpeed;
+
+    [Header("페이즈 체력")]
     [SerializeField] private float _phaseOnePer;
     [SerializeField] private float _phaseTwoPer;
     private float _hpPercent;
 
+    [Header("2페이즈 돌진공격")]
+    [SerializeField] private float _dashSpeed;
+    [SerializeField] private float _dashRange;
+        
     private Rigidbody _rb;
     private Animator _anim;
     private NavMeshAgent _nav;
@@ -29,6 +37,7 @@ public class BossController : MonoBehaviour
     private BossPhase _phase;
 
     private Transform _playerTr;
+    private TrailRenderer _trail;
 
     private readonly int _hashPhase = Animator.StringToHash("");
     private readonly int _hashAttack = Animator.StringToHash("");
@@ -43,10 +52,16 @@ public class BossController : MonoBehaviour
         _bt = GetComponent<BehaviorTree>();
 
         _playerTr = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        _trail = GetComponentInChildren<TrailRenderer>();
+        _trail.Clear();
+        _trail.gameObject.SetActive(false);
 
         _bt.SetVariableValue("Phase1_Per", _phaseOnePer);
         _bt.SetVariableValue("Phase2_Per", _phaseTwoPer);
         _bt.SetVariableValue("Attack_Distance", _attackRange);
+
+        _bt.SetVariableValue("DashSpeed", _dashSpeed);
+        _bt.SetVariableValue("DashRange", _dashRange);
 
         #region 테스트
 
@@ -66,11 +81,47 @@ public class BossController : MonoBehaviour
 
     private void Update()
     {
-        _hp -= 30 * Time.deltaTime;
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _hp = 1000;
+        }
         _hpPercent = _hp / _maxHp * 100;
     }
 
     #endregion
+
+    #region BTA
+
+    public void LookAtPlayer()
+    {
+        Vector3 direction = (_playerTr.position - transform.position);
+        direction.y = 0;
+        direction.Normalize();
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, _rotSpeed * Time.deltaTime);
+    }
+    public Quaternion PlayerRot()
+    {
+        Vector3 direction = (_playerTr.position - transform.position);
+        direction.y = 0;
+        direction.Normalize();
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        return rotation;
+    }
+
+    public void DrawDashTrail()
+    {
+        _trail.gameObject.SetActive(true);
+    }
+    public void DashAttack(float speed)
+    {
+        Vector3 direction = (_playerTr.position - transform.position).normalized;
+        _rb.AddForce(direction * speed, ForceMode.Impulse);
+    }
+
+    #endregion
+
+    #region BTC
 
     public bool CheckDistance(float range)
     {
@@ -89,4 +140,6 @@ public class BossController : MonoBehaviour
 
         return false;
     }
+
+    #endregion
 }

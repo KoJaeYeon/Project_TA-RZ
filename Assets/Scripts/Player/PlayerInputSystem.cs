@@ -16,6 +16,8 @@ public class PlayerInputSystem : MonoBehaviour
     [SerializeField] private float deltaLook;
     [Header("LockOn")]
     [SerializeField] private bool isLockOn;
+    [Header("Skill")]
+    [SerializeField] private bool isSkill;
 
     public Vector2 Input { get { return _input; } }
     public bool IsDrain { get { return isDrain; } }
@@ -23,6 +25,7 @@ public class PlayerInputSystem : MonoBehaviour
     public bool IsAttack { get {  return isAttack; } }
     public float DeltaLook { get { return deltaLook; } set { deltaLook = value; } }
     public bool IsLockOn { get { return isLockOn; } }
+    public bool IsSkill { get { return isSkill; } }
 
     private void OnMove(InputValue input)
     {
@@ -70,17 +73,24 @@ public class PlayerInputSystem : MonoBehaviour
         SetLockOn(!isLockOn);
     }
 
+    private void OnSkill(InputValue input)
+    {
+        bool isPressed = input.isPressed;
+
+        SetSkill(isPressed);
+    }
+
     private void SetMove(Vector2 value)
     {
         _input = value;
     }
 
-    private void SetDash(bool isPressed)
+    public void SetDash(bool isPressed)
     {
         isDash = isPressed; 
     }
 
-    private void SetDrain(bool isPressed)
+    public void SetDrain(bool isPressed)
     {
         isDrain = isPressed;
     }
@@ -98,5 +108,10 @@ public class PlayerInputSystem : MonoBehaviour
     public void SetLockOn(bool isPressed)
     {
         isLockOn = isPressed;
+    }
+
+    private void SetSkill(bool isPressed)
+    {
+        isSkill = isPressed;    
     }
 }

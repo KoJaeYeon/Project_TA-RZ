@@ -1,11 +1,10 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerDash : PlayerState
 {
     public PlayerDash(Player player) : base(player) { }
-    private WaitForSeconds _coolTime = new WaitForSeconds(0.7f);
+    private WaitForSeconds _coolTime = new WaitForSeconds(0.5f);
 
     private float _dashPower = 15f;
     private float _dashTime;
@@ -39,6 +38,11 @@ public class PlayerDash : PlayerState
         Exit();
     }
 
+    public override void OnTriggerEnter(Collider other)
+    {
+        //피격
+    }
+
     private void InitializeDash()
     {
         _canDash = false;
@@ -58,6 +62,8 @@ public class PlayerDash : PlayerState
         {
             _dashTime += Time.deltaTime;
 
+            ChangeStateBehaviour(_inputSystem);
+
             if (_dashTime >= _maxTime)
             {
                 _rigidBody.velocity = Vector3.zero;
@@ -71,6 +77,7 @@ public class PlayerDash : PlayerState
 
     private void Exit()
     {
+        _inputSystem.SetDash(false);
         _dashTime = 0f;
     }
 
@@ -83,7 +90,6 @@ public class PlayerDash : PlayerState
         _rigidBody.AddForce(dash, ForceMode.Impulse);
     }
 
-
     public void StartCoolTime()
     {
         _player.StartCoroutine(DashCoolTime());
@@ -94,5 +100,13 @@ public class PlayerDash : PlayerState
         yield return _coolTime;
 
         _canDash = true;
+    }
+
+    protected override void ChangeStateBehaviour(PlayerInputSystem input)
+    {
+        if (input.IsSkill)
+        {
+
+        }
     }
 }
