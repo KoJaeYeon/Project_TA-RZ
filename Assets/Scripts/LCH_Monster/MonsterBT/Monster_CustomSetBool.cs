@@ -3,7 +3,7 @@ using BehaviorDesigner.Runtime;
 using UnityEngine;
 
 [TaskCategory("Monster/Anim")]
-public class Monster_CustomSetBool : Action
+public class Monster_Anim_CustomSetBool : Action
 {
     [SerializeField] Animator anim;
     [SerializeField] SharedBool BoolValue;
@@ -15,7 +15,7 @@ public class Monster_CustomSetBool : Action
         {
             anim = GetComponent<Animator>();
             anim.SetBool("IsTrack", BoolValue.Value);
-            return TaskStatus.Running;
+            return TaskStatus.Success;
         }
             anim.SetBool("IsTrack", BoolValue.Value);
             return TaskStatus.Success;

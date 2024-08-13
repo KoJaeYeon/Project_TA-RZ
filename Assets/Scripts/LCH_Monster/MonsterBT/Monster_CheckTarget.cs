@@ -6,12 +6,12 @@ using BehaviorDesigner.Runtime.Tasks;
 [TaskCategory("Monster/General")]
 public class Monster_CheckTarget : Conditional
 {
-    [SerializeField] SharedTransform TargetTransform;
-    [SerializeField] SharedFloat AtkDistance;
+    [SerializeField] SharedMonster Monster;
+    
     public override TaskStatus OnUpdate()
     {
-        float distance = Vector3.Distance(TargetTransform.Value.position, Owner.transform.position);
-        if (distance >= AtkDistance.Value)
+        float distance = Vector3.Distance(Monster.Value.Player.transform.position, Owner.transform.position);
+        if (distance >= Monster.Value.Mon_Common_Range)
         {
             return TaskStatus.Success;
         }

@@ -5,10 +5,10 @@ using BehaviorDesigner.Runtime;
 using Zenject;
 using System.Collections;
 
-public class Monster : MonoBehaviour
+public class Monster : MonoBehaviour,IHit
 {
     [SerializeField] BehaviorTree Bt;
-    public int Mon_Common_Stat_Hp;
+    public float Mon_Common_Stat_Hp;
     public float Mon_Common_Damage;
     public float Mon_Common_AttackArea;
     public float Mon_Common_Range;
@@ -24,7 +24,18 @@ public class Monster : MonoBehaviour
         Bt = GetComponent<BehaviorTree>();
     }
 
+    public void Hit(float damage)
+    {
+        Mon_Common_Stat_Hp-=damage;
+        if (Mon_Common_Stat_Hp <= 0)
+        {
 
+        }
+    }
+    public void ApplyKnockback()
+    {
+
+    }
 
     private void OnTriggerEnter(Collider other)
     {

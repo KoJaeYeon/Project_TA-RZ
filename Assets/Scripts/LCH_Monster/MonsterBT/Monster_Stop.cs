@@ -23,15 +23,18 @@ public class Monster_Stop : Action
         if (distanceToTarget <= Monster.Value.Mon_Common_Range)
         {
             Nav.isStopped = true;  // NavMeshAgent 멈추기
+            Nav.velocity = Vector3.zero;
             Debug.Log("멈춤");
             return TaskStatus.Success;  
         }
 
-        else
+        else if(distanceToTarget >= Monster.Value.Mon_Common_Range)
         {
             Debug.Log("안멈춤");
             Nav.isStopped = false;  // NavMeshAgent 다시 움직이기
+
             return TaskStatus.Failure;  
         }
+        return TaskStatus.Success;
     }
 }

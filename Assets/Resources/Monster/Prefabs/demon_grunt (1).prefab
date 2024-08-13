@@ -1111,7 +1111,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 0.45
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -1173,13 +1173,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Bt: {fileID: 0}
-  Mon_Common_Stat_Hp: 0
+  Mon_Common_Stat_Hp: 1
   Mon_Common_Damage: 0
   Mon_Common_AttackArea: 0
-  Mon_Common_Range: 0
-  Mon_Common_DetectArea: 0
+  Mon_Common_Range: 2
+  Mon_Common_DetectArea: 5
   Mon_Common_DetectTime: 0
-  Mon_Common_MovementSpeed: 0
+  Mon_Common_MovementSpeed: 3
   Mon_Common_CoolTime: 3
 --- !u!136 &7897430125240335523
 CapsuleCollider:

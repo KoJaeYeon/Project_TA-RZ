@@ -22,10 +22,15 @@ public class Monster_Track : Action
 
         if (Monster.Value.Player.transform != null)
         {
+
             Nav.speed = Monster.Value.Mon_Common_MovementSpeed;
             Nav.SetDestination(Monster.Value.Player.transform.position);
             return TaskStatus.Success;
-        } 
-        else return TaskStatus.Failure;
+        }
+        else
+        {
+           
+        }
+            return TaskStatus.Failure;
     }
 }
