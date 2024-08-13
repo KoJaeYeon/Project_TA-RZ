@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DashTrail : MonoBehaviour
 {
-    private float _trailSpeed = 10f / 3f;
+    private float _trailSpeed = 20f / 3f;
 
     private Transform _defaultTr;
 
