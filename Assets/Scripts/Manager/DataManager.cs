@@ -26,9 +26,25 @@ public class DataManager
     /// <returns></returns>
     public Data GetStat(string idStr)
     {
-        if (_dataDictionary.TryGetValue(idStr, out Data stat))
+        if (_dataDictionary.TryGetValue(idStr, out Data data))
         {
-            return stat.DeepCopy();
+            return data.DeepCopy();
+        }
+        else
+        {
+            Debug.LogError($"{idStr}을 딕셔너리에서 받아오는데 실패했습니다.");
+            return null;
+        }
+    }
+    /// <summary>
+    /// 데이터만을 받아오기 위한 함수
+    /// </summary>
+    /// <param name="idStr">받아올 스탯의 ID string 데이터</param>
+    public Data GetData(string idStr)
+    {
+        if (_dataDictionary.TryGetValue(idStr, out Data data))
+        {
+            return data;
         }
         else
         {

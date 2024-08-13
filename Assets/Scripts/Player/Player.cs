@@ -8,14 +8,16 @@ using Zenject;
 public class Player : MonoBehaviour
 {
     [Inject]
-    private PlayerManager _playerManager;
-    [Inject] DataManager dataManager;
+    private PlayerManager _playerManager { get; }
+    [Inject] public DataManager dataManager { get;}
     private PlayerInputSystem _inputSystem;
     private PlayerStateMachine _state;
+    private PlayerResourceSystem _resourceSystem;
     private Camera _camera;
     private Action<float, float, float, int, float> _statChangeCallback;
 
     public PC_Common_Stat _playerStat { get; private set; } = new PC_Common_Stat();
+    public PC_Level _PC_Level { get; private set; } = new PC_Level();
 
     public Camera MainCamera { get { return _camera; } }
 
@@ -135,6 +137,7 @@ public class Player : MonoBehaviour
     {
         _state = gameObject.AddComponent<PlayerStateMachine>();
         _inputSystem = gameObject.AddComponent<PlayerInputSystem>();
+        _resourceSystem = gameObject.AddComponent<PlayerResourceSystem>();
         _camera = Camera.main;
     }
 
@@ -170,6 +173,11 @@ public class Player : MonoBehaviour
     public bool StaminaCheck()
     {
         return CurrentStamina > 0;
+    }
+
+    public void Set_PC_Level(PC_Level _PC_Level)
+    {
+        this._PC_Level = _PC_Level;
     }
 
     IEnumerator LoadStat()

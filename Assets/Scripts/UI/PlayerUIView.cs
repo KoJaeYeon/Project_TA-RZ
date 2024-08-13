@@ -12,12 +12,12 @@ public class PlayerUIView : MonoBehaviour
     [SerializeField] Slider StaminaSlider;
     [SerializeField] TextMeshProUGUI CurrenAmmoText;
 
-    [Inject] private Player player;
+    [Inject] private Player _player;
     private void OnEnable()
     {
-        if (player != null)
+        if (_player != null)
         {
-            player.PropertyChanged += OnPropertyChanged;
+            _player.PropertyChanged += OnPropertyChanged;
             RefreshView();
         }
         else
@@ -26,34 +26,34 @@ public class PlayerUIView : MonoBehaviour
         }
     }
     private void OnDisable()
-    {        
-        player.PropertyChanged -= OnPropertyChanged;
+    {
+        _player.PropertyChanged -= OnPropertyChanged;
     }
 
     void RefreshView()
     {
-        HPSlider.value = player.CurrentHP / player.HP;
-        StaminaSlider.value = player.CurrentStamina / 100f;
-        SkillSlider.value = player.CurrentSkill / 100f;
-        CurrenAmmoText.text = player.CurrentAmmo.ToString("000");
+        HPSlider.value = _player.CurrentHP / _player.HP;
+        StaminaSlider.value = _player.CurrentStamina / 100f;
+        SkillSlider.value = _player.CurrentSkill / 100f;
+        CurrenAmmoText.text = _player.CurrentAmmo.ToString("000");
     }
 
     private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
         switch (e.PropertyName)
         {
-            case nameof(player.CurrentHP):
-            case nameof(player.HP):
-                HPSlider.value = player.CurrentHP / player.HP;
+            case nameof(_player.CurrentHP):
+            case nameof(_player.HP):
+                HPSlider.value = _player.CurrentHP / _player.HP;
                 break;
-            case nameof(player.CurrentStamina):
-                StaminaSlider.value = player.CurrentStamina / 100f;
+            case nameof(_player.CurrentStamina):
+                StaminaSlider.value = _player.CurrentStamina / 100f;
                 break;
-            case nameof(player.CurrentSkill):
-                SkillSlider.value = player.CurrentSkill / 100f;
+            case nameof(_player.CurrentSkill):
+                SkillSlider.value = _player.CurrentSkill / 100f;
                 break;
-            case nameof(player.CurrentAmmo):
-                CurrenAmmoText.text = player.CurrentAmmo.ToString("000");
+            case nameof(_player.CurrentAmmo):
+                CurrenAmmoText.text = _player.CurrentAmmo.ToString("000");
                 break;
 
         }

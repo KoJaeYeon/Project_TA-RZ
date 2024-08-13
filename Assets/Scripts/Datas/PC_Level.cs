@@ -1,11 +1,11 @@
 public class PC_Level : Data
 {
-    public string Id { get; set; }
-    public int Level_Min_Require { get; set; }
-    public int Level_Consumption { get; set; }
-    public float Level_Atk_Power_Multiplier { get; set; }
-    public float Level_Atk_Range_Multiplier { get; set; }
-    public bool Level_Stiff_Ignoring { get; set; }
+    public string Id { get; } = "P501";
+    public int Level_Min_Require { get;  } = 0;
+    public int Level_Consumption { get;  } = 0;
+    public float Level_Atk_Power_Multiplier { get;  } = 1.0f;
+    public float Level_Atk_Range_Multiplier { get;  } = 1.0f;
+    public bool Level_Stiff_Ignoring { get;  } = false;
 
     public PC_Level() { }
 
