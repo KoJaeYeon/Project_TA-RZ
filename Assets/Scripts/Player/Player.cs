@@ -5,7 +5,7 @@ using System.ComponentModel;
 using UnityEngine;
 using Zenject;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IHit
 {
     [Inject]
     private PlayerManager _playerManager;
@@ -149,7 +149,7 @@ public class Player : MonoBehaviour
         _state.AddState(State.ThirdComboAttack, new PlayerThirdComboAttack(this));
         _state.AddState(State.FourthComboAttack, new PlayerFourthComboAttack(this));
         _state.AddState(State.Skill, new PlayerSkill(this));
-        _state.OnDamagedStateChange();
+        _state.AddState(State.Hit, new PlayerHit(this));    
     }
 
     IEnumerator StaminaDelay()
@@ -202,5 +202,15 @@ public class Player : MonoBehaviour
     {
         Vector3 GizmoPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         Gizmos.DrawWireSphere(GizmoPosition, 0.2f);
+    }
+
+    public void Hit(float damage)
+    {
+        
+    }
+
+    public void ApplyKnockback()
+    {
+        
     }
 }

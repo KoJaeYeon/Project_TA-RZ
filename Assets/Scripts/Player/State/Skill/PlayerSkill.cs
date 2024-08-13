@@ -19,7 +19,7 @@ public class PlayerSkill : PlayerState
 
     public override void StateUpdate()
     {
-        
+        base.StateUpdate();
     }
 
     public override void StateExit()
@@ -30,5 +30,10 @@ public class PlayerSkill : PlayerState
     private void InitializeSkill()
     {
 
+    }
+
+    public override void InputCheck()
+    {
+        
     }
 }

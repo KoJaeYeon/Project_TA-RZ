@@ -15,7 +15,7 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
     public override void StateUpdate()
     {
-        ChangeStateBehaviour(_inputSystem);
+        base.StateUpdate();
 
         var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
 
