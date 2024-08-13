@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     private Camera _camera;
     private Action<float, float, float, int, float> _statChangeCallback;
 
-    PC_Common_Stat _playerStat = new PC_Common_Stat();
+    public PC_Common_Stat _playerStat { get; private set; } = new PC_Common_Stat();
 
     public Camera MainCamera { get { return _camera; } }
 
@@ -129,6 +129,16 @@ public class Player : MonoBehaviour
         _state.AddState(State.FourthComboAttack, new PlayerFourthComboAttack(this));
         _state.AddState(State.Skill, new PlayerSkill(this));
         _state.OnDamagedStateChange();
+    }
+
+    public bool DashStaminaCheck()
+    {
+        return CurrentStamina >= _playerStat.Dash_Stamina;
+    }
+
+    public bool DrainStaminaCheck()
+    {
+        return CurrentStamina > 0;
     }
 
     IEnumerator LoadStat()
