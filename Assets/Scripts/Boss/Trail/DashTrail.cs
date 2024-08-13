@@ -15,15 +15,16 @@ public class DashTrail : MonoBehaviour
 
     private void OnEnable()
     {
-        _defaultTr = GetComponentInParent<Transform>();
+        _defaultTr = transform.parent;
         transform.position = _defaultTr.position;
         transform.rotation = _defaultTr.rotation;
         Invoke(nameof(DisableTrail), 3f);
+        GetComponent<TrailRenderer>().Clear();
     }
 
     private void Update()
     {
-        transform.Translate(transform.forward * _trailSpeed * Time.deltaTime);
+        transform.Translate(Vector3.forward * _trailSpeed * Time.deltaTime);
     }
 
     private void DisableTrail()

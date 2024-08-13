@@ -53,6 +53,7 @@ public class BossController : MonoBehaviour
 
         _playerTr = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         _trail = GetComponentInChildren<TrailRenderer>();
+        _trail.Clear();
         _trail.gameObject.SetActive(false);
 
         _bt.SetVariableValue("Phase1_Per", _phaseOnePer);
