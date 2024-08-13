@@ -57,6 +57,10 @@ public class PlayerComboAttack : PlayerState
         {
             _state.ChangeState(State.Dash);
         }
+        else if (input.IsSkill)
+        {
+            _state.ChangeState(State.Skill);
+        }
 
         //스킬, 피격
     }
