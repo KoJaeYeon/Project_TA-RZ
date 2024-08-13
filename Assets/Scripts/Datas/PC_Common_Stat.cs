@@ -1,14 +1,16 @@
 public class PC_Common_Stat : Stat
 {
-    public int Id { get; set; }
-    public string Type { get; set; }
-    public float Atk_Power { get; set; }
-    public float HP { get; set; }
-    public float Move_Speed { get; set; }
-    public int Trash_Own_Num { get; set; }
-    public float Stamina_Gain { get; set; }
-    public float Drain_Stamina { get; set; }
-    public float Dash_Stamina { get; set; }
+    public int Id { get; set; } = 101;
+    public string Type { get; set; } = "PC_Type1";
+    public float Atk_Power { get; set; } = 20f;
+    public float HP { get; set; } = 100f;
+    public float Move_Speed { get; set; } = 6f;
+    public int Trash_Own_Num { get; set; } = 50;
+    public float Stamina_Gain { get; set; } = 60f;
+    public float Drain_Stamina { get; set; } = 20f;
+    public float Dash_Stamina { get; set; } = 35f;
+
+    public PC_Common_Stat() { }
 
     public PC_Common_Stat(int id, string type, float atk_Power, float hp, float move_Speed, int trash_Own_Num, float stamina_Gain, float drain_Stamina, float dash_Stamina)
     {

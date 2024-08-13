@@ -54,7 +54,7 @@ MonoBehaviour:
   HPSlider: {fileID: 7515255678617599883}
   SkillSlider: {fileID: 8087937600239446592}
   StaminaSlider: {fileID: 28431827830448704}
-  NowBullets: {fileID: 2015997371177917765}
+  CurrenAmmoText: {fileID: 2015997371177917765}
 --- !u!1 &8859380290338745518
 GameObject:
   m_ObjectHideFlags: 0
