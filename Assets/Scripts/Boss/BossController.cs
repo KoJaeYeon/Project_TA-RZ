@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using BehaviorDesigner.Runtime;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public enum BossPhase
 { 
@@ -113,10 +114,19 @@ public class BossController : MonoBehaviour
     {
         _trail.gameObject.SetActive(true);
     }
-    public void DashAttack(float speed)
+
+    public Vector3 SetDashDirection()
     {
-        Vector3 direction = (_playerTr.position - transform.position).normalized;
-        _rb.AddForce(direction * speed, ForceMode.Impulse);
+        Vector3 direction;
+        direction = (_playerTr.position - transform.position);
+        direction.y = 0;
+        direction.Normalize();
+        return direction;
+    }
+
+    public void DashAttack(float speed, Vector3 direction)
+    {
+        _rb.velocity = direction * speed;
     }
 
     #endregion
