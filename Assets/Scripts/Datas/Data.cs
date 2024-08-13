@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public abstract class Stat
+public abstract class Data
 {
-    public abstract Stat DeepCopy();
+    public abstract Data DeepCopy();
 
 }
 //IEnumerator LoadStat()

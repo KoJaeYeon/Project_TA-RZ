@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class DataManager
 {
-    Dictionary<string, Stat> _statDictionary = new Dictionary<string, Stat>();
+    Dictionary<string, Data> _dataDictionary = new Dictionary<string, Data>();
 
-    public void AddStatToStatDictionary(string idStr, Stat stat)
+    public void AddStatToStatDictionary(string idStr, Data stat)
     {
-        if (!_statDictionary.TryAdd(idStr, stat))
+        if (!_dataDictionary.TryAdd(idStr, stat))
         {
             Debug.LogError($"ID : {idStr}가 스탯 딕셔너리에 추가 실패했습니다.");
         }
+    }
+
+    public Dictionary<string, Data> Log()
+    {
+        return _dataDictionary;
     }
 
     /// <summary>
@@ -19,9 +24,9 @@ public class DataManager
     /// </summary>
     /// <param name="idStr">받아올 스탯의 ID string 데이터</param>
     /// <returns></returns>
-    public Stat GetStat(string idStr)
+    public Data GetStat(string idStr)
     {
-        if (_statDictionary.TryGetValue(idStr, out Stat stat))
+        if (_dataDictionary.TryGetValue(idStr, out Data stat))
         {
             return stat.DeepCopy();
         }
@@ -42,16 +47,18 @@ public class DataManager
         switch (urlName)
         {
             case "_PCStat_URL":
-                ProcessPCStatData(data);
+                Process_PCStat_Data(data);
                 break;
-
+            case "_PC_Level_URL":
+                Process_PC_Level_Data(data);
+                break;
             default:
                 Debug.LogError($"Unknown URL name: {urlName}");
                 break;
         }
     }
 
-    private void ProcessPCStatData(string data)
+    private void Process_PCStat_Data(string data)
     {
         JArray jsonArray = JArray.Parse(data);
 
@@ -74,25 +81,20 @@ public class DataManager
         }
     }
 
-    private void ProcessMonsterStatData(string data)
+    private void Process_PC_Level_Data(string data)
     {
         JArray jsonArray = JArray.Parse(data);
 
         foreach (var item in jsonArray)
         {
-            string idStr = item["ID"].ToString().Substring(1);
-            int id = int.Parse(idStr);
-            string type = item["Type"].ToString();
+            string idStr = item["ID"].ToString();
+            int levelMinRequire = ParseInt(item["Level_Min_Require"]);
+            int levelConsumption = ParseInt(item["Level_Consumption"]);
+            float levelAtkPowerMultiplier = ParseFloat(item["Level_Atk_Power_Multiplier"]);
+            float levelAtkRangeMultiplier = ParseFloat(item["Level_Atk_Range_Multiplier"]);
+            bool levelStiffIgnoring = bool.Parse(item["Level_Stiff_Ignoring"].ToString());
 
-            float attackPower = ParseFloat(item["Atk_Power"]);
-            float health = ParseFloat(item["HP"]);
-            float moveSpeed = ParseFloat(item["Move_Speed"]);
-            int trashOwnNum = ParseInt(item["Trash_Own_Num"]);
-            float staminaGain = ParseFloat(item["Stamina_Gain"]);
-            float drainStamina = ParseFloat(item["Drain_Stamina"]);
-            float dashStamina = ParseFloat(item["Dash_Stamina"]);
-
-            PC_Common_Stat stat = new PC_Common_Stat(id, type, attackPower, health, moveSpeed, trashOwnNum, staminaGain, drainStamina, dashStamina);
+            PC_Level stat = new PC_Level(idStr, levelMinRequire, levelConsumption, levelAtkPowerMultiplier, levelAtkRangeMultiplier, levelStiffIgnoring);
             AddStatToStatDictionary(idStr, stat);
         }
     }
