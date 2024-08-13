@@ -14,9 +14,7 @@ public class PlayerSkill : PlayerState
 
     public override void StateEnter()
     {
-        _currentSkill = _playerSkill.GetSkill();
 
-        _currentSkill.UseSkill();
     }
 
     public override void StateUpdate()
