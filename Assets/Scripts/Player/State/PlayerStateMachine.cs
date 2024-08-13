@@ -16,7 +16,8 @@ public enum State
     FourthComboAttack,
     Dash,
     Skill,
-    Hit
+    Hit,
+    KnockBack
 }
 
 public class PlayerStateMachine : MonoBehaviour
@@ -45,11 +46,15 @@ public class PlayerStateMachine : MonoBehaviour
     {
         if(_state is PlayerSkill)
         {
-
+            return;
+        }
+        else if(_state is PlayerKnockBack)
+        {
+            return;
         }
         else
         {
-
+            ChangeState(State.Hit);
         }
     }
 

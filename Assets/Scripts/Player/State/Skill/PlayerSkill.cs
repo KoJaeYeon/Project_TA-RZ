@@ -4,11 +4,11 @@ public class PlayerSkill : PlayerState
 {
     public PlayerSkill(Player player) : base(player)
     {
-        _playerSkill = player.GetComponentInChildren<SkillSystem>();
+        _skillSystem = player.GetComponentInChildren<SkillSystem>();
     }
 
     #region SkillComponent
-    private SkillSystem _playerSkill;
+    private SkillSystem _skillSystem;
     private Skill _currentSkill;
     #endregion
 

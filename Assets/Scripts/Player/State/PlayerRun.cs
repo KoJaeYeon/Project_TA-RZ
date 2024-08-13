@@ -90,7 +90,6 @@ public class PlayerRun : PlayerState
                 }
             }
 
-
             float currentHorizontalSpeed = new Vector3(_rigidBody.velocity.x, 0f, _rigidBody.velocity.z).magnitude;
 
             bool speedCorrection = currentHorizontalSpeed < _targetSpeed - _speedOffset
