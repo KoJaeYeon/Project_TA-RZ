@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
     }
     public float CurrentSkill
     {
-        get { return CurrentSkill; }
+        get { return _currentSkill; }
         set
         {
             if (_currentSkill == value)
@@ -71,6 +71,18 @@ public class Player : MonoBehaviour
 
             _currentAmmo = value;
             OnPropertyChanged(nameof(CurrentAmmo));
+        }
+    }
+    public float HP
+    {
+        get { return _playerStat.HP; }
+        set
+        {
+            if (_playerStat.HP == value)
+                return;
+
+            _playerStat.HP = value;
+            OnPropertyChanged(nameof(HP));
         }
     }
 
@@ -122,17 +134,19 @@ public class Player : MonoBehaviour
     {
         while (true)
         {
-            _playerStat = dataManager.GetStat("P101") as PC_Common_Stat;
-            if( _playerStat == null )
+            var stat = dataManager.GetStat("P101") as PC_Common_Stat;
+            if(stat == null )
             {
                 Debug.Log("Player의 스탯을 받아오지 못했습니다.");
                 yield return new WaitForSeconds(1f);
             }
             else
             {
+                _playerStat = stat;
                 Debug.Log("Player의 스탯을 성공적으로 받아왔습니다.");
                 CurrentHP = _playerStat.HP;
-                CurrentStamina = 0;
+                HP = _playerStat.HP;
+                CurrentStamina = 100;
                 CurrentSkill = 0;
                 CurrentAmmo = 0;
                 yield break;
