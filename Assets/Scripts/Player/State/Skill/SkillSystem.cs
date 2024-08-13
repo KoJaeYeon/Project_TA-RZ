@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class SkillSystem : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class SkillSystem : MonoBehaviour
         FourthSkill = 100
     }
 
+    [Inject]
+    private Player _player;
     private Dictionary<SkillName, Skill> _skillDictionary = new Dictionary<SkillName, Skill>();
     private float _maxGauge = 100f;
     private float _currentGauge = 56f;
@@ -25,10 +28,10 @@ public class SkillSystem : MonoBehaviour
     {
         _skillDictionary.Clear();
 
-        _skillDictionary.Add(SkillName.FristSkill, new FirstSkill(20f, 25f));
-        _skillDictionary.Add(SkillName.SecondSkill, new SecondSkill(20f, 50f));
-        _skillDictionary.Add(SkillName.ThirdSkill, new ThirdSkill(20f, 75f));
-        _skillDictionary.Add(SkillName.FourthSkill, new FourthSkill(20f, 100f));
+        _skillDictionary.Add(SkillName.FristSkill, new FirstSkill(_player, 20f, 25f));
+        _skillDictionary.Add(SkillName.SecondSkill, new SecondSkill(_player, 20f, 50f));
+        _skillDictionary.Add(SkillName.ThirdSkill, new ThirdSkill(_player, 20f, 75f));
+        _skillDictionary.Add(SkillName.FourthSkill, new FourthSkill(_player, 20f, 100f));
     }
 
     public void SetSkillGauge(float value)
@@ -53,6 +56,8 @@ public class SkillSystem : MonoBehaviour
                 break;
             }
         }
+
+        _currentGauge -= playerSkill.GetValue();
 
         return playerSkill;
     }

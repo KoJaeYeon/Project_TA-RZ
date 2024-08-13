@@ -4,76 +4,108 @@ using UnityEngine;
 
 public abstract class Skill
 {
+    protected Player _player;
+    protected Animator _animator;
+    protected Rigidbody _rigidbody;
+    protected PlayerStateMachine _state;
+    protected PlayerInputSystem _inputSystem;
+
     protected float _power;
     protected float _useValue;
 
-    public Skill(float power, float useValue)
+    public Skill(Player player,float power, float useValue)
     {//각 스킬의 기본 정보를 정의.
+        _player = player;
         _power = power;
-        _useValue=useValue;
+        _useValue = useValue;
+
+        InitializeSkill(player);
     }
 
-    public abstract void UseSkill();
+    private void InitializeSkill(Player player)
+    {
+        _animator = player.GetComponent<Animator>();
+        _rigidbody = player.GetComponent<Rigidbody>();  
+        _inputSystem = player.GetComponent<PlayerInputSystem>();
+        _state = player.GetComponent<PlayerStateMachine>(); 
+    }
+
+    #region Abstract
     public abstract void SetSkillPower(float power);
+    public abstract float GetValue();
+    #endregion
+
+    #region Virtual
+    public virtual void OnStartSkill() { }
+    public virtual void OnUpdateSkill() { }
+    public virtual void OnExitSkill() { }
+    #endregion
 }
 
 public class FirstSkill : Skill
 {
-    public FirstSkill(float power, float useValue) : base(power, useValue) { }
+    public FirstSkill(Player player, float power, float useValue) : base(player, power, useValue) { }
 
+    public override float GetValue()
+    {
+        return _useValue;
+    }
 
     public override void SetSkillPower(float power)
     {
         _power += power;
     }
 
-    public override void UseSkill()
-    {
-        Debug.Log("1번 스킬");
-    }
+    
 }
 
 public class SecondSkill : Skill
 {
-    public SecondSkill(float power, float useValue) : base(power, useValue) { }
+    public SecondSkill(Player player, float power, float useValue) : base(player, power, useValue) { }
+
+    public override float GetValue()
+    {
+        return _useValue;
+    }
 
     public override void SetSkillPower(float power)
     {
         _power += power;
     }
 
-    public override void UseSkill()
-    {
-        Debug.Log("2번 스킬");
-    }
+    
 }
 
 public class ThirdSkill : Skill
 {
-    public ThirdSkill(float power, float useValue) : base(power, useValue) { }
+    public ThirdSkill(Player player, float power, float useValue) : base(player, power, useValue) { }
+
+    public override float GetValue()
+    {
+        return _useValue;
+    }
 
     public override void SetSkillPower(float power)
     {
         _power += power;
     }
 
-    public override void UseSkill()
-    {
-        Debug.Log("3번 스킬");
-    }
+    
 }
 
 public class FourthSkill : Skill
 {
-    public FourthSkill(float power, float useValue) : base(power, useValue) { }
+    public FourthSkill(Player player, float power, float useValue) : base(player, power, useValue) { }
+
+    public override float GetValue()
+    {
+        return _useValue;
+    }
 
     public override void SetSkillPower(float power)
     {
         _power += power;
     }
 
-    public override void UseSkill()
-    {
-        Debug.Log("4번 스킬");
-    }
+    
 }
