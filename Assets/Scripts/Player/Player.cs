@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
     float _currentHP;
     float _currentSkill;
     float _currentStamina;
-    int _currentAmmo;
+    [SerializeField] int _currentAmmo;
     public bool IsActiveStaminaRecovery { get; set; } = true;
 
     public float CurrentHP

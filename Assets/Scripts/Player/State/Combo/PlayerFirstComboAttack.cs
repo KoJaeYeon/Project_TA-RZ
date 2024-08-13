@@ -21,6 +21,7 @@ public class PlayerFirstComboAttack : PlayerComboAttack
     public override void StateExit()
     {
         ComboAnimation(_firstCombo, false);
+        base.StateExit();
     }
 
     private void FirstAttack()
