@@ -1752,31 +1752,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2036722526376663656, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: Mon_Common_Range
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2036722526376663656, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: Mon_Common_Stat_Hp
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2036722526376663656, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: Mon_Common_DetectArea
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2036722526376663656, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: Mon_Common_MovementSpeed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2524027233888448495, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: m_AutoBraking
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3379560720758915511, guid: dfcd9db998287d34386f0f5c807b39de,
         type: 3}
       propertyPath: m_Name

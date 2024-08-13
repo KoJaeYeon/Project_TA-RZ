@@ -28,7 +28,6 @@ public class Monster_Idle : Action
             return TaskStatus.Running;
 
         }
-        //Nav.SetDestination(Owner.transform.position);
         return TaskStatus.Success;
     }
 }
