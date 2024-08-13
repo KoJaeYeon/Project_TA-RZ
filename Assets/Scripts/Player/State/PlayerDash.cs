@@ -14,18 +14,14 @@ public class PlayerDash : PlayerState
 
     private Vector3 _dashDirection;
 
-    private State _previousState;
-
     public override void StateEnter()
     {
-        _previousState = _state.CurrentState;
-
         if (_canDash)
         {
             InitializeDash();
         }
         else
-            _state.ChangeState(_previousState);
+            _state.ChangeState(State.Idle);
     }
 
     public override void StateUpdate()
@@ -70,7 +66,7 @@ public class PlayerDash : PlayerState
 
                 _rigidBody.angularVelocity = Vector3.zero;
 
-                _state.ChangeState(_previousState);
+                _state.ChangeState(State.Idle);
             }
         }
     }
@@ -106,7 +102,7 @@ public class PlayerDash : PlayerState
     {
         if (input.IsSkill)
         {
-
+            _state.ChangeState(State.Skill);
         }
     }
 }

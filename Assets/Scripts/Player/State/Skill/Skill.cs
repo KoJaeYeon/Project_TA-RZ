@@ -4,14 +4,18 @@ using UnityEngine;
 
 public abstract class Skill
 {
+    #region SkillComponent
     protected Player _player;
     protected Animator _animator;
     protected Rigidbody _rigidbody;
     protected PlayerStateMachine _state;
     protected PlayerInputSystem _inputSystem;
+    #endregion
 
+    #region Value
     protected float _power;
     protected float _useValue;
+    #endregion
 
     public Skill(Player player,float power, float useValue)
     {//각 스킬의 기본 정보를 정의.

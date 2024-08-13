@@ -41,7 +41,6 @@ public class PlayerRun : PlayerState
 
     private void InitializeRun()
     {
-        _state.CurrentState = State.Run;
         _isAction = false;
     }
 

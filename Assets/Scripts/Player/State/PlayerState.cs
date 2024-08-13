@@ -39,7 +39,7 @@ public abstract class PlayerState : PlayerBaseState
         {
             _state.ChangeState(State.Run);
         }
-        else if (input.IsDash)
+        else if (input.IsDash)//TODO_사용 전 스태미너 확인
         {
             _state.ChangeState(State.Dash);
         }
@@ -47,7 +47,7 @@ public abstract class PlayerState : PlayerBaseState
         {
             _state.ChangeState(State.FirstComboAttack);
         }
-        else if (input.IsDrain)
+        else if (input.IsDrain)//TODO_사용 전 스태미너 확인
         {
             _state.ChangeState(State.Drain);
         }

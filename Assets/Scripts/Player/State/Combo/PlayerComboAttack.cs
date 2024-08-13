@@ -53,18 +53,13 @@ public class PlayerComboAttack : PlayerState
 
     protected override void ChangeStateBehaviour(PlayerInputSystem input)
     {
-        if (input.IsDash)
+        if (input.IsDash)//TODO_대쉬 전 스태미너 확인
         {
             _state.ChangeState(State.Dash);
         }
-        else if (input.IsSkill)
+        else if (input.IsSkill) 
         {
             _state.ChangeState(State.Skill);
         }
-
-        //스킬, 피격
     }
-
-    
-
 }

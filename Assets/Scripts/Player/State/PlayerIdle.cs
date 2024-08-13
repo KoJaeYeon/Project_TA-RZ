@@ -18,7 +18,7 @@ public class PlayerIdle : PlayerState
 
     private void InitializeIdle()
     {
-        _state.CurrentState = State.Idle;
+        
     }
 
     private void OnUpdateIdle()

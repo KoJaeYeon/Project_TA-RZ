@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 
 public enum State
@@ -13,20 +14,18 @@ public enum State
     ThirdComboAttack,
     FourthComboAttack,
     Dash,
-    Skill
+    Skill,
+    Hit,
+    KnockBack
 }
 
 public class PlayerStateMachine : MonoBehaviour
 {
     private Dictionary<State, PlayerBaseState> _stateDic = new Dictionary<State, PlayerBaseState>();
     private PlayerBaseState _state;
-    private State _currentState;
+    private Action _idleChangeEvent;
 
-    public State CurrentState
-    {
-        get { return _currentState; }
-        set { _currentState = value; }
-    }
+    public Action IdleEvent { get; private set; }   
 
     private void Start()
     {
@@ -41,28 +40,74 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        
+        _state.OnTriggerEnter(other);
     }
 
-    public void OnDamagedStateChange()
+    //Idle
+    public void OnChangeStateIdle()
     {
-        if(_state is PlayerFirstComboAttack)
-        {
 
+    }
+
+    //Run
+    public void OnChangeStateRun()
+    {
+
+    }
+
+    //Dash
+    public void OnChangeStateDash()
+    {
+
+    }
+
+    //Drain
+    public void OnChangeStateDrain()
+    {
+
+    }
+
+    //Attack
+    public void OnChangeStateAttack()
+    {
+
+    }
+
+    //Skill
+    public void OnChangeStateSkill()
+    {
+
+    }
+    
+    //Hit
+    public void OnDamagedChangeState()
+    {
+        bool change = _state is PlayerSkill;
+
+        if (change)
+        {
+            return;
         }
         else
-        {
+            ChangeState(State.Hit);
+    }
 
-        }
+    //KnockBack
+    public void OnChangeStateKnockBack()
+    {
+
     }
 
     public void ChangeState(State changeState)
     {
-        _state.StateExit();
+        if(_stateDic.TryGetValue(changeState, out PlayerBaseState value))
+        {
+            _state.StateExit();
 
-        _state = _stateDic[changeState];
+            _state = value;
 
-        _state.StateEnter();
+            _state.StateEnter();
+        }
     }
 
     public void AddState(State newState, PlayerBaseState state)
