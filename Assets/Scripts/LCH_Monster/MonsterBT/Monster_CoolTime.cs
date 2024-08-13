@@ -1,22 +1,27 @@
-using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
+using BehaviorDesigner.Runtime;
+using static UnityEngine.UI.GridLayoutGroup;
 using UnityEngine;
-[TaskCategory("Monster/General")]
+
 public class Monster_CoolTime : Conditional
 {
     [SerializeField] SharedMonster Monster;
     [SerializeField] SharedFloat AtkDistance;
+    [SerializeField] SharedFloat CoolTime;
+    private float lastAttackTime = -Mathf.Infinity;
+
     public override TaskStatus OnUpdate()
     {
-        float distance = Vector3.Distance(Monster.Value.Player.transform.position, Owner.transform.position);
-        if (distance >= AtkDistance.Value)
+        float currentTime = Time.time;
+        if (currentTime - lastAttackTime >= Monster.Value.Mon_Common_CoolTime)
         {
+            Debug.Log(Monster.Value.Mon_Common_CoolTime);
+            lastAttackTime = currentTime;
             return TaskStatus.Success;
         }
         else
         {
-            return TaskStatus.Failure;  
+            return TaskStatus.Failure; 
         }
     }
-    
 }

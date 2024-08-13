@@ -6,7 +6,6 @@ using UnityEngine;
 public class Monster_CustomSetBool : Action
 {
     [SerializeField] Animator anim;
-    [SerializeField] SharedString ParameterName;
     [SerializeField] SharedBool BoolValue;
     // Start is called before the first frame update
 

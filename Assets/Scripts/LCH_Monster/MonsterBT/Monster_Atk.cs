@@ -10,7 +10,7 @@ public class Monster_Atk : Action
     [SerializeField] Animator animator;
     [SerializeField] SharedFloat AtkSpeed;
     [SerializeField] SharedMonster Monster;
-    [SerializeField] SharedInt CoolTime;
+    [SerializeField] SharedFloat CoolTime;
     public override TaskStatus OnUpdate()
     {
         if (animator == null)
@@ -19,18 +19,13 @@ public class Monster_Atk : Action
         }
         if(Monster.Value.Player.transform != null)
         {
-            StartCoroutine(WaitNextAtk());
             animator.SetTrigger("Atk");
             Debug.Log("공갹");
             return TaskStatus.Success;
         }
         return TaskStatus.Failure;
         
-        IEnumerator WaitNextAtk()
-        {
-
-            yield return new WaitForSeconds(CoolTime.Value);
-        }
+        
 
     }
 

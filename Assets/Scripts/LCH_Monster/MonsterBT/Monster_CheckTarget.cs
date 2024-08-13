@@ -15,6 +15,6 @@ public class Monster_CheckTarget : Conditional
         {
             return TaskStatus.Success;
         }
-        return TaskStatus.Failure;
+        return TaskStatus.Success;
     }
 }
