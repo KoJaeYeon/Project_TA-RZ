@@ -16,7 +16,7 @@ public class Monster_Idle : Action
         Vector3 targetPos = targetTrans.position;
 
         float distance = Vector3.Distance(ownerPos, targetPos);
-        if (distance >= TrackDistance.Value)
+        if (distance >= Monster.Value.Mon_Common_DetectArea)
         {
             return TaskStatus.Running;
         }

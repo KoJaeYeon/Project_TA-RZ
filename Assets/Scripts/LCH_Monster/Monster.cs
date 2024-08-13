@@ -8,13 +8,13 @@ using System.Collections;
 public class Monster : MonoBehaviour
 {
     [SerializeField] BehaviorTree Bt;
-    [SerializeField] int Mon_Common_Stat_Hp;
-    [SerializeField] float Mon_Common_Damage;
-    [SerializeField] float Mon_Common_AttackArea;
-    [SerializeField] float Mon_Common_Range;
-    [SerializeField] float Mon_Common_DetectArea;
-    [SerializeField] float Mon_Common_DetectTime;
-    [SerializeField] float Mon_Common_MovementSpeed;
+    public int Mon_Common_Stat_Hp;
+    public float Mon_Common_Damage;
+    public float Mon_Common_AttackArea;
+    public float Mon_Common_Range;
+    public float Mon_Common_DetectArea;
+    public float Mon_Common_DetectTime;
+    public float Mon_Common_MovementSpeed;
     public float Mon_Common_CoolTime;
 
     [Inject] public Player Player { get;}
@@ -23,12 +23,11 @@ public class Monster : MonoBehaviour
     {
         Bt = GetComponent<BehaviorTree>();
     }
-    private void Update()
+
+
+
+    private void OnTriggerEnter(Collider other)
     {
-
-       
+        //if(other.CompareTag())
     }
-
-
-    
 }
