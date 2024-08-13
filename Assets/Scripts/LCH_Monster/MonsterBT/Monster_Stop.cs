@@ -8,7 +8,6 @@ public class Monster_Stop : Action
 {
     [SerializeField] SharedMonster Monster;
     [SerializeField] NavMeshAgent Nav;
-    [SerializeField] SharedFloat AtkRange;
 
     public override TaskStatus OnUpdate()
     {
@@ -21,7 +20,7 @@ public class Monster_Stop : Action
         float distanceToTarget = Vector3.Distance(Monster.Value.Player.transform.position, Owner.transform.position);
 
         // 목표가 공격 범위 안에 있을 때 NavMeshAgent 멈추기
-        if (distanceToTarget <= AtkRange.Value)
+        if (distanceToTarget <= Monster.Value.Mon_Common_Range)
         {
             Nav.isStopped = true;  // NavMeshAgent 멈추기
             Debug.Log("멈춤");

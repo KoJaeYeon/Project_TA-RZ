@@ -6,8 +6,6 @@ using UnityEngine;
 public class Monster_CoolTime : Conditional
 {
     [SerializeField] SharedMonster Monster;
-    [SerializeField] SharedFloat AtkDistance;
-    [SerializeField] SharedFloat CoolTime;
     private float lastAttackTime = -Mathf.Infinity;
 
     public override TaskStatus OnUpdate()

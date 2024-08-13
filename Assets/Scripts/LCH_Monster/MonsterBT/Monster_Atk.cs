@@ -8,9 +8,7 @@ using UnityEngine;
 public class Monster_Atk : Action
 {
     [SerializeField] Animator animator;
-    [SerializeField] SharedFloat AtkSpeed;
     [SerializeField] SharedMonster Monster;
-    [SerializeField] SharedFloat CoolTime;
     public override TaskStatus OnUpdate()
     {
         if (animator == null)

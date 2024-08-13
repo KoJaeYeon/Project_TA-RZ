@@ -7,7 +7,6 @@ using BehaviorDesigner.Runtime.Tasks;
 public class Monster_Idle : Action
 {
     [SerializeField] SharedMonster Monster;
-    [SerializeField] SharedFloat TrackDistance;
 
     public override TaskStatus OnUpdate()
     {

@@ -8,9 +8,7 @@ using UnityEngine.AI;
 public class Monster_Track : Action
 {
     [SerializeField] SharedMonster Monster;
-    [SerializeField] SharedFloat MoveSpeed;
     [SerializeField] NavMeshAgent Nav;
-    [SerializeField] SharedFloat DetectArea;
     public override TaskStatus OnUpdate()
     {
         if(Monster.Value.Player.transform == null)
@@ -24,6 +22,7 @@ public class Monster_Track : Action
 
         if (Monster.Value.Player.transform != null)
         {
+            Nav.speed = Monster.Value.Mon_Common_MovementSpeed;
             Nav.SetDestination(Monster.Value.Player.transform.position);
             return TaskStatus.Success;
         } 

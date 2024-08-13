@@ -36,4 +36,8 @@ public class Monster_Common_Stat : Stat
     {
         return $"ID: {Id}, Type: {Type}, Hp: {Hp}, Damage: {Damage}, AttackArea: {AttackArea}, Range: {Range}, DetectArea: {DetectArea}, DetectTime: {DetectTime}, MovementSpeed: {MovementSpeed}, Cooldown:{Cooldown}";
     }
+    public override Stat DeepCopy()
+    {
+        throw new System.NotImplementedException();
+    }
 }

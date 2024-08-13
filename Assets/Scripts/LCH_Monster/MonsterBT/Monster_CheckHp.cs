@@ -6,10 +6,10 @@ using UnityEngine;
 [TaskCategory("Monster/General")]
 public class Monster_CheckHp : Conditional
 {
-    [SerializeField] SharedInt Hp;
+    [SerializeField] SharedMonster Monster;
     public override TaskStatus OnUpdate()
     {
-        if (Hp.Value <= 0)
+        if (Monster.Value.Mon_Common_Stat_Hp <= 0)
         {
             return TaskStatus.Success;
         }
