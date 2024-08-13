@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
 {
     [Inject]
     private PlayerManager _playerManager { get; }
-    [Inject] public DataManager dataManager { get;}
+    [Inject] public DataManager dataManager;
     private PlayerInputSystem _inputSystem;
     private PlayerStateMachine _state;
     private PlayerResourceSystem _resourceSystem;
@@ -137,7 +137,7 @@ public class Player : MonoBehaviour
     {
         _state = gameObject.AddComponent<PlayerStateMachine>();
         _inputSystem = gameObject.AddComponent<PlayerInputSystem>();
-        _resourceSystem = gameObject.AddComponent<PlayerResourceSystem>();
+        _resourceSystem = gameObject.GetComponent<PlayerResourceSystem>();
         _camera = Camera.main;
     }
 
