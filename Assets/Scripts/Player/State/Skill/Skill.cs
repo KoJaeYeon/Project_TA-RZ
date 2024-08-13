@@ -56,6 +56,9 @@ public class FirstSkill : Skill
         _power += power;
     }
 
+
+
+
     
 }
 
