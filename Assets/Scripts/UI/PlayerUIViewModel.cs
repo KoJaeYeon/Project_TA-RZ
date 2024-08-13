@@ -20,6 +20,19 @@ public class PlayerUIViewModel : ViewModelBase
         }
     }
 
+    public float MaxHp
+    {
+        get { return _hp; }
+        set
+        {
+            if (_hp == value)
+                return;
+
+            _hp = value;
+            OnPropertyChanged(nameof(MaxHp));
+        }
+    }
+
     public float Stamina
     {
         get { return _stamina; }

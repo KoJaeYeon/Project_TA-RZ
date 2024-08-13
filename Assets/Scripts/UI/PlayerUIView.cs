@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using ViewModel.Extensions;
+using Zenject;
 
 public class PlayerUIView : MonoBehaviour
 {
@@ -11,38 +12,39 @@ public class PlayerUIView : MonoBehaviour
     [SerializeField] Slider StaminaSlider;
     [SerializeField] TextMeshProUGUI NowBullets;
 
-    private PlayerUIViewModel _vm;
+    [Inject] private Player player;
     private void OnEnable()
     {
-        if (_vm == null)
+        if (player != null)
         {
-            _vm = new PlayerUIViewModel();
-            _vm.PropertyChanged += OnPropertyChanged;
-            _vm.RegisterEventsOnEnable();
-            _vm.RefreshViewModel();
+            player.PropertyChanged += OnPropertyChanged;
+        }
+        else
+        {
+            Debug.LogError("PlayerView Is Null!");
         }
     }
     private void OnDisable()
+    {        
+        player.PropertyChanged -= OnPropertyChanged;
+    }
+
+    void RefreshView()
     {
-        if (_vm != null)
-        {
-            _vm.UnRegisterOnDisable();
-            _vm.PropertyChanged -= OnPropertyChanged;
-            _vm = null;
-        }
+
     }
 
     private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
         switch (e.PropertyName)
         {
-            case nameof(_vm.Hp):
+            case nameof(player.CurrentHP):
                 break;
-            case nameof(_vm.Skills):
+            case nameof(player.CurrentStamina):
                 break;
-            case nameof(_vm.Stamina):
+            case nameof(player.CurrentSkill):
                 break;
-            case nameof(_vm.Nowbullets):
+            case nameof(player.CurrentAmmo):
                 break;
         }
     }

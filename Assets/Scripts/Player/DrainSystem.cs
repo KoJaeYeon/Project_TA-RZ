@@ -27,7 +27,7 @@ public class DrainSystem : MonoBehaviour
             if(distance < 1.5f)
             {
                 item.gameObject.SetActive(false);
-                player.currentAmmo += 1;
+                player.CurrentAmmo += 1;
                 DrainedItemList.Add(item);
             }
         }

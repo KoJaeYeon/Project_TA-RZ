@@ -57,8 +57,8 @@ public class DataManager
 
         foreach (var item in jsonArray)
         {
-            string idStr = item["ID"].ToString().Substring(1);
-            int id = int.Parse(idStr);
+            string idStr = item["ID"].ToString();
+            int id = int.Parse(idStr.Substring(1));
             string type = item["Type"].ToString();
 
             float atkPower = ParseFloat(item["PC_Common_Atk_Power"]);
