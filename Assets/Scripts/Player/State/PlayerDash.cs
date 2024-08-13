@@ -38,6 +38,11 @@ public class PlayerDash : PlayerState
         Exit();
     }
 
+    public override void OnTriggerEnter(Collider other)
+    {
+        //피격
+    }
+
     private void InitializeDash()
     {
         _canDash = false;
@@ -56,6 +61,8 @@ public class PlayerDash : PlayerState
         if (_rigidBody != null)
         {
             _dashTime += Time.deltaTime;
+
+            ChangeStateBehaviour(_inputSystem);
 
             if (_dashTime >= _maxTime)
             {
@@ -97,6 +104,9 @@ public class PlayerDash : PlayerState
 
     protected override void ChangeStateBehaviour(PlayerInputSystem input)
     {
-        //스킬, 피격
+        if (input.IsSkill)
+        {
+
+        }
     }
 }

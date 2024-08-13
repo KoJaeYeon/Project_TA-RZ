@@ -48,6 +48,7 @@ public class Player : MonoBehaviour
         _state.AddState(State.SecondComboAttack, new PlayerSecondComboAttack(this));
         _state.AddState(State.ThirdComboAttack, new PlayerThirdComboAttack(this));
         _state.AddState(State.FourthComboAttack, new PlayerFourthComboAttack(this));
+        _state.AddState(State.Skill, new PlayerSkill(this));
         _state.OnDamagedStateChange();
     }
 

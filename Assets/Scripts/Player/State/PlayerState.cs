@@ -51,5 +51,9 @@ public abstract class PlayerState : PlayerBaseState
         {
             _state.ChangeState(State.Drain);
         }
+        else if (input.IsSkill)
+        {
+            _state.ChangeState(State.Skill);
+        }
     }
 }
