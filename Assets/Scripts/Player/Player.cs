@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     float _currentSkill;
     float _currentStamina;
     int _currentAmmo;
+    public bool IsActiveStaminaRecovery { get; set; } = true;
 
     public float CurrentHP
     {
@@ -54,10 +55,25 @@ public class Player : MonoBehaviour
         get { return _currentStamina; }
         set
         {
+            if (value <= 0)
+            {
+                value = 0;
+            }
+            else if (value > 100)
+            {
+                value = 100;
+            }
+
             if (_currentStamina == value)
                 return;
 
             _currentStamina = value;
+
+            if (_currentStamina == 0)
+            {
+                StartCoroutine(StaminaDelay());
+            }
+            
             OnPropertyChanged(nameof(CurrentStamina));
         }
     }
@@ -104,6 +120,11 @@ public class Player : MonoBehaviour
         InitializeState();
     }
 
+    private void Update()
+    {
+        StaminaRecovery();
+    }
+
     private void InitializePlayer()
     {
         _playerManager.SetPlayerObject(gameObject);
@@ -131,12 +152,22 @@ public class Player : MonoBehaviour
         _state.OnDamagedStateChange();
     }
 
-    public bool DashStaminaCheck()
+    IEnumerator StaminaDelay()
     {
-        return CurrentStamina >= _playerStat.Dash_Stamina;
+        IsActiveStaminaRecovery = false;
+        yield return new WaitForSeconds(3f);
+        IsActiveStaminaRecovery = true;
     }
 
-    public bool DrainStaminaCheck()
+    private void StaminaRecovery()
+    {
+        if(IsActiveStaminaRecovery == true)
+        {
+            CurrentStamina += _playerStat.Stamina_Gain * Time.deltaTime;
+        }
+    }
+
+    public bool StaminaCheck()
     {
         return CurrentStamina > 0;
     }

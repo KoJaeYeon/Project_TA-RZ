@@ -53,7 +53,7 @@ public class PlayerComboAttack : PlayerState
 
     protected override void ChangeStateBehaviour(PlayerInputSystem input)
     {
-        if (input.IsDash && _player.DashStaminaCheck())
+        if (input.IsDash && _player.StaminaCheck())
         {
             _state.ChangeState(State.Dash);
         }

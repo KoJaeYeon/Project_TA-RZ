@@ -43,6 +43,7 @@ public class PlayerDrain : PlayerState
         _animator.SetBool(_drain, true);
         _currentDrainRadius = 1;
         _drainSystem.OnSetActiveDraintEffect(true);
+        _player.IsActiveStaminaRecovery = false;
     }
 
     void UpdateDrain()
@@ -58,6 +59,7 @@ public class PlayerDrain : PlayerState
         _currentDrainRadius = 1;
         _drainSystem.OnSetActiveDraintEffect(false);        
         _inputSystem.SetDrain(false);
+        if (_player.CurrentStamina > 0) _player.IsActiveStaminaRecovery = true;
     }
 
     /// <summary>
@@ -89,7 +91,7 @@ public class PlayerDrain : PlayerState
         {
             _state.ChangeState(State.Idle);
         }
-        else if(_inputSystem.IsDash == true && _player.DashStaminaCheck())
+        else if(_inputSystem.IsDash == true && _player.StaminaCheck())
         {
             _state.ChangeState(State.Dash);
         }

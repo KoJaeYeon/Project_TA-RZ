@@ -149,7 +149,7 @@ public class PlayerRun : PlayerState
 
     protected override void ChangeStateBehaviour(PlayerInputSystem input)
     {
-        if (input.IsDash && _player.DashStaminaCheck())
+        if (input.IsDash && _player.StaminaCheck())
         {
             _state.ChangeState(State.Dash);
         }
@@ -158,7 +158,7 @@ public class PlayerRun : PlayerState
             _isAction = true;
             _state.ChangeState(State.FirstComboAttack);
         }
-        else if (input.IsDrain && _player.DrainStaminaCheck())
+        else if (input.IsDrain && _player.StaminaCheck())
         {
             _isAction = true;
             _state.ChangeState(State.Drain);    

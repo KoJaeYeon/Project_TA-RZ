@@ -39,7 +39,7 @@ public abstract class PlayerState : PlayerBaseState
         {
             _state.ChangeState(State.Run);
         }
-        else if (input.IsDash && _player.DashStaminaCheck())
+        else if (input.IsDash && _player.StaminaCheck())
         {
             _state.ChangeState(State.Dash);
         }
@@ -47,7 +47,7 @@ public abstract class PlayerState : PlayerBaseState
         {
             _state.ChangeState(State.FirstComboAttack);
         }
-        else if (input.IsDrain && _player.DrainStaminaCheck())
+        else if (input.IsDrain && _player.StaminaCheck())
         {
             _state.ChangeState(State.Drain);
         }
