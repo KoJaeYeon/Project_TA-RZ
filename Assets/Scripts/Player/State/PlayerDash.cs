@@ -18,6 +18,7 @@ public class PlayerDash : PlayerState
 
     public override void StateEnter()
     {
+        _player.CurrentStamina -= _player._playerStat.Dash_Stamina;
         _previousState = _state.CurrentState;
 
         if (_canDash)

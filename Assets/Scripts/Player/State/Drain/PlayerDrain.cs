@@ -24,7 +24,7 @@ public class PlayerDrain : PlayerState
     #endregion
 
     public override void StateEnter()
-    {        
+    {
         StartDrain();
     }
 
@@ -43,20 +43,43 @@ public class PlayerDrain : PlayerState
         _animator.SetBool(_drain, true);
         _currentDrainRadius = 1;
         _drainSystem.OnSetActiveDraintEffect(true);
+        _player.IsActiveStaminaRecovery = false;
     }
 
     void UpdateDrain()
     {
         DrainInputCheck();
         DrainRangeControl();
+        DrainStaminaUse();
     }
 
     void EndDrain()
     {
         _animator.SetBool(_drain, false);
         _currentDrainRadius = 1;
-        _drainSystem.OnSetActiveDraintEffect(false);
+        _drainSystem.OnSetActiveDraintEffect(false);        
         _inputSystem.SetDrain(false);
+        if (_player.CurrentStamina > 0) _player.IsActiveStaminaRecovery = true;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    void StaminaCheck()
+    {
+
+    }
+
+    /// <summary>
+    /// 드레인 시 스태미나 사용하는 함수
+    /// </summary>
+    void DrainStaminaUse()
+    {
+        _player.CurrentStamina -= _player._playerStat.Drain_Stamina * Time.deltaTime;
+        if(_player.CurrentStamina <= 0)
+        {
+            _state.ChangeState(State.Idle);
+        }
     }
 
     /// <summary>
@@ -68,7 +91,7 @@ public class PlayerDrain : PlayerState
         {
             _state.ChangeState(State.Idle);
         }
-        else if(_inputSystem.IsDash == true)
+        else if(_inputSystem.IsDash == true && _player.StaminaCheck())
         {
             _state.ChangeState(State.Dash);
         }
