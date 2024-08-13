@@ -93,6 +93,7 @@ public class BossController : MonoBehaviour
 
     #region BTA
 
+    //보스 회전 관련
     public void LookAtPlayer()
     {
         Vector3 direction = (_playerTr.position - transform.position);
@@ -109,12 +110,17 @@ public class BossController : MonoBehaviour
         Quaternion rotation = Quaternion.LookRotation(direction);
         return rotation;
     }
+    public Vector3 PlayerPos()
+    { 
+        return _playerTr.position;
+    }
 
+    //보스 대쉬 공격
     public void DrawDashTrail()
     {
         _trail.gameObject.SetActive(true);
     }
-
+    //방향 설정
     public Vector3 SetDashDirection()
     {
         Vector3 direction;
@@ -123,7 +129,7 @@ public class BossController : MonoBehaviour
         direction.Normalize();
         return direction;
     }
-
+    //돌진
     public void DashAttack(float speed, Vector3 direction)
     {
         _rb.velocity = direction * speed;
@@ -133,6 +139,7 @@ public class BossController : MonoBehaviour
 
     #region BTC
 
+    //거리 체크
     public bool CheckDistance(float range)
     {
         if (_playerTr == null) return false;
@@ -144,6 +151,7 @@ public class BossController : MonoBehaviour
         return false;
     }
 
+    //보스 Hp 체크
     public bool CheckPhase(float standard)
     {
         if (standard < _hpPercent) return true;
