@@ -19,11 +19,11 @@ public class TestScript : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.K))
         {
             player.ApplyKnockback(transform.position);
-            player.Hit(10);
+            player.Hit(10,0.4f);
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
-            player.Hit(10);
+            player.Hit(10,0.4f);
         }
     }
 }
