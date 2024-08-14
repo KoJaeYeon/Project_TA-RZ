@@ -7,7 +7,7 @@ public class PlayerKnockBack : PlayerStaus
     public PlayerKnockBack(Player player) : base(player) { }
     
     public static Vector3 _knockBackPosition { get; set; }
-    private float Pc_Knock_Back_Time = 1f;
+    public static float Pc_Knock_Back_Time { get; set; } = 1.0f;
     private float Pc_Knock_Back_Speed = 5f;
 
     public override void StateEnter()

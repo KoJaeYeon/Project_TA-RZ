@@ -127,10 +127,6 @@ public class Player : MonoBehaviour, IHit
     private void Update()
     {
         StaminaRecovery();
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            ApplyKnockback(-transform.forward);
-        }
     }
 
     private void InitializePlayer()
@@ -240,9 +236,10 @@ public class Player : MonoBehaviour, IHit
         _state.OnDamagedStateChange();
     }
 
-    public void ApplyKnockback(Vector3 otherPosition)
+    public void ApplyKnockback(Vector3 otherPosition, float knockBackTime)
     {
         PlayerKnockBack._knockBackPosition = otherPosition;
+        PlayerKnockBack.Pc_Knock_Back_Time = knockBackTime;
 
         _state.OnKnockBackStateChange();
     }
