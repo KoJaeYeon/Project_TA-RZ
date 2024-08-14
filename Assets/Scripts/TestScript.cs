@@ -18,7 +18,7 @@ public class TestScript : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.K))
         {
-            player.ApplyKnockback(transform.position);
+            player.ApplyKnockback(transform.position, 1f);
             player.Hit(10,0.4f);
         }
         if (Input.GetKeyDown(KeyCode.L))

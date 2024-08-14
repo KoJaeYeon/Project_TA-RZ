@@ -4,6 +4,6 @@ public interface IHit
 {
     public void Hit(float damage, float paralysisTime);
 
-    public void ApplyKnockback(Vector3 otherPosition);
+    public void ApplyKnockback(Vector3 otherPosition, float knockBackTime);
 }
 
