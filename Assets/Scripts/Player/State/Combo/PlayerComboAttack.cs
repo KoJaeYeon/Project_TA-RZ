@@ -7,7 +7,12 @@ using UnityEngine.Windows;
 public class PlayerComboAttack : PlayerState
 {
     public PlayerComboAttack(Player player) : base(player) { }
-    
+
+    public override void StateExit()
+    {
+        _player.CurrentAmmo -= _player._PC_Level.Level_Consumption;
+    }
+
     #region AnimatorStringToHash
     protected AnimatorStateInfo _animatorStateInfo;
 

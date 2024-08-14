@@ -1,15 +1,15 @@
 using UnityEngine;
 
-public abstract class Stat
+public abstract class Data
 {
-    public abstract Stat DeepCopy();
+    public abstract Data DeepCopy();
 
 }
-//IEnumerator LoadStat()
+//IEnumerator LoadData(string idStr)
 //{
 //    while (true)
 //    {
-//        var stat = dataManager.GetStat("P101") as PC_Common_Stat;
+//        var stat = dataManager.GetStat(idStr) as PC_Common_Stat;
 //        if (stat == null)
 //        {
 //            Debug.Log("Player의 스탯을 받아오지 못했습니다.");

@@ -23,6 +23,7 @@ public class PlayerThirdComboAttack : PlayerComboAttack
     public override void StateExit()
     {
         ComboAnimation(_thirdCombo, false);
+        base.StateExit();
     }
 
     private void ThirdAttack()

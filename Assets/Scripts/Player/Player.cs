@@ -8,24 +8,26 @@ using Zenject;
 public class Player : MonoBehaviour, IHit
 {
     [Inject]
-    private PlayerManager _playerManager;
-    [Inject] DataManager dataManager;
+    private PlayerManager _playerManager { get; }
+    [Inject] public DataManager dataManager;
     private PlayerInputSystem _inputSystem;
     private PlayerStateMachine _state;
+    private PlayerResourceSystem _resourceSystem;
     private Rigidbody _rigidBody;
     private Camera _camera;
     private Action<float, float, float, int, float> _statChangeCallback;
 
     public PC_Common_Stat _playerStat { get; private set; } = new PC_Common_Stat();
+    public PC_Level _PC_Level { get; private set; } = new PC_Level();
 
     public Camera MainCamera { get { return _camera; } }
 
     #region PlayerValue
- 
     float _currentHP;
     float _currentSkill;
     float _currentStamina;
-    int _currentAmmo;
+    [SerializeField] int _currentAmmo;
+
     public bool IsImmunitActive { get; set; }
     public bool IsActiveStaminaRecovery { get; set; } = true;
 
@@ -76,7 +78,7 @@ public class Player : MonoBehaviour, IHit
             {
                 StartCoroutine(StaminaDelay());
             }
-            
+
             OnPropertyChanged(nameof(CurrentStamina));
         }
     }
@@ -105,7 +107,7 @@ public class Player : MonoBehaviour, IHit
         }
     }
 
-    public bool IsNext {  get; set; }
+    public bool IsNext { get; set; }
     #endregion
 
     #region PropChanged
@@ -142,6 +144,7 @@ public class Player : MonoBehaviour, IHit
     {
         _state = gameObject.AddComponent<PlayerStateMachine>();
         _inputSystem = gameObject.AddComponent<PlayerInputSystem>();
+        _resourceSystem = gameObject.GetComponent<PlayerResourceSystem>();
         _rigidBody = GetComponent<Rigidbody>();
         _camera = Camera.main;
     }
@@ -150,7 +153,7 @@ public class Player : MonoBehaviour, IHit
     {
         _state.AddState(State.Idle, new PlayerIdle(this));
         _state.AddState(State.Run, new PlayerRun(this));
-        _state.AddState(State.Dash, new PlayerDash(this));  
+        _state.AddState(State.Dash, new PlayerDash(this));
         _state.AddState(State.Drain, new PlayerDrain(this));
         _state.AddState(State.FirstComboAttack, new PlayerFirstComboAttack(this));
         _state.AddState(State.SecondComboAttack, new PlayerSecondComboAttack(this));
@@ -170,7 +173,7 @@ public class Player : MonoBehaviour, IHit
 
     private void StaminaRecovery()
     {
-        if(IsActiveStaminaRecovery == true)
+        if (IsActiveStaminaRecovery == true)
         {
             CurrentStamina += _playerStat.Stamina_Gain * Time.deltaTime;
         }
@@ -181,12 +184,17 @@ public class Player : MonoBehaviour, IHit
         return CurrentStamina > 0;
     }
 
+    public void Set_PC_Level(PC_Level _PC_Level)
+    {
+        this._PC_Level = _PC_Level;
+    }
+
     IEnumerator LoadStat()
     {
         while (true)
         {
             var stat = dataManager.GetStat("P101") as PC_Common_Stat;
-            if(stat == null )
+            if (stat == null)
             {
                 Debug.Log("Player의 스탯을 받아오지 못했습니다.");
                 yield return new WaitForSeconds(1f);

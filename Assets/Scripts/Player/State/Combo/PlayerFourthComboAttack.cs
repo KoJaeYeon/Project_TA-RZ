@@ -31,6 +31,7 @@ public class PlayerFourthComboAttack : PlayerComboAttack
     public override void StateExit()
     {
         ComboAnimation(_fourthCombo, false);
+        base.StateExit();
     }
 
     private void FourthAttack()
