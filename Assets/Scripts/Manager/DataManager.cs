@@ -87,12 +87,12 @@ public class DataManager
             float atkPower = ParseFloat(item["PC_Common_Atk_Power"]);
             float hp = ParseFloat(item["PC_Common_Hp"]);
             float moveSpeed = ParseFloat(item["PC_Common_Moving_Speed"]);
-            int trashOwnNum = ParseInt(item["PC_Common_Trash_OwnNum"]);
+            int resouceOwnNum = ParseInt(item["PC_Common_Resource_OwnNum"]);
             float staminaGain = ParseFloat(item["PC_Common_StaminaGain"]);
             float drainStamina = ParseFloat(item["PC_Common_Drain_Stamina"]);
             float dashStamina = ParseFloat(item["PC_Common_Dash_Stamina"]);
 
-            PC_Common_Stat stat = new PC_Common_Stat(id, type, atkPower, hp, moveSpeed, trashOwnNum, staminaGain, drainStamina, dashStamina);
+            PC_Common_Stat stat = new PC_Common_Stat(id, type, atkPower, hp, moveSpeed, resouceOwnNum, staminaGain, drainStamina, dashStamina);
             AddStatToStatDictionary(idStr, stat);
         }
     }

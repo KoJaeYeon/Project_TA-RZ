@@ -204,6 +204,7 @@ public class Player : MonoBehaviour, IHit
                 CurrentStamina = 100;
                 CurrentSkill = 0;
                 CurrentAmmo = 0;
+                OnPropertyChanged(nameof(stat.Resource_Own_Num));
                 yield break;
             }
 

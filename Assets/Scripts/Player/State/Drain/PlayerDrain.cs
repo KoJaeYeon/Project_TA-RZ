@@ -40,7 +40,7 @@ public class PlayerDrain : PlayerState
     void StartDrain()
     {
         _animator.SetBool(_drain, true);
-        _currentDrainRadius = 1;
+        _currentDrainRadius = 0.7f;
         _drainSystem.OnSetActiveDraintEffect(true);
         _drainSystem.OnSetDrainArea(_currentDrainRadius);
         _player.IsActiveStaminaRecovery = false;
@@ -55,7 +55,7 @@ public class PlayerDrain : PlayerState
     void EndDrain()
     {
         _animator.SetBool(_drain, false);
-        _currentDrainRadius = 1;
+        _currentDrainRadius = 0.7f;
         _drainSystem.OnSetActiveDraintEffect(false);
         _drainSystem.OnSetDrainArea(_currentDrainRadius);
         _inputSystem.SetDrain(false);

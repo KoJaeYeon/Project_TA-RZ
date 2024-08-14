@@ -33,9 +33,18 @@ public class DrainSystem : MonoBehaviour
             float distance = Vector3.Distance(transform.position, item.position);
             if(distance < 1.5f)
             {
-                item.gameObject.SetActive(false);
-                player.CurrentAmmo += 1;
-                DrainedItemList.Add(item);
+                if(player.CurrentAmmo < 50)
+                {
+                    item.gameObject.SetActive(false);
+                    player.CurrentAmmo += 1;
+                    DrainedItemList.Add(item);
+                }
+                else
+                {
+                    item.AddForce(-drainDir * Time.deltaTime * 1000 * _pull_speed);
+                    item.velocity = Vector3.zero;
+                }
+
             }
         }
 
