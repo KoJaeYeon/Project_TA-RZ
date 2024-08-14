@@ -15,12 +15,12 @@ public class PlayerDash : PlayerState
     private Vector3 _dashDirection;
 
     public override void StateEnter()
-    {
-        _player.CurrentStamina -= _player._playerStat.Dash_Stamina;
+    {       
 
         if (_canDash)
         {
             InitializeDash();
+            _player.CurrentStamina -= _player._playerStat.Dash_Stamina;
         }
         else
             _state.ChangeState(State.Idle);

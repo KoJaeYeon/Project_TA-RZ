@@ -3913,11 +3913,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9103644520398874801, guid: b18aac639121d694286eaabbef2e8e98,
         type: 3}
-      propertyPath: DrainEffect.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 9103644520398874801, guid: b18aac639121d694286eaabbef2e8e98,
-        type: 3}
       propertyPath: DrainEffect.Array.data[0]
       value: 
       objectReference: {fileID: 3475489171071811541}
