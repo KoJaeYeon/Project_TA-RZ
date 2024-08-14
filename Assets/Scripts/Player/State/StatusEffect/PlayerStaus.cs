@@ -6,6 +6,18 @@ public class PlayerStaus : PlayerState
 {
     public PlayerStaus(Player player) : base(player) { }
 
+    protected Coroutine _coroutine;
+
+    public override void StateExit()
+    {
+        _animator.speed = 1f;
+
+        if (_coroutine != null)
+        {
+            _player.StopCoroutine(_coroutine);
+        }
+    }
+
     #region AnimatorStringToHash
     protected readonly int _comboFail = Animator.StringToHash("ComboFail");
     protected readonly int _paralysis = Animator.StringToHash("Paralysis");
