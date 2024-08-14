@@ -24,7 +24,7 @@ public class BossController : MonoBehaviour
     [Header("페이즈 체력")]
     [SerializeField] private float _phaseOnePer;
     [SerializeField] private float _phaseTwoPer;
-    private float _hpPercent;
+    public float _hpPercent;
 
     [Header("2페이즈 돌진공격")]
     [SerializeField] private float _dashSpeed;
