@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerKnockBack : PlayerState
+public class PlayerKnockBack : PlayerStaus
 {
     public PlayerKnockBack(Player player) : base(player) { }
     
@@ -18,7 +18,7 @@ public class PlayerKnockBack : PlayerState
 
         _animator.speed = 2.6f / Pc_Knock_Back_Time;
 
-        _animator.SetFloat("Speed", 0f);
+        _animator.SetFloat(_speed, 0f);
 
         _player.transform.LookAt(_knockBackPosition);
 
@@ -29,8 +29,6 @@ public class PlayerKnockBack : PlayerState
 
         _player.transform.eulerAngles = rot;
     }
-
-    public override void InputCheck() { }
     
     public override void StateExit()
     {
@@ -56,6 +54,7 @@ public class PlayerKnockBack : PlayerState
         _rigidBody.velocity = Vector3.zero;
 
         _rigidBody.angularVelocity = Vector3.zero;
+
         _state.ChangeState(State.Idle);
     }
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHit : PlayerState
+public class PlayerHit : PlayerStaus
 {
     public PlayerHit(Player player) : base(player) { }
 
@@ -12,9 +12,13 @@ public class PlayerHit : PlayerState
     {
         _animator.SetLayerWeight(1, 1f);
 
+        _animator.SetTrigger(_comboFail);
+
+        _animator.SetTrigger(_paralysis);
+
         _player.StartCoroutine(Paralysis());
 
-        _animator.SetFloat("Speed", 0f);
+        _animator.SetFloat(_speed, 0f);
     }
 
     public override void StateUpdate()
@@ -24,12 +28,13 @@ public class PlayerHit : PlayerState
 
     public override void StateExit()
     {
+        _animator.ResetTrigger(_comboFail);
+
         _animator.SetLayerWeight(1, 0f);
     }
 
     private IEnumerator Paralysis()
     {
-        _animator.SetTrigger("Paralysis");
 
         _rigidBody.velocity = Vector3.zero;
 
@@ -40,13 +45,5 @@ public class PlayerHit : PlayerState
         _rigidBody.angularVelocity = Vector3.zero;
 
         _state.ChangeState(State.Idle);
-    }
-
-    public override void InputCheck()
-    {
-        if (_inputSystem.IsSkill)
-        {
-            _state.ChangeState(State.Skill);
-        }
     }
 }
