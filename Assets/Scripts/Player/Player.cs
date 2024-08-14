@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     private PlayerInputSystem _inputSystem;
     private PlayerStateMachine _state;
     private PlayerResourceSystem _resourceSystem;
+    private Rigidbody _rigidBody;
     private Camera _camera;
     private Action<float, float, float, int, float> _statChangeCallback;
 
@@ -22,10 +23,12 @@ public class Player : MonoBehaviour
     public Camera MainCamera { get { return _camera; } }
 
     #region PlayerValue
+
     float _currentHP;
     float _currentSkill;
     float _currentStamina;
     [SerializeField] int _currentAmmo;
+    public bool IsImmunitActive { get; set; }
     public bool IsActiveStaminaRecovery { get; set; } = true;
 
     public float CurrentHP
@@ -75,7 +78,7 @@ public class Player : MonoBehaviour
             {
                 StartCoroutine(StaminaDelay());
             }
-            
+
             OnPropertyChanged(nameof(CurrentStamina));
         }
     }
@@ -104,7 +107,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public bool IsNext {  get; set; }
+    public bool IsNext { get; set; }
     #endregion
 
     #region PropChanged
@@ -138,6 +141,7 @@ public class Player : MonoBehaviour
         _state = gameObject.AddComponent<PlayerStateMachine>();
         _inputSystem = gameObject.AddComponent<PlayerInputSystem>();
         _resourceSystem = gameObject.GetComponent<PlayerResourceSystem>();
+        _rigidBody = GetComponent<Rigidbody>();
         _camera = Camera.main;
     }
 
@@ -145,7 +149,7 @@ public class Player : MonoBehaviour
     {
         _state.AddState(State.Idle, new PlayerIdle(this));
         _state.AddState(State.Run, new PlayerRun(this));
-        _state.AddState(State.Dash, new PlayerDash(this));  
+        _state.AddState(State.Dash, new PlayerDash(this));
         _state.AddState(State.Drain, new PlayerDrain(this));
         _state.AddState(State.FirstComboAttack, new PlayerFirstComboAttack(this));
         _state.AddState(State.SecondComboAttack, new PlayerSecondComboAttack(this));
@@ -164,7 +168,7 @@ public class Player : MonoBehaviour
 
     private void StaminaRecovery()
     {
-        if(IsActiveStaminaRecovery == true)
+        if (IsActiveStaminaRecovery == true)
         {
             CurrentStamina += _playerStat.Stamina_Gain * Time.deltaTime;
         }
@@ -185,7 +189,7 @@ public class Player : MonoBehaviour
         while (true)
         {
             var stat = dataManager.GetStat("P101") as PC_Common_Stat;
-            if(stat == null )
+            if (stat == null)
             {
                 Debug.Log("Player의 스탯을 받아오지 못했습니다.");
                 yield return new WaitForSeconds(1f);
