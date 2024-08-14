@@ -12,8 +12,12 @@ public class DrainSystem : MonoBehaviour
     [SerializeField] GameObject DrainArea;
 
     SphereCollider _sphereCollider;
-
     private float _pull_speed = 1;
+
+    private void Awake()
+    {
+        _sphereCollider = GetComponent<SphereCollider>();
+    }
 
     private void OnEnable()
     {
@@ -56,6 +60,8 @@ public class DrainSystem : MonoBehaviour
 
     public void OnSetDrainArea(float radius)
     {
+        _sphereCollider.radius = radius;
+
         Vector3 scale = DrainArea.transform.localScale;
         scale.x = radius * 2;
         scale.z = radius * 2;

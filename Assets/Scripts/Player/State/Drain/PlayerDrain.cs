@@ -9,12 +9,10 @@ public class PlayerDrain : PlayerState
         _inputSystem = player.GetComponent<PlayerInputSystem>();
         _state = player.GetComponent<PlayerStateMachine>();
         _drainSystem = player.GetComponentInChildren<DrainSystem>();
-        _sphereCollider = _drainSystem.GetComponent<SphereCollider>();
     }
 
     #region DrainComponent
     private DrainSystem _drainSystem;
-    private SphereCollider _sphereCollider;
     #endregion
 
     #region DrainValue
@@ -44,6 +42,7 @@ public class PlayerDrain : PlayerState
         _animator.SetBool(_drain, true);
         _currentDrainRadius = 1;
         _drainSystem.OnSetActiveDraintEffect(true);
+        _drainSystem.OnSetDrainArea(_currentDrainRadius);
         _player.IsActiveStaminaRecovery = false;
     }
 
@@ -57,7 +56,8 @@ public class PlayerDrain : PlayerState
     {
         _animator.SetBool(_drain, false);
         _currentDrainRadius = 1;
-        _drainSystem.OnSetActiveDraintEffect(false);        
+        _drainSystem.OnSetActiveDraintEffect(false);
+        _drainSystem.OnSetDrainArea(_currentDrainRadius);
         _inputSystem.SetDrain(false);
         if (_player.CurrentStamina > 0) _player.IsActiveStaminaRecovery = true;
     }
@@ -100,8 +100,7 @@ public class PlayerDrain : PlayerState
     {
         if (_currentDrainRadius < _maxDrainRadius)
         {
-            _currentDrainRadius += _drainSpeed * Time.deltaTime;
-            _sphereCollider.radius = _currentDrainRadius;
+            _currentDrainRadius += _drainSpeed * Time.deltaTime;            
             _drainSystem.OnSetDrainArea(_currentDrainRadius);
         }
     }
