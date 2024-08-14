@@ -222,12 +222,13 @@ public class Player : MonoBehaviour, IHit
     }
 
     #region Hit
-
-    public void Hit(float damage)
+    public void Hit(float damage, float paralysisTime)
     {
+        PlayerHit.Pc_Stiff_Time = paralysisTime;
+
         Debug.Log(_currentHP);
 
-        if(_currentHP <= 0)
+        if (_currentHP <= 0)
         {
             _state.ChangeState(State.Death);
 

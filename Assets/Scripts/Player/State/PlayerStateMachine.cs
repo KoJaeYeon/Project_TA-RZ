@@ -45,7 +45,7 @@ public class PlayerStateMachine : MonoBehaviour
     //Hit
     public void OnDamagedStateChange()
     {
-        if(_state is PlayerSkill)
+        if(false)
         {
             return;
         }
@@ -62,7 +62,7 @@ public class PlayerStateMachine : MonoBehaviour
     //KnockBack
     public void OnKnockBackStateChange()
     {
-        if(_state is PlayerHit)
+        if (false)
         {
             return;
         }

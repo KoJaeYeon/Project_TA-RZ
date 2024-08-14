@@ -6,17 +6,19 @@ public class PlayerHit : PlayerStaus
 {
     public PlayerHit(Player player) : base(player) { }
 
-    private float Pc_Stiff_Time = 0.4f;
+    public static float Pc_Stiff_Time { get; set; } = 0.4f;
+
+    Coroutine _coroutine;
 
     public override void StateEnter()
     {
-        _animator.SetLayerWeight(1, 1f);
+        //_animator.SetLayerWeight(1, 1f);
 
         _animator.SetTrigger(_comboFail);
 
         _animator.SetTrigger(_paralysis);
 
-        _player.StartCoroutine(Paralysis());
+        _coroutine = _player.StartCoroutine(Paralysis(Pc_Stiff_Time));
 
         _animator.SetFloat(_speed, 0f);
     }
@@ -30,15 +32,20 @@ public class PlayerHit : PlayerStaus
     {
         _animator.ResetTrigger(_comboFail);
 
-        _animator.SetLayerWeight(1, 0f);
+        //_animator.SetLayerWeight(1, 0f);
+
+        if (_coroutine != null)
+        {
+            _player.StopCoroutine(_coroutine);
+        }
     }
 
-    private IEnumerator Paralysis()
+    private IEnumerator Paralysis(float stiffTime)
     {
 
         _rigidBody.velocity = Vector3.zero;
 
-        yield return new WaitForSeconds(Pc_Stiff_Time);
+        yield return new WaitForSeconds(stiffTime);
 
         _rigidBody.velocity = Vector3.zero;
 
