@@ -9,6 +9,9 @@ public class DrainSystem : MonoBehaviour
     List<Rigidbody> DrainedItemList = new List<Rigidbody>();
     [Inject] Player player;
     [SerializeField] GameObject[] DrainEffect;
+    [SerializeField] GameObject DrainArea;
+
+    SphereCollider _sphereCollider;
 
     private float _pull_speed = 1;
 
@@ -48,6 +51,15 @@ public class DrainSystem : MonoBehaviour
         {
             item.SetActive(isAcitve);
         }
+        DrainArea.SetActive(isAcitve);
+    }
+
+    public void OnSetDrainArea(float radius)
+    {
+        Vector3 scale = DrainArea.transform.localScale;
+        scale.x = radius * 2;
+        scale.z = radius * 2;
+        DrainArea.transform.localScale = scale;
     }
 
     private void OnTriggerEnter(Collider other)

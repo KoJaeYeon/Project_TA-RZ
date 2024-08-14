@@ -1,4 +1,4 @@
-public class PC_Common_Stat : Stat
+public class PC_Common_Stat : Data
 {
     public int Id { get; set; } = 101;
     public string Type { get; set; } = "PC_Type1";
@@ -25,7 +25,7 @@ public class PC_Common_Stat : Stat
         Dash_Stamina = dash_Stamina;
     }
 
-    public override Stat DeepCopy()
+    public override Data DeepCopy()
     {
         return new PC_Common_Stat(Id, Type, Atk_Power, HP, Move_Speed, Trash_Own_Num, Stamina_Gain, Drain_Stamina, Dash_Stamina);
     }

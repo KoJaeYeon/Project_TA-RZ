@@ -102,6 +102,7 @@ public class PlayerDrain : PlayerState
         {
             _currentDrainRadius += _drainSpeed * Time.deltaTime;
             _sphereCollider.radius = _currentDrainRadius;
+            _drainSystem.OnSetDrainArea(_currentDrainRadius);
         }
     }
 }
