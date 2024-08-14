@@ -26,8 +26,8 @@ public class Player : MonoBehaviour, IHit
     float _currentSkill;
     float _currentStamina;
     int _currentAmmo;
-    public bool IsImmunitActive { get; set; }
     public bool IsActiveStaminaRecovery { get; set; } = true;
+
 
     public float CurrentHP
     {
@@ -159,6 +159,7 @@ public class Player : MonoBehaviour, IHit
         _state.AddState(State.Skill, new PlayerSkill(this));
         _state.AddState(State.Hit, new PlayerHit(this));    
         _state.AddState(State.KnockBack, new PlayerKnockBack(this));
+        _state.AddState(State.Death, new PlayerDeath(this));    
     }
 
     IEnumerator StaminaDelay()
@@ -217,18 +218,25 @@ public class Player : MonoBehaviour, IHit
 
     public void Hit(float damage)
     {
+        Debug.Log(_currentHP);
+
+        if(_currentHP <= 0)
+        {
+            _state.ChangeState(State.Death);
+
+            return;
+        }
+
         CurrentHP -= damage;
+
         _state.OnDamagedStateChange();
     }
 
     public void ApplyKnockback(Vector3 otherPosition)
     {
-        if (IsImmunitActive)
-            return;
-
         PlayerKnockBack._knockBackPosition = otherPosition;
 
-        _state.ChangeState(State.KnockBack);
+        _state.OnKnockBackStateChange();
     }
 
     #endregion

@@ -17,7 +17,8 @@ public enum State
     Dash,
     Skill,
     Hit,
-    KnockBack
+    KnockBack,
+    Death
 }
 
 public class PlayerStateMachine : MonoBehaviour
@@ -41,7 +42,7 @@ public class PlayerStateMachine : MonoBehaviour
         _state.OnTriggerEnter(other);
     }
 
-    //Skill
+    //Hit
     public void OnDamagedStateChange()
     {
         if(_state is PlayerSkill)
@@ -55,6 +56,19 @@ public class PlayerStateMachine : MonoBehaviour
         else
         {
             ChangeState(State.Hit);
+        }
+    }
+
+    //KnockBack
+    public void OnKnockBackStateChange()
+    {
+        if(_state is PlayerHit)
+        {
+            return;
+        }
+        else
+        {
+            ChangeState(State.KnockBack);
         }
     }
 
