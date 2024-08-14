@@ -8,6 +8,8 @@ public class PlayerSecondComboAttack : PlayerComboAttack
 
     public override void StateEnter()
     {
+       // _inputSystem.SetAttack(false);
+        
         _player.IsNext = false;
 
         ComboAnimation(_secondCombo, true);
@@ -23,12 +25,7 @@ public class PlayerSecondComboAttack : PlayerComboAttack
     public override void StateExit()
     {
         ComboAnimation(_secondCombo, false);
+
         base.StateExit();
     }
-
-    private void SecondAttack()
-    {
-        //2타 공격 로직
-    }
-
 }

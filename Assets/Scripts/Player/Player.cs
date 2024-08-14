@@ -228,6 +228,16 @@ public class Player : MonoBehaviour, IHit
     {
         Vector3 GizmoPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         Gizmos.DrawWireSphere(GizmoPosition, 0.2f);
+
+        //if(true)
+        //{
+        //    PlayerComboAttack comboAttack;
+        //    comboAttack = new PlayerComboAttack(this);
+        //    if(comboAttack != null)
+        //    {
+        //        comboAttack.drawGizmo();
+        //    }
+        //}
     }
 
     #region Hit

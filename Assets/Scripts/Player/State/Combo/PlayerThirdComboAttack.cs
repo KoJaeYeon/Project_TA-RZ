@@ -8,6 +8,7 @@ public class PlayerThirdComboAttack : PlayerComboAttack
 
     public override void StateEnter()
     {
+        
         _player.IsNext = false;
 
         ComboAnimation(_thirdCombo, true);

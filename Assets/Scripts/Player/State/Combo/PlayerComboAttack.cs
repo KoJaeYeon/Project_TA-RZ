@@ -2,20 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Windows;
 
 public class PlayerComboAttack : PlayerState
 {
     public PlayerComboAttack(Player player) : base(player) { }
 
-    public override void StateExit()
-    {
-        _player.CurrentAmmo -= _player._PC_Level.Level_Consumption;
-    }
 
     #region AnimatorStringToHash
     protected AnimatorStateInfo _animatorStateInfo;
-
     protected readonly int _firstCombo = Animator.StringToHash("ComboAttack1");
     protected readonly int _secondCombo = Animator.StringToHash("ComboAttack2");
     protected readonly int _thirdCombo = Animator.StringToHash("ComboAttack3");
@@ -23,23 +17,38 @@ public class PlayerComboAttack : PlayerState
     protected readonly int _comboFail = Animator.StringToHash("ComboFail");
     #endregion
 
+    public override void StateExit()
+    {
+        _inputSystem.AttackCount = 0;
+
+        _player.CurrentAmmo -= _player._PC_Level.Level_Consumption;
+    }
+
     protected void OnComboAttackUpdate(string attackName, State nextCombo)
     {
+
         _animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
 
         if (_animatorStateInfo.IsName(attackName) && _animatorStateInfo.normalizedTime >= 0.99f)
         {
-            _animator.SetTrigger(_comboFail);
-            _state.ChangeState(State.Idle);
+            if(_player.IsNext)
+            {
+                _state.ChangeState(nextCombo);
+            }
+            else
+            {
+                _animator.SetTrigger(_comboFail);
+
+                _state.ChangeState(State.Idle);
+            }
             return;
         }
         else
             AttackRotation();
-        
 
-        if (_inputSystem.IsAttack && _player.IsNext)
+        if (_inputSystem.IsAttack)
         {
-            _state.ChangeState(nextCombo);
+            _player.IsNext = true;
         }
     }
 

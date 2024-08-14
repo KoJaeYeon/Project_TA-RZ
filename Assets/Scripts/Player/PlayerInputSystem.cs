@@ -12,6 +12,8 @@ public class PlayerInputSystem : MonoBehaviour
     [SerializeField] private bool isDrain;
     [Header("Attack")]
     [SerializeField] private bool isAttack;
+    [Header("AttackCount")]
+    [SerializeField] private int attackCount;
     [Header("Look")]
     [SerializeField] private float deltaLook;
     [Header("LockOn")]
@@ -22,7 +24,8 @@ public class PlayerInputSystem : MonoBehaviour
     public Vector2 Input { get { return _input; } }
     public bool IsDrain { get { return isDrain; } }
     public bool IsDash { get { return isDash; } }
-    public bool IsAttack { get {  return isAttack; } }
+    public bool IsAttack { get { return isAttack; } }
+    public int AttackCount {  get { return attackCount; } set { attackCount = value; } }
     public float DeltaLook { get { return deltaLook; } set { deltaLook = value; } }
     public bool IsLockOn { get { return isLockOn; } }
     public bool IsSkill { get { return isSkill; } }
@@ -50,6 +53,13 @@ public class PlayerInputSystem : MonoBehaviour
     {
         bool isPressed = input.isPressed;
 
+        //if (isPressed)
+        //{
+        //    attackCount++;
+
+        //    Debug.Log(attackCount);
+        //}
+        
         SetAttack(isPressed);
     }
 
@@ -95,7 +105,7 @@ public class PlayerInputSystem : MonoBehaviour
         isDrain = isPressed;
     }
 
-    private void SetAttack(bool isPressed)
+    public void SetAttack(bool isPressed)
     {
         isAttack = isPressed;
     }

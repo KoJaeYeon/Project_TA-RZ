@@ -9,6 +9,8 @@ public class PlayerAnimationEvent : MonoBehaviour
     
     public void NextCombo()
     {
-        _player.IsNext = true;
+       // _player.IsNext = true;
     }
+
+
 }
