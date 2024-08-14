@@ -6,7 +6,7 @@ using Zenject;
 
 public class PlayerResourceSystem : MonoBehaviour
 {
-    [Inject] Player _player;
+    Player _player;
     [Inject] DataManager _dataManager;
 
     [SerializeField] GameObject[] ArmUnitEffects; 
@@ -14,6 +14,11 @@ public class PlayerResourceSystem : MonoBehaviour
     private int _currentLevel;
 
     private int[] _needResource = new int[4];
+
+    private void Awake()
+    {
+        _player = GetComponent<Player>();
+    }
 
     private void OnEnable()
     {
