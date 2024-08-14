@@ -30,6 +30,7 @@ public class PlayerDrain : PlayerState
 
     public override void StateUpdate()
     {
+        base.StateUpdate();
         UpdateDrain();
     }
 
@@ -47,8 +48,7 @@ public class PlayerDrain : PlayerState
     }
 
     void UpdateDrain()
-    {
-        DrainInputCheck();
+    {        
         DrainRangeControl();
         DrainStaminaUse();
     }
@@ -60,14 +60,6 @@ public class PlayerDrain : PlayerState
         _drainSystem.OnSetActiveDraintEffect(false);        
         _inputSystem.SetDrain(false);
         if (_player.CurrentStamina > 0) _player.IsActiveStaminaRecovery = true;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    void StaminaCheck()
-    {
-
     }
 
     /// <summary>
@@ -85,7 +77,7 @@ public class PlayerDrain : PlayerState
     /// <summary>
     /// 드레인 키가 활성화 되어 있는지 확인하는 함수
     /// </summary>
-    void DrainInputCheck()
+    public override void InputCheck()
     {
         if (_inputSystem.IsDrain == false)
         {

@@ -17,6 +17,8 @@ public abstract class PlayerState : PlayerBaseState
     protected readonly int _dashChange = Animator.StringToHash("DashChange");
     protected readonly int _moveAnimation = Animator.StringToHash("Walk");
     protected readonly int _drain = Animator.StringToHash("Drain");
+    protected readonly int _knockBack = Animator.StringToHash("KnockBack");
+    protected readonly int _paralysis = Animator.StringToHash("Paralysis");
     #endregion
 
     public PlayerState(Player player)

@@ -15,7 +15,7 @@ public class PlayerSecondComboAttack : PlayerComboAttack
 
     public override void StateUpdate()
     {
-        ChangeStateBehaviour(_inputSystem);
+        base.StateUpdate();
 
         OnComboAttackUpdate("Attack2", State.ThirdComboAttack);
     }

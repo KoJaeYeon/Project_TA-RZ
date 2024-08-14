@@ -14,23 +14,21 @@ public class PlayerDash : PlayerState
 
     private Vector3 _dashDirection;
 
-    private State _previousState;
-
     public override void StateEnter()
     {
         _player.CurrentStamina -= _player._playerStat.Dash_Stamina;
-        _previousState = _state.CurrentState;
 
         if (_canDash)
         {
             InitializeDash();
         }
         else
-            _state.ChangeState(_previousState);
+            _state.ChangeState(State.Idle);
     }
 
     public override void StateUpdate()
     {
+        base.StateUpdate();
         OnUpdateDash();
     }
 
@@ -62,16 +60,14 @@ public class PlayerDash : PlayerState
         if (_rigidBody != null)
         {
             _dashTime += Time.deltaTime;
-
-            ChangeStateBehaviour(_inputSystem);
-
+           
             if (_dashTime >= _maxTime)
             {
                 _rigidBody.velocity = Vector3.zero;
 
                 _rigidBody.angularVelocity = Vector3.zero;
 
-                _state.ChangeState(_previousState);
+                _state.ChangeState(State.Idle);
             }
         }
     }
@@ -103,11 +99,11 @@ public class PlayerDash : PlayerState
         _canDash = true;
     }
 
-    protected override void ChangeStateBehaviour(PlayerInputSystem input)
+    public override void InputCheck()
     {
-        if (input.IsSkill)
+        if (_inputSystem.IsSkill)
         {
-
+            _state.ChangeState(State.Skill);
         }
     }
 }

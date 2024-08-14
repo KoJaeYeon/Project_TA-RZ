@@ -13,8 +13,7 @@ public class PlayerFirstComboAttack : PlayerComboAttack
 
     public override void StateUpdate()
     {
-        ChangeStateBehaviour(_inputSystem);
-
+        base.StateUpdate(); 
         OnComboAttackUpdate("Attack1", State.SecondComboAttack);
     }
 
