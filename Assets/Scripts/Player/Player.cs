@@ -7,27 +7,36 @@ using Zenject;
 
 public class Player : MonoBehaviour, IHit
 {
-    [Inject]
-    private PlayerManager _playerManager { get; }
+    #region InJect
+    [Inject] private PlayerManager _playerManager { get; }
     [Inject] public DataManager dataManager;
+    #endregion
+
+    #region PlayerComponent
     private PlayerInputSystem _inputSystem;
     private PlayerStateMachine _state;
-    private PlayerResourceSystem _resourceSystem;
-    private Rigidbody _rigidBody;
     private Camera _camera;
-    private Action<float, float, float, int, float> _statChangeCallback;
-
+    
     public PC_Common_Stat _playerStat { get; private set; } = new PC_Common_Stat();
     public PC_Level _PC_Level { get; private set; } = new PC_Level();
-
     public Camera MainCamera { get { return _camera; } }
+    #endregion
+
+    #region PropChanged
+    public event PropertyChangedEventHandler PropertyChanged;
+    protected virtual void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+    #endregion
 
     #region PlayerValue
+    [SerializeField] int _currentAmmo;
     float _currentHP;
     float _currentSkill;
     float _currentStamina;
-    [SerializeField] int _currentAmmo;
     public bool IsActiveStaminaRecovery { get; set; } = true;
+    bool _isPlayerAlive = true;
 
 
     public float CurrentHP
@@ -105,17 +114,23 @@ public class Player : MonoBehaviour, IHit
             OnPropertyChanged(nameof(HP));
         }
     }
+    public bool IsPlayerAlive
+    {
+        get { return _isPlayerAlive; }
+        set
+        {
+            if (_isPlayerAlive == value)
+                return;
+
+            _isPlayerAlive = value;
+            OnPropertyChanged(nameof(IsPlayerAlive));
+        }
+    }
 
     public bool IsNext { get; set; }
     #endregion
 
-    #region PropChanged
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected virtual void OnPropertyChanged(string propertyName)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-    #endregion
+    
 
     private void Awake()
     {
@@ -139,8 +154,6 @@ public class Player : MonoBehaviour, IHit
     {
         _state = gameObject.AddComponent<PlayerStateMachine>();
         _inputSystem = gameObject.AddComponent<PlayerInputSystem>();
-        _resourceSystem = gameObject.GetComponent<PlayerResourceSystem>();
-        _rigidBody = GetComponent<Rigidbody>();
         _camera = Camera.main;
     }
 
@@ -220,28 +233,34 @@ public class Player : MonoBehaviour, IHit
     #region Hit
     public void Hit(float damage, float paralysisTime)
     {
-        PlayerHit.Pc_Stiff_Time = paralysisTime;
-
-        Debug.Log(_currentHP);
+        if(_isPlayerAlive == false)
+        {
+            return;
+        }
 
         if (_currentHP <= 0)
         {
             _state.ChangeState(State.Death);
-
-            return;
         }
+        else
+        {
+            PlayerHit.Pc_Stiff_Time = paralysisTime;
 
-        CurrentHP -= damage;
+            CurrentHP -= damage;
 
-        _state.OnDamagedStateChange();
+            _state.OnDamagedStateChange();
+        }
     }
 
     public void ApplyKnockback(Vector3 otherPosition, float knockBackTime)
     {
-        PlayerKnockBack._knockBackPosition = otherPosition;
-        PlayerKnockBack.Pc_Knock_Back_Time = knockBackTime;
+        if(_isPlayerAlive)
+        {
+            PlayerKnockBack._knockBackPosition = otherPosition;
+            PlayerKnockBack.Pc_Knock_Back_Time = knockBackTime;
 
-        _state.OnKnockBackStateChange();
+            _state.OnKnockBackStateChange();
+        }
     }
 
     #endregion

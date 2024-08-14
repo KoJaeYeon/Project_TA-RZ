@@ -8,11 +8,12 @@ public class PlayerKnockBack : PlayerStaus
     
     public static Vector3 _knockBackPosition { get; set; }
     public static float Pc_Knock_Back_Time { get; set; } = 1.0f;
+
     private float Pc_Knock_Back_Speed = 5f;
 
     public override void StateEnter()
     {
-        _player.StartCoroutine(KnockBack());
+        _coroutine = _player.StartCoroutine(KnockBack());
 
         _animator.SetTrigger(_knockBack);
 
@@ -32,7 +33,7 @@ public class PlayerKnockBack : PlayerStaus
     
     public override void StateExit()
     {
-        _animator.speed = 1f;
+        base.StateExit();
     }
 
     private IEnumerator KnockBack()

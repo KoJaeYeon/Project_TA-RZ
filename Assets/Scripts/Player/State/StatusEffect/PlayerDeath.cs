@@ -15,6 +15,8 @@ public class PlayerDeath : PlayerStaus
         _animator.SetBool(_deathCheck, true);
 
         _player.StartCoroutine(DeathUI());
+
+        _player.IsPlayerAlive = false;
     }
 
     public override void StateUpdate()

@@ -8,7 +8,7 @@ public class PlayerHit : PlayerStaus
 
     public static float Pc_Stiff_Time { get; set; } = 0.4f;
 
-    Coroutine _coroutine;
+    
 
     public override void StateEnter()
     {
@@ -34,10 +34,7 @@ public class PlayerHit : PlayerStaus
 
         //_animator.SetLayerWeight(1, 0f);
 
-        if (_coroutine != null)
-        {
-            _player.StopCoroutine(_coroutine);
-        }
+        base.StateExit();
     }
 
     private IEnumerator Paralysis(float stiffTime)
