@@ -103,12 +103,12 @@ public class DataManager
 
         foreach (var item in jsonArray)
         {
-            string idStr = item["ID"].ToString();
-            int levelMinRequire = ParseInt(item["Level_Min_Require"]);
-            int levelConsumption = ParseInt(item["Level_Consumption"]);
-            float levelAtkPowerMultiplier = ParseFloat(item["Level_Atk_Power_Multiplier"]);
-            float levelAtkRangeMultiplier = ParseFloat(item["Level_Atk_Range_Multiplier"]);
-            bool levelStiffIgnoring = bool.Parse(item["Level_Stiff_Ignoring"].ToString());
+            string idStr = item[nameof(PC_Level.ID)].ToString();
+            int levelMinRequire = ParseInt(item[nameof(PC_Level.Level_Min_Require)]);
+            int levelConsumption = ParseInt(item[nameof(PC_Level.Level_Consumption)]);
+            float levelAtkPowerMultiplier = ParseFloat(item[nameof(PC_Level.Level_Atk_Power_Multiplier)]);
+            float levelAtkRangeMultiplier = ParseFloat(item[nameof(PC_Level.Level_Atk_Range_Multiplier)]);
+            bool levelStiffIgnoring = bool.Parse(item[nameof(PC_Level.Level_Stiff_Ignoring)].ToString());
 
             PC_Level stat = new PC_Level(idStr, levelMinRequire, levelConsumption, levelAtkPowerMultiplier, levelAtkRangeMultiplier, levelStiffIgnoring);
             AddStatToStatDictionary(idStr, stat);
