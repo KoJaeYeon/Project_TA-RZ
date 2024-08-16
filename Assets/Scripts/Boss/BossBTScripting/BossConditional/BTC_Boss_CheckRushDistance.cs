@@ -4,7 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BTC_Boss_CheckDistance : BossConditional
+[TaskCategory("Boss/Rush")]
+public class BTC_Boss_CheckRushDistance : BossConditional
 {
     [SerializeField] private SharedFloat _range;
 
@@ -16,7 +17,7 @@ public class BTC_Boss_CheckDistance : BossConditional
             return TaskStatus.Failure;
         }
 
-        if (_owner.CheckDistance(_range.Value))
+        if (!_owner.CheckDistance(_range.Value))
         {
             return TaskStatus.Success;
         }
