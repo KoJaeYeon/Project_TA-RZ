@@ -7,7 +7,7 @@ public class Player : MonoBehaviour, IHit
 {
     #region InJect
     [Inject] private PlayerManager _playerManager { get; }
-    [Inject] public DataManager dataManager;
+    [Inject] public DataManager dataManager { get; }
     #endregion
 
     #region PlayerComponent
@@ -31,7 +31,7 @@ public class Player : MonoBehaviour, IHit
     #region PlayerValue
     [SerializeField] int _currentAmmo;
     float _currentHP;
-    float _currentSkill;
+    [SerializeField] float _currentSkill;
     float _currentStamina;
     public bool IsActiveStaminaRecovery { get; set; } = true;
     bool _isPlayerAlive = true;
@@ -141,6 +141,10 @@ public class Player : MonoBehaviour, IHit
     private void Update()
     {
         StaminaRecovery();
+        if(Input.GetKeyDown(KeyCode.N))
+        {
+            CurrentSkill++;
+        }
     }
 
     private void InitializePlayer()
