@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 using Zenject;
@@ -38,7 +36,7 @@ public class Player : MonoBehaviour, IHit
     public bool IsActiveStaminaRecovery { get; set; } = true;
     bool _isPlayerAlive = true;
 
-
+    
     public float CurrentHP
     {
         get { return _currentHP; }
@@ -51,6 +49,7 @@ public class Player : MonoBehaviour, IHit
             OnPropertyChanged(nameof(CurrentHP));
         }
     }
+
     public float CurrentSkill
     {
         get { return _currentSkill; }

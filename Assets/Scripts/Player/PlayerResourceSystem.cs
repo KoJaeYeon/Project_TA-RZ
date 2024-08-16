@@ -64,7 +64,7 @@ public class PlayerResourceSystem : MonoBehaviour
     {
         while (true)
         {
-            var level = _dataManager.GetStat("P501") as PC_Level;
+            var level = _dataManager.GetData("P501") as PC_Level;
             if (level == null)
             {
                 Debug.Log("Player의 암유닛 필요 자원을 받아오지 못했습니다.");

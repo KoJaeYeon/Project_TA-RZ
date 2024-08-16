@@ -1,8 +1,6 @@
-using UnityEngine;
-
+[System.Serializable]
 public abstract class Data
-{
-    public abstract Data DeepCopy();
+{   
 
 }
 //IEnumerator LoadData(string idStr)
