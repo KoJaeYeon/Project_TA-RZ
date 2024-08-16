@@ -18,6 +18,7 @@ public class Monster : MonoBehaviour,IHit
     public float Mon_Common_CoolTime;
 
     public bool isDamaged;
+    public bool isAtk;
     public float Mon_Common_Hp_Remain;
     [Inject] public Player Player { get;}
 
@@ -66,4 +67,6 @@ public class Monster : MonoBehaviour,IHit
             Bt.enabled = true;
         }
     }
+
+    
 }
