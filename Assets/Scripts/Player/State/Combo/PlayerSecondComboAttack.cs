@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class PlayerSecondComboAttack : PlayerComboAttack
 {
-    public PlayerSecondComboAttack(Player player) : base(player) { }
+    public PlayerSecondComboAttack(Player player) : base(player)
+    {
+        PlayerAnimationEvent _event;
+        _event = player.GetComponentInChildren<PlayerAnimationEvent>();
+        _event.AddEvent(AttackType.secondAttack, SecondAttack);
+    }
 
     public override void StateEnter()
     {
@@ -23,12 +28,12 @@ public class PlayerSecondComboAttack : PlayerComboAttack
     public override void StateExit()
     {
         ComboAnimation(_secondCombo, false);
+
         base.StateExit();
     }
 
     private void SecondAttack()
     {
-        //2타 공격 로직
-    }
 
+    }
 }

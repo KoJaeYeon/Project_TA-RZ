@@ -95,7 +95,7 @@ public class PlayerInputSystem : MonoBehaviour
         isDrain = isPressed;
     }
 
-    private void SetAttack(bool isPressed)
+    public void SetAttack(bool isPressed)
     {
         isAttack = isPressed;
     }

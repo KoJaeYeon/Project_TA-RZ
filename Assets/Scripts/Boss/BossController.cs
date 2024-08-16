@@ -12,18 +12,18 @@ public enum BossPhase
 public class BossController : MonoBehaviour
 {
     [Header("기본 정보")]
-    [SerializeField] private float _maxHp;
+    public float _maxHp;
     [SerializeField] private float _hp;
+    [HideInInspector] public float _hpPercent;
     [SerializeField] private float _speed;
     [SerializeField] private float _damage;
     [SerializeField] private float _attackSpeed;
     [SerializeField] private float _attackRange;
     [SerializeField] private float _rotSpeed;
 
-    [Header("페이즈 체력")]
+    [Header("페이즈 체력 퍼센트")]
     [SerializeField] private float _phaseOnePer;
     [SerializeField] private float _phaseTwoPer;
-    private float _hpPercent;
 
     [Header("2페이즈 돌진공격")]
     [SerializeField] private float _dashSpeed;
@@ -38,6 +38,11 @@ public class BossController : MonoBehaviour
 
     private Transform _playerTr;
     private TrailRenderer _trail;
+    [Header("뿌리")]
+    [SerializeField] private SpriteRenderer _markRoot;
+    [SerializeField] private RootContoller[] _roots;
+    [Header("폭발")]
+    [SerializeField] private GameObject _explosion;
 
     private readonly int _hashPhase = Animator.StringToHash("");
     private readonly int _hashAttack = Animator.StringToHash("");
@@ -55,6 +60,7 @@ public class BossController : MonoBehaviour
         _trail = GetComponentInChildren<TrailRenderer>();
         _trail.Clear();
         _trail.gameObject.SetActive(false);
+        _markRoot.gameObject.SetActive(false);
 
         _bt.SetVariableValue("Phase1_Per", _phaseOnePer);
         _bt.SetVariableValue("Phase2_Per", _phaseTwoPer);
@@ -67,7 +73,7 @@ public class BossController : MonoBehaviour
 
         _maxHp = 3000;
 
-        #endregion
+        #endregion 테스트
     }
 
     private void OnEnable()
@@ -88,41 +94,94 @@ public class BossController : MonoBehaviour
         _hpPercent = _hp / _maxHp * 100;
     }
 
-    #endregion
+    #endregion 테스트
 
     #region BTA
 
+    #region Phase1
+
+    public void MarkActiveRoot()
+    {
+        _markRoot.gameObject.transform.position = _playerTr.position;
+        _markRoot.gameObject.SetActive(true);
+    }
+    public void ActiveRoot()
+    {
+        foreach (var root in _roots)
+        {
+            if (root.rootState == RootState.Emerge)
+                continue;
+
+            root.RootAttack(_markRoot.gameObject.transform.position);
+            break;
+        }
+    }
+    public void MarkSmash()
+    {
+        foreach (var root in _roots)
+        {
+            if (root.rootState == RootState.Hide)
+                continue;
+
+            root.MarkSmash(RotateToPlayer());
+        }
+    }
+    public void RootSmash()
+    {
+        foreach (var root in _roots)
+        {
+            if (root.rootState == RootState.Hide)
+                continue;
+
+            root.RootSmash();
+        }
+    }
+    public void Explosion()
+    { 
+        _explosion.SetActive(true);
+    }
+
+    #endregion Phase1
+
+    //보스 회전 관련
     public void LookAtPlayer()
     {
-        Vector3 direction = (_playerTr.position - transform.position);
-        direction.y = 0;
-        direction.Normalize();
-        Quaternion rotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, _rotSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, RotateToPlayer(), _rotSpeed * Time.deltaTime);
     }
     public Quaternion PlayerRot()
     {
-        Vector3 direction = (_playerTr.position - transform.position);
-        direction.y = 0;
-        direction.Normalize();
-        Quaternion rotation = Quaternion.LookRotation(direction);
-        return rotation;
+        return RotateToPlayer();
+    }
+    public Vector3 PlayerPos()
+    { 
+        return _playerTr.position;
     }
 
+    //보스 대쉬 공격
     public void DrawDashTrail()
     {
         _trail.gameObject.SetActive(true);
     }
-    public void DashAttack(float speed)
+    //방향 설정
+    public Vector3 SetDashDirection()
     {
-        Vector3 direction = (_playerTr.position - transform.position).normalized;
-        _rb.AddForce(direction * speed, ForceMode.Impulse);
+        Vector3 direction;
+        direction = (_playerTr.position - transform.position);
+        direction.y = 0;
+        direction.Normalize();
+        return direction;
+    }
+    //돌진
+    public void DashAttack(float speed, Vector3 direction)
+    {
+        _rb.velocity = direction * speed;
     }
 
-    #endregion
+    #endregion BTA
 
     #region BTC
 
+    //거리 체크
     public bool CheckDistance(float range)
     {
         if (_playerTr == null) return false;
@@ -134,6 +193,7 @@ public class BossController : MonoBehaviour
         return false;
     }
 
+    //보스 Hp 체크
     public bool CheckPhase(float standard)
     {
         if (standard < _hpPercent) return true;
@@ -141,5 +201,19 @@ public class BossController : MonoBehaviour
         return false;
     }
 
-    #endregion
+    #endregion BTC
+
+    private Quaternion RotateToPlayer()
+    {
+        Vector3 direction = (_playerTr.position - transform.position);
+        direction.y = 0;
+        direction.Normalize();
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        return rotation;
+    }
+
+    public void Hurt(float damage)
+    {
+        _hp -= damage;
+    }
 }

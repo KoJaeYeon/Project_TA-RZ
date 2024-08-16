@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace BehaviorDesigner.Runtime.Tasks
 {
@@ -52,6 +52,11 @@ namespace BehaviorDesigner.Runtime.Tasks
                 // Add the difference between Time.time and pauseTime to figure out a new start time.
                 startTime += (Time.time - pauseTime);
             }
+        }
+
+        public override void OnEnd()
+        {
+            base.OnEnd();
         }
 
         public override void OnReset()
