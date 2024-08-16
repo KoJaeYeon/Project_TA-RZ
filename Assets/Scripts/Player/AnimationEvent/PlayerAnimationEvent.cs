@@ -126,9 +126,16 @@ public class PlayerAnimationEvent : MonoBehaviour
 
     private IEnumerator ReturnSecondEffect(GameObject effect)
     {
-        yield return new WaitWhile(()=>effect.GetComponent<ParticleSystem>().isPlaying);
+        yield return new WaitWhile(() => effect.GetComponent<ParticleSystem>().isPlaying);
 
         effect.transform.SetParent(GetEffectTransform(AttackType.secondAttack));
     }
+
+    public void SkillEnd()
+    {
+        _player.IsSkillAnimationEnd = true;
+
+    }
+
 }
 
