@@ -58,7 +58,7 @@ public class Monster : MonoBehaviour,IHit
         Bt.enabled = false;
         var anim = GetComponent<Animator>();
         anim.SetTrigger("Damaged");
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
         isDamaged = false;
         if (isDamaged == false)
         {
