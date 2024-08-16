@@ -9,7 +9,7 @@ public class Monster_CheckHp : Conditional
     [SerializeField] SharedMonster Monster;
     public override TaskStatus OnUpdate()
     {
-        if (Monster.Value.Mon_Common_CurrentHp <= 0)
+        if (Monster.Value.Mon_Common_Hp_Remain <= 0)
         {
             return TaskStatus.Success;
         }
