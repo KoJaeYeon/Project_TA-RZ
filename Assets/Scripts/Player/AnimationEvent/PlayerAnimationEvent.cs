@@ -58,5 +58,10 @@ public class PlayerAnimationEvent : MonoBehaviour
     {
         _attackDictionary[AttackType.fourthAttack].Invoke();
     }
+
+    public void SkillEnd()
+    {
+        _player.IsSkillAnimationEnd = true;
+    }
 }
 

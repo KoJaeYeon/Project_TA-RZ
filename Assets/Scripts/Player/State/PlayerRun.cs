@@ -1,10 +1,14 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Windows;
 
 
 public class PlayerRun : PlayerState
 {
-    public PlayerRun(Player player) : base(player) { }
+    public PlayerRun(Player player) : base(player)
+    {
+        _player.StartCoroutine(LoadRunMultiplier());
+    }
    
     #region RunValue
     private float _runSpeed = 5f;
@@ -16,7 +20,7 @@ public class PlayerRun : PlayerState
     private float _rotationVelocity;
     private float _targetRotation;
     private float _sphereRadius = 0.2f;
-    
+    private float skill1_Speed = 1.5f;
     private Vector3 _spherePosition;
     
     private bool _isGround;
@@ -43,7 +47,7 @@ public class PlayerRun : PlayerState
 
     private void InitializeRun()
     {
-        _isAction = false;
+        _isAction = false;        
     }
 
     private void OnUpdateRun()
@@ -66,7 +70,8 @@ public class PlayerRun : PlayerState
 
         if (!_isAction)
         {
-            _targetSpeed = _runSpeed;
+            float skill1_Speed_Multiplier = _player.IsSkillAcitve[0] ? skill1_Speed : 1;
+            _targetSpeed = _runSpeed * skill1_Speed_Multiplier;
 
             if (_inputSystem.Input == Vector2.zero)
             {
@@ -161,6 +166,31 @@ public class PlayerRun : PlayerState
         {
             _isAction = true;
             _state.ChangeState(State.Drain);
+        }
+        else if(_inputSystem.IsSkill && _player.SkillCheck())
+        {
+            _isAction = true;
+            _state.ChangeState(State.Skill);
+        }
+    }
+
+    IEnumerator LoadRunMultiplier()
+    {
+        while (true)
+        {
+            var data = _player.dataManager.GetData("S201") as PC_Skill;
+            if (data == null)
+            {
+                Debug.Log("Player의 스킬1 속도값을 받아오지 못했습니다.");
+                yield return new WaitForSeconds(1f);
+            }
+            else
+            {
+                skill1_Speed = data.Skill_Value[0];
+                Debug.Log("Player의 스킬1 속도값을 성공적으로 받아왔습니다.");
+                yield break;
+            }
+
         }
     }
 }

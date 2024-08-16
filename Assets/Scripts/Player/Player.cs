@@ -7,14 +7,14 @@ public class Player : MonoBehaviour, IHit
 {
     #region InJect
     [Inject] private PlayerManager _playerManager { get; }
-    [Inject] public DataManager dataManager;
+    [Inject] public DataManager dataManager { get; }
     #endregion
 
     #region PlayerComponent
     private PlayerInputSystem _inputSystem;
     private PlayerStateMachine _state;
     private Camera _camera;
-    
+
     public PC_Common_Stat _playerStat { get; private set; } = new PC_Common_Stat();
     public PC_Level _PC_Level { get; private set; } = new PC_Level();
     public Camera MainCamera { get { return _camera; } }
@@ -22,7 +22,7 @@ public class Player : MonoBehaviour, IHit
 
     #region PropChanged
     public event PropertyChangedEventHandler PropertyChanged;
-    protected virtual void OnPropertyChanged(string propertyName)
+    public void OnPropertyChanged(string propertyName)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
@@ -31,12 +31,14 @@ public class Player : MonoBehaviour, IHit
     #region PlayerValue
     [SerializeField] int _currentAmmo;
     float _currentHP;
-    float _currentSkill;
+    [SerializeField] float _currentSkill;
     float _currentStamina;
     public bool IsActiveStaminaRecovery { get; set; } = true;
     bool _isPlayerAlive = true;
+    public bool[] IsSkillAcitve { get; set; } = new bool[4] { false, false, false, false };
+    public float[] _skillCounption { get; private set; } = new float[4] { 25, 50, 75, 100 };
+    public bool IsSkillAnimationEnd { get; set; } = true;
 
-    
     public float CurrentHP
     {
         get { return _currentHP; }
@@ -55,8 +57,23 @@ public class Player : MonoBehaviour, IHit
         get { return _currentSkill; }
         set
         {
+            if (value <= 0)
+            {
+                value = 0;
+            }
+            else if (value > 100)
+            {
+                value = 100;
+            }
+
             if (_currentSkill == value)
                 return;
+
+            //스킬 사용 시 자원 획득 불가
+            foreach (bool isActive in IsSkillAcitve)
+            {
+                if (isActive == true) return;
+            }
 
             _currentSkill = value;
             OnPropertyChanged(nameof(CurrentSkill));
@@ -94,6 +111,14 @@ public class Player : MonoBehaviour, IHit
         get { return _currentAmmo; }
         set
         {
+            if (value <= 0)
+            {
+                value = 0;
+            }
+            else if (value > _playerStat.Resource_Own_Num)
+            {
+                value = _playerStat.Resource_Own_Num;
+            }
             if (_currentAmmo == value)
                 return;
 
@@ -141,12 +166,17 @@ public class Player : MonoBehaviour, IHit
     private void Update()
     {
         StaminaRecovery();
+        if(Input.GetKeyDown(KeyCode.N))
+        {
+            CurrentSkill++;
+        }
     }
 
     private void InitializePlayer()
     {
         _playerManager.SetPlayerObject(gameObject);
         StartCoroutine(LoadStat());
+        StartCoroutine(LoadSkillCounsumption());
     }
 
     private void InitializeComponent()
@@ -192,10 +222,17 @@ public class Player : MonoBehaviour, IHit
         return CurrentStamina > 0;
     }
 
+    public bool SkillCheck()
+    {
+        return CurrentSkill >= _skillCounption[0];
+    }
+
     public void Set_PC_Level(PC_Level _PC_Level)
     {
         this._PC_Level = _PC_Level;
     }
+
+    #region PlayerLoad
 
     IEnumerator LoadStat()
     {
@@ -223,6 +260,33 @@ public class Player : MonoBehaviour, IHit
         }
     }
 
+    IEnumerator LoadSkillCounsumption()
+    {
+        while (true)
+        {
+            var data = dataManager.GetData("S201") as PC_Skill;
+            if (data == null)
+            {
+                Debug.Log("Player의 스킬 소모값을 받아오지 못했습니다.");
+                yield return new WaitForSeconds(1f);
+            }
+            else
+            {
+                _skillCounption[0] = data.Skill_Gauge_Consumption;
+                for (int i = 1; i < 4; i++)
+                {
+                    string idStr = $"S20{1 + i}";
+                    data = dataManager.GetData(idStr) as PC_Skill;
+                    _skillCounption[i] = data.Skill_Gauge_Consumption;
+                }
+                Debug.Log("Player의 스킬 소모값을 성공적으로 받아왔습니다.");
+                yield break;
+            }
+
+        }
+    }
+    #endregion
+
     //checkGround 
     private void OnDrawGizmos()
     {
@@ -231,7 +295,7 @@ public class Player : MonoBehaviour, IHit
     }
 
     #region Hit
-    public void Hit(float damage, float paralysisTime)
+    public void Hit(float damage, float paralysisTime, Transform attackTrans)
     {
         if(_isPlayerAlive == false)
         {

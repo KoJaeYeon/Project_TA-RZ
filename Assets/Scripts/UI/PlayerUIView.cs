@@ -1,3 +1,4 @@
+using System.Collections;
 using System.ComponentModel;
 using TMPro;
 using UnityEngine;
@@ -12,8 +13,11 @@ public class PlayerUIView : MonoBehaviour
     [SerializeField] Slider StaminaSlider;
     [SerializeField] TextMeshProUGUI CurrenAmmoText;
     [SerializeField] TextMeshProUGUI Resource_OwnNum_Text;
+    [SerializeField]
+    GameObject[] GageImages;
 
     [Inject] private Player _player;
+        
     private void OnEnable()
     {
         if (_player != null)
@@ -53,6 +57,7 @@ public class PlayerUIView : MonoBehaviour
                 break;
             case nameof(_player.CurrentSkill):
                 SkillSlider.value = _player.CurrentSkill / 100f;
+                AcitveSkillImage(_player.CurrentSkill);
                 break;
             case nameof(_player.CurrentAmmo):
                 CurrenAmmoText.text = _player.CurrentAmmo.ToString("000");
@@ -61,6 +66,45 @@ public class PlayerUIView : MonoBehaviour
                 Resource_OwnNum_Text.text = _player._playerStat.Resource_Own_Num.ToString("000");
                 break;
 
+        }
+    }
+
+    void AcitveSkillImage(float currentSkill)
+    {
+        if(currentSkill < _player._skillCounption[0])
+        {
+            GageImages[0].SetActive(false);
+            GageImages[1].SetActive(false);
+            GageImages[2].SetActive(false);
+            GageImages[3].SetActive(false);
+        }
+        else if (currentSkill < _player._skillCounption[1])
+        {
+            GageImages[0].SetActive(true);
+            GageImages[1].SetActive(false);
+            GageImages[2].SetActive(false);
+            GageImages[3].SetActive(false);
+        }
+        else if (currentSkill < _player._skillCounption[2])
+        {
+            GageImages[0].SetActive(true);
+            GageImages[1].SetActive(true);
+            GageImages[2].SetActive(false);
+            GageImages[3].SetActive(false);
+        }
+        else if (currentSkill < _player._skillCounption[3])
+        {
+            GageImages[0].SetActive(true);
+            GageImages[1].SetActive(true);
+            GageImages[2].SetActive(true);
+            GageImages[3].SetActive(false);
+        }
+        else
+        {
+            GageImages[0].SetActive(true);
+            GageImages[1].SetActive(true);
+            GageImages[2].SetActive(true);
+            GageImages[3].SetActive(true);
         }
     }
 }
