@@ -11,7 +11,7 @@ public class MonsterStun : Action
     [SerializeField] SharedMonster Monster;
     public override TaskStatus OnUpdate()
     {
-        Monster.Value.StartCoroutine(Monster.Value.WaitForStun());
+        //Monster.Value.StartCoroutine(Monster.Value.WaitForStun());
         return TaskStatus.Success;  
     }
 }
