@@ -22,7 +22,7 @@ public class Player : MonoBehaviour, IHit
 
     #region PropChanged
     public event PropertyChangedEventHandler PropertyChanged;
-    protected virtual void OnPropertyChanged(string propertyName)
+    public void OnPropertyChanged(string propertyName)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
@@ -95,6 +95,14 @@ public class Player : MonoBehaviour, IHit
         get { return _currentAmmo; }
         set
         {
+            if (value <= 0)
+            {
+                value = 0;
+            }
+            else if (value > _playerStat.Resource_Own_Num)
+            {
+                value = _playerStat.Resource_Own_Num;
+            }
             if (_currentAmmo == value)
                 return;
 

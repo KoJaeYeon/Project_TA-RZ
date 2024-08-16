@@ -96,12 +96,12 @@ public class PlayerResourceSystem : MonoBehaviour
 
     void ChangeLevel(int currentAmmo)
     {
-        if(false)
+        if (_player.IsSkillAcitve[3] == true)
         {
             //4단계 조건 성공 시
             if (_currentLevel == 4) return;
 
-            StartCoroutine(LoadData("P504"));
+            StartCoroutine(LoadData("P505"));
             _currentLevel = 4;
 
             EffectAcitve(6, 7);

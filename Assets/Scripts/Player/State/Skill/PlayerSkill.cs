@@ -129,8 +129,18 @@ public class PlayerSkill : PlayerState
         int index = skillindex - 1;
         _player.IsSkillAcitve[index] = true;
         _skillSystem.SetActive_Skiil_Effect(index, true);
+        if (skillIndex == 4)
+        {
+            _player.OnPropertyChanged(nameof(_player.CurrentAmmo));
+        }
+
         yield return new WaitForSeconds(_PC_Skill.Skill_Duration);
+
         _player.IsSkillAcitve[index] = false;
         _skillSystem.SetActive_Skiil_Effect(index, false);
+        if(skillIndex == 4)
+        {
+            _player.OnPropertyChanged(nameof(_player.CurrentAmmo));
+        }
     }
 }
