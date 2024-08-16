@@ -14,7 +14,7 @@ public class Player : MonoBehaviour, IHit
     private PlayerInputSystem _inputSystem;
     private PlayerStateMachine _state;
     private Camera _camera;
-    
+
     public PC_Common_Stat _playerStat { get; private set; } = new PC_Common_Stat();
     public PC_Level _PC_Level { get; private set; } = new PC_Level();
     public Camera MainCamera { get { return _camera; } }
@@ -37,6 +37,7 @@ public class Player : MonoBehaviour, IHit
     bool _isPlayerAlive = true;
     public bool[] IsSkillAcitve { get; set; } = new bool[4] { false, false, false, false };
     public float[] _skillCounption { get; private set; } = new float[4] { 25, 50, 75, 100 };
+    public bool IsSkillAnimationEnd { get; set; } = true;
 
     public float CurrentHP
     {

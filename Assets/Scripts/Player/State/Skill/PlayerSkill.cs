@@ -44,12 +44,13 @@ public class PlayerSkill : PlayerState
 
     public override void StateExit()
     {
-        
+        _player.IsSkillAnimationEnd = false;
     }
 
     private void StartSkill()
     {
         _PC_Skill = GetSkill() as PC_Skill;
+        _player.IsSkillAnimationEnd = false;
         SkillConsume();
         SelectSkillAndStart();
     }
@@ -60,7 +61,7 @@ public class PlayerSkill : PlayerState
 
         if(skillIndex == 3)
         {
-            if (_animatorStateInfo.IsName($"Skill_3_2") && _animatorStateInfo.normalizedTime >= 0.99f)
+            if (_animatorStateInfo.IsName("Skill_3_2") && _animatorStateInfo.normalizedTime >= 0.99f || _player.IsSkillAnimationEnd)
             {
                 _state.ChangeState(State.Idle);
                 return;
@@ -68,7 +69,7 @@ public class PlayerSkill : PlayerState
         }
         else
         {
-            if (_animatorStateInfo.IsName($"Skill_{skillIndex}") && _animatorStateInfo.normalizedTime >= 0.99f)
+            if (_animatorStateInfo.IsName($"Skill_{skillIndex}") && _animatorStateInfo.normalizedTime >= 0.99f || _player.IsSkillAnimationEnd)
             {
                 _state.ChangeState(State.Idle);
                 return;
