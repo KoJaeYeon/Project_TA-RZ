@@ -29,7 +29,7 @@ public class PlayerIdle : PlayerState
         {
             _state.ChangeState(State.Drain);
         }
-        else if (_inputSystem.IsSkill)
+        else if (_inputSystem.IsSkill && _player.SkillCheck())
         {
             _state.ChangeState(State.Skill);
         }

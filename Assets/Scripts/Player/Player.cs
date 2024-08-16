@@ -35,7 +35,8 @@ public class Player : MonoBehaviour, IHit
     float _currentStamina;
     public bool IsActiveStaminaRecovery { get; set; } = true;
     bool _isPlayerAlive = true;
-    public int[] _skillCounption { get; private set; } = new int[4] { 25, 50, 75, 100 };
+    public bool[] IsSkillAcitve { get; set; }
+    public float[] _skillCounption { get; private set; } = new float[4] { 25, 50, 75, 100 };
 
     public float CurrentHP
     {
@@ -199,13 +200,15 @@ public class Player : MonoBehaviour, IHit
 
     public bool SkillCheck()
     {
-        return CurrentStamina >= 25;
+        return CurrentSkill >= _skillCounption[0];
     }
 
     public void Set_PC_Level(PC_Level _PC_Level)
     {
         this._PC_Level = _PC_Level;
     }
+
+    #region PlayerLoad
 
     IEnumerator LoadStat()
     {
@@ -258,6 +261,7 @@ public class Player : MonoBehaviour, IHit
 
         }
     }
+    #endregion
 
     //checkGround 
     private void OnDrawGizmos()
@@ -267,7 +271,7 @@ public class Player : MonoBehaviour, IHit
     }
 
     #region Hit
-    public void Hit(float damage, float paralysisTime)
+    public void Hit(float damage, float paralysisTime, Transform attackTrans)
     {
         if(_isPlayerAlive == false)
         {

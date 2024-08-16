@@ -162,5 +162,10 @@ public class PlayerRun : PlayerState
             _isAction = true;
             _state.ChangeState(State.Drain);
         }
+        else if(_inputSystem.IsSkill && _player.SkillCheck())
+        {
+            _isAction = true;
+            _state.ChangeState(State.Skill);
+        }
     }
 }
