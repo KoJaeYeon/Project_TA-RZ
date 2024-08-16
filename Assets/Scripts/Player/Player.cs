@@ -35,7 +35,7 @@ public class Player : MonoBehaviour, IHit
     float _currentStamina;
     public bool IsActiveStaminaRecovery { get; set; } = true;
     bool _isPlayerAlive = true;
-    public bool[] IsSkillAcitve { get; set; }
+    public bool[] IsSkillAcitve { get; set; } = new bool[4] { false, false, false, false };
     public float[] _skillCounption { get; private set; } = new float[4] { 25, 50, 75, 100 };
 
     public float CurrentHP

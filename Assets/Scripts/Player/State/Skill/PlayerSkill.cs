@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerSkill : PlayerState
@@ -5,6 +6,13 @@ public class PlayerSkill : PlayerState
     public PlayerSkill(Player player) : base(player)
     {
     }
+
+    #region AnimatorStringToHash
+    protected AnimatorStateInfo _animatorStateInfo;
+
+    protected readonly int _skill = Animator.StringToHash("Skill");
+    protected readonly int _skill_Index = Animator.StringToHash("Skill_Index");
+    #endregion
 
     #region SkillComponent
     private PC_Skill _PC_Skill;
@@ -17,12 +25,18 @@ public class PlayerSkill : PlayerState
     public override void StateEnter()
     {
        StartSkill();
+
+       _animator.SetTrigger(_skill);
+
+       _animator.SetInteger(_skill_Index, skillIndex);
     }
 
     public override void StateUpdate()
     {
         base.StateUpdate();
         Debug.Log(_PC_Skill);
+
+        OnSkillUpdate();
     }
 
     public override void StateExit()
@@ -34,6 +48,37 @@ public class PlayerSkill : PlayerState
     {
         _PC_Skill = GetSkill() as PC_Skill;
         SkillConsume();
+        SelectSkillAndStart();
+    }
+
+    protected void OnSkillUpdate()
+    {
+        AnimatorStateInfo _animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+
+        if (_animatorStateInfo.IsName($"Skill_{skillIndex}") && _animatorStateInfo.normalizedTime >= 0.99f)
+        {
+            _state.ChangeState(State.Idle);
+            return;
+        }
+    }
+
+    private void SelectSkillAndStart()
+    {        
+        switch(skillIndex)
+        {
+            case 1:
+                _player.StartCoroutine(ApplySkillDuration(skillIndex));
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            default:
+                Debug.LogError("Skill Error!");
+                break;
+        }
     }
 
     private Data GetSkill()
@@ -72,5 +117,12 @@ public class PlayerSkill : PlayerState
         {
             _state.ChangeState(State.Dash);
         }
+    }
+
+    IEnumerator ApplySkillDuration(int skillindex)
+    {
+        _player.IsSkillAcitve[skillindex - 1] = true;
+        yield return new WaitForSeconds(_PC_Skill.Skill_Duration);
+        _player.IsSkillAcitve[skillindex - 1] = false;
     }
 }
