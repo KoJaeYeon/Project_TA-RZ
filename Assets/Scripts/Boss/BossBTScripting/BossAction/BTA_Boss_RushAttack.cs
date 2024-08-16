@@ -23,7 +23,7 @@ public class BTA_Boss_RushAttack : BossAction
         _startPos = transform.position;
         _isDash = true;
 
-        direction = _owner.SetDashDirection();
+        direction = _owner.SetRushDirection();
     }
 
     public override TaskStatus OnUpdate()
