@@ -27,20 +27,21 @@ public class Monster : MonoBehaviour,IHit
         Bt = GetComponent<BehaviorTree>();
     }
 
-    public void Hit(float damage)
+    public void Hit(float damage, float paralysisTime)
     {
         isDamaged = true;
         Mon_Common_Hp_Remain -= damage;
         
         if (Mon_Common_Hp_Remain > 0)
         {
-            StartCoroutine(WaitForStun());
+            StartCoroutine(WaitForStun(paralysisTime));
         }
     }
-    public void ApplyKnockback()
+    public void ApplyKnockback(Vector3 otherPosition,float knockBackTime)
     {
         var knockback = GetComponent<Rigidbody>();
-        knockback.AddForce(0,0,0);
+        knockback.AddForce(otherPosition);
+        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -48,17 +49,17 @@ public class Monster : MonoBehaviour,IHit
         if (other.CompareTag("Player"))
         {
             Debug.Log("데미지받음");
-            Hit(10);
-            ApplyKnockback();
+            Hit(10,5);
+            ApplyKnockback(this.gameObject.transform.position,10);
         }
     }
 
-    public IEnumerator WaitForStun()
+    public IEnumerator WaitForStun(float paralysisTime)
     {
         Bt.enabled = false;
         var anim = GetComponent<Animator>();
         anim.SetTrigger("Damaged");
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(paralysisTime);
         isDamaged = false;
         if (isDamaged == false)
         {
