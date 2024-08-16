@@ -158,12 +158,12 @@ public class BossController : MonoBehaviour
     }
 
     //보스 대쉬 공격
-    public void DrawDashTrail()
+    public void DrawRushTrail()
     {
         _trail.gameObject.SetActive(true);
     }
     //방향 설정
-    public Vector3 SetDashDirection()
+    public Vector3 SetRushDirection()
     {
         Vector3 direction;
         direction = (_playerTr.position - transform.position);
@@ -172,7 +172,7 @@ public class BossController : MonoBehaviour
         return direction;
     }
     //돌진
-    public void DashAttack(float speed, Vector3 direction)
+    public void RushAttack(float speed, Vector3 direction)
     {
         _rb.velocity = direction * speed;
     }
