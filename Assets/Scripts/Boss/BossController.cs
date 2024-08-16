@@ -9,6 +9,13 @@ public enum BossPhase
     Phase1, Phase2
 }
 
+public struct BossPattern
+{
+    public string patternName;
+    public float cooltime;
+
+}
+
 public class BossController : MonoBehaviour
 {
     [Header("기본 정보")]
@@ -25,10 +32,36 @@ public class BossController : MonoBehaviour
     [SerializeField] private float _phaseOnePer;
     [SerializeField] private float _phaseTwoPer;
 
+    [Header("1페이즈 기믹")]
+    public float gimmickDamage;
+    private float _gimmickCoolDown;
+    public bool isGimmick;
+    [Header("1페이즈 뿌리 공격")]
+    public float rootDamage;
+    private float _rootCoolDown;
+    public bool isRootAttack;
+    [Header("1, 2페이즈 내려치기")]
+    public float smashDamage;
+    private float _smashCoolDown;
+    public bool isSmash;
+    [Header("1페이즈 폭발")]
+    public float explosionDamage;
+    private float _explotionCoolDown;
+    public bool isExplosion;
+
     [Header("2페이즈 돌진공격")]
-    [SerializeField] private float _dashSpeed;
-    [SerializeField] private float _dashRange;
-        
+    [SerializeField] private float _rushSpeed;
+    [SerializeField] private float _rushRange;
+    public float rushDamage;
+    private float _rushCoolDown;
+    public bool isRush;
+    [Header("2페이즈 휘두르기")]
+    public float swingDamage;
+    private float _swingCoolDown;
+    public bool isSwing;
+    //[Header("2페이즈 내려치기")]
+
+
     private Rigidbody _rb;
     private Animator _anim;
     private NavMeshAgent _nav;
@@ -66,8 +99,8 @@ public class BossController : MonoBehaviour
         _bt.SetVariableValue("Phase2_Per", _phaseTwoPer);
         _bt.SetVariableValue("Attack_Distance", _attackRange);
 
-        _bt.SetVariableValue("DashSpeed", _dashSpeed);
-        _bt.SetVariableValue("DashRange", _dashRange);
+        _bt.SetVariableValue("RushSpeed", _rushSpeed);
+        _bt.SetVariableValue("RushRange", _rushRange);
 
         #region 테스트
 
@@ -215,5 +248,6 @@ public class BossController : MonoBehaviour
     public void Hurt(float damage)
     {
         _hp -= damage;
+        _hpPercent = _hp / _maxHp * 100;
     }
 }

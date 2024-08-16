@@ -106,6 +106,13 @@ public class RootContoller : MonoBehaviour
 
     public void Hurt(float damage)
     {
+        if (_hp - damage <= 0)
+        {
+            _boss.Hurt(_hp);
+            _hp = 0;
+            return;
+        }
+
         _hp -= damage;
         _boss.Hurt(damage);
     }
