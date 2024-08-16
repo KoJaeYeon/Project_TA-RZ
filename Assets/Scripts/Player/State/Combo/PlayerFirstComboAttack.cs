@@ -53,7 +53,7 @@ public class PlayerFirstComboAttack : PlayerComboAttack
 
             if(hit != null)
             {
-                hit.Hit(10f, 5f);
+                hit.Hit(10f, 5f, _player.transform);
             }
         }
     }
