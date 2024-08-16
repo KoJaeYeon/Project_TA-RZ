@@ -9,6 +9,10 @@ public class PlayerFirstComboAttack : PlayerComboAttack
         _event.AddEvent(AttackType.firstAttack, FirstAttack);
     }
 
+    public Vector3 _forward { get; private set; }
+    public Vector3 _boxPosition { get; private set; }   
+    public Vector3 _boxSize { get; private set; } = new Vector3(1f, 1f, 0.5f);
+    private LayerMask _enemyLayer;
 
     public override void StateEnter()
     {
@@ -33,7 +37,25 @@ public class PlayerFirstComboAttack : PlayerComboAttack
 
     private void FirstAttack()
     {
-        Debug.Log("firstAttack");
+        _forward = _player.transform.forward;
+
+        _boxPosition = (_player.transform.position + new Vector3(0f,1f,-0.5f)) + _forward;
+
+        _enemyLayer = LayerMask.GetMask("Monster");
+
+        Collider[] colliders = Physics.OverlapBox(_boxPosition, _boxSize / 2f, _player.transform.rotation, _enemyLayer);
+
+        foreach(var target in  colliders)
+        {
+            IHit hit = target.gameObject.GetComponent<IHit>();
+
+            Debug.Log(target.gameObject.gameObject.name);
+
+            if(hit != null)
+            {
+                hit.Hit(10f, 5f);
+            }
+        }
     }
 
 }
