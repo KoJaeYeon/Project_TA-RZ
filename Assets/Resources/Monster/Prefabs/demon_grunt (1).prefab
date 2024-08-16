@@ -1147,7 +1147,7 @@ MonoBehaviour:
       parentIndex: 
       startIndex: 
       variableStartIndex: 
-      JSONSerialization: '{"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"TargetTransform","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"MoveSpeed","IsShared":true,"SinglemValue":5},{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"Hp","IsShared":true,"Int32mValue":1},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"AtkSpeed","IsShared":true,"SinglemValue":5},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Atk","IsShared":true,"SinglemValue":0},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"AtkDistance","IsShared":true,"SinglemValue":2},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"AtkRange","IsShared":true,"SinglemValue":3},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Mon_Common_DetectArea","IsShared":true,"SinglemValue":5},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Mon_Common_CoolDown","IsShared":true,"SinglemValue":1.5},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"Mon_Common_DetectTime","IsShared":true,"SinglemValue":0},{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"IsTrack","IsShared":true,"StringmValue":"IsTrack"},{"Type":"BehaviorDesigner.Runtime.SharedMonster","Name":"Monster","IsShared":true,"MonstermValue":0}]}'
+      JSONSerialization: '{"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"TargetTransform","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"IsTrack","IsShared":true,"StringmValue":"IsTrack"},{"Type":"BehaviorDesigner.Runtime.SharedMonster","Name":"Monster","IsShared":true,"MonstermValue":0}]}'
       fieldSerializationData:
         typeName: []
         fieldNameHash: 
@@ -1173,7 +1173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Bt: {fileID: 0}
-  Mon_Common_Stat_Hp: 1
+  Mon_Common_Stat_Hp: 100
   Mon_Common_Damage: 0
   Mon_Common_AttackArea: 0
   Mon_Common_Range: 2
@@ -1181,6 +1181,8 @@ MonoBehaviour:
   Mon_Common_DetectTime: 0
   Mon_Common_MovementSpeed: 3
   Mon_Common_CoolTime: 3
+  isDamaged: 0
+  Mon_Common_CurrentHp: 0
 --- !u!136 &7897430125240335523
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1196,7 +1198,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2

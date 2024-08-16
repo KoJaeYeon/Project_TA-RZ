@@ -17,17 +17,24 @@ public class Monster : MonoBehaviour,IHit
     public float Mon_Common_MovementSpeed;
     public float Mon_Common_CoolTime;
 
+    public bool isDamaged;
+    public float Mon_Common_CurrentHp;
     [Inject] public Player Player { get;}
 
     void Start()
     {
+        Mon_Common_CurrentHp = Mon_Common_Stat_Hp;
         Bt = GetComponent<BehaviorTree>();
     }
 
     public void Hit(float damage)
     {
-        Mon_Common_Stat_Hp-=damage;
-        if (Mon_Common_Stat_Hp <= 0)
+        isDamaged = true;
+        Mon_Common_CurrentHp -= damage;
+        StartCoroutine(WaitForStun());
+        var anim = GetComponent<Animator>();
+        anim.SetTrigger("Damaged");
+        if (Mon_Common_CurrentHp <= 0)
         {
 
         }
@@ -39,6 +46,18 @@ public class Monster : MonoBehaviour,IHit
 
     private void OnTriggerEnter(Collider other)
     {
-        //if(other.CompareTag())
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("데미지받음");
+            Hit(10);
+        }
+    }
+
+    public IEnumerator WaitForStun()
+    {
+        Bt.enabled = false;
+        yield return new WaitForSeconds(5);
+        Bt.enabled = true;
+        isDamaged = false;
     }
 }

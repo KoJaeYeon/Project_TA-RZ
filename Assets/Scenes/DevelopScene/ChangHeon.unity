@@ -310,6 +310,7 @@ MonoBehaviour:
   Mon_Common_DetectTime: 0
   Mon_Common_MovementSpeed: 0
   Mon_Common_CoolTime: 0
+  isDamaged: 0
 --- !u!195 &62376406
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -348,7 +349,7 @@ PrefabInstance:
     - target: {fileID: 3740475152086547784, guid: e44852ff32c7ef14687c01b75dca3779,
         type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 6148404288403476671, guid: e44852ff32c7ef14687c01b75dca3779,
         type: 3}
@@ -796,6 +797,7 @@ MonoBehaviour:
   Mon_Common_DetectTime: 0
   Mon_Common_MovementSpeed: 0
   Mon_Common_CoolTime: 0
+  isDamaged: 0
 --- !u!114 &507205009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1752,6 +1754,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2036722526376663656, guid: dfcd9db998287d34386f0f5c807b39de,
+        type: 3}
+      propertyPath: Mon_Common_Stat_Hp
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 3379560720758915511, guid: dfcd9db998287d34386f0f5c807b39de,
         type: 3}
       propertyPath: m_Name
@@ -1806,6 +1813,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7739591162682787326, guid: dfcd9db998287d34386f0f5c807b39de,
+        type: 3}
+      propertyPath: mBehaviorSource.mTaskData.JSONSerialization
+      value: '{"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"TargetTransform","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"IsTrack","IsShared":true,"StringmValue":"IsTrack"},{"Type":"BehaviorDesigner.Runtime.SharedMonster","Name":"Monster","IsShared":true,"MonstermValue":0}]}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7897430125240335523, guid: dfcd9db998287d34386f0f5c807b39de,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
