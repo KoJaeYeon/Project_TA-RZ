@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BTA_Boss_DashAttack : BossAction
+public class BTA_Boss_RushAttack : BossAction
 {
     [SerializeField] private SharedFloat _dashSpeed;
     [SerializeField] private SharedFloat _dashRange;
