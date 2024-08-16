@@ -14,6 +14,7 @@ public class PlayerSkill : PlayerState
 
     private readonly int _skill = Animator.StringToHash("Skill");
     private readonly int _skill_Index = Animator.StringToHash("Skill_Index");
+    private readonly int _skill_3 = Animator.StringToHash("Skill_3");
     #endregion
 
     #region SkillComponent
@@ -57,11 +58,23 @@ public class PlayerSkill : PlayerState
     {
         AnimatorStateInfo _animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
 
-        if (_animatorStateInfo.IsName($"Skill_{skillIndex}") && _animatorStateInfo.normalizedTime >= 0.99f)
+        if(skillIndex == 3)
         {
-            _state.ChangeState(State.Idle);
-            return;
+            if (_animatorStateInfo.IsName($"Skill_3_2") && _animatorStateInfo.normalizedTime >= 0.99f)
+            {
+                _state.ChangeState(State.Idle);
+                return;
+            }
         }
+        else
+        {
+            if (_animatorStateInfo.IsName($"Skill_{skillIndex}") && _animatorStateInfo.normalizedTime >= 0.99f)
+            {
+                _state.ChangeState(State.Idle);
+                return;
+            }
+        }
+
     }
 
     private void SelectSkillAndStart()
@@ -75,6 +88,7 @@ public class PlayerSkill : PlayerState
                 _player.StartCoroutine(ApplySkillDuration(skillIndex));
                 break;
             case 3:
+                _player.StartCoroutine(ApplySkillDuration(skillIndex));
                 break;
             case 4:
                 _player.StartCoroutine(ApplySkillDuration(skillIndex));
@@ -133,7 +147,16 @@ public class PlayerSkill : PlayerState
             _player.OnPropertyChanged(nameof(_player.CurrentAmmo));
         }
 
-        yield return new WaitForSeconds(_PC_Skill.Skill_Duration);
+        if (skillIndex == 3)
+        {
+            yield return new WaitForSeconds(_PC_Skill.Skill_Value[0]);
+            _animator.SetTrigger(_skill_3);
+        }
+        else
+        {
+            yield return new WaitForSeconds(_PC_Skill.Skill_Duration);
+
+        }
 
         _player.IsSkillAcitve[index] = false;
         _skillSystem.SetActive_Skiil_Effect(index, false);

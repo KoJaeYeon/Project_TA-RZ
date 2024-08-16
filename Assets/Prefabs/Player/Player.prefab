@@ -667,6 +667,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e020154da5bd314a87fb74a2d43a490, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _firstEffect: {fileID: 0}
+  _secondEffect: {fileID: 0}
+  _thirdEffect: {fileID: 0}
+  _fourthEffect: {fileID: 0}
 --- !u!1 &2235718456473916865
 GameObject:
   m_ObjectHideFlags: 0
@@ -1232,7 +1236,7 @@ MonoBehaviour:
   Skill_Effect:
   - {fileID: 8068776052815614647}
   - {fileID: 8288382190342705057}
-  - {fileID: 0}
+  - {fileID: 6345965806302059868}
   - {fileID: 6345965806302059868}
 --- !u!1 &3791058002001884171
 GameObject:
