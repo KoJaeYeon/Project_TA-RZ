@@ -58,6 +58,10 @@ public class Player : MonoBehaviour, IHit
         {
             if (_currentSkill == value)
                 return;
+            foreach (bool isActive in IsSkillAcitve)
+            {
+                if (isActive == true) return;
+            }
 
             _currentSkill = value;
             OnPropertyChanged(nameof(CurrentSkill));
