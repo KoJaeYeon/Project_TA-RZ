@@ -9,8 +9,15 @@ public class DrainSystem : MonoBehaviour
     List<Rigidbody> DrainedItemList = new List<Rigidbody>();
     [Inject] Player player;
     [SerializeField] GameObject[] DrainEffect;
+    [SerializeField] GameObject DrainArea;
 
+    SphereCollider _sphereCollider;
     private float _pull_speed = 1;
+
+    private void Awake()
+    {
+        _sphereCollider = GetComponent<SphereCollider>();
+    }
 
     private void OnEnable()
     {
@@ -26,9 +33,18 @@ public class DrainSystem : MonoBehaviour
             float distance = Vector3.Distance(transform.position, item.position);
             if(distance < 1.5f)
             {
-                item.gameObject.SetActive(false);
-                player.CurrentAmmo += 1;
-                DrainedItemList.Add(item);
+                if(player.CurrentAmmo < 50)
+                {
+                    item.gameObject.SetActive(false);
+                    player.CurrentAmmo += 1;
+                    DrainedItemList.Add(item);
+                }
+                else
+                {
+                    item.AddForce(-drainDir * Time.deltaTime * 1000 * _pull_speed);
+                    item.velocity = Vector3.zero;
+                }
+
             }
         }
 
@@ -48,6 +64,17 @@ public class DrainSystem : MonoBehaviour
         {
             item.SetActive(isAcitve);
         }
+        DrainArea.SetActive(isAcitve);
+    }
+
+    public void OnSetDrainArea(float radius)
+    {
+        _sphereCollider.radius = radius;
+
+        Vector3 scale = DrainArea.transform.localScale;
+        scale.x = radius * 2;
+        scale.z = radius * 2;
+        DrainArea.transform.localScale = scale;
     }
 
     private void OnTriggerEnter(Collider other)

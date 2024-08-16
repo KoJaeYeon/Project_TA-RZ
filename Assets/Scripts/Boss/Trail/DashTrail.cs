@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DashTrail : MonoBehaviour
 {
-    private float _trailSpeed = 10f / 3f;
+    private float _trailSpeed = 20f / 3f;
 
     private Transform _defaultTr;
 
@@ -18,6 +18,9 @@ public class DashTrail : MonoBehaviour
         _defaultTr = transform.parent;
         transform.position = _defaultTr.position;
         transform.rotation = _defaultTr.rotation;
+        Vector3 rotation = transform.eulerAngles;
+        rotation.x = -0.1f;
+        transform.eulerAngles = rotation;
         Invoke(nameof(DisableTrail), 3f);
         GetComponent<TrailRenderer>().Clear();
     }

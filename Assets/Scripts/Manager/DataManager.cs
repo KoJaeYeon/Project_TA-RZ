@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class DataManager
 {
-    Dictionary<string, Stat> _statDictionary = new Dictionary<string, Stat>();
+    Dictionary<string, Data> _dataDictionary = new Dictionary<string, Data>();
 
-    public void AddStatToStatDictionary(string idStr, Stat stat)
+    public void AddDataToDataDictionary(string idStr, Data stat)
     {
-        if (!_statDictionary.TryAdd(idStr, stat))
+        if (!_dataDictionary.TryAdd(idStr, stat))
         {
-            Debug.LogError($"ID : {idStr}가 스탯 딕셔너리에 추가 실패했습니다.");
+            Debug.LogError($"ID : {idStr}가 데이터 딕셔너리에 추가 실패했습니다.");
         }
+    }
+
+    public Dictionary<string, Data> Log()
+    {
+        return _dataDictionary;
     }
 
     /// <summary>
@@ -21,9 +26,26 @@ public class DataManager
     /// <returns></returns>
     public Stat GetStat(string idStr)
     {
-        if (_statDictionary.TryGetValue(idStr, out Stat stat))
+        if (_dataDictionary.TryGetValue(idStr, out Data data))
         {
+            var stat = data as Stat;
             return stat.DeepCopy();
+        }
+        else
+        {
+            Debug.LogError($"{idStr}을 딕셔너리에서 받아오는데 실패했습니다.");
+            return null;
+        }
+    }
+    /// <summary>
+    /// 데이터만을 받아오기 위한 함수
+    /// </summary>
+    /// <param name="idStr">받아올 스탯의 ID string 데이터</param>
+    public Data GetData(string idStr)
+    {
+        if (_dataDictionary.TryGetValue(idStr, out Data data))
+        {
+            return data;
         }
         else
         {
@@ -42,16 +64,21 @@ public class DataManager
         switch (urlName)
         {
             case "_PCStat_URL":
-                ProcessPCStatData(data);
+                Process_PCStat_Data(data);
                 break;
-
+            case "_PC_Level_URL":
+                Process_PC_Level_Data(data);
+                break;
+            case "_PC_Skill_URL":
+                Process_PC_Skill_Data(data);
+                break;
             default:
                 Debug.LogError($"Unknown URL name: {urlName}");
                 break;
         }
     }
 
-    private void ProcessPCStatData(string data)
+    private void Process_PCStat_Data(string data)
     {
         JArray jsonArray = JArray.Parse(data);
 
@@ -64,38 +91,85 @@ public class DataManager
             float atkPower = ParseFloat(item["PC_Common_Atk_Power"]);
             float hp = ParseFloat(item["PC_Common_Hp"]);
             float moveSpeed = ParseFloat(item["PC_Common_Moving_Speed"]);
-            int trashOwnNum = ParseInt(item["PC_Common_Trash_OwnNum"]);
+            int resouceOwnNum = ParseInt(item["PC_Common_Resource_OwnNum"]);
             float staminaGain = ParseFloat(item["PC_Common_StaminaGain"]);
             float drainStamina = ParseFloat(item["PC_Common_Drain_Stamina"]);
             float dashStamina = ParseFloat(item["PC_Common_Dash_Stamina"]);
 
-            PC_Common_Stat stat = new PC_Common_Stat(id, type, atkPower, hp, moveSpeed, trashOwnNum, staminaGain, drainStamina, dashStamina);
-            AddStatToStatDictionary(idStr, stat);
+            PC_Common_Stat stat = new PC_Common_Stat(id, type, atkPower, hp, moveSpeed, resouceOwnNum, staminaGain, drainStamina, dashStamina);
+            AddDataToDataDictionary(idStr, stat);
         }
     }
 
-    private void ProcessMonsterStatData(string data)
+    private void Process_PC_Level_Data(string data)
     {
         JArray jsonArray = JArray.Parse(data);
 
         foreach (var item in jsonArray)
         {
-            string idStr = item["ID"].ToString().Substring(1);
-            int id = int.Parse(idStr);
-            string type = item["Type"].ToString();
+            string idStr = item[nameof(PC_Level.ID)].ToString();
+            int levelMinRequire = ParseInt(item[nameof(PC_Level.Level_Min_Require)]);
+            int levelConsumption = ParseInt(item[nameof(PC_Level.Level_Consumption)]);
+            float levelAtkPowerMultiplier = ParseFloat(item[nameof(PC_Level.Level_Atk_Power_Multiplier)]);
+            float levelAtkRangeMultiplier = ParseFloat(item[nameof(PC_Level.Level_Atk_Range_Multiplier)]);
+            bool levelStiffIgnoring = bool.Parse(item[nameof(PC_Level.Level_Stiff_Ignoring)].ToString());
 
-            float attackPower = ParseFloat(item["Atk_Power"]);
-            float health = ParseFloat(item["HP"]);
-            float moveSpeed = ParseFloat(item["Move_Speed"]);
-            int trashOwnNum = ParseInt(item["Trash_Own_Num"]);
-            float staminaGain = ParseFloat(item["Stamina_Gain"]);
-            float drainStamina = ParseFloat(item["Drain_Stamina"]);
-            float dashStamina = ParseFloat(item["Dash_Stamina"]);
-
-            PC_Common_Stat stat = new PC_Common_Stat(id, type, attackPower, health, moveSpeed, trashOwnNum, staminaGain, drainStamina, dashStamina);
-            AddStatToStatDictionary(idStr, stat);
+            PC_Level stat = new PC_Level(idStr, levelMinRequire, levelConsumption, levelAtkPowerMultiplier, levelAtkRangeMultiplier, levelStiffIgnoring);
+            AddDataToDataDictionary(idStr, stat);
         }
     }
+
+    private void Process_PC_Skill_Data(string data)
+    {
+        JArray jsonArray = JArray.Parse(data);
+
+        foreach (var item in jsonArray)
+        {
+            string idStr = item[nameof(PC_Skill.ID)].ToString();
+            int skillGaugeConsumption = ParseInt(item[nameof(PC_Skill.Skill_Gauge_Consumption)]);
+            int skillDuration = ParseInt(item[nameof(PC_Skill.Skill_Duration)]);
+            List<float> skillValue = parseList<float>(item[nameof(PC_Skill.Skill_Value)]);
+
+            PC_Skill skill = new PC_Skill(idStr, skillGaugeConsumption, skillDuration, skillValue);
+            AddDataToDataDictionary(idStr, skill);
+        }
+    }
+
+
+
+    private List<T> parseList<T>(JToken token)
+    {
+        List<T> result = new List<T>();
+
+        if (token != null && token.Type == JTokenType.String)
+        {
+            string tokenStr = token.ToString().Trim('{', '}');
+
+            if (!string.IsNullOrWhiteSpace(tokenStr) && tokenStr != "-")
+            {
+                foreach (var item in tokenStr.Split(','))
+                {
+                    if (typeof(T) == typeof(float))
+                    {
+                        if (float.TryParse(item, out float parsedFloat))
+                        {
+                            result.Add((T)(object)parsedFloat);
+                        }
+                    }
+                    else if (typeof(T) == typeof(int))
+                    {
+                        if (int.TryParse(item, out int parsedInt))
+                        {
+                            result.Add((T)(object)parsedInt);
+                        }
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
 
     private float ParseFloat(JToken token)
     {

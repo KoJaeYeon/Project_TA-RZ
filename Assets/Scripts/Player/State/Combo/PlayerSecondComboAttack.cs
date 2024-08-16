@@ -15,7 +15,7 @@ public class PlayerSecondComboAttack : PlayerComboAttack
 
     public override void StateUpdate()
     {
-        ChangeStateBehaviour(_inputSystem);
+        base.StateUpdate();
 
         OnComboAttackUpdate("Attack2", State.ThirdComboAttack);
     }
@@ -23,6 +23,7 @@ public class PlayerSecondComboAttack : PlayerComboAttack
     public override void StateExit()
     {
         ComboAnimation(_secondCombo, false);
+        base.StateExit();
     }
 
     private void SecondAttack()

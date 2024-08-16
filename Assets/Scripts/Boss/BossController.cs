@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using BehaviorDesigner.Runtime;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public enum BossPhase
 { 
@@ -23,7 +24,7 @@ public class BossController : MonoBehaviour
     [Header("페이즈 체력")]
     [SerializeField] private float _phaseOnePer;
     [SerializeField] private float _phaseTwoPer;
-    private float _hpPercent;
+    public float _hpPercent;
 
     [Header("2페이즈 돌진공격")]
     [SerializeField] private float _dashSpeed;
@@ -92,6 +93,7 @@ public class BossController : MonoBehaviour
 
     #region BTA
 
+    //보스 회전 관련
     public void LookAtPlayer()
     {
         Vector3 direction = (_playerTr.position - transform.position);
@@ -108,21 +110,36 @@ public class BossController : MonoBehaviour
         Quaternion rotation = Quaternion.LookRotation(direction);
         return rotation;
     }
+    public Vector3 PlayerPos()
+    { 
+        return _playerTr.position;
+    }
 
+    //보스 대쉬 공격
     public void DrawDashTrail()
     {
         _trail.gameObject.SetActive(true);
     }
-    public void DashAttack(float speed)
+    //방향 설정
+    public Vector3 SetDashDirection()
     {
-        Vector3 direction = (_playerTr.position - transform.position).normalized;
-        _rb.AddForce(direction * speed, ForceMode.Impulse);
+        Vector3 direction;
+        direction = (_playerTr.position - transform.position);
+        direction.y = 0;
+        direction.Normalize();
+        return direction;
+    }
+    //돌진
+    public void DashAttack(float speed, Vector3 direction)
+    {
+        _rb.velocity = direction * speed;
     }
 
     #endregion
 
     #region BTC
 
+    //거리 체크
     public bool CheckDistance(float range)
     {
         if (_playerTr == null) return false;
@@ -134,6 +151,7 @@ public class BossController : MonoBehaviour
         return false;
     }
 
+    //보스 Hp 체크
     public bool CheckPhase(float standard)
     {
         if (standard < _hpPercent) return true;

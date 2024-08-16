@@ -10,6 +10,7 @@ public class TestScript : MonoBehaviour
     [Inject] Dictionary<int, Stat> dic;
     [Inject] GoogleSheetManager sheetManager;
     PC_Common_Stat PC_Common_Stat;
+    [Inject] Player player;
     void Start()
     {
         //1안
@@ -22,6 +23,14 @@ public class TestScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.K))
+        {
+            player.ApplyKnockback(transform.position, 1f);
+            player.Hit(10,0.4f);
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            player.Hit(10,0.4f);
+        }
     }
 }

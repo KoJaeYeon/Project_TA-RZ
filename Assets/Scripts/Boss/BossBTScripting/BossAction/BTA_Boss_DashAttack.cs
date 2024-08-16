@@ -10,6 +10,7 @@ public class BTA_Boss_DashAttack : BossAction
     [SerializeField] private SharedFloat _dashRange;
 
     private Vector3 _startPos;
+     Vector3 direction;
 
     private bool _isDash = false;
 
@@ -22,11 +23,14 @@ public class BTA_Boss_DashAttack : BossAction
         _startPos = transform.position;
         _isDash = true;
 
-        _owner.DashAttack(_dashSpeed.Value);
+        direction = _owner.SetDashDirection();
     }
 
     public override TaskStatus OnUpdate()
     {
+        //_owner.DashAttack(_dashSpeed.Value, direction);
+        _rb.velocity = direction * _dashSpeed.Value;
+
         if (_isDash)
         { 
             float distance = Vector3.Distance(transform.position, _startPos);

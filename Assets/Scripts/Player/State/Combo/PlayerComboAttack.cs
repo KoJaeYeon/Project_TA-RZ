@@ -2,11 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class PlayerComboAttack : PlayerState
 {
     public PlayerComboAttack(Player player) : base(player) { }
-    
+
+    public override void StateExit()
+    {
+        _player.CurrentAmmo -= _player._PC_Level.Level_Consumption;
+    }
+
     #region AnimatorStringToHash
     protected AnimatorStateInfo _animatorStateInfo;
 
@@ -51,20 +57,15 @@ public class PlayerComboAttack : PlayerState
         _player.transform.rotation = Quaternion.Slerp(_player.transform.rotation, rotation, 10f * Time.deltaTime);
     }
 
-    protected override void ChangeStateBehaviour(PlayerInputSystem input)
+    public override void InputCheck()
     {
-        if (input.IsDash)
+        if (_inputSystem.IsDash && _player.StaminaCheck())
         {
             _state.ChangeState(State.Dash);
         }
-        else if (input.IsSkill)
+        else if (_inputSystem.IsSkill)
         {
             _state.ChangeState(State.Skill);
         }
-
-        //스킬, 피격
     }
-
-    
-
 }

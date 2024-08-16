@@ -1,30 +1,42 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 using Zenject;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IHit
 {
-    [Inject]
-    private PlayerManager _playerManager;
-    [Inject] DataManager dataManager;
+    #region InJect
+    [Inject] private PlayerManager _playerManager { get; }
+    [Inject] public DataManager dataManager;
+    #endregion
+
+    #region PlayerComponent
     private PlayerInputSystem _inputSystem;
     private PlayerStateMachine _state;
     private Camera _camera;
-    private Action<float, float, float, int, float> _statChangeCallback;
-
-    PC_Common_Stat _playerStat = new PC_Common_Stat();
-
+    
+    public PC_Common_Stat _playerStat { get; private set; } = new PC_Common_Stat();
+    public PC_Level _PC_Level { get; private set; } = new PC_Level();
     public Camera MainCamera { get { return _camera; } }
+    #endregion
+
+    #region PropChanged
+    public event PropertyChangedEventHandler PropertyChanged;
+    protected virtual void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+    #endregion
 
     #region PlayerValue
+    [SerializeField] int _currentAmmo;
     float _currentHP;
     float _currentSkill;
     float _currentStamina;
-    int _currentAmmo;
+    public bool IsActiveStaminaRecovery { get; set; } = true;
+    bool _isPlayerAlive = true;
 
+    
     public float CurrentHP
     {
         get { return _currentHP; }
@@ -37,6 +49,7 @@ public class Player : MonoBehaviour
             OnPropertyChanged(nameof(CurrentHP));
         }
     }
+
     public float CurrentSkill
     {
         get { return _currentSkill; }
@@ -54,10 +67,25 @@ public class Player : MonoBehaviour
         get { return _currentStamina; }
         set
         {
+            if (value <= 0)
+            {
+                value = 0;
+            }
+            else if (value > 100)
+            {
+                value = 100;
+            }
+
             if (_currentStamina == value)
                 return;
 
             _currentStamina = value;
+
+            if (_currentStamina == 0)
+            {
+                StartCoroutine(StaminaDelay());
+            }
+
             OnPropertyChanged(nameof(CurrentStamina));
         }
     }
@@ -85,23 +113,34 @@ public class Player : MonoBehaviour
             OnPropertyChanged(nameof(HP));
         }
     }
-
-    public bool IsNext {  get; set; }
-    #endregion
-
-    #region PropChanged
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected virtual void OnPropertyChanged(string propertyName)
+    public bool IsPlayerAlive
     {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        get { return _isPlayerAlive; }
+        set
+        {
+            if (_isPlayerAlive == value)
+                return;
+
+            _isPlayerAlive = value;
+            OnPropertyChanged(nameof(IsPlayerAlive));
+        }
     }
+
+    public bool IsNext { get; set; }
     #endregion
+
+    
 
     private void Awake()
     {
         InitializeComponent();
         InitializePlayer();
         InitializeState();
+    }
+
+    private void Update()
+    {
+        StaminaRecovery();
     }
 
     private void InitializePlayer()
@@ -121,14 +160,41 @@ public class Player : MonoBehaviour
     {
         _state.AddState(State.Idle, new PlayerIdle(this));
         _state.AddState(State.Run, new PlayerRun(this));
-        _state.AddState(State.Dash, new PlayerDash(this));  
+        _state.AddState(State.Dash, new PlayerDash(this));
         _state.AddState(State.Drain, new PlayerDrain(this));
         _state.AddState(State.FirstComboAttack, new PlayerFirstComboAttack(this));
         _state.AddState(State.SecondComboAttack, new PlayerSecondComboAttack(this));
         _state.AddState(State.ThirdComboAttack, new PlayerThirdComboAttack(this));
         _state.AddState(State.FourthComboAttack, new PlayerFourthComboAttack(this));
         _state.AddState(State.Skill, new PlayerSkill(this));
-        _state.OnDamagedStateChange();
+        _state.AddState(State.Hit, new PlayerHit(this));    
+        _state.AddState(State.KnockBack, new PlayerKnockBack(this));
+        _state.AddState(State.Death, new PlayerDeath(this));    
+    }
+
+    IEnumerator StaminaDelay()
+    {
+        IsActiveStaminaRecovery = false;
+        yield return new WaitForSeconds(3f);
+        IsActiveStaminaRecovery = true;
+    }
+
+    private void StaminaRecovery()
+    {
+        if (IsActiveStaminaRecovery == true)
+        {
+            CurrentStamina += _playerStat.Stamina_Gain * Time.deltaTime;
+        }
+    }
+
+    public bool StaminaCheck()
+    {
+        return CurrentStamina > 0;
+    }
+
+    public void Set_PC_Level(PC_Level _PC_Level)
+    {
+        this._PC_Level = _PC_Level;
     }
 
     IEnumerator LoadStat()
@@ -136,7 +202,7 @@ public class Player : MonoBehaviour
         while (true)
         {
             var stat = dataManager.GetStat("P101") as PC_Common_Stat;
-            if(stat == null )
+            if (stat == null)
             {
                 Debug.Log("Player의 스탯을 받아오지 못했습니다.");
                 yield return new WaitForSeconds(1f);
@@ -150,6 +216,7 @@ public class Player : MonoBehaviour
                 CurrentStamina = 100;
                 CurrentSkill = 0;
                 CurrentAmmo = 0;
+                OnPropertyChanged(nameof(stat.Resource_Own_Num));
                 yield break;
             }
 
@@ -162,4 +229,39 @@ public class Player : MonoBehaviour
         Vector3 GizmoPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         Gizmos.DrawWireSphere(GizmoPosition, 0.2f);
     }
+
+    #region Hit
+    public void Hit(float damage, float paralysisTime)
+    {
+        if(_isPlayerAlive == false)
+        {
+            return;
+        }
+
+        if (_currentHP <= 0)
+        {
+            _state.ChangeState(State.Death);
+        }
+        else
+        {
+            PlayerHit.Pc_Stiff_Time = paralysisTime;
+
+            CurrentHP -= damage;
+
+            _state.OnDamagedStateChange();
+        }
+    }
+
+    public void ApplyKnockback(Vector3 otherPosition, float knockBackTime)
+    {
+        if(_isPlayerAlive)
+        {
+            PlayerKnockBack._knockBackPosition = otherPosition;
+            PlayerKnockBack.Pc_Knock_Back_Time = knockBackTime;
+
+            _state.OnKnockBackStateChange();
+        }
+    }
+
+    #endregion
 }

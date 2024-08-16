@@ -9,12 +9,10 @@ public class PlayerDrain : PlayerState
         _inputSystem = player.GetComponent<PlayerInputSystem>();
         _state = player.GetComponent<PlayerStateMachine>();
         _drainSystem = player.GetComponentInChildren<DrainSystem>();
-        _sphereCollider = _drainSystem.GetComponent<SphereCollider>();
     }
 
     #region DrainComponent
     private DrainSystem _drainSystem;
-    private SphereCollider _sphereCollider;
     #endregion
 
     #region DrainValue
@@ -24,12 +22,13 @@ public class PlayerDrain : PlayerState
     #endregion
 
     public override void StateEnter()
-    {        
+    {
         StartDrain();
     }
 
     public override void StateUpdate()
     {
+        base.StateUpdate();
         UpdateDrain();
     }
 
@@ -41,34 +40,50 @@ public class PlayerDrain : PlayerState
     void StartDrain()
     {
         _animator.SetBool(_drain, true);
-        _currentDrainRadius = 1;
+        _currentDrainRadius = 0.7f;
         _drainSystem.OnSetActiveDraintEffect(true);
+        _drainSystem.OnSetDrainArea(_currentDrainRadius);
+        _player.IsActiveStaminaRecovery = false;
     }
 
     void UpdateDrain()
-    {
-        DrainInputCheck();
+    {        
         DrainRangeControl();
+        DrainStaminaUse();
     }
 
     void EndDrain()
     {
         _animator.SetBool(_drain, false);
-        _currentDrainRadius = 1;
+        _currentDrainRadius = 0.7f;
         _drainSystem.OnSetActiveDraintEffect(false);
+        _drainSystem.OnSetDrainArea(_currentDrainRadius);
         _inputSystem.SetDrain(false);
+        if (_player.CurrentStamina > 0) _player.IsActiveStaminaRecovery = true;
+    }
+
+    /// <summary>
+    /// 드레인 시 스태미나 사용하는 함수
+    /// </summary>
+    void DrainStaminaUse()
+    {
+        _player.CurrentStamina -= _player._playerStat.Drain_Stamina * Time.deltaTime;
+        if(_player.CurrentStamina <= 0)
+        {
+            _state.ChangeState(State.Idle);
+        }
     }
 
     /// <summary>
     /// 드레인 키가 활성화 되어 있는지 확인하는 함수
     /// </summary>
-    void DrainInputCheck()
+    public override void InputCheck()
     {
         if (_inputSystem.IsDrain == false)
         {
             _state.ChangeState(State.Idle);
         }
-        else if(_inputSystem.IsDash == true)
+        else if(_inputSystem.IsDash == true && _player.StaminaCheck())
         {
             _state.ChangeState(State.Dash);
         }
@@ -85,8 +100,8 @@ public class PlayerDrain : PlayerState
     {
         if (_currentDrainRadius < _maxDrainRadius)
         {
-            _currentDrainRadius += _drainSpeed * Time.deltaTime;
-            _sphereCollider.radius = _currentDrainRadius;
+            _currentDrainRadius += _drainSpeed * Time.deltaTime;            
+            _drainSystem.OnSetDrainArea(_currentDrainRadius);
         }
     }
 }

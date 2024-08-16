@@ -55,6 +55,7 @@ MonoBehaviour:
   SkillSlider: {fileID: 8087937600239446592}
   StaminaSlider: {fileID: 28431827830448704}
   CurrenAmmoText: {fileID: 2015997371177917765}
+  Resource_OwnNum_Text: {fileID: 4631639533258370494}
 --- !u!1 &8859380290338745518
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,6 +208,18 @@ RectTransform:
 --- !u!114 &2015997371177917765 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1756730406866027275, guid: 490cb97f2eae4e341b7e39536c0aee4d,
+    type: 3}
+  m_PrefabInstance: {fileID: 259918032574275150}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4631639533258370494 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4890216019308295152, guid: 490cb97f2eae4e341b7e39536c0aee4d,
     type: 3}
   m_PrefabInstance: {fileID: 259918032574275150}
   m_PrefabAsset: {fileID: 0}

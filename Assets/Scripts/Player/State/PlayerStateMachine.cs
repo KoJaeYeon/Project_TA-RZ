@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 
 public enum State
@@ -13,20 +15,16 @@ public enum State
     ThirdComboAttack,
     FourthComboAttack,
     Dash,
-    Skill
+    Skill,
+    Hit,
+    KnockBack,
+    Death
 }
 
 public class PlayerStateMachine : MonoBehaviour
 {
     private Dictionary<State, PlayerBaseState> _stateDic = new Dictionary<State, PlayerBaseState>();
     private PlayerBaseState _state;
-    private State _currentState;
-
-    public State CurrentState
-    {
-        get { return _currentState; }
-        set { _currentState = value; }
-    }
 
     private void Start()
     {
@@ -41,18 +39,36 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        
+        _state.OnTriggerEnter(other);
     }
 
+    //Hit
     public void OnDamagedStateChange()
     {
-        if(_state is PlayerFirstComboAttack)
+        if(false)
         {
-
+            return;
+        }
+        else if(_state is PlayerKnockBack)
+        {
+            return;
         }
         else
         {
+            ChangeState(State.Hit);
+        }
+    }
 
+    //KnockBack
+    public void OnKnockBackStateChange()
+    {
+        if (false)
+        {
+            return;
+        }
+        else
+        {
+            ChangeState(State.KnockBack);
         }
     }
 
@@ -74,7 +90,15 @@ public class PlayerStateMachine : MonoBehaviour
 public abstract class PlayerBaseState
 {
     public virtual void StateEnter() { }
-    public virtual void StateUpdate() { }
+
+    public virtual void StateUpdate()
+    {
+        InputCheck();
+    }
+    
     public virtual void StateExit() { }
+
     public virtual void OnTriggerEnter(Collider other) { }
+
+    public abstract void InputCheck();
 }
