@@ -35,8 +35,8 @@ public class Player : MonoBehaviour, IHit
     float _currentStamina;
     public bool IsActiveStaminaRecovery { get; set; } = true;
     bool _isPlayerAlive = true;
+    public int[] _skillCounption { get; private set; } = new int[4] { 25, 50, 75, 100 };
 
-    
     public float CurrentHP
     {
         get { return _currentHP; }
@@ -151,6 +151,7 @@ public class Player : MonoBehaviour, IHit
     {
         _playerManager.SetPlayerObject(gameObject);
         StartCoroutine(LoadStat());
+        StartCoroutine(LoadSkillCounsumption());
     }
 
     private void InitializeComponent()
@@ -196,6 +197,11 @@ public class Player : MonoBehaviour, IHit
         return CurrentStamina > 0;
     }
 
+    public bool SkillCheck()
+    {
+        return CurrentStamina >= 25;
+    }
+
     public void Set_PC_Level(PC_Level _PC_Level)
     {
         this._PC_Level = _PC_Level;
@@ -221,6 +227,32 @@ public class Player : MonoBehaviour, IHit
                 CurrentSkill = 0;
                 CurrentAmmo = 0;
                 OnPropertyChanged(nameof(stat.Resource_Own_Num));
+                yield break;
+            }
+
+        }
+    }
+
+    IEnumerator LoadSkillCounsumption()
+    {
+        while (true)
+        {
+            var data = dataManager.GetData("S201") as PC_Skill;
+            if (data == null)
+            {
+                Debug.Log("Player의 스킬 소모값을 받아오지 못했습니다.");
+                yield return new WaitForSeconds(1f);
+            }
+            else
+            {
+                _skillCounption[0] = data.Skill_Gauge_Consumption;
+                for (int i = 1; i < 4; i++)
+                {
+                    string idStr = $"S20{1 + i}";
+                    data = dataManager.GetData(idStr) as PC_Skill;
+                    _skillCounption[i] = data.Skill_Gauge_Consumption;
+                }
+                Debug.Log("Player의 스킬 소모값을 성공적으로 받아왔습니다.");
                 yield break;
             }
 

@@ -99,10 +99,10 @@ public class PlayerResourceSystem : MonoBehaviour
         if(false)
         {
             //4단계 조건 성공 시
-            if (_currentLevel == 3) return;
+            if (_currentLevel == 4) return;
 
             StartCoroutine(LoadData("P504"));
-            _currentLevel = 3;
+            _currentLevel = 4;
 
             EffectAcitve(6, 7);
         }
