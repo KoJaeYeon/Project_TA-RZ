@@ -38,7 +38,7 @@
                     "id": "c8681970-ce3a-487e-97fb-08dba7538c92",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press(behavior=2)",
+                    "interactions": "",
                     "initialStateCheck": false
                 },
                 {
@@ -160,7 +160,7 @@
                     "name": "",
                     "id": "3a565a4d-fbfb-49e8-bf77-26979c30ab35",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "Press",
+                    "interactions": "Press(behavior=2)",
                     "processors": "",
                     "groups": "",
                     "action": "Attack",
