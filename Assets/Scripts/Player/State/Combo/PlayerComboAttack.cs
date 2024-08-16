@@ -10,7 +10,7 @@ public class PlayerComboAttack : PlayerState
 
     public override void StateExit()
     {
-        _player.CurrentAmmo -= _player._PC_Level.Level_Consumption;
+        _player.CurrentAmmo -= _player.IsSkillAcitve[1] ? 0 : _player._PC_Level.Level_Consumption;
     }
 
     #region AnimatorStringToHash

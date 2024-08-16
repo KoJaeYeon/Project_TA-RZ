@@ -5,17 +5,20 @@ public class PlayerSkill : PlayerState
 {
     public PlayerSkill(Player player) : base(player)
     {
+        _skillSystem = _player.GetComponentInChildren<SkillSystem>();
+        Debug.Log(_skillSystem);
     }
 
     #region AnimatorStringToHash
-    protected AnimatorStateInfo _animatorStateInfo;
+    private AnimatorStateInfo _animatorStateInfo;
 
-    protected readonly int _skill = Animator.StringToHash("Skill");
-    protected readonly int _skill_Index = Animator.StringToHash("Skill_Index");
+    private readonly int _skill = Animator.StringToHash("Skill");
+    private readonly int _skill_Index = Animator.StringToHash("Skill_Index");
     #endregion
 
     #region SkillComponent
     private PC_Skill _PC_Skill;
+    private SkillSystem _skillSystem;
     #endregion
 
     #region skillValue
@@ -70,10 +73,12 @@ public class PlayerSkill : PlayerState
                 _player.StartCoroutine(ApplySkillDuration(skillIndex));
                 break;
             case 2:
+                _player.StartCoroutine(ApplySkillDuration(skillIndex));
                 break;
             case 3:
                 break;
             case 4:
+                _player.StartCoroutine(ApplySkillDuration(skillIndex));
                 break;
             default:
                 Debug.LogError("Skill Error!");
@@ -121,8 +126,11 @@ public class PlayerSkill : PlayerState
 
     IEnumerator ApplySkillDuration(int skillindex)
     {
-        _player.IsSkillAcitve[skillindex - 1] = true;
+        int index = skillindex - 1;
+        _player.IsSkillAcitve[index] = true;
+        _skillSystem.SetActive_Skiil_Effect(index, true);
         yield return new WaitForSeconds(_PC_Skill.Skill_Duration);
-        _player.IsSkillAcitve[skillindex - 1] = false;
+        _player.IsSkillAcitve[index] = false;
+        _skillSystem.SetActive_Skiil_Effect(index, false);
     }
 }
