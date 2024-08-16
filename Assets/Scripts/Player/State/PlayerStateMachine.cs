@@ -26,6 +26,8 @@ public class PlayerStateMachine : MonoBehaviour
     private Dictionary<State, PlayerBaseState> _stateDic = new Dictionary<State, PlayerBaseState>();
     private PlayerBaseState _state;
 
+    public PlayerBaseState CurrentState { get { return _state; } }
+
     private void Start()
     {
         _state = _stateDic[State.Idle];

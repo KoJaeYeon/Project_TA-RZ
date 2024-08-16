@@ -290,6 +290,42 @@ public class Player : MonoBehaviour, IHit
     //checkGround 
     private void OnDrawGizmos()
     {
+        if (Application.isPlaying &&_state.CurrentState is PlayerFirstComboAttack)
+        {
+            PlayerFirstComboAttack firstCombo = _state.CurrentState as PlayerFirstComboAttack;
+
+            Vector3 boxposition = firstCombo._boxPosition;
+            Vector3 boxSize = firstCombo._boxSize;
+            Quaternion boxrotation = transform.rotation;
+
+            Matrix4x4 originalMatrix = Gizmos.matrix;
+
+            Gizmos.matrix = Matrix4x4.TRS(boxposition, boxrotation, Vector3.one);
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(Vector3.zero, boxSize);
+
+            Gizmos.matrix = originalMatrix; 
+        }
+        else if(Application.isPlaying && _state.CurrentState is PlayerSecondComboAttack)
+        {
+            PlayerSecondComboAttack secondCombo = _state.CurrentState as PlayerSecondComboAttack;
+
+
+        }
+        else if(Application.isPlaying && _state.CurrentState is PlayerThirdComboAttack)
+        {
+            PlayerThirdComboAttack thirdCombo = _state.CurrentState as PlayerThirdComboAttack;
+
+
+        }
+        else if(Application.isPlaying && _state.CurrentState is PlayerFourthComboAttack)
+        {
+            PlayerFourthComboAttack fourthCombo = _state.CurrentState as PlayerFourthComboAttack;
+
+
+        }
+
         Vector3 GizmoPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         Gizmos.DrawWireSphere(GizmoPosition, 0.2f);
     }
