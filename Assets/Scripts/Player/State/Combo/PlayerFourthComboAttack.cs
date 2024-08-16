@@ -4,39 +4,57 @@ using UnityEngine;
 
 public class PlayerFourthComboAttack : PlayerComboAttack
 {
-    public PlayerFourthComboAttack(Player player) : base(player) { }
+    public PlayerFourthComboAttack(Player player) : base(player)
+    {
+        //PlayerAnimationEvent _event;
+        //_event = player.GetComponentInChildren<PlayerAnimationEvent>();
+        //_event.AddEvent(AttackType.fourthAttack, FourthAttack);
+    }
+
+    private float _chargeMaxTime = 4f;
+    private float _currentChargeTime;
 
     public override void StateEnter()
     {
-        _player.IsNext = false;
-
         ComboAnimation(_fourthCombo, true);
     }
 
     public override void StateUpdate()
     {
-        base.StateUpdate();
+        ChargeAttack(_currentChargeTime);
 
-        var animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-
-        if (animatorStateInfo.IsName("Attack4") && animatorStateInfo.normalizedTime >= 0.95f)
+        if (!_inputSystem.IsAttack)
         {
+            _animator.SetBool(_fourthCombo, false);
+
             _state.ChangeState(State.Idle);
+
             return;
         }
-        else
-            AttackRotation();
+
+        _currentChargeTime += Time.deltaTime;
     }
 
     public override void StateExit()
     {
         ComboAnimation(_fourthCombo, false);
+
         base.StateExit();
     }
 
-    private void FourthAttack()
+    private void ChargeAttack(float time)
     {
-        //4타 공격 로직
+        if(time <= 1f)
+        {
+            FourthAttack(time);
+        }
+
     }
 
+
+
+    private void FourthAttack(float time)
+    {
+
+    }
 }

@@ -162,7 +162,7 @@ public class Player : MonoBehaviour, IHit
         _state.AddState(State.Idle, new PlayerIdle(this));
         _state.AddState(State.Run, new PlayerRun(this));
         _state.AddState(State.Dash, new PlayerDash(this));
-        _state.AddState(State.Drain, new PlayerDrain(this));
+        _state.AddState(State.Drain, new PlayerDrain(this));        
         _state.AddState(State.FirstComboAttack, new PlayerFirstComboAttack(this));
         _state.AddState(State.SecondComboAttack, new PlayerSecondComboAttack(this));
         _state.AddState(State.ThirdComboAttack, new PlayerThirdComboAttack(this));

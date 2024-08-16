@@ -7,6 +7,7 @@ public class PlayerContainer : MonoInstaller
         Container.Bind<PlayerManager>().AsSingle();
 
         Container.Bind<PlayerUIViewModel>().AsSingle();
+
         Container.Bind<Player>().FromComponentInHierarchy().AsSingle();
     }
 }
