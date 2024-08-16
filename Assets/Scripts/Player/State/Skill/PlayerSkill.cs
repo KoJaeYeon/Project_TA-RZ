@@ -37,7 +37,6 @@ public class PlayerSkill : PlayerState
     public override void StateUpdate()
     {
         base.StateUpdate();
-        Debug.Log(_PC_Skill);
 
         OnSkillUpdate();
     }

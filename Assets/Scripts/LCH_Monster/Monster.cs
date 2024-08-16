@@ -27,7 +27,7 @@ public class Monster : MonoBehaviour,IHit
         Bt = GetComponent<BehaviorTree>();
     }
 
-    public void Hit(float damage, float paralysisTime)
+    public void Hit(float damage, float paralysisTime, Transform transform)
     {
         isDamaged = true;
         Mon_Common_Hp_Remain -= damage;
@@ -49,7 +49,7 @@ public class Monster : MonoBehaviour,IHit
         if (other.CompareTag("Player"))
         {
             Debug.Log("데미지받음");
-            Hit(10,5);
+            Hit(10,5, transform);
             ApplyKnockback(this.gameObject.transform.position,10);
         }
     }

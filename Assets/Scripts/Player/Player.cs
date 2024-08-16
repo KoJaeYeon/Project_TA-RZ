@@ -56,8 +56,19 @@ public class Player : MonoBehaviour, IHit
         get { return _currentSkill; }
         set
         {
+            if (value <= 0)
+            {
+                value = 0;
+            }
+            else if (value > 100)
+            {
+                value = 100;
+            }
+
             if (_currentSkill == value)
                 return;
+
+            //스킬 사용 시 자원 획득 불가
             foreach (bool isActive in IsSkillAcitve)
             {
                 if (isActive == true) return;
