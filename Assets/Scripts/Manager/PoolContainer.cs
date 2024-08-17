@@ -4,6 +4,6 @@ public class PoolContainer : MonoInstaller
 {
     public override void InstallBindings()
     {
-        Container.Bind<PoolManager>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<PoolManager>().FromNewComponentOnNewGameObject().AsSingle();
     }
 }

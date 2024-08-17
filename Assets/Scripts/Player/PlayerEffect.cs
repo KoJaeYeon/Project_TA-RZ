@@ -55,13 +55,15 @@ public class PlayerEffect : MonoBehaviour
 
     public GameObject GetHitEffect()
     {
-        Invoke(nameof(ReturnHitEffect), 2f);
+        GameObject hitEffect = _poolManager.DequeueObject(_hitEffect);
 
-        return _poolManager.DequeueObject(_hitEffect);
+        return hitEffect;
     }
 
-    public void ReturnHitEffect(GameObject hitEffect)
+    public void ReturnHit(GameObject hitParticle)
     {
-        _poolManager.EnqueueObject(hitEffect);
+        ReturnHitParticle returnComponent = hitParticle.GetComponent<ReturnHitParticle>();
+
+        StartCoroutine(returnComponent.ReturnParticle(hitParticle, _poolManager));
     }
 }

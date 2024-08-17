@@ -97,6 +97,7 @@ MonoBehaviour:
   _monoInstallers:
   - {fileID: 8315993531449653818}
   - {fileID: 7195175278930344354}
+  - {fileID: 4157357873276117376}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -167,6 +168,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1454506439972462460}
+  - component: {fileID: 4157357873276117376}
   m_Layer: 0
   m_Name: PoolContainer
   m_TagString: Untagged
@@ -189,3 +191,15 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3074397450199315102}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4157357873276117376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8407020210700380252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e28ccf89bbdb4b4b844c820eb9144e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
