@@ -77,6 +77,16 @@ public class PlayerAnimationEvent : MonoBehaviour
     //세 번째 공격 이펙트
     public void ThirdAttack()
     {
+        GameObject thirdEffect = _effect.GetAttackEffect(AttackType.thirdAttack);
+        ParticleSystem effectParticle = thirdEffect.GetComponent<ParticleSystem>();
+
+        thirdEffect.transform.localPosition = Vector3.zero;
+        thirdEffect.transform.localRotation = Quaternion.identity;
+        thirdEffect.transform.parent = null;
+        effectParticle.Play();
+
+        StartCoroutine(ReturnThirdEffect(thirdEffect)); 
+
         _attackDictionary[AttackType.thirdAttack].Invoke();
     }
 
@@ -99,6 +109,13 @@ public class PlayerAnimationEvent : MonoBehaviour
         yield return _returnTime;
 
         effect.transform.SetParent(_effect.GetAttackEffectTransform(AttackType.secondAttack));
+    }
+
+    private IEnumerator ReturnThirdEffect(GameObject effect)
+    {
+        yield return _returnTime;
+
+        effect.transform.SetParent(_effect.GetAttackEffectTransform(AttackType.thirdAttack));
     }
 
     public void SkillEnd()
