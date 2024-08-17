@@ -26,6 +26,8 @@ public class PlayerAnimationEvent : MonoBehaviour
     [Header("EffectPosition")]
     [SerializeField] private GameObject _effectTransformobject;
 
+    private WaitForSeconds _returnTime = new WaitForSeconds(0.5f);
+
     private void Start()
     {
         InitializeEffect();
@@ -77,6 +79,7 @@ public class PlayerAnimationEvent : MonoBehaviour
         _player.IsNext = true;
     }
 
+    //첫 번째 공격 이펙트
     public void FirstAttack()
     {
         GameObject firstEffect = GetEffect(AttackType.firstAttack);
@@ -92,6 +95,7 @@ public class PlayerAnimationEvent : MonoBehaviour
         _attackDictionary[AttackType.firstAttack].Invoke();
     }
 
+    //두 번째 공격 이펙트
     public void SecondAttack()
     {
         GameObject secondEffect = GetEffect(AttackType.secondAttack);
@@ -107,26 +111,29 @@ public class PlayerAnimationEvent : MonoBehaviour
         _attackDictionary[AttackType.secondAttack].Invoke();
     }
 
+    //세 번째 공격 이펙트
     public void ThirdAttack()
     {
         _attackDictionary[AttackType.thirdAttack].Invoke();
     }
 
+    //네 번째 공격 이펙트
     public void FourthAttack()
     {
         _attackDictionary[AttackType.fourthAttack].Invoke();
     }
 
+    //종료
     private IEnumerator ReturnFirstEffect(GameObject effect)
     {
-        yield return new WaitWhile(() => effect.GetComponent<ParticleSystem>().isPlaying);
+        yield return _returnTime;
 
         effect.transform.SetParent(GetEffectTransform(AttackType.firstAttack));
     }
 
     private IEnumerator ReturnSecondEffect(GameObject effect)
     {
-        yield return new WaitWhile(() => effect.GetComponent<ParticleSystem>().isPlaying);
+        yield return _returnTime;
 
         effect.transform.SetParent(GetEffectTransform(AttackType.secondAttack));
     }
@@ -134,8 +141,6 @@ public class PlayerAnimationEvent : MonoBehaviour
     public void SkillEnd()
     {
         _player.IsSkillAnimationEnd = true;
-
     }
-
 }
 
