@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using Zenject;
 
 public enum AttackType
@@ -17,40 +16,14 @@ public class PlayerAnimationEvent : MonoBehaviour
 {
     [Inject]
     private Player _player;
+    private PlayerEffect _effect;
     private Dictionary<AttackType, Action> _attackDictionary = new Dictionary<AttackType, Action>();
-    private Dictionary<AttackType, GameObject> _effectDictionary = new Dictionary<AttackType, GameObject>();
-    private Dictionary<AttackType, Transform> _effectTransform = new Dictionary<AttackType, Transform>();
-
-    [Header("AttackEffect")]
-    [SerializeField] private GameObject[] _effects;
-    [Header("EffectPosition")]
-    [SerializeField] private GameObject _effectTransformobject;
 
     private WaitForSeconds _returnTime = new WaitForSeconds(0.5f);
 
     private void Start()
     {
-        InitializeEffect();
-    }
-
-    private void InitializeEffect()
-    {
-        var childEffectList = new List<Transform>();   
-
-        foreach(Transform child in _effectTransformobject.transform)
-        {
-            childEffectList.Add(child);
-        }
-
-        for(int i = 0; i < _effects.Length; i++)
-        {
-            if(i < childEffectList.Count)
-            {
-                GameObject effect = Instantiate(_effects[i], childEffectList[i]);
-                _effectDictionary.Add((AttackType)i, effect);
-                _effectTransform.Add((AttackType)i, childEffectList[i]);
-            }
-        }
+        _effect = gameObject.GetComponentInParent<PlayerEffect>();
     }
 
     public void AddEvent(AttackType attacktype, Action callBack)
@@ -63,16 +36,6 @@ public class PlayerAnimationEvent : MonoBehaviour
             return;
     }
 
-    private GameObject GetEffect(AttackType attacktype)
-    {
-        return _effectDictionary[attacktype];
-    }
-
-    private Transform GetEffectTransform(AttackType attacktype)
-    {
-        return _effectTransform[attacktype];
-    }
-
     //다음 콤보 State로 넘겨주는 애니메이션 이벤트
     public void NextCombo()
     {
@@ -82,7 +45,7 @@ public class PlayerAnimationEvent : MonoBehaviour
     //첫 번째 공격 이펙트
     public void FirstAttack()
     {
-        GameObject firstEffect = GetEffect(AttackType.firstAttack);
+        GameObject firstEffect = _effect.GetAttackEffect(AttackType.firstAttack);
         ParticleSystem effectParticle = firstEffect.GetComponent<ParticleSystem>();
 
         firstEffect.transform.localPosition = Vector3.zero;
@@ -98,7 +61,7 @@ public class PlayerAnimationEvent : MonoBehaviour
     //두 번째 공격 이펙트
     public void SecondAttack()
     {
-        GameObject secondEffect = GetEffect(AttackType.secondAttack);
+        GameObject secondEffect = _effect.GetAttackEffect(AttackType.secondAttack);
         ParticleSystem effectParticle = secondEffect.GetComponent<ParticleSystem>();
 
         secondEffect.transform.localPosition = Vector3.zero;
@@ -128,14 +91,14 @@ public class PlayerAnimationEvent : MonoBehaviour
     {
         yield return _returnTime;
 
-        effect.transform.SetParent(GetEffectTransform(AttackType.firstAttack));
+        effect.transform.SetParent(_effect.GetAttackEffectTransform(AttackType.firstAttack));
     }
 
     private IEnumerator ReturnSecondEffect(GameObject effect)
     {
         yield return _returnTime;
 
-        effect.transform.SetParent(GetEffectTransform(AttackType.secondAttack));
+        effect.transform.SetParent(_effect.GetAttackEffectTransform(AttackType.secondAttack));
     }
 
     public void SkillEnd()

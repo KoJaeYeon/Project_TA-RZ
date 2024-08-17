@@ -10,6 +10,7 @@ public abstract class PlayerState : PlayerBaseState
     protected Rigidbody _rigidBody;
     protected Animator _animator;
     protected PlayerStateMachine _state;
+    protected PlayerEffect _effect;
     #endregion
 
     #region AnimatorStringToHash
@@ -31,5 +32,6 @@ public abstract class PlayerState : PlayerBaseState
         _rigidBody = player.GetComponent<Rigidbody>();
         _animator = player.GetComponentInChildren<Animator>();
         _state = player.GetComponent<PlayerStateMachine>();
+        _effect = player.GetComponent<PlayerEffect>();
     }
 }

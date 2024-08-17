@@ -4,7 +4,7 @@ using Zenject;
 public class PlayerComboAttack : PlayerState
 {
     public PlayerComboAttack(Player player) : base(player) { }
-
+    
     #region AnimatorStringToHash
     protected AnimatorStateInfo _animatorStateInfo;
 
