@@ -14,7 +14,7 @@ public class Player : MonoBehaviour, IHit
     private PlayerInputSystem _inputSystem;
     private PlayerStateMachine _state;
     private Camera _camera;
-
+    
     public PC_Common_Stat _playerStat { get; private set; } = new PC_Common_Stat();
     public PC_Level _PC_Level { get; private set; } = new PC_Level();
     public Camera MainCamera { get { return _camera; } }
@@ -153,8 +153,6 @@ public class Player : MonoBehaviour, IHit
 
     public bool IsNext { get; set; }
     #endregion
-
-    
 
     private void Awake()
     {
@@ -311,7 +309,18 @@ public class Player : MonoBehaviour, IHit
         {
             PlayerSecondComboAttack secondCombo = _state.CurrentState as PlayerSecondComboAttack;
 
+            Vector3 boxposition = secondCombo._boxPosition;
+            Vector3 boxSize = secondCombo._boxSize;
+            Quaternion boxrotation = transform.rotation;
 
+            Matrix4x4 originalMatrix = Gizmos.matrix;
+
+            Gizmos.matrix = Matrix4x4.TRS(boxposition, boxrotation, Vector3.one);
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(Vector3.zero, boxSize);
+
+            Gizmos.matrix = originalMatrix;
         }
         else if(Application.isPlaying && _state.CurrentState is PlayerThirdComboAttack)
         {

@@ -42,7 +42,7 @@ public class PlayerFirstComboAttack : PlayerComboAttack
     {
         _forward = _player.transform.forward;
 
-        _boxPosition = _player.transform.position + _additionalPosition + _forward;
+        _boxPosition = _player.transform.position + _player.transform.TransformDirection(_additionalPosition) + _forward;
 
         _enemyLayer = LayerMask.GetMask("Monster");
 
@@ -57,6 +57,10 @@ public class PlayerFirstComboAttack : PlayerComboAttack
             if(hit != null)
             {
                 hit.Hit(10f, 5f, _player.transform);
+                GameObject hitEffect = _effect.GetHitEffect();
+                ParticleSystem hitParticle = hitEffect.GetComponent<ParticleSystem>();
+                hitEffect.transform.position = target.transform.position;
+                hitParticle.Play();
             }
         }
     }
