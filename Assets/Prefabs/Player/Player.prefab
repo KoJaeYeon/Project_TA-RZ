@@ -669,12 +669,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e020154da5bd314a87fb74a2d43a490, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _effects:
-  - {fileID: 1893033738566276, guid: 3e04efdf8ee665d48962b33b06e8e3d3, type: 3}
-  - {fileID: 1893033738566276, guid: 3e04efdf8ee665d48962b33b06e8e3d3, type: 3}
-  - {fileID: 1893033738566276, guid: 3e04efdf8ee665d48962b33b06e8e3d3, type: 3}
-  - {fileID: 1893033738566276, guid: 3e04efdf8ee665d48962b33b06e8e3d3, type: 3}
-  _effectTransformobject: {fileID: 1096371256798846863}
 --- !u!1 &2235718456473916865
 GameObject:
   m_ObjectHideFlags: 0
@@ -1285,7 +1279,7 @@ MonoBehaviour:
   _attackEffectArray:
   - {fileID: 1893033738566276, guid: 3e04efdf8ee665d48962b33b06e8e3d3, type: 3}
   - {fileID: 1893033738566276, guid: 3e04efdf8ee665d48962b33b06e8e3d3, type: 3}
-  - {fileID: 1893033738566276, guid: 3e04efdf8ee665d48962b33b06e8e3d3, type: 3}
+  - {fileID: 1130446560849736, guid: c4d564b5d4682ad46b8621f0fa6f40d9, type: 3}
   - {fileID: 1893033738566276, guid: 3e04efdf8ee665d48962b33b06e8e3d3, type: 3}
 --- !u!1 &3791058002001884171
 GameObject:
