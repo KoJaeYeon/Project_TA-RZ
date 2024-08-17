@@ -9,10 +9,13 @@ public class PlayerFirstComboAttack : PlayerComboAttack
         _event.AddEvent(AttackType.firstAttack, FirstAttack);
     }
 
+    #region Overlap
     public Vector3 _forward { get; private set; }
     public Vector3 _boxPosition { get; private set; }   
-    public Vector3 _boxSize { get; private set; } = new Vector3(1f, 1f, 0.5f);
+    public Vector3 _boxSize { get; private set; } = new Vector3(1f, 1f, 2f);
+    private Vector3 _additionalPosition = new Vector3(0f, 1f, 0.5f);
     private LayerMask _enemyLayer;
+    #endregion
 
     public override void StateEnter()
     {
@@ -39,7 +42,7 @@ public class PlayerFirstComboAttack : PlayerComboAttack
     {
         _forward = _player.transform.forward;
 
-        _boxPosition = (_player.transform.position + new Vector3(0f,1f,-0.5f)) + _forward;
+        _boxPosition = _player.transform.position + _additionalPosition + _forward;
 
         _enemyLayer = LayerMask.GetMask("Monster");
 

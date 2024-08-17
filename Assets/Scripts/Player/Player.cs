@@ -287,7 +287,7 @@ public class Player : MonoBehaviour, IHit
     }
     #endregion
 
-    //checkGround 
+    //Ground, AttackGizmos
     private void OnDrawGizmos()
     {
         if (Application.isPlaying &&_state.CurrentState is PlayerFirstComboAttack)

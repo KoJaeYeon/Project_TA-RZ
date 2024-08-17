@@ -32,28 +32,4 @@ public abstract class PlayerState : PlayerBaseState
         _animator = player.GetComponentInChildren<Animator>();
         _state = player.GetComponent<PlayerStateMachine>();
     }
-
-    protected virtual void ChangeStateBehaviour(PlayerInputSystem input)
-    {
-        if (input.Input != Vector2.zero)
-        {
-            _state.ChangeState(State.Run);
-        }
-        else if (input.IsDash && _player.StaminaCheck())
-        {
-            _state.ChangeState(State.Dash);
-        }
-        else if (input.IsAttack)
-        {
-            _state.ChangeState(State.FirstComboAttack);
-        }
-        else if (input.IsDrain && _player.StaminaCheck())
-        {
-            _state.ChangeState(State.Drain);
-        }
-        else if (input.IsSkill)
-        {
-            _state.ChangeState(State.Skill);
-        }
-    }
 }

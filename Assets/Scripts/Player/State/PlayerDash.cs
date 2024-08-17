@@ -37,11 +37,6 @@ public class PlayerDash : PlayerState
         Exit();
     }
 
-    public override void OnTriggerEnter(Collider other)
-    {
-        //피격
-    }
-
     private void InitializeDash()
     {
         _canDash = false;
