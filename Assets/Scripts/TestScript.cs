@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class TestScript : MonoBehaviour
+public class TestScript : MonoBehaviour, IHit
 {
     // Start is called before the first frame update
     // 한글테스트
@@ -11,6 +11,19 @@ public class TestScript : MonoBehaviour
     [Inject] GoogleSheetManager sheetManager;
     PC_Common_Stat PC_Common_Stat;
     [Inject] Player player;
+
+    public void ApplyKnockback(Vector3 otherPosition, float knockBackTime)
+    {
+        
+    }
+
+    public void Hit(float damage, float paralysisTime, Transform attackTrans)
+    {
+        Debug.Log(damage);
+        Debug.Log(paralysisTime);
+        Debug.Log(attackTrans);
+    }
+
     void Start()
     {
         //1안

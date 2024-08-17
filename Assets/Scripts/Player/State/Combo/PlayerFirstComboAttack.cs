@@ -52,15 +52,22 @@ public class PlayerFirstComboAttack : PlayerComboAttack
         {
             IHit hit = target.gameObject.GetComponent<IHit>();
 
+            Vector3 hitPosition = target.ClosestPoint(_boxPosition);
+
             Debug.Log(target.gameObject.gameObject.name);
 
             if(hit != null)
             {
                 hit.Hit(10f, 5f, _player.transform);
+
                 GameObject hitEffect = _effect.GetHitEffect();
                 ParticleSystem hitParticle = hitEffect.GetComponent<ParticleSystem>();
-                hitEffect.transform.position = target.transform.position;
+
+                hitEffect.transform.position = hitPosition;
+                hitEffect.transform.rotation = _player.transform.rotation;
+
                 hitParticle.Play();
+                _effect.ReturnHit(hitEffect);
             }
         }
     }
