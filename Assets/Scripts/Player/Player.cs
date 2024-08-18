@@ -326,8 +326,43 @@ public class Player : MonoBehaviour, IHit
         {
             PlayerThirdComboAttack thirdCombo = _state.CurrentState as PlayerThirdComboAttack;
 
+            Gizmos.color = Color.red;
 
+            // 부채꼴의 중심 방향
+            Vector3 forward = transform.forward;
+
+            // 부채꼴의 외곽을 그리기 위한 각도 계산
+            for (int i = 0; i <= thirdCombo._segments; i++)
+            {
+                float currentAngle = -thirdCombo._angle / 2 + (thirdCombo._angle / thirdCombo._segments) * i;
+                Quaternion rotation = Quaternion.AngleAxis(currentAngle, transform.up);
+
+                // 외곽 지점 계산
+                Vector3 direction = rotation * forward;
+                Vector3 endPoint = transform.position + direction * thirdCombo._range;
+
+                // 기즈모 선 그리기
+                Gizmos.DrawLine(transform.position, endPoint);
+            }
+
+            // 부채꼴의 바닥 원호를 그리기 위한 계산
+            for (int i = 0; i < thirdCombo._segments; i++)
+            {
+                float angle1 = -thirdCombo._angle  / 2 + (thirdCombo._angle  / thirdCombo._segments) * i;
+                float angle2 = -thirdCombo._angle / 2 + (thirdCombo._angle / thirdCombo._segments) * (i + 1);
+
+                Quaternion rot1 = Quaternion.AngleAxis(angle1, transform.up);
+                Quaternion rot2 = Quaternion.AngleAxis(angle2, transform.up);
+
+                Vector3 point1 = transform.position + (rot1 * forward) * thirdCombo._range;
+                Vector3 point2 = transform.position + (rot2 * forward) * thirdCombo._range;
+
+                Gizmos.DrawLine(point1, point2);
+            }
+
+            Gizmos.DrawWireSphere(transform.position, thirdCombo._range);
         }
+
         else if(Application.isPlaying && _state.CurrentState is PlayerFourthComboAttack)
         {
             PlayerFourthComboAttack fourthCombo = _state.CurrentState as PlayerFourthComboAttack;

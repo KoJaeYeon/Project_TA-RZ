@@ -56,8 +56,6 @@ public class PlayerSecondComboAttack : PlayerComboAttack
 
             Vector3 hitPosition = target.ClosestPoint(_boxPosition);
 
-            Debug.Log(target.gameObject.gameObject.name);
-
             if (hit != null)
             {
                 hit.Hit(10f, 5f, _player.transform);

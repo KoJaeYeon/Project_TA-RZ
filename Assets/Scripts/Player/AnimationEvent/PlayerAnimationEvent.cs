@@ -81,7 +81,7 @@ public class PlayerAnimationEvent : MonoBehaviour
         ParticleSystem effectParticle = thirdEffect.GetComponent<ParticleSystem>();
 
         thirdEffect.transform.localPosition = Vector3.zero;
-        thirdEffect.transform.localRotation = Quaternion.identity;
+        
         thirdEffect.transform.parent = null;
         effectParticle.Play();
 
