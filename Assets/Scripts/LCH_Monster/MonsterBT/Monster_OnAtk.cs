@@ -28,7 +28,6 @@ public class Monster_OnAtk : Action
             if (anim.GetCurrentAnimatorStateInfo(0).IsName("Atk") == true)
             {
                 animinfo = anim.GetCurrentAnimatorStateInfo(0);
-                Debug.Log(animinfo.normalizedTime);
                 if (animinfo.normalizedTime < 0.95f)
                 {
                     return TaskStatus.Running;
