@@ -57,15 +57,6 @@ public class PlayerThirdComboAttack : PlayerComboAttack
 
     private bool IsRange(Transform targetTransform)
     {
-        float targetY = targetTransform.position.y;
-        float bottom = _player.transform.position.y;
-        float top = bottom + _height;
-        Debug.Log($"Y축 비교 : {targetY < bottom ||  targetY > top}");
-        if(targetY < bottom ||  targetY > top)
-        {
-            return false;
-        }
-
         Vector3 targetDirection = targetTransform.position - _player.transform.position;
         targetDirection.y = 0f;
         targetDirection.Normalize();
@@ -95,7 +86,9 @@ public class PlayerThirdComboAttack : PlayerComboAttack
     {
         IHit hit = other.gameObject.GetComponent<IHit>();
 
-        Vector3 hitPosition = other.ClosestPoint(_player.transform.position);
+        Vector3 directionToPlayer = (_player.transform.position - other.transform.position).normalized;
+
+        Vector3 hitPosition = other.transform.position + directionToPlayer * 1f;
 
         if (hit != null)
         {
@@ -105,7 +98,8 @@ public class PlayerThirdComboAttack : PlayerComboAttack
             ParticleSystem hitParticle = hitEffect.GetComponent<ParticleSystem>();
 
             hitEffect.transform.position = hitPosition;
-            hitEffect.transform.rotation = _player.transform.rotation;
+            Quaternion lookRotation = Quaternion.LookRotation(_player.transform.forward);
+            hitEffect.transform.rotation = lookRotation;
 
             hitParticle.Play();
             _effect.ReturnHit(hitEffect);
