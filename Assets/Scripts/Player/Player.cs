@@ -360,7 +360,15 @@ public class Player : MonoBehaviour, IHit
                 Gizmos.DrawLine(point1, point2);
             }
 
-            Gizmos.DrawWireSphere(transform.position, thirdCombo._range);
+            Vector3 bottom = transform.position - Vector3.up * thirdCombo._height /2;
+            Vector3 top = transform.position + Vector3.up * thirdCombo._height / 2;
+
+            Gizmos.DrawLine(bottom, bottom + forward * thirdCombo._range);
+            Gizmos.DrawLine(top, top + forward * thirdCombo._range);
+
+            Gizmos.DrawLine(bottom + forward * thirdCombo._range, top + forward * thirdCombo._range);
+
+            //Gizmos.DrawWireSphere(transform.position, thirdCombo._range);
         }
 
         else if(Application.isPlaying && _state.CurrentState is PlayerFourthComboAttack)

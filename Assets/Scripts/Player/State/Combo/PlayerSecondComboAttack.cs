@@ -54,7 +54,9 @@ public class PlayerSecondComboAttack : PlayerComboAttack
         {
             IHit hit = target.gameObject.GetComponent<IHit>();
 
-            Vector3 hitPosition = target.ClosestPoint(_boxPosition);
+            Vector3 directionToPlayer = (_player.transform.position - target.transform.position).normalized;
+
+            Vector3 hitPosition = target.transform.position + directionToPlayer * 1f;
 
             if (hit != null)
             {
@@ -64,7 +66,8 @@ public class PlayerSecondComboAttack : PlayerComboAttack
                 ParticleSystem hitParticle = hitEffect.GetComponent<ParticleSystem>();
 
                 hitEffect.transform.position = hitPosition;
-                hitEffect.transform.rotation = _player.transform.rotation;
+                Quaternion lookRotation = Quaternion.LookRotation(_player.transform.forward);
+                hitEffect.transform.rotation = lookRotation;
 
                 hitParticle.Play();
                 _effect.ReturnHit(hitEffect);
