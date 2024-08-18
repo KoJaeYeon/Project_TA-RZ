@@ -5,7 +5,7 @@ using BehaviorDesigner.Runtime.Tasks;
 using Zenject;
 using System.Collections;
 
-public class Monster : MonoBehaviour,IHit
+public class Monster : MonoBehaviour, IHit
 {
     [SerializeField] BehaviorTree Bt;
     public float Mon_Common_Stat_Hp;
@@ -20,7 +20,7 @@ public class Monster : MonoBehaviour,IHit
     public bool isDamaged;
     public bool isAtk;
     public float Mon_Common_Hp_Remain;
-    [Inject] public Player Player { get;}
+    [Inject] public Player Player { get; }
 
     void Start()
     {
@@ -32,26 +32,31 @@ public class Monster : MonoBehaviour,IHit
     {
         isDamaged = true;
         Mon_Common_Hp_Remain -= damage;
-        
+
         if (Mon_Common_Hp_Remain > 0)
         {
             StartCoroutine(WaitForStun(paralysisTime));
         }
     }
-    public void ApplyKnockback(Vector3 otherPosition,float knockBackTime)
+
+    public void ApplyKnockback(Vector3 attackerPosition, float knockbackForce)
     {
-        var knockback = GetComponent<Rigidbody>();
-        knockback.AddForce(otherPosition);
-        
+        var rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            Vector3 knockbackDirection = (transform.position - attackerPosition).normalized;
+
+            rb.AddForce(knockbackDirection * knockbackForce, ForceMode.Impulse);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("데미지받음");
-            Hit(10,5, transform);
-            ApplyKnockback(this.gameObject.transform.position,10);
+            Debug.Log("데미지 받음");
+            Hit(10, 5, transform);
+            ApplyKnockback(other.transform.position, 1f); 
         }
     }
 
@@ -62,11 +67,9 @@ public class Monster : MonoBehaviour,IHit
         anim.SetTrigger("Damaged");
         yield return new WaitForSeconds(paralysisTime);
         isDamaged = false;
-        if (isDamaged == false)
+        if (!isDamaged)
         {
             Bt.enabled = true;
         }
     }
-
-    
 }
