@@ -1,6 +1,7 @@
 using BehaviorDesigner.Runtime.Tasks;
 using BehaviorDesigner.Runtime;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Monster_CoolTime : Conditional
 {

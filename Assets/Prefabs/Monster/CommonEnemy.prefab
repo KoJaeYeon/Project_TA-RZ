@@ -1183,7 +1183,8 @@ MonoBehaviour:
   Mon_Common_MovementSpeed: 3
   Mon_Common_CoolTime: 3
   isDamaged: 0
-  Mon_Common_CurrentHp: 0
+  isAtk: 0
+  Mon_Common_Hp_Remain: 0
 --- !u!136 &7897430125240335523
 CapsuleCollider:
   m_ObjectHideFlags: 0
