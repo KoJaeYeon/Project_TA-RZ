@@ -8,6 +8,7 @@ using UnityEngine;
 public class Monster_OnAtk : Action
 {
     [SerializeField] SharedMonster monster;
+    [SerializeField] SharedCustomCollider collider;
     // Start is called before the first frame update
     Animator anim;
     AnimatorStateInfo animinfo;
@@ -19,6 +20,7 @@ public class Monster_OnAtk : Action
     public override void OnStart()
     {
         anim.Play("Atk");
+        collider.Value.enabled = true;
     }
     public override TaskStatus OnUpdate()
     {
@@ -36,6 +38,7 @@ public class Monster_OnAtk : Action
 
                 else
                 {
+                    collider.Value.enabled = false;
                     return TaskStatus.Success;
                 }
 
