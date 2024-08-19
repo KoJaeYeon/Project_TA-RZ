@@ -30,6 +30,7 @@ public class Monster_OnAtk : Action
                 animinfo = anim.GetCurrentAnimatorStateInfo(0);
                 if (animinfo.normalizedTime < 0.95f)
                 {
+
                     return TaskStatus.Running;
                 }
 
@@ -57,6 +58,7 @@ public class Monster_OnAtk : Action
             //    return TaskStatus.Success;
             //}
         }
+
         return TaskStatus.Failure;
     }
 }

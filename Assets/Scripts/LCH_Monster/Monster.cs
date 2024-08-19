@@ -79,7 +79,6 @@ public class Monster : MonoBehaviour, IHit
             Debug.Log("데미지 받음");
             isKnockBack = true;
             Hit(10, 5, transform);
-            //ApplyKnockback(Player.gameObject.transform.position, 1f); 
         }
     }
 
