@@ -312,6 +312,7 @@ MonoBehaviour:
   Mon_Common_CoolTime: 0
   isDamaged: 0
   isAtk: 0
+  isKnockBack: 0
   Mon_Common_Hp_Remain: 0
 --- !u!195 &62376406
 NavMeshAgent:
@@ -789,6 +790,7 @@ MonoBehaviour:
   Mon_Common_CoolTime: 0
   isDamaged: 0
   isAtk: 0
+  isKnockBack: 0
   Mon_Common_Hp_Remain: 0
 --- !u!114 &507205009
 MonoBehaviour:
@@ -1815,28 +1817,13 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2036722526376663656, guid: dfcd9db998287d34386f0f5c807b39de,
         type: 3}
-      propertyPath: isAtk
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2036722526376663656, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
       propertyPath: Mon_Common_CoolTime
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2444760024111282628, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 126
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3379560720758915511, guid: dfcd9db998287d34386f0f5c807b39de,
         type: 3}
       propertyPath: m_Name
       value: CommonEnemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 3379560720758915511, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: m_TagString
-      value: Monster
       objectReference: {fileID: 0}
     - target: {fileID: 3379560720759086487, guid: dfcd9db998287d34386f0f5c807b39de,
         type: 3}
@@ -1886,21 +1873,6 @@ PrefabInstance:
     - target: {fileID: 3379560720759086487, guid: dfcd9db998287d34386f0f5c807b39de,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6273317750215575751, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7739591162682787326, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: gizmoViewMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7739591162682787326, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: showBehaviorDesignerGizmo
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

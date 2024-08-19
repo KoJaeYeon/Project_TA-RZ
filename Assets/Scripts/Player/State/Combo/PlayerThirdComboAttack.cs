@@ -93,7 +93,7 @@ public class PlayerThirdComboAttack : PlayerComboAttack
         if (hit != null)
         {
             hit.Hit(10f, 0f, _player.transform);
-            hit.ApplyKnockback(other.transform.position, 1f);
+            hit.ApplyKnockback(1f, other.transform);
 
             GameObject hitEffect = _effect.GetHitEffect();
             ParticleSystem hitParticle = hitEffect.GetComponent<ParticleSystem>();
