@@ -1269,12 +1269,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5baf705d4fe962440bbd2e9c1ff6fcc8, type: 3}
---- !u!65 &1417777212 stripped
-BoxCollider:
-  m_CorrespondingSourceObject: {fileID: 6273317750215575751, guid: dfcd9db998287d34386f0f5c807b39de,
-    type: 3}
-  m_PrefabInstance: {fileID: 6446038411887447963}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1442178758
 GameObject:
   m_ObjectHideFlags: 0
@@ -1887,16 +1881,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2036722526376663656, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: Mon_Knockback_Time
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2036722526376663656, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: Mon_Knockback_Speed
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 3379560720758915511, guid: dfcd9db998287d34386f0f5c807b39de,
         type: 3}
       propertyPath: m_Name
@@ -1952,31 +1936,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6273317750215575751, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6273317750215575751, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: m_Center.z
-      value: 1.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 7739591162682787326, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: mBehaviorSource.mTaskData.JSONSerialization
-      value: '{"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"TargetTransform","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"IsTrack","IsShared":true,"StringmValue":"IsTrack"},{"Type":"BehaviorDesigner.Runtime.SharedMonster","Name":"Monster","IsShared":true,"MonstermValue":0},{"Type":"BehaviorDesigner.Runtime.SharedNavmesh","Name":"NavmeshAgent","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"waitTime","IsShared":true,"SinglemValue":2},{"Type":"BehaviorDesigner.Runtime.SharedCustomCollider","Name":"Collider","IsShared":true,"BoxCollidermValue":1}]}'
-      objectReference: {fileID: 0}
-    - target: {fileID: 7739591162682787326, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: mBehaviorSource.mTaskData.fieldSerializationData.unityObjects.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7739591162682787326, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: mBehaviorSource.mTaskData.fieldSerializationData.unityObjects.Array.data[1]
-      value: 
-      objectReference: {fileID: 1417777212}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
