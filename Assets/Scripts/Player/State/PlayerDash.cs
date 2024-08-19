@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 public class PlayerDash : PlayerState
 {
@@ -75,6 +76,8 @@ public class PlayerDash : PlayerState
 
     private void Dash()
     {
+        _player.AllgnToCamera();
+
         _dashDirection = _player.transform.forward;
 
         Vector3 dash = _dashDirection * _dashPower;

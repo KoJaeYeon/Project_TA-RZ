@@ -8,6 +8,8 @@ public class Player : MonoBehaviour, IHit
     #region InJect
     [Inject] private PlayerManager _playerManager { get; }
     [Inject] public DataManager dataManager { get; }
+
+    [Inject] public CameraRoot cameraRoot { get; }
     #endregion
 
     #region PlayerComponent
@@ -253,6 +255,13 @@ public class Player : MonoBehaviour, IHit
     public void Set_PC_Level(PC_Level _PC_Level)
     {
         this._PC_Level = _PC_Level;
+    }
+
+    public void AllgnToCamera()
+    {
+        transform.rotation = cameraRoot.transform.rotation;
+
+        cameraRoot.transform.rotation = transform.rotation;
     }
 
     #region PlayerLoad
