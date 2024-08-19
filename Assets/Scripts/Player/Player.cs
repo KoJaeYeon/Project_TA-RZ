@@ -351,6 +351,7 @@ public class Player : MonoBehaviour, IHit
             // 부채꼴의 외곽을 그리기 위한 각도 계산
             for (int i = 0; i <= thirdCombo._segments; i++)
             {
+                if (i != 0 && i != thirdCombo._segments) continue;
                 float currentAngle = -thirdCombo._angle / 2 + (thirdCombo._angle / thirdCombo._segments) * i;
                 Quaternion rotation = Quaternion.AngleAxis(currentAngle, transform.up);
 

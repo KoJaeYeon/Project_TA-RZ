@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class PlayerFourthComboAttack : PlayerComboAttack
 {
-    public PlayerFourthComboAttack(Player player) : base(player) { }
+    public PlayerFourthComboAttack(Player player) : base(player)
+    {
+        PlayerAnimationEvent _event;
+        _event = player.GetComponentInChildren<PlayerAnimationEvent>();
+        _event.AddEvent(AttackType.fourthAttack, ChargeAttack);
+    }
     
     private float _maxDelayTime = 2f;
     private float _currentDelayTime;
@@ -39,13 +44,12 @@ public class PlayerFourthComboAttack : PlayerComboAttack
             Debug.Log(Mathf.Round(_currentDelayTime));
 
             EndState();
-
-            _currentDelayTime += Time.deltaTime;
         }
     }
 
     public override void StateExit()
     {
+        _effect.DeActive_FourthEffect();
         ComboAnimation(_fourthCombo, false);
 
         _inputSystem.SetAttack(false);
@@ -55,10 +59,17 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
     private IEnumerator GaugeAmount()
     {
+        _effect.Active_FourthEffect();
+
+        int index = 0;
+        
+        _effect.ChangeColor(index);
+
         while (_isFillingGauge)
         {
             yield return new WaitForSeconds(0.5f);
-
+            index += index == 3 ? 0 : 1;
+            _effect.ChangeColor(index);
             _gauge += 1f;
 
             Debug.Log(_gauge);
@@ -87,21 +98,18 @@ public class PlayerFourthComboAttack : PlayerComboAttack
         if(!_inputSystem.IsAttack || _currentDelayTime >= _maxDelayTime)
         {
             _animator.speed = 1f;
+
             _state.ChangeState(State.Idle);
+
             return;
         }
+
+        _currentDelayTime += Time.deltaTime;
     }
 
-    private void ChargeAttack(float animatorSpeed)
+    private void ChargeAttack()
     {
-        if(animatorSpeed == 0.5f)
-        {
-
-
-
-
-
-        }
+        
     }
 
 
