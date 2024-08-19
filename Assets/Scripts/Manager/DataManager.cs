@@ -72,6 +72,9 @@ public class DataManager
             case "_PC_Skill_URL":
                 Process_PC_Skill_Data(data);
                 break;
+            case "_PC_Attack_URL":
+                Process_PC_Atatck_Data(data);
+                break;
             default:
                 Debug.LogError($"Unknown URL name: {urlName}");
                 break;
@@ -132,6 +135,28 @@ public class DataManager
 
             PC_Skill skill = new PC_Skill(idStr, skillGaugeConsumption, skillDuration, skillValue);
             AddDataToDataDictionary(idStr, skill);
+        }
+    }
+
+    private void Process_PC_Atatck_Data(string data)
+    {
+        JArray jsonArray = JArray.Parse(data);
+
+        foreach (var item in jsonArray)
+        {
+            string idStr = item[nameof(PC_Attack.ID)].ToString();
+            float atkMultiplier = ParseFloat(item["PC_Type1_Atk_Multiplier"]);
+            int arm0SkillGageGet = ParseInt(item["PC_Type1_Arm0_SkillGageGet"]);
+            int arm1SkillGageGet = ParseInt(item["PC_Type1_Arm1_SkillGageGet"]);
+            int arm2SkillGageGet = ParseInt(item["PC_Type1_Arm2_SkillGageGet"]);
+            int arm3SkillGageGet = ParseInt(item["PC_Type1_Arm3_SkillGageGet"]);
+            float atk4GageGetMaxT = ParseFloat(item["PC_Type1_Atk4_GageGetMaxT"]);
+            float atk4GageKeepT = ParseFloat(item["PC_Type1_Atk4_GageKeepT"]);
+            float atk4StiffT = ParseFloat(item["PC_Type1_Atk4_StiffT"]);
+            float atk3KnockBackT = ParseFloat(item["PC_Type1_Atk3_KnockBackT"]);
+
+            PC_Attack attack = new PC_Attack(idStr, atkMultiplier, arm0SkillGageGet, arm1SkillGageGet, arm2SkillGageGet, arm3SkillGageGet, atk4GageGetMaxT, atk4GageKeepT, atk4StiffT, atk3KnockBackT);
+            AddDataToDataDictionary(idStr, attack);
         }
     }
 
