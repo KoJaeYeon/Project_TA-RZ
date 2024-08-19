@@ -396,12 +396,13 @@ public class Player : MonoBehaviour, IHit
 
         Vector3 GizmoPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         Gizmos.DrawWireSphere(GizmoPosition, 0.2f);
+
     }
 
     #region Hit
     public void Hit(float damage, float paralysisTime, Transform attackTrans)
     {
-        if(_isPlayerAlive == false)
+        if (CheckAttackIsAvailable(attackTrans.position) == false)
         {
             return;
         }
@@ -420,15 +421,41 @@ public class Player : MonoBehaviour, IHit
         }
     }
 
-    public void ApplyKnockback(Vector3 otherPosition, float knockBackTime)
+    public void ApplyKnockback(float knockBackTime, Transform otherTrans)
     {
-        if(_isPlayerAlive)
+        if (CheckAttackIsAvailable(otherTrans.position) == false)
         {
-            PlayerKnockBack._knockBackPosition = otherPosition;
-            PlayerKnockBack.Pc_Knock_Back_Time = knockBackTime;
-
-            _state.OnKnockBackStateChange();
+            return;
         }
+
+        PlayerKnockBack._knockBackPosition = otherTrans.position;
+        PlayerKnockBack.Pc_Knock_Back_Time = knockBackTime;
+
+        _state.OnKnockBackStateChange();
+
+    }
+
+    bool CheckAttackIsAvailable(Vector3 attackPos)
+    {
+        if (_isPlayerAlive == false)
+        {
+            return false;
+        }
+        else if (IsSkillAcitve[2] == true)
+        {
+            Vector3 directionToAttack = attackPos - transform.position;
+
+            // 방향이 전방인지 확인 (플레이어의 전방은 transform.forward와 비교)
+            float dotProduct = Vector3.Dot(transform.forward, directionToAttack.normalized);
+
+            // dotProduct가 0보다 크면 전방
+            if (dotProduct >= 0)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     #endregion

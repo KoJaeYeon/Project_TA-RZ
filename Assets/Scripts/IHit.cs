@@ -11,6 +11,6 @@ public interface IHit
     /// <param name="attackTrans">공격자의 트랜스폼</param>
     public void Hit(float damage, float paralysisTime, Transform attackTrans);
     //hit position, 넉백 시간
-    public void ApplyKnockback(Vector3 otherPosition, float knockBackTime);
+    public void ApplyKnockback(float knockBackTime, Transform otherPosition);
 }
 
