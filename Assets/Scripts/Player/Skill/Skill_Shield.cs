@@ -24,19 +24,6 @@ public class Skill_Shield : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other);        
-    }
-
-    public void ApplyShield(float value)
-    {
-        isActive = true;
-        this.value = value;
-        boxCollider.isTrigger = true;
-        boxCollider.size *= 1.1f;
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
         if (isActive)
         {
             var ihit = other.gameObject.GetComponent<IHit>();
@@ -45,5 +32,13 @@ public class Skill_Shield : MonoBehaviour
                 ihit.ApplyKnockback(transform.position, value);
             }
         }
+    }
+
+    public void ApplyShield(float value)
+    {
+        isActive = true;
+        this.value = value;
+        boxCollider.isTrigger = true;
+        boxCollider.size *= 1.1f;
     }
 }

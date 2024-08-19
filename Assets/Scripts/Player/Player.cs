@@ -168,9 +168,21 @@ public class Player : MonoBehaviour, IHit
         {
             CurrentSkill++;
         }
-        else if(Input.GetKeyDown(KeyCode.M))
+        else if(Input.GetKeyDown(KeyCode.F5))
         {
-            CurrentSkill = 76;
+            CurrentSkill = 25;
+        }
+        else if (Input.GetKeyDown(KeyCode.F6))
+        {
+            CurrentSkill = 50;
+        }
+        else if (Input.GetKeyDown(KeyCode.F7))
+        {
+            CurrentSkill = 75;
+        }
+        else if (Input.GetKeyDown(KeyCode.F8))
+        {
+            CurrentSkill = 100;
         }
     }
 
