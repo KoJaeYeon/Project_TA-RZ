@@ -98,6 +98,7 @@ namespace BehaviorDesigner.Runtime.Tasks
                 return string.Empty;
             }
 
+
             return conditionalTask.GetType().Name;
         }
 

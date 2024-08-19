@@ -19,6 +19,7 @@ public class Monster : MonoBehaviour, IHit
 
     public bool isDamaged;
     public bool isAtk;
+    public bool isKnockBack;
     public float Mon_Common_Hp_Remain;
     [Inject] public Player Player { get; }
 
@@ -55,21 +56,22 @@ public class Monster : MonoBehaviour, IHit
         if (other.CompareTag("Player"))
         {
             Debug.Log("데미지 받음");
+            isKnockBack = true;
             Hit(10, 5, transform);
-            ApplyKnockback(other.transform.position, 1f); 
+            //ApplyKnockback(Player.gameObject.transform.position, 1f); 
         }
     }
 
     public IEnumerator WaitForStun(float paralysisTime)
     {
-        Bt.enabled = false;
+        //Bt.enabled = false;
         var anim = GetComponent<Animator>();
         anim.SetTrigger("Damaged");
         yield return new WaitForSeconds(paralysisTime);
         isDamaged = false;
         if (!isDamaged)
         {
-            Bt.enabled = true;
+           // Bt.enabled = true;
         }
     }
 }

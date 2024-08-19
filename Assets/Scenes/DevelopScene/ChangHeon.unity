@@ -312,6 +312,7 @@ MonoBehaviour:
   Mon_Common_CoolTime: 0
   isDamaged: 0
   isAtk: 0
+  isKnockBack: 0
   Mon_Common_Hp_Remain: 0
 --- !u!195 &62376406
 NavMeshAgent:
@@ -789,6 +790,7 @@ MonoBehaviour:
   Mon_Common_CoolTime: 0
   isDamaged: 0
   isAtk: 0
+  isKnockBack: 0
   Mon_Common_Hp_Remain: 0
 --- !u!114 &507205009
 MonoBehaviour:
@@ -1813,6 +1815,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2036722526376663656, guid: dfcd9db998287d34386f0f5c807b39de,
+        type: 3}
+      propertyPath: Mon_Common_CoolTime
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3379560720758915511, guid: dfcd9db998287d34386f0f5c807b39de,
         type: 3}
       propertyPath: m_Name
