@@ -3,7 +3,16 @@ using Zenject;
 
 public class PlayerComboAttack : PlayerState
 {
-    public PlayerComboAttack(Player player) : base(player) { }
+    public PlayerComboAttack(Player player) : base(player)
+    {
+        if (!_isLoadData)
+        {
+            _isLoadData = true;
+            Debug.Log("데이터 로드중");
+        }
+    }
+
+    private bool _isLoadData = false;
     
     #region AnimatorStringToHash
     protected AnimatorStateInfo _animatorStateInfo;
@@ -17,6 +26,7 @@ public class PlayerComboAttack : PlayerState
 
     protected void OnComboAttackUpdate(string attackName, State nextCombo)
     {
+        Debug.Log(_player.CurrentAmmo);
         _animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
 
         if (_animatorStateInfo.IsName(attackName) && _animatorStateInfo.normalizedTime >= 0.99f)
@@ -27,7 +37,14 @@ public class PlayerComboAttack : PlayerState
         }
         else
             AttackRotation();
-        
+
+        if(nextCombo is State.FourthComboAttack)
+        {
+            if(_player.CurrentAmmo <= 1)
+            {
+                return;
+            }
+        }
 
         if (_inputSystem.IsAttack && _player.IsNext)
         {
