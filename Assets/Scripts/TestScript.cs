@@ -9,9 +9,9 @@ public class TestScript : MonoBehaviour, IHit
     // 한글테스트
     [Inject] Player player;
 
-    public void ApplyKnockback(Vector3 otherPosition, float knockBackTime)
+    public void ApplyKnockback(float knockBackTime, Transform otherTrans)
     {
-        Debug.Log($"ApplyKnockback {otherPosition}, {knockBackTime}");
+        Debug.Log($"ApplyKnockback {otherTrans}, {knockBackTime}");
     }
 
     public void Hit(float damage, float paralysisTime, Transform attackTrans)
@@ -26,7 +26,7 @@ public class TestScript : MonoBehaviour, IHit
     {
         if(Input.GetKeyDown(KeyCode.K))
         {
-            player.ApplyKnockback(transform.position, 1f);
+            player.ApplyKnockback(1f, transform);
             player.Hit(10,0.4f,transform);
         }
         if (Input.GetKeyDown(KeyCode.L))

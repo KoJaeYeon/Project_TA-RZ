@@ -38,10 +38,10 @@ public class Monster : MonoBehaviour,IHit
             StartCoroutine(WaitForStun(paralysisTime));
         }
     }
-    public void ApplyKnockback(Vector3 otherPosition,float knockBackTime)
+    public void ApplyKnockback(float knockBackTime, Transform otherTrans)
     {
         var knockback = GetComponent<Rigidbody>();
-        knockback.AddForce(otherPosition);
+        knockback.AddForce(otherTrans.position);
         
     }
 
@@ -51,7 +51,7 @@ public class Monster : MonoBehaviour,IHit
         {
             Debug.Log("데미지받음");
             Hit(10,5, transform);
-            ApplyKnockback(this.gameObject.transform.position,10);
+            ApplyKnockback(10, this.gameObject.transform);
         }
     }
 

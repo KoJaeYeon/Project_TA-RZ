@@ -29,7 +29,7 @@ public class Skill_Shield : MonoBehaviour
             var ihit = other.gameObject.GetComponent<IHit>();
             if (ihit != null)
             {
-                ihit.ApplyKnockback(transform.position, value);
+                ihit.ApplyKnockback(value, transform);
             }
         }
     }

@@ -48,6 +48,8 @@ public class PlayerSkill : PlayerState
         _player.IsSkillAnimationEnd = false;
         if (skillIndex == 3)
         {
+            //액티브 스킬
+            _player.IsSkillAcitve[skillIndex - 1] = false;
             _skillSystem.SetActive_Skiil_Effect(skillIndex, false);
         }
     }
@@ -166,9 +168,7 @@ public class PlayerSkill : PlayerState
         {
             yield return new WaitForSeconds(_PC_Skill.Skill_Duration);
 
-        }
-
-        _player.IsSkillAcitve[skillIndex - 1] = false;
+        }        
 
         if (skillIndex == 3)
         {
@@ -176,6 +176,8 @@ public class PlayerSkill : PlayerState
         }
         else
         {
+            //지속시간 있는 스킬
+            _player.IsSkillAcitve[skillIndex - 1] = false;
             _skillSystem.SetActive_Skiil_Effect(skillIndex, false);
         }
 
