@@ -9,5 +9,7 @@ public class PlayerContainer : MonoInstaller
         Container.Bind<PlayerUIViewModel>().AsSingle();
 
         Container.Bind<Player>().FromComponentInHierarchy().AsSingle();
+
+        Container.Bind<CameraRoot>().FromComponentInHierarchy().AsSingle();
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 public class PlayerDash : PlayerState
 {
@@ -75,11 +76,7 @@ public class PlayerDash : PlayerState
 
     private void Dash()
     {
-        float targetRotation = _player.MainCamera.transform.rotation.eulerAngles.y;
-
-        Quaternion rotation = Quaternion.Euler(0, targetRotation, 0);
-
-        _player.transform.rotation = rotation;
+        _player.AllgnToCamera();
 
         _dashDirection = _player.transform.forward;
 
