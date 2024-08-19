@@ -40,6 +40,7 @@ public class PlayerSecondComboAttack : PlayerComboAttack
         base.StateExit();
     }
 
+    //두 번째 공격로직
     private void SecondAttack()
     {
         _forward = _player.transform.forward;

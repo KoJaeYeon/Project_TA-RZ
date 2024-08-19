@@ -285,6 +285,7 @@ public class Player : MonoBehaviour, IHit
     }
     #endregion
 
+    #region Gizmos
     //Ground, AttackGizmos
     private void OnDrawGizmos()
     {
@@ -381,6 +382,7 @@ public class Player : MonoBehaviour, IHit
         Vector3 GizmoPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         Gizmos.DrawWireSphere(GizmoPosition, 0.2f);
     }
+    #endregion
 
     #region Hit
     public void Hit(float damage, float paralysisTime, Transform attackTrans)

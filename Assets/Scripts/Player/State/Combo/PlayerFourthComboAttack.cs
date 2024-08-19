@@ -6,62 +6,42 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 {
     public PlayerFourthComboAttack(Player player) : base(player) { }
     
-    //4초면 4초에 0.3f, 0.03f
-    private float _chargeMaxTime = 2f;
-    private float _currentChargeTime;
+    private float _maxDelayTime = 2f;
+    private float _currentDelayTime;
+    private float _maxGauge = 4f;
+    private float _gauge;
+    private bool _isFillingGauge = true;
     
     public override void StateEnter()
     {
-        _currentChargeTime = 0f;
+        _currentDelayTime = 0f;
+
+        _gauge = 0f;
+
+        _isFillingGauge = true;
 
         ComboAnimation(_fourthCombo, true);
+
+        _player.StartCoroutine(GaugeAmount());
     }
 
     public override void StateUpdate()
     {
-        if (_inputSystem.IsAttack && _currentChargeTime <= _chargeMaxTime)
+        _animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+        //4초면 4초에 0.3f, 0.03f
+        if (_animatorStateInfo.IsName("Attack_Legend_Anim") &&_animatorStateInfo.normalizedTime >= 0.3f)
         {
-            _animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-
-            if(_animatorStateInfo.IsName("Attack_Legend_Anim") &&_animatorStateInfo.normalizedTime >= 0.3f)
-            {
-                _animator.speed = 0.05f;
-            }
+            _animator.speed = 0.05f;
         }
-        else
+        
+        if (!_isFillingGauge)
         {
-            _animator.speed = 1f;
+            Debug.Log(Mathf.Round(_currentDelayTime));
 
-            _animator.SetBool(_fourthCombo, false);
+            EndState();
 
-            _state.ChangeState(State.Idle);
-
-            return;
+            _currentDelayTime += Time.deltaTime;
         }
-
-        _currentChargeTime += Time.deltaTime;
-
-        //if(_currentChargeTime >= _chargeMaxTime)
-        //{
-        //    ChargeAttack(_currentChargeTime);
-
-        //    _animator.SetBool(_fourthCombo, false);
-
-        //    _state.ChangeState(State.Idle);
-
-        //    return;
-        //}
-
-        //if (!_inputSystem.IsAttack)
-        //{
-        //    ChargeAttack(_currentChargeTime);
-
-        //    _animator.SetBool(_fourthCombo, false);
-
-        //    _state.ChangeState(State.Idle);
-
-        //    return;
-        //}
     }
 
     public override void StateExit()
@@ -73,13 +53,55 @@ public class PlayerFourthComboAttack : PlayerComboAttack
         base.StateExit();
     }
 
-    private void ChargeAttack(float time)
+    private IEnumerator GaugeAmount()
     {
-        if(time <= 1f)
+        while (_isFillingGauge)
         {
-            FourthAttack(time);
-        }
+            yield return new WaitForSeconds(0.5f);
 
+            _gauge += 1f;
+
+            Debug.Log(_gauge);
+
+            if(_gauge >= _maxGauge)
+            {
+                _isFillingGauge = false;
+
+                yield break;
+            }
+            else if (!_inputSystem.IsAttack)
+            {
+                Debug.Log("취소");
+
+                _animator.speed = 1f;
+
+                _state.ChangeState(State.Idle);
+
+                yield break;
+            }
+        }
+    }
+
+    private void EndState()
+    {
+        if(!_inputSystem.IsAttack || _currentDelayTime >= _maxDelayTime)
+        {
+            _animator.speed = 1f;
+            _state.ChangeState(State.Idle);
+            return;
+        }
+    }
+
+    private void ChargeAttack(float animatorSpeed)
+    {
+        if(animatorSpeed == 0.5f)
+        {
+
+
+
+
+
+        }
     }
 
 
