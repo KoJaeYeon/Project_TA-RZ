@@ -38,6 +38,7 @@ public class PlayerFirstComboAttack : PlayerComboAttack
         base.StateExit();
     }
 
+    //첫 번째 공격로직
     private void FirstAttack()
     {
         _forward = _player.transform.forward;
