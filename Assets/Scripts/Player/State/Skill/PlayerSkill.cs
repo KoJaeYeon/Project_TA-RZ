@@ -83,16 +83,16 @@ public class PlayerSkill : PlayerState
         switch(skillIndex)
         {
             case 1:
-                _player.StartCoroutine(ApplySkillDuration(skillIndex));
+                _player.StartCoroutine(ApplySkillAndDuration(skillIndex));
                 break;
             case 2:
-                _player.StartCoroutine(ApplySkillDuration(skillIndex));
+                _player.StartCoroutine(ApplySkillAndDuration(skillIndex));
                 break;
             case 3:
-                _player.StartCoroutine(ApplySkillDuration(skillIndex));
+                _player.StartCoroutine(ApplySkillAndDuration(skillIndex));
                 break;
             case 4:
-                _player.StartCoroutine(ApplySkillDuration(skillIndex));
+                _player.StartCoroutine(ApplySkillAndDuration(skillIndex));
                 break;
             default:
                 Debug.LogError("Skill Error!");
@@ -138,12 +138,17 @@ public class PlayerSkill : PlayerState
         }
     }
 
-    IEnumerator ApplySkillDuration(int skillindex)
+    IEnumerator ApplySkillAndDuration(int skillindex)
     {
         int index = skillindex - 1;
         _player.IsSkillAcitve[index] = true;
         _skillSystem.SetActive_Skiil_Effect(index, true);
-        if (skillIndex == 4)
+
+        if (skillIndex == 1)
+        {
+            _player.gameObject.layer = LayerMask.NameToLayer("Ghost");
+        }
+        else if (skillIndex == 4)
         {
             _player.OnPropertyChanged(nameof(_player.CurrentAmmo));
         }
@@ -161,7 +166,11 @@ public class PlayerSkill : PlayerState
 
         _player.IsSkillAcitve[index] = false;
         _skillSystem.SetActive_Skiil_Effect(index, false);
-        if(skillIndex == 4)
+        if (skillIndex == 1)
+        {
+            _player.gameObject.layer = LayerMask.NameToLayer("Player");
+        }
+        else if(skillIndex == 4)
         {
             _player.OnPropertyChanged(nameof(_player.CurrentAmmo));
         }

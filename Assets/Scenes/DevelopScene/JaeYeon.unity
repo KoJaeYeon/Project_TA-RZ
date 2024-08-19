@@ -624,6 +624,7 @@ GameObject:
   - component: {fileID: 1038979931}
   - component: {fileID: 1038979930}
   - component: {fileID: 1038979929}
+  - component: {fileID: 1038979933}
   m_Layer: 7
   m_Name: DummyMonster
   m_TagString: Untagged
@@ -719,6 +720,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1038979933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1038979928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4346bae0e4740da4db856213edfb8ba3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1155996105
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -911,6 +924,7 @@ GameObject:
   - component: {fileID: 1393795896}
   - component: {fileID: 1393795895}
   - component: {fileID: 1393795894}
+  - component: {fileID: 1393795898}
   m_Layer: 7
   m_Name: DummyMonster
   m_TagString: Untagged
@@ -1006,6 +1020,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1393795898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1393795893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4346bae0e4740da4db856213edfb8ba3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1399748346
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1154,6 +1180,7 @@ GameObject:
   - component: {fileID: 1563548401}
   - component: {fileID: 1563548400}
   - component: {fileID: 1563548399}
+  - component: {fileID: 1563548403}
   m_Layer: 7
   m_Name: DummyMonster
   m_TagString: Untagged
@@ -1249,6 +1276,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1563548403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563548398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4346bae0e4740da4db856213edfb8ba3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1609531406
 PrefabInstance:
   m_ObjectHideFlags: 0
