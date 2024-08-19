@@ -90,25 +90,31 @@ public class PlayerFourthComboAttack : PlayerComboAttack
         _effect.Active_FourthEffect(_player.CurrentAmmo);
 
         int index = 0;
-        
+
         _effect.ChangeColor(index);
 
+        float _elapsedTime = Time.time;
+
         while (_isFillingGauge)
-        {
-            _chargeCount--;
+        {          
+            yield return new WaitForSeconds(0.1f);
 
-            yield return new WaitForSeconds(1f);
+            if (Time.time - _elapsedTime >= 1)
+            {
+                index += index == 4 ? 0 : 1;
 
-            index += index == 3 ? 0 : 1;
+                _elapsedTime += 1;
 
-            _effect.ChangeColor(index);
+                _chargeCount--;
 
-            _gauge += 1f;
+                _effect.ChangeColor(index);
+            }
+
+            _gauge += 0.1f;
 
             if(_gauge >= _maxGauge)
             {
                 _isFillingGauge = false;
-
                 yield break;
             }
             else if(_chargeCount < 0 || !_inputSystem.IsAttack)
@@ -118,7 +124,7 @@ public class PlayerFourthComboAttack : PlayerComboAttack
                 _state.ChangeState(State.Idle);
 
                 yield break;
-            }
+            }           
         }
     }
 

@@ -78,6 +78,7 @@ public class PlayerEffect : MonoBehaviour
             var colorOverLifetime = item.colorOverLifetime; // ColorOverLifetimeModule 가져오기
             colorOverLifetime.color = new ParticleSystem.MinMaxGradient(_gradients[index]); // 변경된 값을 다시 설정     
             _material.color = _gradients[index].colorKeys[1].color;
+            _effectLight.enabled = index != 0;
             _effectLight.color = _gradients[index].colorKeys[1].color;
         }
     }
@@ -128,7 +129,6 @@ public class PlayerEffect : MonoBehaviour
         {
             return;
         }
-
         GameObject fourthEffect = GetAttackEffect(AttackType.fourthAttack);
         ParticleSystem effectParticle = fourthEffect.GetComponentInChildren<ParticleSystem>();
 
