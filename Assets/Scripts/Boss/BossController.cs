@@ -93,7 +93,7 @@ public class BossController : MonoBehaviour
         _trail = GetComponentInChildren<TrailRenderer>();
         _trail.Clear();
         _trail.gameObject.SetActive(false);
-        _markRoot.gameObject.SetActive(false);
+        //_markRoot.gameObject.SetActive(false);
 
         _bt.SetVariableValue("Phase1_Per", _phaseOnePer);
         _bt.SetVariableValue("Phase2_Per", _phaseTwoPer);
@@ -135,8 +135,8 @@ public class BossController : MonoBehaviour
 
     public void MarkActiveRoot()
     {
-        _markRoot.gameObject.transform.position = _playerTr.position;
-        _markRoot.gameObject.SetActive(true);
+        //_markRoot.gameObject.transform.position = _playerTr.position;
+        //_markRoot.gameObject.SetActive(true);
     }
     public void ActiveRoot()
     {
@@ -145,6 +145,7 @@ public class BossController : MonoBehaviour
             if (root.rootState == RootState.Emerge)
                 continue;
 
+            root.rootState = RootState.Emerge;
             root.RootAttack(_markRoot.gameObject.transform.position);
             break;
         }
