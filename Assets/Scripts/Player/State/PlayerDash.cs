@@ -75,6 +75,12 @@ public class PlayerDash : PlayerState
 
     private void Dash()
     {
+        float targetRotation = _player.MainCamera.transform.rotation.eulerAngles.y;
+
+        Quaternion rotation = Quaternion.Euler(0, targetRotation, 0);
+
+        _player.transform.rotation = rotation;
+
         _dashDirection = _player.transform.forward;
 
         Vector3 dash = _dashDirection * _dashPower;
