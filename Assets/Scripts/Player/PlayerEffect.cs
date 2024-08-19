@@ -20,6 +20,7 @@ public class PlayerEffect : MonoBehaviour
     [SerializeField] private Gradient[] _gradients;
     [SerializeField] private Material _material;
 
+    private Player _player;
     private Light _effectLight;
     private ParticleSystem[] particleSystems;
     private WaitForSeconds _returnTime = new WaitForSeconds(0.5f);
@@ -29,8 +30,15 @@ public class PlayerEffect : MonoBehaviour
         InitializePlayerEffect();
     }
 
+    private void Update()
+    {
+        
+    }
+
     private void InitializePlayerEffect()
     {
+        //_attackEffectDic ??= new(); 또 다른 초기화 방법.
+
         var childTransformList = new List<Transform>();
 
         foreach(Transform childTransform in _effectPosition.transform)
@@ -60,10 +68,11 @@ public class PlayerEffect : MonoBehaviour
         _effectLight = fourthAttackEffectTrans.GetComponentInChildren<Light>();
         fourthAttackEffectTrans.gameObject.SetActive(false);
 
+        _player = gameObject.GetComponent<Player>();    
     }
 
     public void ChangeColor(int index)
-    {       
+    {
         foreach (var item in particleSystems)
         {
             var colorOverLifetime = item.colorOverLifetime; // ColorOverLifetimeModule 가져오기
@@ -113,8 +122,13 @@ public class PlayerEffect : MonoBehaviour
         StartCoroutine(ReturnThirdEffect(thirdEffect));
     }
 
-    public void Active_FourthEffect()
+    public void Active_FourthEffect(float currentAmmo)
     {
+        if (currentAmmo <= 1)
+        {
+            return;
+        }
+
         GameObject fourthEffect = GetAttackEffect(AttackType.fourthAttack);
         ParticleSystem effectParticle = fourthEffect.GetComponentInChildren<ParticleSystem>();
 

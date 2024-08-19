@@ -33,6 +33,7 @@ public class Player : MonoBehaviour, IHit
     float _currentHP;
     [SerializeField] float _currentSkill;
     float _currentStamina;
+    public float CurrentAtk { get; set; }
     public bool IsActiveStaminaRecovery { get; set; } = true;
     bool _isPlayerAlive = true;
     public bool[] IsSkillAcitve { get; set; } = new bool[4] { false, false, false, false };
@@ -184,6 +185,14 @@ public class Player : MonoBehaviour, IHit
         {
             CurrentSkill = 100;
         }
+        else if (Input.GetKeyDown(KeyCode.O))
+        {
+            CurrentAmmo += 1;
+        }
+        else if (Input.GetKeyDown(KeyCode.P))
+        {
+            CurrentAmmo += 10;
+        }
     }
 
     private void InitializePlayer()
@@ -262,6 +271,7 @@ public class Player : MonoBehaviour, IHit
             {
                 _playerStat = stat;
                 Debug.Log("Player의 스탯을 성공적으로 받아왔습니다.");
+                CurrentAtk = _playerStat.Atk_Power;                
                 CurrentHP = _playerStat.HP;
                 HP = _playerStat.HP;
                 CurrentStamina = 100;
@@ -305,7 +315,10 @@ public class Player : MonoBehaviour, IHit
     //Ground, AttackGizmos
     private void OnDrawGizmos()
     {
-        if (Application.isPlaying &&_state.CurrentState is PlayerFirstComboAttack)
+        if (!Application.isPlaying)
+            return;
+
+        if (_state.CurrentState is PlayerFirstComboAttack)
         {
             PlayerFirstComboAttack firstCombo = _state.CurrentState as PlayerFirstComboAttack;
 
@@ -322,7 +335,7 @@ public class Player : MonoBehaviour, IHit
 
             Gizmos.matrix = originalMatrix; 
         }
-        else if(Application.isPlaying && _state.CurrentState is PlayerSecondComboAttack)
+        else if(_state.CurrentState is PlayerSecondComboAttack)
         {
             PlayerSecondComboAttack secondCombo = _state.CurrentState as PlayerSecondComboAttack;
 
@@ -339,7 +352,7 @@ public class Player : MonoBehaviour, IHit
 
             Gizmos.matrix = originalMatrix;
         }
-        else if(Application.isPlaying && _state.CurrentState is PlayerThirdComboAttack)
+        else if(_state.CurrentState is PlayerThirdComboAttack)
         {
             PlayerThirdComboAttack thirdCombo = _state.CurrentState as PlayerThirdComboAttack;
 
@@ -347,12 +360,13 @@ public class Player : MonoBehaviour, IHit
 
             // 부채꼴의 중심 방향
             Vector3 forward = transform.forward;
+            float angle = thirdCombo._angle -10;
 
             // 부채꼴의 외곽을 그리기 위한 각도 계산
             for (int i = 0; i <= thirdCombo._segments; i++)
             {
                 if (i != 0 && i != thirdCombo._segments) continue;
-                float currentAngle = -thirdCombo._angle / 2 + (thirdCombo._angle / thirdCombo._segments) * i;
+                float currentAngle = -angle / 2 + (angle / thirdCombo._segments) * i;
                 Quaternion rotation = Quaternion.AngleAxis(currentAngle, transform.up);
 
                 // 외곽 지점 계산
@@ -366,8 +380,8 @@ public class Player : MonoBehaviour, IHit
             // 부채꼴의 바닥 원호를 그리기 위한 계산
             for (int i = 0; i < thirdCombo._segments; i++)
             {
-                float angle1 = -thirdCombo._angle  / 2 + (thirdCombo._angle  / thirdCombo._segments) * i;
-                float angle2 = -thirdCombo._angle / 2 + (thirdCombo._angle / thirdCombo._segments) * (i + 1);
+                float angle1 = -angle  / 2 + (angle  / thirdCombo._segments) * i;
+                float angle2 = -angle / 2 + (angle / thirdCombo._segments) * (i + 1);
 
                 Quaternion rot1 = Quaternion.AngleAxis(angle1, transform.up);
                 Quaternion rot2 = Quaternion.AngleAxis(angle2, transform.up);
@@ -389,11 +403,22 @@ public class Player : MonoBehaviour, IHit
             //Gizmos.DrawWireSphere(transform.position, thirdCombo._range);
         }
 
-        else if(Application.isPlaying && _state.CurrentState is PlayerFourthComboAttack)
+        else if(_state.CurrentState is PlayerFourthComboAttack)
         {
             PlayerFourthComboAttack fourthCombo = _state.CurrentState as PlayerFourthComboAttack;
 
+            Vector3 boxposition = fourthCombo._boxPosition;
+            Vector3 boxSize = fourthCombo._boxSize;
+            Quaternion boxrotation = transform.rotation;
 
+            Matrix4x4 originalMatrix = Gizmos.matrix;
+
+            Gizmos.matrix = Matrix4x4.TRS(boxposition, boxrotation, Vector3.one);
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(Vector3.zero, boxSize);
+
+            Gizmos.matrix = originalMatrix;
         }
 
         Vector3 GizmoPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
