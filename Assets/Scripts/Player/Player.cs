@@ -168,6 +168,10 @@ public class Player : MonoBehaviour, IHit
         {
             CurrentSkill++;
         }
+        else if(Input.GetKeyDown(KeyCode.M))
+        {
+            CurrentSkill = 76;
+        }
     }
 
     private void InitializePlayer()

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - ThrowItem
   - Monster
+  - Shield
   layers:
   - Default
   - TransparentFX

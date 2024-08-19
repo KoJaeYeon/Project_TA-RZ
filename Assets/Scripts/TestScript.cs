@@ -11,7 +11,7 @@ public class TestScript : MonoBehaviour, IHit
 
     public void ApplyKnockback(Vector3 otherPosition, float knockBackTime)
     {
-        
+        Debug.Log($"ApplyKnockback {otherPosition}, {knockBackTime}");
     }
 
     public void Hit(float damage, float paralysisTime, Transform attackTrans)

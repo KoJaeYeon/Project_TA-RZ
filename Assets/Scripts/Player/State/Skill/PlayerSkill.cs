@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -45,6 +46,10 @@ public class PlayerSkill : PlayerState
     public override void StateExit()
     {
         _player.IsSkillAnimationEnd = false;
+        if (skillIndex == 3)
+        {
+            _skillSystem.SetActive_Skiil_Effect(skillIndex, false);
+        }
     }
 
     private void StartSkill()
@@ -83,16 +88,16 @@ public class PlayerSkill : PlayerState
         switch(skillIndex)
         {
             case 1:
-                _player.StartCoroutine(ApplySkillAndDuration(skillIndex));
+                _player.StartCoroutine(ApplySkillAndDuration());
                 break;
             case 2:
-                _player.StartCoroutine(ApplySkillAndDuration(skillIndex));
+                _player.StartCoroutine(ApplySkillAndDuration());
                 break;
             case 3:
-                _player.StartCoroutine(ApplySkillAndDuration(skillIndex));
+                _player.StartCoroutine(ApplySkillAndDuration());
                 break;
             case 4:
-                _player.StartCoroutine(ApplySkillAndDuration(skillIndex));
+                _player.StartCoroutine(ApplySkillAndDuration());
                 break;
             default:
                 Debug.LogError("Skill Error!");
@@ -138,11 +143,10 @@ public class PlayerSkill : PlayerState
         }
     }
 
-    IEnumerator ApplySkillAndDuration(int skillindex)
+    IEnumerator ApplySkillAndDuration()
     {
-        int index = skillindex - 1;
-        _player.IsSkillAcitve[index] = true;
-        _skillSystem.SetActive_Skiil_Effect(index, true);
+        _player.IsSkillAcitve[skillIndex - 1] = true;
+        _skillSystem.SetActive_Skiil_Effect(skillIndex, true);
 
         if (skillIndex == 1)
         {
@@ -164,13 +168,22 @@ public class PlayerSkill : PlayerState
 
         }
 
-        _player.IsSkillAcitve[index] = false;
-        _skillSystem.SetActive_Skiil_Effect(index, false);
+        _player.IsSkillAcitve[skillIndex - 1] = false;
+
+        if (skillIndex == 3)
+        {
+            _skillSystem.Active_Shield(_PC_Skill.Skill_Value[1]);
+        }
+        else
+        {
+            _skillSystem.SetActive_Skiil_Effect(skillIndex, false);
+        }
+
         if (skillIndex == 1)
         {
             _player.gameObject.layer = LayerMask.NameToLayer("Player");
         }
-        else if(skillIndex == 4)
+        else if (skillIndex == 4)
         {
             _player.OnPropertyChanged(nameof(_player.CurrentAmmo));
         }
