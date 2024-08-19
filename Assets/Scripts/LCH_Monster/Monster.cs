@@ -16,12 +16,21 @@ public class Monster : MonoBehaviour, IHit
     public float Mon_Common_DetectTime;
     public float Mon_Common_MovementSpeed;
     public float Mon_Common_CoolTime;
-
+    public float Mon_Knockback_Time;
+    public float Mon_Knockback_Speed;
     public bool isDamaged;
     public bool isAtk;
     public bool isKnockBack;
     public float Mon_Common_Hp_Remain;
     [Inject] public Player Player { get; }
+
+    Rigidbody _rigidbody;
+    Coroutine _hitCoroutine;
+
+    private void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+    }
 
     void Start()
     {
@@ -36,20 +45,32 @@ public class Monster : MonoBehaviour, IHit
 
         if (Mon_Common_Hp_Remain > 0)
         {
-            StartCoroutine(WaitForStun(paralysisTime));
+            if(_hitCoroutine != null)
+            {
+                StopCoroutine(_hitCoroutine);
+            }
+            _hitCoroutine = StartCoroutine(WaitForStun(paralysisTime));
         }
     }
 
-    public void ApplyKnockback(float knockbackForce, Transform attackerTrans)
+    public void ApplyKnockback(float knockbackDuration, Transform attackerTrans)
     {
-        var rb = GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            Vector3 knockbackDirection = (transform.position - attackerTrans.position).normalized;
+        
+        _rigidbody.velocity = Vector3.zero;
 
-            rb.AddForce(knockbackDirection * knockbackForce, ForceMode.Impulse);
-        }
+        
+        Vector3 knockBackDirection = transform.position - attackerTrans.position;
+
+        knockBackDirection.y = 0;
+
+        knockBackDirection.Normalize();
+
+        Vector3 knockBack = knockBackDirection * 5f + Vector3.up * Mon_Knockback_Speed;
+
+        _rigidbody.AddForce(knockBack, ForceMode.Impulse);
     }
+
+
 
     private void OnTriggerEnter(Collider other)
     {

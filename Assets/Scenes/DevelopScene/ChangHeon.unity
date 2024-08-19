@@ -310,6 +310,8 @@ MonoBehaviour:
   Mon_Common_DetectTime: 0
   Mon_Common_MovementSpeed: 0
   Mon_Common_CoolTime: 0
+  Mon_Knockback_Time: 0
+  Mon_Knockback_Speed: 0
   isDamaged: 0
   isAtk: 0
   isKnockBack: 0
@@ -788,6 +790,8 @@ MonoBehaviour:
   Mon_Common_DetectTime: 0
   Mon_Common_MovementSpeed: 0
   Mon_Common_CoolTime: 0
+  Mon_Knockback_Time: 0
+  Mon_Knockback_Speed: 0
   isDamaged: 0
   isAtk: 0
   isKnockBack: 0
@@ -938,79 +942,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &561046716
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3379560720758915511, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: m_Name
-      value: CommonEnemy (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 3379560720758915511, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: m_TagString
-      value: Monster
-      objectReference: {fileID: 0}
-    - target: {fileID: 3379560720759086487, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 3.9842145
-      objectReference: {fileID: 0}
-    - target: {fileID: 3379560720759086487, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3379560720759086487, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1.26
-      objectReference: {fileID: 0}
-    - target: {fileID: 3379560720759086487, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3379560720759086487, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3379560720759086487, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3379560720759086487, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3379560720759086487, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3379560720759086487, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3379560720759086487, guid: dfcd9db998287d34386f0f5c807b39de,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: dfcd9db998287d34386f0f5c807b39de, type: 3}
 --- !u!1 &641874055
 GameObject:
   m_ObjectHideFlags: 0
@@ -1658,6 +1589,79 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &1884203888
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2036722526376663656, guid: dfcd9db998287d34386f0f5c807b39de,
+        type: 3}
+      propertyPath: Mon_Knockback_Speed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3379560720758915511, guid: dfcd9db998287d34386f0f5c807b39de,
+        type: 3}
+      propertyPath: m_Name
+      value: CommonEnemy (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3379560720759086487, guid: dfcd9db998287d34386f0f5c807b39de,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 3379560720759086487, guid: dfcd9db998287d34386f0f5c807b39de,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 3379560720759086487, guid: dfcd9db998287d34386f0f5c807b39de,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -8.78
+      objectReference: {fileID: 0}
+    - target: {fileID: 3379560720759086487, guid: dfcd9db998287d34386f0f5c807b39de,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3379560720759086487, guid: dfcd9db998287d34386f0f5c807b39de,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3379560720759086487, guid: dfcd9db998287d34386f0f5c807b39de,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3379560720759086487, guid: dfcd9db998287d34386f0f5c807b39de,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3379560720759086487, guid: dfcd9db998287d34386f0f5c807b39de,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3379560720759086487, guid: dfcd9db998287d34386f0f5c807b39de,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3379560720759086487, guid: dfcd9db998287d34386f0f5c807b39de,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: dfcd9db998287d34386f0f5c807b39de, type: 3}
 --- !u!1 &2018496787
 GameObject:
   m_ObjectHideFlags: 0
@@ -1817,7 +1821,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2036722526376663656, guid: dfcd9db998287d34386f0f5c807b39de,
         type: 3}
-      propertyPath: Mon_Common_CoolTime
+      propertyPath: Mon_Knockback_Time
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2036722526376663656, guid: dfcd9db998287d34386f0f5c807b39de,
+        type: 3}
+      propertyPath: Mon_Knockback_Speed
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3379560720758915511, guid: dfcd9db998287d34386f0f5c807b39de,
@@ -1833,12 +1842,12 @@ PrefabInstance:
     - target: {fileID: 3379560720759086487, guid: dfcd9db998287d34386f0f5c807b39de,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.27
       objectReference: {fileID: 0}
     - target: {fileID: 3379560720759086487, guid: dfcd9db998287d34386f0f5c807b39de,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.2825813
+      value: -8.78
       objectReference: {fileID: 0}
     - target: {fileID: 3379560720759086487, guid: dfcd9db998287d34386f0f5c807b39de,
         type: 3}
@@ -1875,6 +1884,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7739591162682787326, guid: dfcd9db998287d34386f0f5c807b39de,
+        type: 3}
+      propertyPath: mBehaviorSource.mTaskData.JSONSerialization
+      value: '{"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"TargetTransform","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"IsTrack","IsShared":true,"StringmValue":"IsTrack"},{"Type":"BehaviorDesigner.Runtime.SharedMonster","Name":"Monster","IsShared":true,"MonstermValue":0},{"Type":"BehaviorDesigner.Runtime.SharedNavmesh","Name":"NavmeshAgent","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"waitTime","IsShared":true,"SinglemValue":0}]}'
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1898,4 +1912,4 @@ SceneRoots:
   - {fileID: 832269214}
   - {fileID: 131483933}
   - {fileID: 6446038411887447963}
-  - {fileID: 561046716}
+  - {fileID: 1884203888}

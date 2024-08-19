@@ -24,18 +24,24 @@ public class Monster_OnAtk : Action
     {
         if (monster != null)
         {
-           
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Atk") == true)
+            var stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+            if (stateInfo.IsName("Atk") == true)
             {
                 animinfo = anim.GetCurrentAnimatorStateInfo(0);
                 if (animinfo.normalizedTime < 0.95f)
                 {
                     return TaskStatus.Running;
                 }
+
                 else
                 {
                     return TaskStatus.Success;
                 }
+
+            }
+            else if (stateInfo.IsName("get hit from front") == true)
+            {
+                return TaskStatus.Failure;
             }
             else
             {
