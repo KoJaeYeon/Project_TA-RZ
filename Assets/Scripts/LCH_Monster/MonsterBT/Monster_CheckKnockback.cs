@@ -13,7 +13,7 @@ public class Monster_CheckKnockback : Conditional
     {
         if (Monster.Value.isKnockBack==true)
         {
-            Monster.Value.ApplyKnockback(Monster.Value.Player.transform.position, knockbackForce);
+            Monster.Value.ApplyKnockback(knockbackForce, Monster.Value.Player.transform);
             return TaskStatus.Success;
         }
 

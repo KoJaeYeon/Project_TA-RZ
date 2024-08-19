@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -45,6 +46,12 @@ public class PlayerSkill : PlayerState
     public override void StateExit()
     {
         _player.IsSkillAnimationEnd = false;
+        if (skillIndex == 3)
+        {
+            //액티브 스킬
+            _player.IsSkillAcitve[skillIndex - 1] = false;
+            _skillSystem.SetActive_Skiil_Effect(skillIndex, false);
+        }
     }
 
     private void StartSkill()
@@ -83,16 +90,16 @@ public class PlayerSkill : PlayerState
         switch(skillIndex)
         {
             case 1:
-                _player.StartCoroutine(ApplySkillDuration(skillIndex));
+                _player.StartCoroutine(ApplySkillAndDuration());
                 break;
             case 2:
-                _player.StartCoroutine(ApplySkillDuration(skillIndex));
+                _player.StartCoroutine(ApplySkillAndDuration());
                 break;
             case 3:
-                _player.StartCoroutine(ApplySkillDuration(skillIndex));
+                _player.StartCoroutine(ApplySkillAndDuration());
                 break;
             case 4:
-                _player.StartCoroutine(ApplySkillDuration(skillIndex));
+                _player.StartCoroutine(ApplySkillAndDuration());
                 break;
             default:
                 Debug.LogError("Skill Error!");
@@ -138,12 +145,16 @@ public class PlayerSkill : PlayerState
         }
     }
 
-    IEnumerator ApplySkillDuration(int skillindex)
+    IEnumerator ApplySkillAndDuration()
     {
-        int index = skillindex - 1;
-        _player.IsSkillAcitve[index] = true;
-        _skillSystem.SetActive_Skiil_Effect(index, true);
-        if (skillIndex == 4)
+        _player.IsSkillAcitve[skillIndex - 1] = true;
+        _skillSystem.SetActive_Skiil_Effect(skillIndex, true);
+
+        if (skillIndex == 1)
+        {
+            _player.gameObject.layer = LayerMask.NameToLayer("Ghost");
+        }
+        else if (skillIndex == 4)
         {
             _player.OnPropertyChanged(nameof(_player.CurrentAmmo));
         }
@@ -157,11 +168,24 @@ public class PlayerSkill : PlayerState
         {
             yield return new WaitForSeconds(_PC_Skill.Skill_Duration);
 
+        }        
+
+        if (skillIndex == 3)
+        {
+            _skillSystem.Active_Shield(_PC_Skill.Skill_Value[1]);
+        }
+        else
+        {
+            //지속시간 있는 스킬
+            _player.IsSkillAcitve[skillIndex - 1] = false;
+            _skillSystem.SetActive_Skiil_Effect(skillIndex, false);
         }
 
-        _player.IsSkillAcitve[index] = false;
-        _skillSystem.SetActive_Skiil_Effect(index, false);
-        if(skillIndex == 4)
+        if (skillIndex == 1)
+        {
+            _player.gameObject.layer = LayerMask.NameToLayer("Player");
+        }
+        else if (skillIndex == 4)
         {
             _player.OnPropertyChanged(nameof(_player.CurrentAmmo));
         }

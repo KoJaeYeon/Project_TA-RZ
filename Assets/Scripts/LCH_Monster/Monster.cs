@@ -40,12 +40,12 @@ public class Monster : MonoBehaviour, IHit
         }
     }
 
-    public void ApplyKnockback(Vector3 attackerPosition, float knockbackForce)
+    public void ApplyKnockback(float knockbackForce, Transform attackerTrans)
     {
         var rb = GetComponent<Rigidbody>();
         if (rb != null)
         {
-            Vector3 knockbackDirection = (transform.position - attackerPosition).normalized;
+            Vector3 knockbackDirection = (transform.position - attackerTrans.position).normalized;
 
             rb.AddForce(knockbackDirection * knockbackForce, ForceMode.Impulse);
         }

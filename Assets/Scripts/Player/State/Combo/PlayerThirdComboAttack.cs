@@ -40,6 +40,7 @@ public class PlayerThirdComboAttack : PlayerComboAttack
         base.StateExit();
     }
 
+    //세 번째 공격로직
     private void ThirdAttack()
     {
         _enemyLayer = LayerMask.GetMask("Monster");
@@ -55,6 +56,7 @@ public class PlayerThirdComboAttack : PlayerComboAttack
         }
     }
 
+    //부채꼴 판정
     private bool IsRange(Transform targetTransform)
     {
         Vector3 targetDirection = targetTransform.position - _player.transform.position;
@@ -66,14 +68,12 @@ public class PlayerThirdComboAttack : PlayerComboAttack
         playerForward.Normalize();
 
         float angleTotarget = Vector3.Angle(playerForward, targetDirection);
-        Debug.Log($"각도 비교 {angleTotarget > _angle / 2}");
         if(angleTotarget > _angle / 2)
         {
             return false;
         }
 
         float distanceTotarget = Vector3.Distance(_player.transform.position, targetTransform.position);
-        Debug.Log($"거리비교{Vector3.Distance(_player.transform.position, targetTransform.position)}");
         if(distanceTotarget > _range)
         {
             return false;
@@ -93,6 +93,7 @@ public class PlayerThirdComboAttack : PlayerComboAttack
         if (hit != null)
         {
             hit.Hit(10f, 0f, _player.transform);
+            hit.ApplyKnockback(1f, other.transform);
 
             GameObject hitEffect = _effect.GetHitEffect();
             ParticleSystem hitParticle = hitEffect.GetComponent<ParticleSystem>();
@@ -105,6 +106,4 @@ public class PlayerThirdComboAttack : PlayerComboAttack
             _effect.ReturnHit(hitEffect);
         }
     }
-
-
 }
