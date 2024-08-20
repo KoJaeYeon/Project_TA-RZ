@@ -68,6 +68,7 @@ public class PlayerFourthComboAttack : PlayerComboAttack
     #endregion
 
     #region Attack
+    private float _maxIndex;
     private float _maxDelayTime = 2f;
     private float _currentDelayTime;
     private float _maxGauge = 4f;
@@ -92,6 +93,8 @@ public class PlayerFourthComboAttack : PlayerComboAttack
     public override void StateEnter()
     {
         _chargeCount = _player.CurrentAmmo - 1;
+
+        _maxIndex = _chargeCount;
 
         _currentDelayTime = 0f;
 
@@ -155,7 +158,7 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
             if (Time.time - _elapsedTime >= 1)
             {
-                index += index == 4 ? 0 : 1;
+                index += index == _maxIndex ? 0 : 1;
 
                 _elapsedTime += 1;
 
@@ -171,7 +174,7 @@ public class PlayerFourthComboAttack : PlayerComboAttack
                 _isFillingGauge = false;
                 yield break;
             }
-            else if(_chargeCount < 0 || !_inputSystem.IsAttack)
+            else if(!_inputSystem.IsAttack)
             {
                 _animator.speed = 1f;
 
