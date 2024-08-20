@@ -456,9 +456,11 @@ public class Player : MonoBehaviour, IHit
         }
         else
         {
-            PlayerHit.Pc_Stiff_Time = paralysisTime;
-
             CurrentHP -= damage;
+
+            if (IsSkillAcitve[3] == true) return;
+
+            PlayerHit.Pc_Stiff_Time = paralysisTime;
 
             _state.OnDamagedStateChange();
         }
