@@ -6,20 +6,19 @@ namespace QFX.SFX
 {
     public class SFX_MotionCloner : SFX_ControlledObject
     {
+        [Header("CloneParent")]
         public GameObject TargetGameObject;
 
+        [Header("Particle_LifeTime")]
         public float CloneLifeTime = 1f;
-        public float CloneRate = 1f;
 
-        public bool ReplaceMaterialInMotion;
+        public bool ReplaceMaterialInMotion; //투명화
         public Material MotionMaterial;
 
         public GameObject TrailParticleSystem;
         public GameObject ActivateCloneParticleSystem;
         public GameObject FinishMotionParticleSystem;
 
-        public GameObject CloneParticleSystem;
-        public MeshRenderer MeshRenderer;
         public SkinnedMeshRenderer SkinnedMeshRenderer;
 
         private GameObject _activateCloneGo;
@@ -34,8 +33,7 @@ namespace QFX.SFX
         private readonly Dictionary<Renderer, Material[]> _rendererToSharedMaterials =
             new Dictionary<Renderer, Material[]>();
 
-        private float _time;
-
+        //활성화 될 때 1번 호출
         public override void Setup()
         {
             base.Setup();
@@ -53,10 +51,10 @@ namespace QFX.SFX
                 _activateClonePs = _activateCloneGo.GetComponent<ParticleSystem>();
                 _activateCloneGo.SetActive(true);
                 _activateCloneGo.transform.parent = TargetGameObject.transform;
-                if (MeshRenderer != null)
-                    SFX_ParticleSystemMeshAttacher.Attach(_activateClonePs, MeshRenderer, 0f);
-                else if (SkinnedMeshRenderer != null)
+                if(SkinnedMeshRenderer != null)
+                {
                     SFX_ParticleSystemMeshAttacher.Attach(_activateClonePs, SkinnedMeshRenderer, 0f);
+                }
             }
 
             if (TrailParticleSystem != null)
@@ -65,10 +63,11 @@ namespace QFX.SFX
                 _trailPs = _trailGo.GetComponent<ParticleSystem>();
                 _trailGo.SetActive(true);
                 _trailGo.transform.parent = TargetGameObject.transform;
-                if (MeshRenderer != null)
-                    SFX_ParticleSystemMeshAttacher.Attach(_trailPs, MeshRenderer, 0f);
-                else if (SkinnedMeshRenderer != null)
+                if(SkinnedMeshRenderer != null)
+                {
                     SFX_ParticleSystemMeshAttacher.Attach(_trailPs, SkinnedMeshRenderer, 0f);
+                }
+               
             }
 
             if (FinishMotionParticleSystem != null)
@@ -77,10 +76,11 @@ namespace QFX.SFX
                 _finishPs = _finishGo.GetComponent<ParticleSystem>();
                 _finishGo.SetActive(true);
                 _finishGo.transform.parent = TargetGameObject.transform;
-                if (MeshRenderer != null)
-                    SFX_ParticleSystemMeshAttacher.Attach(_finishPs, MeshRenderer, 0f);
-                else if (SkinnedMeshRenderer != null)
+                if(SkinnedMeshRenderer != null)
+                {
                     SFX_ParticleSystemMeshAttacher.Attach(_finishPs, SkinnedMeshRenderer, 0f);
+                }
+               
             }
         }
 
@@ -111,8 +111,6 @@ namespace QFX.SFX
 
         private void Activate()
         {
-            _time = 0;
-
             if (ReplaceMaterialInMotion)
             {
                 foreach (var originalMaterial in _rendererToSharedMaterials.Keys)
@@ -142,7 +140,8 @@ namespace QFX.SFX
                 _finishPs.Play();
         }
 
-        private void OnDestroy()
+        //비활성화 시 삭제
+        private void OnDisable()
         {
             Destroy(_activateCloneGo);
             Destroy(_trailGo);

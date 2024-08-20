@@ -47,8 +47,7 @@ MonoBehaviour:
   RunAtStart: 0
   Delay: 0
   TargetGameObject: {fileID: 0}
-  CloneLifeTime: 2
-  CloneRate: 0.2
+  CloneLifeTime: 0.5
   ReplaceMaterialInMotion: 1
   MotionMaterial: {fileID: 2100000, guid: e595601a4f064aea855f1e037790b36f, type: 2}
   TrailParticleSystem: {fileID: 1204090391620592, guid: f724c32a048f4c5babf106408868941c,
@@ -57,7 +56,4 @@ MonoBehaviour:
     type: 3}
   FinishMotionParticleSystem: {fileID: 1204090391620592, guid: c312cf214e5e44799d3a22e2b1a35f4b,
     type: 3}
-  CloneParticleSystem: {fileID: 1638125897505738, guid: ae8dbda1bd874ee79202b6fb8bc74952,
-    type: 3}
-  MeshRenderer: {fileID: 0}
   SkinnedMeshRenderer: {fileID: 0}

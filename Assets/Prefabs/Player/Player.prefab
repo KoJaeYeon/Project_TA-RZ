@@ -4181,11 +4181,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9003454185839151940, guid: c0b97e4306cde3c47839328ad459b9ae,
         type: 3}
-      propertyPath: CloneLifeTime
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 9003454185839151940, guid: c0b97e4306cde3c47839328ad459b9ae,
-        type: 3}
       propertyPath: TargetGameObject
       value: 
       objectReference: {fileID: 2046931851476203028}
