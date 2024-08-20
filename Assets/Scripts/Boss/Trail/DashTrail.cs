@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class DashTrail : MonoBehaviour
 {
-    private float _trailSpeed = 20f / 3f;
+    private float _rushSpeed = 10f;
+    private float _waitTime = 3f;
+    private float _trailSpeed;
 
     private Transform _defaultTr;
 
     private void Awake()
     {
-        
+        _trailSpeed = _rushSpeed / _waitTime;
     }
 
     private void OnEnable()
