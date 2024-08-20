@@ -75,6 +75,9 @@ public class DataManager
             case "_PC_Attack_URL":
                 Process_PC_Atatck_Data(data);
                 break;
+            case "_Monster_Stat_URL":
+                Process_Monster_Stat_Data(data);
+                break;
             default:
                 Debug.LogError($"Unknown URL name: {urlName}");
                 break;
@@ -159,6 +162,28 @@ public class DataManager
             AddDataToDataDictionary(idStr, attack);
         }
     }
+
+    private void Process_Monster_Stat_Data(string data)
+    {
+        JArray jsonArray = JArray.Parse(data);
+
+        foreach (var item in jsonArray)
+        {
+            string idStr = item["ID"].ToString();
+            float hp = ParseFloat(item["Mon_Common_Stat_HP"]);
+            float damage = ParseFloat(item["Mon_Common_Stat_Damage"]);
+            float attackArea = ParseFloat(item["Mon_Common_Stat_AttackArea"]);
+            int range = ParseInt(item["Mon_Common_Stat_Range"]);
+            float detectArea = ParseFloat(item["Mon_Common_Stat_DetectArea"]);
+            float detectTime = ParseFloat(item["Mon_Common_Stat_DetectTime"]);
+            float movementSpeed = ParseFloat(item["Mon_Common_Stat_MovementSpeed"]);
+            float cooldown = ParseFloat(item["Mon_Common_Stat_Cooldown"]);
+
+            Monster_Stat stat = new Monster_Stat(idStr, hp, damage, attackArea, range, detectArea, detectTime, movementSpeed, cooldown);
+            AddDataToDataDictionary(idStr, stat);
+        }
+    }
+
 
 
 
