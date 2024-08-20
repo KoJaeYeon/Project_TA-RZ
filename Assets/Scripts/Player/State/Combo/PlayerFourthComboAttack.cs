@@ -2,7 +2,7 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject.SpaceFighter;
+
 
 public class PlayerFourthComboAttack : PlayerComboAttack
 {
@@ -12,14 +12,70 @@ public class PlayerFourthComboAttack : PlayerComboAttack
         _event = player.GetComponentInChildren<PlayerAnimationEvent>();
         _event.AddEvent(AttackType.fourthAttack, FourthAttack);
         player.StartCoroutine(GetCamera());
+
+        player.StartCoroutine(LoadData("A204"));
     }
-    
+
+    private PC_Attack[] _fourthComboData = new PC_Attack[5];
+
+    public override IEnumerator LoadData(string idStr)
+    {
+        int[] gaugeValue = new int[4];
+
+        while (true)
+        {
+            var comboData = _player.dataManager.GetData(idStr) as PC_Attack;
+
+            if (comboData == null)
+            {
+                Debug.Log("콤보 데이터를 가져오지 못했습니다.");
+                yield return new WaitForSeconds(1f);
+            }
+            else
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    comboData =_player.dataManager.GetData($"A20{i+4}") as PC_Attack;
+                    _fourthComboData[i] = comboData;
+
+                 
+                }
+                Debug.Log("콤보 데이터를 성공적으로 가져왔습니다.");
+                yield break;
+            }
+        }
+    }
+
+   
+
+    private void GetLevelSkillGage(int level, int chargeLevel)
+    {
+        if(level == 4)
+        {
+            _currentGetSkillGauge = 0;
+            return;
+        }
+
+        int gageGet = _fourthComboData[chargeLevel].Arm_SkillGageGet[level];
+
+        _currentGetSkillGauge = gageGet;
+    }
+
+    #region Data
+    private float _currentAtkMultiplier;
+    private int _currentGetSkillGauge;
+    private float _currentStiffT;
+    #endregion
+
+    #region Attack
     private float _maxDelayTime = 2f;
     private float _currentDelayTime;
     private float _maxGauge = 4f;
     private float _gauge;
     private int _chargeCount;
     private bool _isFillingGauge = true;
+    private int index = 0;
+    #endregion
 
     private CinemachineVirtualCamera _virtualCamera;
     private float _maxView = 90f;
@@ -51,7 +107,7 @@ public class PlayerFourthComboAttack : PlayerComboAttack
     public override void StateUpdate()
     {
         _animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-        //4초면 4초에 0.3f, 0.03f
+
         if (_animatorStateInfo.IsName("Attack_Legend_Anim") &&_animatorStateInfo.normalizedTime >= 0.3f)
         {
             _animator.speed = 0.03f;
@@ -59,8 +115,6 @@ public class PlayerFourthComboAttack : PlayerComboAttack
         
         if (!_isFillingGauge)
         {
-            Debug.Log(Mathf.Round(_currentDelayTime));
-
             if (!_inputSystem.IsAttack || _currentDelayTime >= _maxDelayTime)
             {
                 _animator.speed = 1f;
@@ -82,14 +136,14 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
         _inputSystem.SetAttack(false);
 
-        base.StateExit();
+        _player.CurrentAmmo -= _player.IsSkillAcitve[1] ? 0 : index + 1;
     }
 
     private IEnumerator GaugeAmount()
     {
         _effect.Active_FourthEffect(_player.CurrentAmmo);
 
-        int index = 0;
+        index = 0;
 
         _effect.ChangeColor(index);
 
@@ -128,6 +182,13 @@ public class PlayerFourthComboAttack : PlayerComboAttack
         }
     }
 
+    protected override void ChangeData(int currentLevel)
+    {
+        _currentAtkMultiplier = _fourthComboData[index].Atk_Multiplier;
+        _currentStiffT = _fourthComboData[index].Atk4_StiffT;
+        GetLevelSkillGage(currentLevel, index);
+    }
+
     private void FourthAttack()
     {
         _forward = _player.transform.forward;
@@ -138,6 +199,7 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
         Collider[] colliders = Physics.OverlapBox(_boxPosition, _boxSize /2f, _player.transform.rotation, _enemyLayer);
 
+        bool isHit = false;
         foreach(var target in  colliders)
         {
             IHit hit = target.gameObject.GetComponent<IHit>();
@@ -147,8 +209,9 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
             if(hit != null)
             {
-                hit.Hit(10f, 5f, _player.transform);
-
+                ChangeData(_player.CurrentLevel);
+                hit.Hit(_player.CurrentAtk * _currentAtkMultiplier, _currentStiffT, _player.transform);
+                isHit = true;
                 GameObject hitEffect = _effect.GetHitEffect();
                 ParticleSystem hitParticle = hitEffect.GetComponent<ParticleSystem>();
 
@@ -159,6 +222,10 @@ public class PlayerFourthComboAttack : PlayerComboAttack
                 hitParticle.Play();
                 _effect.ReturnHit(hitEffect);
             }
+        }
+        if (isHit)
+        {
+            _player.CurrentSkill += _currentGetSkillGauge;
         }
 
     }

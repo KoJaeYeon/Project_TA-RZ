@@ -8,31 +8,8 @@ public class PlayerFirstComboAttack : PlayerComboAttack
         PlayerAnimationEvent _event;
         _event = player.GetComponentInChildren<PlayerAnimationEvent>();
         _event.AddEvent(AttackType.firstAttack, FirstAttack);
+
         player.StartCoroutine(LoadData("A201"));
-    }
-
-    private PC_Attack _attackData;
-
-    private IEnumerator LoadData(string idStr)
-    {
-        while (true)
-        {
-            var firstComboData = _player.dataManager.GetData(idStr) as PC_Attack;
-            if(firstComboData == null )
-            {
-                Debug.Log("1번 콤보 데이터를 가져오지 못했습니다.");
-                yield return new WaitForSeconds(1f);
-            }
-            else
-            {
-                _attackData = firstComboData;
-                PC_Type1_Atk_Multiplier = _attackData.Atk_Multiplier;
-                
-                Debug.Log("1번 콤보 데이터를 성공적으로 가져왔습니다.");
-                yield break;
-            }
-
-        }
     }
 
     #region Overlap
@@ -42,9 +19,6 @@ public class PlayerFirstComboAttack : PlayerComboAttack
     private Vector3 _additionalPosition = new Vector3(0f, 1f, 0.5f);
     private LayerMask _enemyLayer;
     #endregion
-
-    private float _currentAtk;
-    private float PC_Type1_Atk_Multiplier;
 
     public override void StateEnter()
     {
@@ -67,6 +41,11 @@ public class PlayerFirstComboAttack : PlayerComboAttack
         base.StateExit();
     }
 
+    protected override void ChangeData(int currentLevel)
+    {
+        base.ChangeData(currentLevel);
+    }
+
     //첫 번째 공격로직
     private void FirstAttack()
     {
@@ -78,6 +57,7 @@ public class PlayerFirstComboAttack : PlayerComboAttack
 
         Collider[] colliders = Physics.OverlapBox(_boxPosition, _boxSize / 2f, _player.transform.rotation, _enemyLayer);
 
+        bool isHit = false;
         foreach(var target in  colliders)
         {
             IHit hit = target.gameObject.GetComponent<IHit>();
@@ -87,10 +67,9 @@ public class PlayerFirstComboAttack : PlayerComboAttack
 
             if (hit != null)
             {
-                _currentAtk = _player.CurrentAtk * PC_Type1_Atk_Multiplier;
-
-                hit.Hit(_currentAtk, 5f, _player.transform);
-
+                ChangeData(_player.CurrentLevel);
+                hit.Hit(_player.CurrentAtk * _currentAtkMultiplier, _currentStiffT, _player.transform);
+                isHit = true;
                 GameObject hitEffect = _effect.GetHitEffect();
                 ParticleSystem hitParticle = hitEffect.GetComponent<ParticleSystem>();
 
@@ -101,6 +80,10 @@ public class PlayerFirstComboAttack : PlayerComboAttack
                 hitParticle.Play();
                 _effect.ReturnHit(hitEffect);
             }
+        }
+        if (isHit)
+        {
+            _player.CurrentSkill += _currentGetSkillGauge;
         }
     }
 

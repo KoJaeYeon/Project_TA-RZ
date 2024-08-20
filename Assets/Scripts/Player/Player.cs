@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using System.ComponentModel;
 using UnityEngine;
 using Zenject;
@@ -31,6 +32,7 @@ public class Player : MonoBehaviour, IHit
     #endregion
 
     #region PlayerValue
+    public Func<IEnumerator> _attackDataFunc;
     [SerializeField] int _currentAmmo;
     float _currentHP;
     [SerializeField] float _currentSkill;
@@ -41,6 +43,7 @@ public class Player : MonoBehaviour, IHit
     public bool[] IsSkillAcitve { get; set; } = new bool[4] { false, false, false, false };
     public float[] _skillCounption { get; private set; } = new float[4] { 25, 50, 75, 100 };
     public bool IsSkillAnimationEnd { get; set; } = true;
+    public int CurrentLevel { get; set; }
 
     public float CurrentHP
     {
@@ -224,7 +227,7 @@ public class Player : MonoBehaviour, IHit
         _state.AddState(State.Skill, new PlayerSkill(this));
         _state.AddState(State.Hit, new PlayerHit(this));    
         _state.AddState(State.KnockBack, new PlayerKnockBack(this));
-        _state.AddState(State.Death, new PlayerDeath(this));    
+        _state.AddState(State.Death, new PlayerDeath(this));
     }
 
     IEnumerator StaminaDelay()
