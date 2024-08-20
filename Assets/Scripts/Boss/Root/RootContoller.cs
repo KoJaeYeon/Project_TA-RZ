@@ -23,7 +23,7 @@ public class RootContoller : MonoBehaviour
 
     [HideInInspector] public RootState rootState;
     private BossController _boss;
-    private SpriteRenderer _attackMark;
+    private MeshRenderer _attackMark;
 
     private readonly int _hashActive = Animator.StringToHash("isActive");
     private readonly int _hashAttackReady = Animator.StringToHash("AttackReady");
@@ -36,8 +36,8 @@ public class RootContoller : MonoBehaviour
         _anim = GetComponent<Animator>();
 
         _boss = GetComponentInParent<BossController>();
-        //_attackMark = GetComponentInChildren<SpriteRenderer>();
-        //_attackMark.gameObject.SetActive(false);
+        _attackMark = GetComponentInChildren<MeshRenderer>();
+        _attackMark.gameObject.SetActive(false);
     }
 
     private void OnEnable()
@@ -97,13 +97,14 @@ public class RootContoller : MonoBehaviour
 
         transform.rotation = rot;
         _anim.SetTrigger(_hashAttackReady);
-        //_attackMark.gameObject.SetActive(true);
+        _attackMark.gameObject.SetActive(true);
     }
     public void RootSmash()
     {
         if (rootState == RootState.Hide) return;
 
         _anim.SetTrigger(_hashAttack);
+        _attackMark.gameObject.SetActive(false);
     }
 
     private IEnumerator CheckDistance()
