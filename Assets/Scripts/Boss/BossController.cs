@@ -26,6 +26,8 @@ public class BossController : MonoBehaviour
     [SerializeField] private float _damage;
     [SerializeField] private float _attackSpeed;
     [SerializeField] private float _attackRange;
+    [SerializeField] private float _rushDistance;
+    [SerializeField] private float _traceDistance;
     [SerializeField] private float _rotSpeed;
 
     [Header("페이즈 체력 퍼센트")]
@@ -34,32 +36,38 @@ public class BossController : MonoBehaviour
 
     [Header("1페이즈 기믹")]
     public float gimmickDamage;
-    private float _gimmickCoolDown;
-    public bool isGimmick;
+    [SerializeField] private float _gimmickCoolDown;
+    public bool isCoolGimmick;
     [Header("1페이즈 뿌리 공격")]
+    [SerializeField] private GameObject _markRoot;
+    [SerializeField] private RootContoller[] _roots;
     public float rootDamage;
-    private float _rootCoolDown;
-    public bool isRootAttack;
+    [SerializeField] private float _rootCoolDown;
+    public bool isCoolRootAttack;
     [Header("1, 2페이즈 내려치기")]
     public float smashDamage;
-    private float _smashCoolDown;
-    public bool isSmash;
+    [SerializeField] private float _smashCoolDown;
+    public bool isCoolSmash;
     [Header("1페이즈 폭발")]
+    [SerializeField] private GameObject _explosion;
     public float explosionDamage;
-    private float _explotionCoolDown;
-    public bool isExplosion;
+    [SerializeField] private float _explosionCoolDown;
+    public bool isCoolExplosion;
 
     [Header("2페이즈 돌진공격")]
     [SerializeField] private float _rushSpeed;
     [SerializeField] private float _rushRange;
+    [SerializeField] private float _rushWailtTime;
     public float rushDamage;
-    private float _rushCoolDown;
-    public bool isRush;
+    [SerializeField] private float _rushCoolDown;
+    public bool isCoolRush;
     [Header("2페이즈 휘두르기")]
+    [SerializeField] private GameObject _swingMark;
     public float swingDamage;
-    private float _swingCoolDown;
-    public bool isSwing;
-    //[Header("2페이즈 내려치기")]
+    [SerializeField] private float _swingCoolDown;
+    public bool isCoolSwing;
+    [Header("2페이즈 내려치기")]
+    [SerializeField] private GameObject _smashMark;
 
 
     private Rigidbody _rb;
@@ -71,16 +79,21 @@ public class BossController : MonoBehaviour
 
     private Transform _playerTr;
     private TrailRenderer _trail;
-    [Header("뿌리")]
-    [SerializeField] private SpriteRenderer _markRoot;
-    [SerializeField] private RootContoller[] _roots;
-    [Header("폭발")]
-    [SerializeField] private GameObject _explosion;
 
     private readonly int _hashPhase = Animator.StringToHash("");
     private readonly int _hashAttack = Animator.StringToHash("");
     private readonly int _hashAttackPattern = Animator.StringToHash("");
     private readonly int _hashSkill = Animator.StringToHash("");
+
+    private enum CoolDown
+    {
+        gimmick,
+        rootAttack,
+        smash,
+        explosion,
+        rush,
+        swing
+    }
 
     private void Awake()
     {
@@ -93,14 +106,20 @@ public class BossController : MonoBehaviour
         _trail = GetComponentInChildren<TrailRenderer>();
         _trail.Clear();
         _trail.gameObject.SetActive(false);
-        //_markRoot.gameObject.SetActive(false);
+        //_markRoot.SetActive(false);
+        _swingMark.SetActive(false);
+        _smashMark.SetActive(false);
 
         _bt.SetVariableValue("Phase1_Per", _phaseOnePer);
         _bt.SetVariableValue("Phase2_Per", _phaseTwoPer);
         _bt.SetVariableValue("Attack_Distance", _attackRange);
+        _bt.SetVariableValue("Rush_Distance", _rushDistance);
+        _bt.SetVariableValue("Trace_Distance", _traceDistance);
 
         _bt.SetVariableValue("RushSpeed", _rushSpeed);
         _bt.SetVariableValue("RushRange", _rushRange);
+        _bt.SetVariableValue("RushWaitTime", _rushWailtTime);
+        _bt.SetVariableValue("DefaultRushWaitTime", _rushWailtTime);
 
         #region 테스트
 
@@ -113,7 +132,7 @@ public class BossController : MonoBehaviour
     {
         _phase = BossPhase.Phase1;
 
-        _hp = _maxHp;    
+        _hp = _maxHp;
     }
 
     #region 테스트
@@ -149,6 +168,7 @@ public class BossController : MonoBehaviour
             root.RootAttack(_markRoot.gameObject.transform.position);
             break;
         }
+        StartCoroutine(CoCheckCoolTime(_rootCoolDown, CoolDown.rootAttack));
     }
     public void MarkSmash()
     {
@@ -169,10 +189,12 @@ public class BossController : MonoBehaviour
 
             root.RootSmash();
         }
+        StartCoroutine(CoCheckCoolTime(_smashCoolDown, CoolDown.smash));
     }
     public void Explosion()
-    { 
+    {
         _explosion.SetActive(true);
+        StartCoroutine(CoCheckCoolTime(_explosionCoolDown, CoolDown.explosion));
     }
 
     #endregion Phase1
@@ -187,9 +209,11 @@ public class BossController : MonoBehaviour
         return RotateToPlayer();
     }
     public Vector3 PlayerPos()
-    { 
+    {
         return _playerTr.position;
     }
+
+    #region Phase2
 
     //보스 대쉬 공격
     public void DrawRushTrail()
@@ -210,6 +234,32 @@ public class BossController : MonoBehaviour
     {
         _rb.velocity = direction * speed;
     }
+    public void RushCool()
+    {
+        StartCoroutine(CoCheckCoolTime(_rushCoolDown, CoolDown.rush));
+    }
+
+    //휘두르기
+    public void DrawSwing(bool isActive)
+    { 
+        _swingMark.SetActive(isActive);
+    }
+    public void SwingCool()
+    {
+        StartCoroutine(CoCheckCoolTime(_swingCoolDown, CoolDown.swing));
+    }
+
+    //내려치기
+    public void DrawSmash(bool isActive)
+    { 
+        _smashMark.SetActive(isActive);
+    }
+    public void SmashCool()
+    {
+        StartCoroutine(CoCheckCoolTime(_smashCoolDown, CoolDown.smash));
+    }
+
+    #endregion Phase2
 
     #endregion BTA
 
@@ -219,7 +269,7 @@ public class BossController : MonoBehaviour
     public bool CheckDistance(float range)
     {
         if (_playerTr == null) return false;
-        
+
         float distance = Vector3.Distance(transform.position, _playerTr.position);
 
         if (distance <= range) return true;
@@ -231,6 +281,16 @@ public class BossController : MonoBehaviour
     public bool CheckPhase(float standard)
     {
         if (standard < _hpPercent) return true;
+
+        return false;
+    }
+
+    //쿨타임 체크
+    public bool CheckCoolDown(bool isPattern)
+    {
+        if(_playerTr == null) return false;
+
+        if(!isPattern) return true;
 
         return false;
     }
@@ -250,5 +310,39 @@ public class BossController : MonoBehaviour
     {
         _hp -= damage;
         _hpPercent = _hp / _maxHp * 100;
+    }
+
+    private void SetBoolCooldown(CoolDown coolDown, bool isCool)
+    {
+        switch (coolDown)
+        {
+            case CoolDown.gimmick:
+                isCoolGimmick = isCool;
+                break;
+            case CoolDown.rootAttack:
+                isCoolRootAttack = isCool;
+                break;
+            case CoolDown.smash:
+                isCoolSmash = isCool;
+                break;
+            case CoolDown.explosion:
+                isCoolExplosion = isCool;
+                break;
+            case CoolDown.rush:
+                isCoolRush = isCool;
+                break;
+            case CoolDown.swing:
+                isCoolSwing = isCool;
+                break;
+            default:
+                Debug.Log("해당사항없음");
+                break;
+        }
+    }
+    private IEnumerator CoCheckCoolTime(float time, CoolDown coolDown)
+    {
+        SetBoolCooldown(coolDown, true);
+        yield return new WaitForSeconds(time);
+        SetBoolCooldown(coolDown, false);
     }
 }
