@@ -10,6 +10,7 @@ public class GoogleSheetManager : MonoBehaviour
     const string _PC_Level_URL = "https://script.google.com/macros/s/AKfycbxofCWapjAVsb8zGZfciCOHTEroZqIScbdic5u7Cyk3OPlbHyTw5VhHnGDRNc24Oho/exec";
     const string _PC_Skill_URL = "https://script.google.com/macros/s/AKfycby_rHh5Zgv5-9IzX5YZNHcBk2RFmHeGWN8WQnbYRxK3Z5qxHqry1jjmOJsWVsRnOCt_/exec";
     const string _PC_Attack_URL = "https://script.google.com/macros/s/AKfycbxRtDJSB7VeIkbcIeKxRJoBsDELpf4z9yDR2rlAVxILUH2Klk4UmCZt_p7KfuU9DyCp9g/exec";
+    const string _Monster_Stat_URL = "https://script.google.com/macros/s/AKfycbzpl1LyCn504Guowz3d5ttyCyWPzqfhWvgNhYVg6kby4loIIf8Triar3JWCaxHh42be/exec";
     string data = string.Empty;
 
     [SerializeField] bool TryConnectSheet;
@@ -24,6 +25,7 @@ public class GoogleSheetManager : MonoBehaviour
         StartCoroutine(RequestSJsonAPI(nameof(_PC_Level_URL), _PC_Level_URL));
         StartCoroutine(RequestSJsonAPI(nameof(_PC_Skill_URL), _PC_Skill_URL));
         StartCoroutine(RequestSJsonAPI(nameof(_PC_Attack_URL), _PC_Attack_URL));
+        StartCoroutine(RequestSJsonAPI(nameof(_Monster_Stat_URL), _Monster_Stat_URL));
     }
     private void Update()
     {

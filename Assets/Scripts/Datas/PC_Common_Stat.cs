@@ -1,6 +1,6 @@
 public class PC_Common_Stat : Stat
 {
-    public int Id { get; set; }
+    public int Id { get;}
     public string Type { get; set; }
     public float Atk_Power { get; set; }
     public float HP { get; set; }
