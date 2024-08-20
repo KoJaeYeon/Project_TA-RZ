@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class CameraRoot : MonoBehaviour
 {
@@ -10,13 +11,17 @@ public class CameraRoot : MonoBehaviour
     [Inject] Player player;
     PlayerInputSystem _input;
 
+    [Inject] public CinemachineVirtualCamera cinemachineVirtualCamera { get; }
+
     Transform _target;
     bool beforeLockOnMode;
+
     void Start()
     {        
         _input = player.GetComponent<PlayerInputSystem>();
         beforeLockOnMode = _input.IsLockOn;
         SetCameraToPlayer();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
@@ -86,6 +91,8 @@ public class CameraRoot : MonoBehaviour
             }
         }
 
+        SetCameraToTarget();
+
         return true;
 
     }
@@ -108,10 +115,8 @@ public class CameraRoot : MonoBehaviour
     void SetCameraToPlayer()
     {
         rotation = transform.rotation;
-        CinemachineBrain cineBrain = Camera.main.GetComponent<CinemachineBrain>();
-        var virutalCamera = cineBrain.ActiveVirtualCamera;
-        virutalCamera.Follow = transform;
-        virutalCamera.LookAt = transform;
+        cinemachineVirtualCamera.Follow = transform;
+        cinemachineVirtualCamera.LookAt = transform;
         _input.SetLockOn(false);
     }
 
@@ -134,6 +139,10 @@ public class CameraRoot : MonoBehaviour
         if (_target.gameObject.activeSelf == true)
         {
             transform.LookAt(_target);
+            Vector3 rot = transform.eulerAngles;
+            rot.x = 0;
+            rot.z = 0;
+            transform.eulerAngles = rot;
         }
         else
         {

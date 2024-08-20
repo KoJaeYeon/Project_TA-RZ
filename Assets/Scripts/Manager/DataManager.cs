@@ -121,7 +121,7 @@ public class DataManager
             AddDataToDataDictionary(idStr, stat);
         }
     }
-
+    
     private void Process_PC_Skill_Data(string data)
     {
         JArray jsonArray = JArray.Parse(data);

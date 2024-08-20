@@ -1,7 +1,5 @@
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [TaskCategory("Monster/General")]
@@ -41,15 +39,6 @@ public class Monster_OnAtk : Action
             {
                 return TaskStatus.Running;
             }
-            //var animinfo = anim.GetCurrentAnimatorStateInfo(0);
-            //if (animinfo.normalizedTime < 1)
-            //{
-            //    return TaskStatus.Running;
-            //}
-            //else
-            //{
-            //    return TaskStatus.Success;
-            //}
         }
         return TaskStatus.Failure;
     }
