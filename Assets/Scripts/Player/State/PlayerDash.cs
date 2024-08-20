@@ -118,6 +118,10 @@ public class PlayerDash : PlayerState
     {
         if (_inputSystem.IsSkill && _player.SkillCheck())
         {
+            _rigidBody.velocity = Vector3.zero;
+
+            _rigidBody.angularVelocity = Vector3.zero;
+
             _state.ChangeState(State.Skill);
         }
     }
