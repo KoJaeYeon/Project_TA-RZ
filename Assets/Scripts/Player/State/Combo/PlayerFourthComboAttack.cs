@@ -96,6 +96,11 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
         _maxIndex = _chargeCount;
 
+        if(_chargeCount >= 4)
+        {
+            _maxDelayTime += 2f;
+        }
+
         _currentDelayTime = 0f;
 
         _gauge = 0f;
@@ -138,6 +143,8 @@ public class PlayerFourthComboAttack : PlayerComboAttack
         ComboAnimation(_fourthCombo, false);
 
         _inputSystem.SetAttack(false);
+
+        _maxDelayTime = 2f;
 
         _player.CurrentAmmo -= _player.IsSkillAcitve[1] ? 0 : index + 1;
     }
