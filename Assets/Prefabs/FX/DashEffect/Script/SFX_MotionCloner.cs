@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 // ReSharper disable once CheckNamespace
 namespace QFX.SFX
@@ -9,18 +10,26 @@ namespace QFX.SFX
         [Header("CloneParent")]
         public GameObject TargetGameObject;
 
-        [Header("Particle_LifeTime")]
-        public float CloneLifeTime = 1f;
+        [Header("TrailParticle_LifeTime")]
+        public float _trailParticlelifeTime;
 
+        [Header("isInvisible")]
         public bool ReplaceMaterialInMotion; //투명화
         public Material MotionMaterial;
 
+        [Header("TrailParticle")]
         public GameObject TrailParticleSystem;
+
+        [Header("ActivateParticle")]
         public GameObject ActivateCloneParticleSystem;
+
+        [Header("FinishMotionParticle")]
         public GameObject FinishMotionParticleSystem;
 
+        [Header("PlayerSkinnedMeshRenderer")]
         public SkinnedMeshRenderer SkinnedMeshRenderer;
 
+        #region Particle
         private GameObject _activateCloneGo;
         private ParticleSystem _activateClonePs;
 
@@ -29,6 +38,7 @@ namespace QFX.SFX
 
         private GameObject _finishGo;
         private ParticleSystem _finishPs;
+        #endregion
 
         private readonly Dictionary<Renderer, Material[]> _rendererToSharedMaterials =
             new Dictionary<Renderer, Material[]>();
@@ -61,6 +71,8 @@ namespace QFX.SFX
             {
                 _trailGo = Instantiate(TrailParticleSystem, Vector3.zero, Quaternion.identity);
                 _trailPs = _trailGo.GetComponent<ParticleSystem>();
+                var particleMain = _trailPs.main;
+                particleMain.startLifetime = _trailParticlelifeTime;
                 _trailGo.SetActive(true);
                 _trailGo.transform.parent = TargetGameObject.transform;
                 if(SkinnedMeshRenderer != null)
