@@ -16,6 +16,17 @@ public class CameraRoot : MonoBehaviour
     Transform _target;
     bool beforeLockOnMode;
 
+    #region ZoomIn/Out
+    Coroutine _zoomCoroutine;
+    bool startZoomOut;
+    [Header("ZoomOutSpeed")]
+    [SerializeField] float _zoomOutspeed;
+    [Header("ZoomInSpeed")]
+    [SerializeField] float _zoomInspeed;
+    float _cameraFieldOfView;
+    float _maxView;
+    #endregion
+
     void Start()
     {        
         _input = player.GetComponent<PlayerInputSystem>();
@@ -152,4 +163,54 @@ public class CameraRoot : MonoBehaviour
             }
         }
     }
+
+    public void StartCameraMovement()
+    {
+        startZoomOut = true;
+
+        _zoomCoroutine = StartCoroutine(ZoomOut());
+    }
+
+    IEnumerator ZoomOut()
+    {
+        _maxView = 90f;
+        _cameraFieldOfView = cinemachineVirtualCamera.m_Lens.FieldOfView;
+
+        while (cinemachineVirtualCamera.m_Lens.FieldOfView < _maxView)
+        {
+            cinemachineVirtualCamera.m_Lens.FieldOfView += Time.deltaTime * _zoomOutspeed;
+
+            yield return null;
+        }
+
+        startZoomOut = false;
+    }
+
+    public void EndCameraMovement()
+    {
+        if(_zoomCoroutine != null)
+        {
+            StopCoroutine(_zoomCoroutine);
+            startZoomOut = false;
+        }
+
+        StartCoroutine(ZoomIn());
+    }
+
+    IEnumerator ZoomIn()
+    {
+        if (startZoomOut)
+        {
+            Debug.Log("대기중...");
+            yield return new WaitWhile(() => startZoomOut);
+        }
+
+        while(cinemachineVirtualCamera.m_Lens.FieldOfView > _cameraFieldOfView)
+        {
+            cinemachineVirtualCamera.m_Lens.FieldOfView -= Time.deltaTime * _zoomInspeed;
+
+            yield return null;
+        }
+    }
+
 }

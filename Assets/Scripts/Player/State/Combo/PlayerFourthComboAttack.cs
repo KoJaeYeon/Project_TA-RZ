@@ -61,12 +61,6 @@ public class PlayerFourthComboAttack : PlayerComboAttack
         _currentGetSkillGauge = gageGet;
     }
 
-    #region Data
-    private float _currentAtkMultiplier;
-    private int _currentGetSkillGauge;
-    private float _currentStiffT;
-    #endregion
-
     #region Attack
     private float _maxIndex;
     private float _maxDelayTime = 2f;
@@ -125,6 +119,8 @@ public class PlayerFourthComboAttack : PlayerComboAttack
         {
             if (!_inputSystem.IsAttack || _currentDelayTime >= _maxDelayTime)
             {
+                _player.cameraRoot.EndCameraMovement();
+
                 _animator.speed = 1f;
 
                 _state.ChangeState(State.Idle);
@@ -157,6 +153,8 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
         _effect.ChangeColor(index);
 
+        _player.cameraRoot.StartCameraMovement();
+
         float _elapsedTime = Time.time;
 
         while (_isFillingGauge)
@@ -173,7 +171,7 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
                 _effect.ChangeColor(index);
             }
-
+            
             _gauge += 0.1f;
 
             if(_gauge >= _maxGauge)
@@ -183,6 +181,8 @@ public class PlayerFourthComboAttack : PlayerComboAttack
             }
             else if(!_inputSystem.IsAttack)
             {
+                _player.cameraRoot.EndCameraMovement();
+
                 _animator.speed = 1f;
 
                 _state.ChangeState(State.Idle);
