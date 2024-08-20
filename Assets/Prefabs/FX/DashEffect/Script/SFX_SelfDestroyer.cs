@@ -1,6 +1,7 @@
 // ReSharper disable once CheckNamespace
 namespace QFX.SFX
 {
+    //사용안함
     public class SFX_SelfDestroyer : SFX_ControlledObject
     {
         public float LifeTime;
