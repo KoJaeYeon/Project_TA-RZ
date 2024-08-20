@@ -55,6 +55,19 @@ public class Monster : MonoBehaviour, IHit
         }
     }
 
+    public void Attack()
+    {
+        string[] targetLayers = new string[] { "Player", "Dash", "Ghost" };
+        int layer = LayerMask.GetMask(targetLayers);
+        Collider[] colliders = Physics.OverlapSphere(transform.position + transform.forward, 1f, layer);
+
+        if(colliders.Length == 0) return;
+
+        var player = colliders[0].gameObject;
+        var ihit = player.GetComponent<IHit>();
+        ihit?.Hit(10, 1, transform);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -77,5 +90,11 @@ public class Monster : MonoBehaviour, IHit
         {
            // Bt.enabled = true;
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position + transform.forward, 1f);
     }
 }
