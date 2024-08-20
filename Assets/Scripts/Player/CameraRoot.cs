@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class CameraRoot : MonoBehaviour
 {
@@ -137,6 +138,10 @@ public class CameraRoot : MonoBehaviour
         if (_target.gameObject.activeSelf == true)
         {
             transform.LookAt(_target);
+            Vector3 rot = transform.eulerAngles;
+            rot.x = 0;
+            rot.z = 0;
+            transform.eulerAngles = rot;
         }
         else
         {
