@@ -220,7 +220,7 @@ public class PlayerFourthComboAttack : PlayerComboAttack
             if(hit != null)
             {
                 ChangeData(_player.CurrentLevel);
-                hit.Hit(_player.CurrentAtk * _currentAtkMultiplier, _currentStiffT, _player.transform);
+                hit.Hit(_player.CurrentAtk * _currentAtkMultiplier * _player._PC_Level.Level_Atk_Power_Multiplier, _currentStiffT, _player.transform);
                 isHit = true;
                 GameObject hitEffect = _effect.GetHitEffect();
                 ParticleSystem hitParticle = hitEffect.GetComponent<ParticleSystem>();
