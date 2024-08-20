@@ -47,7 +47,7 @@ MonoBehaviour:
   RunAtStart: 0
   Delay: 0
   TargetGameObject: {fileID: 0}
-  CloneLifeTime: 0.5
+  _trailParticlelifeTime: 1
   ReplaceMaterialInMotion: 1
   MotionMaterial: {fileID: 2100000, guid: e595601a4f064aea855f1e037790b36f, type: 2}
   TrailParticleSystem: {fileID: 1204090391620592, guid: f724c32a048f4c5babf106408868941c,

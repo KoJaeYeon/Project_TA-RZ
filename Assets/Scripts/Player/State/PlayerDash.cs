@@ -70,8 +70,6 @@ public class PlayerDash : PlayerState
 
             if (_dashTime >= _maxTime)
             {
-                _player.Cloner.Stop();
-
                 _rigidBody.velocity = Vector3.zero;
 
                 _rigidBody.angularVelocity = Vector3.zero;
@@ -83,6 +81,7 @@ public class PlayerDash : PlayerState
 
     private void Exit()
     {
+        _player.Cloner.Stop();
         _inputSystem.SetDash(false);
         _dashTime = 0f;
     }
