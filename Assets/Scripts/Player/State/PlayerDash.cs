@@ -116,8 +116,12 @@ public class PlayerDash : PlayerState
 
     public override void InputCheck()
     {
-        if (_inputSystem.IsSkill)
+        if (_inputSystem.IsSkill && _player.SkillCheck())
         {
+            _rigidBody.velocity = Vector3.zero;
+
+            _rigidBody.angularVelocity = Vector3.zero;
+
             _state.ChangeState(State.Skill);
         }
     }
