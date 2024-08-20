@@ -13,6 +13,7 @@ public class BTA_Boss_ResetRushTime : BossAction
     public override TaskStatus OnUpdate()
     {
         _rushTime.Value = _defaultRushTime.Value;
+        _owner.RushCool();
 
         return TaskStatus.Success;
     }
