@@ -3,21 +3,23 @@ using System;
 using System.ComponentModel;
 using UnityEngine;
 using Zenject;
+using QFX.SFX;
 
 public class Player : MonoBehaviour, IHit
 {
     #region InJect
     [Inject] private PlayerManager _playerManager { get; }
     [Inject] public DataManager dataManager { get; }
-
     [Inject] public CameraRoot cameraRoot { get; }
     #endregion
 
     #region PlayerComponent
     private PlayerInputSystem _inputSystem;
     private PlayerStateMachine _state;
+    private SFX_MotionCloner _cloner;
     private Camera _camera;
     
+
     public PC_Common_Stat _playerStat { get; private set; } = new PC_Common_Stat();
     public PC_Level _PC_Level { get; private set; } = new PC_Level();
     public Camera MainCamera { get { return _camera; } }
@@ -32,7 +34,7 @@ public class Player : MonoBehaviour, IHit
     #endregion
 
     #region PlayerValue
-    public Func<IEnumerator> _attackDataFunc;
+    public SFX_MotionCloner Cloner { get { return _cloner; } }
     [SerializeField] int _currentAmmo;
     float _currentHP;
     [SerializeField] float _currentSkill;
@@ -209,6 +211,7 @@ public class Player : MonoBehaviour, IHit
 
     private void InitializeComponent()
     {
+        _cloner = gameObject.GetComponentInChildren<SFX_MotionCloner>();
         _state = gameObject.AddComponent<PlayerStateMachine>();
         _inputSystem = gameObject.AddComponent<PlayerInputSystem>();
         _camera = Camera.main;

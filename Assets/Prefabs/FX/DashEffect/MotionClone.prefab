@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6284516670430612347
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 910188767399557128}
+  - component: {fileID: 9003454185839151940}
+  m_Layer: 6
+  m_Name: MotionClone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &910188767399557128
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6284516670430612347}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9003454185839151940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6284516670430612347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 890d6f336f624bc8a12363a11369a3d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RunAtStart: 0
+  Delay: 0
+  TargetGameObject: {fileID: 0}
+  CloneLifeTime: 2
+  CloneRate: 0.2
+  ReplaceMaterialInMotion: 1
+  MotionMaterial: {fileID: 2100000, guid: e595601a4f064aea855f1e037790b36f, type: 2}
+  TrailParticleSystem: {fileID: 1204090391620592, guid: f724c32a048f4c5babf106408868941c,
+    type: 3}
+  ActivateCloneParticleSystem: {fileID: 1204090391620592, guid: dd7d93f383074dfebc4b44046e07fdc7,
+    type: 3}
+  FinishMotionParticleSystem: {fileID: 1204090391620592, guid: c312cf214e5e44799d3a22e2b1a35f4b,
+    type: 3}
+  CloneParticleSystem: {fileID: 1638125897505738, guid: ae8dbda1bd874ee79202b6fb8bc74952,
+    type: 3}
+  MeshRenderer: {fileID: 0}
+  SkinnedMeshRenderer: {fileID: 0}
