@@ -76,7 +76,10 @@ public class PlayerDash : PlayerState
 
     private void Dash()
     {
-        _player.AllgnToCamera();
+        if (_inputSystem.Input == Vector2.zero)
+        {
+            _player.AllgnToCamera();
+        }
 
         _dashDirection = _player.transform.forward;
 

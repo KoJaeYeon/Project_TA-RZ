@@ -11,19 +11,17 @@ public class CameraRoot : MonoBehaviour
     [Inject] Player player;
     PlayerInputSystem _input;
 
-    public CinemachineVirtualCamera cinemachineVirtualCamera { get; private set; }
+    [Inject] public CinemachineVirtualCamera cinemachineVirtualCamera { get; }
 
     Transform _target;
     bool beforeLockOnMode;
+
     void Start()
     {        
         _input = player.GetComponent<PlayerInputSystem>();
         beforeLockOnMode = _input.IsLockOn;
         SetCameraToPlayer();
         Cursor.lockState = CursorLockMode.Locked;
-        CinemachineBrain cineBrain = Camera.main.GetComponent<CinemachineBrain>();
-        var virutalCamera = cineBrain.ActiveVirtualCamera;
-        cinemachineVirtualCamera = virutalCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
     }
 
     private void Update()
