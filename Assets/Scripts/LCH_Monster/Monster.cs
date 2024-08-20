@@ -38,6 +38,10 @@ public class Monster : MonoBehaviour, IHit
         {
             StartCoroutine(WaitForStun(paralysisTime));
         }
+        else
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     public void ApplyKnockback(float knockbackForce, Transform attackerTrans)

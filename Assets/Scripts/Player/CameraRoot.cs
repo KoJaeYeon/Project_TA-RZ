@@ -17,6 +17,7 @@ public class CameraRoot : MonoBehaviour
         _input = player.GetComponent<PlayerInputSystem>();
         beforeLockOnMode = _input.IsLockOn;
         SetCameraToPlayer();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
@@ -85,6 +86,8 @@ public class CameraRoot : MonoBehaviour
                 closestDistance = targetDistance;
             }
         }
+
+        SetCameraToTarget();
 
         return true;
 
