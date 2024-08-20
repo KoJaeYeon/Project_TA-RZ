@@ -95,7 +95,7 @@ public class PlayerComboAttack : PlayerState
         {
             _state.ChangeState(State.Dash);
         }
-        else if (_inputSystem.IsSkill)
+        else if (_inputSystem.IsSkill && _player.SkillCheck())
         {
             _state.ChangeState(State.Skill);
         }

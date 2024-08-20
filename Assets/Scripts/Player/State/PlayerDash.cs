@@ -116,7 +116,7 @@ public class PlayerDash : PlayerState
 
     public override void InputCheck()
     {
-        if (_inputSystem.IsSkill)
+        if (_inputSystem.IsSkill && _player.SkillCheck())
         {
             _state.ChangeState(State.Skill);
         }
