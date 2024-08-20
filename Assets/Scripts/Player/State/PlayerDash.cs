@@ -11,7 +11,7 @@ public class PlayerDash : PlayerState
     private float _dashPower = 15f;
     private float _dashTime;
     private float _maxTime = 0.3f;
-    private float _cloneRate = 0.1f;
+    private float _activateCloneplay = 0.1f;
     private float _time;
 
     private bool _canDash = true;
@@ -60,8 +60,8 @@ public class PlayerDash : PlayerState
             _dashTime += Time.deltaTime;
 
             _time += Time.deltaTime;
-           
-            if(_time >= _cloneRate)
+            
+            if (_time >= _activateCloneplay)
             {
                 _player.Cloner.MakeClone();
 
