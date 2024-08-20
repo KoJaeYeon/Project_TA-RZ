@@ -87,6 +87,11 @@ public class PlayerStateMachine : MonoBehaviour
     {
         _stateDic.Add(newState, state);
     }
+
+    public PlayerBaseState GetState(State state)
+    {
+        return _stateDic[state];
+    }
 }
 
 public abstract class PlayerBaseState

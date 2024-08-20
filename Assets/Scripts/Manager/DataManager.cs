@@ -155,7 +155,7 @@ public class DataManager
             float atk4StiffT = ParseFloat(item["PC_Type1_Atk4_StiffT"]);
             float atk3KnockBackT = ParseFloat(item["PC_Type1_Atk3_KnockBackT"]);
 
-            PC_Attack attack = new PC_Attack(idStr, atkMultiplier, arm0SkillGageGet, arm1SkillGageGet, arm2SkillGageGet, arm3SkillGageGet, atk4GageGetMaxT, atk4GageKeepT, atk4StiffT, atk3KnockBackT);
+            PC_Attack attack = new PC_Attack(idStr, atkMultiplier, new int[] {arm0SkillGageGet,arm1SkillGageGet,arm2SkillGageGet,arm3SkillGageGet }, atk4GageGetMaxT, atk4GageKeepT, atk4StiffT, atk3KnockBackT);
             AddDataToDataDictionary(idStr, attack);
         }
     }

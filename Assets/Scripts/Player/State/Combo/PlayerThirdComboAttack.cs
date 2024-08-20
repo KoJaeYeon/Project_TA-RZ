@@ -9,6 +9,8 @@ public class PlayerThirdComboAttack : PlayerComboAttack
         PlayerAnimationEvent _event;
         _event = player.GetComponentInChildren<PlayerAnimationEvent>();
         _event.AddEvent(AttackType.thirdAttack, ThirdAttack);
+
+        player.StartCoroutine(LoadData("A203"));
     }
 
     #region Overlap
@@ -40,6 +42,11 @@ public class PlayerThirdComboAttack : PlayerComboAttack
         base.StateExit();
     }
 
+    protected override void ChangeData(int currentLevel)
+    {
+        base.ChangeData(currentLevel);
+    }
+
     //세 번째 공격로직
     private void ThirdAttack()
     {
@@ -47,12 +54,18 @@ public class PlayerThirdComboAttack : PlayerComboAttack
 
         Collider[] colliders = Physics.OverlapSphere(_player.transform.position, _range, _enemyLayer);
 
+        bool isHit = false;
         foreach(var target in colliders)
         {
             if (IsRange(target.transform))
             {
+                isHit = true;
                 Hit(target);
             }
+        }
+        if (isHit)
+        {
+            _player.CurrentSkill += _currentGetSkillGauge;
         }
     }
 
@@ -92,9 +105,10 @@ public class PlayerThirdComboAttack : PlayerComboAttack
 
         if (hit != null)
         {
-            hit.Hit(10f, 0f, _player.transform);
+            ChangeData(_player.CurrentLevel);
+            hit.Hit(_player.CurrentAtk * _currentAtkMultiplier, 0f, _player.transform);
             hit.ApplyKnockback(1f, other.transform);
-
+            
             GameObject hitEffect = _effect.GetHitEffect();
             ParticleSystem hitParticle = hitEffect.GetComponent<ParticleSystem>();
 

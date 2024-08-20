@@ -11,7 +11,7 @@ public class PlayerResourceSystem : MonoBehaviour
 
     [SerializeField] GameObject[] ArmUnitEffects; 
 
-    private int _currentLevel;
+    //private int _currentLevel;
 
     private int[] _needResource = new int[4];
 
@@ -99,47 +99,47 @@ public class PlayerResourceSystem : MonoBehaviour
         if (_player.IsSkillAcitve[3] == true)
         {
             //4단계 조건 성공 시
-            if (_currentLevel == 4) return;
+            if (_player.CurrentLevel == 4) return;
 
             StartCoroutine(LoadData("P505"));
-            _currentLevel = 4;
+            _player.CurrentLevel = 4;
 
             EffectAcitve(6, 7);
         }
         else if(currentAmmo >= _needResource[3])
         {
-            if (_currentLevel == 3) return;
+            if (_player.CurrentLevel == 3) return;
 
             StartCoroutine( LoadData("P504"));
-            _currentLevel = 3;
+            _player.CurrentLevel = 3;
 
             EffectAcitve(4, 5);
 
         }
         else if (currentAmmo >= _needResource[2])
         {
-            if (_currentLevel == 2) return;
+            if (_player.CurrentLevel == 2) return;
 
             StartCoroutine(LoadData("P503"));
-            _currentLevel = 2;
+            _player.CurrentLevel = 2;
 
             EffectAcitve(2, 3);
         }
         else if (currentAmmo >= _needResource[1])
         {
-            if (_currentLevel == 1) return;
+            if (_player.CurrentLevel == 1) return;
 
             StartCoroutine(LoadData("P502"));
-            _currentLevel = 1;
+            _player.CurrentLevel = 1;
 
             EffectAcitve(0, 1);
         }
         else if (currentAmmo >= _needResource[0])
         {
-            if (_currentLevel == 0) return;
+            if (_player.CurrentLevel == 0) return;
 
             StartCoroutine(LoadData("P501"));
-            _currentLevel = 0;
+            _player.CurrentLevel = 0;
 
             EffectAcitve(-1, -1);
         }
