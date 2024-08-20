@@ -1626,6 +1626,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 147207716783241615, guid: e44852ff32c7ef14687c01b75dca3779,
+        type: 3}
+      propertyPath: _zoomInspeed
+      value: 150
+      objectReference: {fileID: 0}
     - target: {fileID: 3740475152086547784, guid: e44852ff32c7ef14687c01b75dca3779,
         type: 3}
       propertyPath: m_Name
