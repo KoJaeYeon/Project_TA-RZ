@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2507178055619450053}
   - component: {fileID: 1704232825268429462}
   m_Layer: 0
-  m_Name: Sprite
+  m_Name: Smash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
