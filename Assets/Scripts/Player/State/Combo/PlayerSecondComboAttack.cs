@@ -65,7 +65,7 @@ public class PlayerSecondComboAttack : PlayerComboAttack
 
             Vector3 directionToPlayer = (_player.transform.position - target.transform.position).normalized;
 
-            Vector3 hitPosition = target.transform.position + directionToPlayer * 1f;
+            Vector3 hitPosition = target.transform.position + directionToPlayer * 1f + Vector3.up;
 
             if (hit != null)
             {
