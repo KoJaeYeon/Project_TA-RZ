@@ -30,7 +30,7 @@ public class Monster : MonoBehaviour, IHit
     public bool isKnockBack;
     public float Mon_Common_Hp_Remain;
 
-    public float targetTime;
+    public float targetKnockbackTime;
 
     protected Monster_Stat monster_Stat = new Monster_Stat();
     protected string idStr = "E101";
@@ -48,6 +48,14 @@ public class Monster : MonoBehaviour, IHit
     {
         Mon_Common_Hp_Remain = Mon_Common_Stat_Hp;
         StartCoroutine(LoadStat());
+    }
+
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.V))
+        {
+            ApplyKnockback(2, Player.transform);
+        }
     }
 
     IEnumerator LoadStat()
@@ -101,6 +109,8 @@ public class Monster : MonoBehaviour, IHit
     {
         isKnockBack = true;
 
+        targetKnockbackTime = Time.time + knockbackDuration;
+
         Nav.enabled = false;
 
         _rigidbody.velocity = Vector3.zero;
@@ -131,6 +141,14 @@ public class Monster : MonoBehaviour, IHit
         if (!isDamaged)
         {
            // Bt.enabled = true;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Player"))
+        {
+
         }
     }
 

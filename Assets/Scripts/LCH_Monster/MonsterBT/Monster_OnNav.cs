@@ -9,11 +9,13 @@ public class Monster_OnNav : Action
     [SerializeField] SharedNavmesh Nav;
     public override TaskStatus OnUpdate()
     {
+        if (Time.time < Monster.Value.targetKnockbackTime)
+        {
+            return TaskStatus.Running;
+        }
+
         Monster.Value.isKnockBack = false;
         Nav.Value.enabled = true;
-        //Nav.Value.isStopped = true;
-        //Nav.Value.velocity = Vector3.zero;
-        //Nav.Value.SetDestination(Owner.transform.position);
         return TaskStatus.Success;
     }
 }
