@@ -111,6 +111,8 @@ public class Monster : MonoBehaviour, IHit
     {
         isKnockBack = true;
 
+        _rigidbody.isKinematic = false;
+
         anim.SetTrigger("Damaged");
 
         targetKnockbackTime = Time.time + knockbackDuration;
@@ -128,6 +130,12 @@ public class Monster : MonoBehaviour, IHit
         Vector3 knockBack = (knockBackDirection * 2 + Vector3.up) * 2;
 
         _rigidbody.AddForce(knockBack, ForceMode.Impulse);
+    }
+
+    public void KnockbackEnd()
+    {
+        isKnockBack = false;
+        _rigidbody.isKinematic = true;
     }
 
     public void Attack()
@@ -150,17 +158,9 @@ public class Monster : MonoBehaviour, IHit
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player") && other.CompareTag("Shield"))
+        if(other.CompareTag("Player") || other.CompareTag("Shield"))
         {
             isCollsion = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player") && other.CompareTag("Shield"))
-        {
-            isCollsion = false;
         }
     }
 

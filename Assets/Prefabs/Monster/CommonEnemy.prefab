@@ -1199,7 +1199,6 @@ MonoBehaviour:
   Mon_Common_MovementSpeed: 3
   Mon_Common_CoolTime: 2
   Mon_Knockback_Time: 2
-  Mon_Knockback_Speed: 10
   isCollsion: 0
   isDamaged: 0
   isAtk: 1
@@ -1225,7 +1224,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.71
+  m_Radius: 0.5
   m_Height: 2.92
   m_Direction: 1
   m_Center: {x: 0, y: 1.36, z: 0}
@@ -1275,7 +1274,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0

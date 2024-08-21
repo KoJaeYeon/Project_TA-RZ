@@ -14,7 +14,7 @@ public class Monster_OnNav : Action
             return TaskStatus.Running;
         }
 
-        Monster.Value.isKnockBack = false;
+        Monster.Value.KnockbackEnd();
         Nav.Value.enabled = true;
         return TaskStatus.Success;
     }

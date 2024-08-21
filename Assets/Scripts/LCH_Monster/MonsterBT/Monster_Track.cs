@@ -19,7 +19,7 @@ public class Monster_Track : Action
 
         if (Monster.Value.Player.transform != null)
         {
-
+            Nav.Value.isStopped = false;  // NavMeshAgent 다시 움직이기
             Nav.Value.speed = Monster.Value.Mon_Common_MovementSpeed;
             Nav.Value.SetDestination(Monster.Value.Player.transform.position);
             return TaskStatus.Success;

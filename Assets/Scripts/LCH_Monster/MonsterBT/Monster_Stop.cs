@@ -8,11 +8,16 @@ public class Monster_Stop : Action
 {
     [SerializeField] SharedMonster Monster;
     [SerializeField] SharedNavmesh Nav;
+    int index;
+
+    public override void OnStart()
+    {
+        index = 0;
+    }
 
     public override TaskStatus OnUpdate()
     {
-        
-
+        Debug.Log(index++);
         // 몬스터와 목표 사이의 거리 계산
         float distanceToTarget = Vector3.Distance(Monster.Value.Player.transform.position, Owner.transform.position);
 
@@ -21,16 +26,17 @@ public class Monster_Stop : Action
         {
             Nav.Value.isStopped = true;  // NavMeshAgent 멈추기
             Nav.Value.velocity = Vector3.zero;
+            Monster.Value.isCollsion = false;
             Debug.Log("멈춤");
             return TaskStatus.Success;  
         }
         else if(distanceToTarget >= Monster.Value.Mon_Common_Range)
         {
             Debug.Log("안멈춤");
-            Nav.Value.isStopped = false;  // NavMeshAgent 다시 움직이기
+            Nav.Value.SetDestination(Monster.Value.Player.transform.position);            
 
-            return TaskStatus.Failure;  
+            return TaskStatus.Running;  
         }
-        return TaskStatus.Success;
+        return TaskStatus.Failure;
     }
 }
