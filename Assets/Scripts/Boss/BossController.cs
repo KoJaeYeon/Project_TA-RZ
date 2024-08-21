@@ -49,9 +49,7 @@ public class BossController : MonoBehaviour
     [SerializeField] private float _smashCoolDown;
     public bool isCoolSmash;
     [Header("1페이즈 폭발")]
-    [SerializeField] private GameObject[] _firstExplosion;
-    [SerializeField] private GameObject _secondExplosion;
-    [SerializeField] private float _explosionTime;
+    [SerializeField] private GameObject _explosion;
     public float explosionDamage;
     [SerializeField] private float _explosionCoolDown;
     public bool isCoolExplosion;
@@ -108,12 +106,7 @@ public class BossController : MonoBehaviour
         _trail = GetComponentInChildren<TrailRenderer>();
         _trail.Clear();
         _trail.gameObject.SetActive(false);
-        _markRoot.SetActive(false);
-        foreach (var explosion in _firstExplosion) 
-        { 
-            explosion.SetActive(false);
-        }
-        _secondExplosion.SetActive(false);
+        //_markRoot.SetActive(false);
         _swingMark.SetActive(false);
         _smashMark.SetActive(false);
 
@@ -122,7 +115,6 @@ public class BossController : MonoBehaviour
         _bt.SetVariableValue("Attack_Distance", _attackRange);
         _bt.SetVariableValue("Rush_Distance", _rushDistance);
         _bt.SetVariableValue("Trace_Distance", _traceDistance);
-        _bt.SetVariableValue("Root_Distance", _roots[0]._attackRange);
 
         _bt.SetVariableValue("RushSpeed", _rushSpeed);
         _bt.SetVariableValue("RushRange", _rushRange);
@@ -160,16 +152,13 @@ public class BossController : MonoBehaviour
 
     #region Phase1
 
-    //뿌리공격 범위 표시
     public void MarkActiveRoot()
-    { 
-        _markRoot.gameObject.transform.position = _playerTr.position;
-        _markRoot.gameObject.SetActive(true);
+    {
+        //_markRoot.gameObject.transform.position = _playerTr.position;
+        //_markRoot.gameObject.SetActive(true);
     }
-    //뿌리공격 실행부
     public void ActiveRoot()
     {
-        _markRoot.gameObject.SetActive(false);
         foreach (var root in _roots)
         {
             if (root.rootState == RootState.Emerge)
@@ -181,18 +170,16 @@ public class BossController : MonoBehaviour
         }
         StartCoroutine(CoCheckCoolTime(_rootCoolDown, CoolDown.rootAttack));
     }
-    //내려치기 범위표시
-    public void MarkRootSmash()
+    public void MarkSmash()
     {
         foreach (var root in _roots)
         {
             if (root.rootState == RootState.Hide)
                 continue;
 
-            root.MarkSmash(_playerTr.position);
+            root.MarkSmash(RotateToPlayer());
         }
     }
-    //내려치기 실행부
     public void RootSmash()
     {
         foreach (var root in _roots)
@@ -204,28 +191,9 @@ public class BossController : MonoBehaviour
         }
         StartCoroutine(CoCheckCoolTime(_smashCoolDown, CoolDown.smash));
     }
-    //폭발 공격1 범위표시
-    public void MarkFirstExplosion()
+    public void Explosion()
     {
-        foreach (var explosion in _firstExplosion)
-        {
-            explosion.SetActive(true);
-        }
-    }
-    //폭발 공격1 실행부
-    public void FirstExplosion()
-    {
-        foreach (var explosion in _firstExplosion)
-        {
-            explosion.SetActive(false);
-        }
-
-        _secondExplosion.SetActive(true);
-    }
-    //폭발 공격2 실행부
-    public void SecondExplosion()
-    {
-        _secondExplosion.SetActive(false);
+        _explosion.SetActive(true);
         StartCoroutine(CoCheckCoolTime(_explosionCoolDown, CoolDown.explosion));
     }
 
