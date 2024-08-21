@@ -177,6 +177,7 @@ public class PlayerEffect : MonoBehaviour
         yield return _returnTime;
 
         effect.transform.SetParent(GetAttackEffectTransform(AttackType.firstAttack));
+        yield break;
     }
 
     private IEnumerator ReturnSecondEffect(GameObject effect)
