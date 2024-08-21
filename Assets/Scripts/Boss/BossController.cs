@@ -294,6 +294,55 @@ public class BossController : MonoBehaviour
 
         return false;
     }
+    //뿌리 활성화 확인 (전부 활성화 되있는지)
+    public bool CheckAllRoot()
+    { 
+        if (_playerTr == null) return false;
+
+        int count = 0;
+
+        foreach (var root in _roots)
+        {
+            if (root.rootState == RootState.Emerge)
+            {
+                count++;
+            }
+        }
+
+        if (count < _roots.Length) return true;
+
+        return false;
+    }
+    //뿌리 활성화 확인
+    public bool CheckRootActive()
+    {
+        if (_playerTr == null) return false;
+
+        foreach (var root in _roots)
+        {
+            if (root.rootState == RootState.Emerge)
+            { 
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    //뿌리 거리 체크
+    public bool CheckRootDistance(float range)
+    {
+        if (_playerTr == null) return false;
+
+        foreach (var root in _roots)
+        {
+            float distance = Vector3.Distance(root.gameObject.transform.position, _playerTr.position);
+
+            if (distance <= range) return true;
+        }
+
+        return false;
+    }
 
     #endregion BTC
 
