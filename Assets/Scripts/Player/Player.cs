@@ -12,6 +12,7 @@ public class Player : MonoBehaviour, IHit
     [Inject] private PlayerManager _playerManager { get; }
     [Inject] public DataManager dataManager { get; }
     [Inject] public CameraRoot cameraRoot { get; }
+    [Inject] public DrainSystem drainSystem { get; }
     #endregion
 
     #region PlayerComponent

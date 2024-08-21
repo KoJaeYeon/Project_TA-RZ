@@ -14,5 +14,7 @@ public class PlayerContainer : MonoInstaller
         Container.Bind<CameraRoot>().FromComponentInHierarchy().AsSingle();
 
         Container.Bind<CinemachineVirtualCamera>().FromComponentInHierarchy().AsSingle();
+
+        Container.Bind<DrainSystem>().FromComponentInHierarchy().AsSingle();
     }
 }
