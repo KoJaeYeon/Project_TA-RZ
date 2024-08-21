@@ -1,6 +1,7 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 using Zenject;
 using static UnityEngine.UI.GridLayoutGroup;
@@ -18,11 +19,16 @@ public class CameraRoot : MonoBehaviour
 
     #region ZoomIn/Out
     Coroutine _zoomCoroutine;
-    bool startZoomOut;
+    [Header("Zoom")]
+    [SerializeField] bool startZoomOut;
+
     [Header("ZoomOutSpeed")]
     [SerializeField] float _zoomOutspeed;
+
     [Header("ZoomInSpeed")]
     [SerializeField] float _zoomInspeed;
+
+    float _time;
     float _cameraFieldOfView;
     float _maxView;
     #endregion
@@ -176,9 +182,13 @@ public class CameraRoot : MonoBehaviour
         _maxView = 90f;
         _cameraFieldOfView = cinemachineVirtualCamera.m_Lens.FieldOfView;
 
+        _time = 0f;
+        
         while (cinemachineVirtualCamera.m_Lens.FieldOfView < _maxView)
         {
-            cinemachineVirtualCamera.m_Lens.FieldOfView += Time.deltaTime * _zoomOutspeed;
+            _time += _zoomOutspeed * Time.deltaTime;
+
+            cinemachineVirtualCamera.m_Lens.FieldOfView = Mathf.Lerp(_cameraFieldOfView, _maxView, _time * _time);
 
             yield return null;
         }
@@ -201,13 +211,18 @@ public class CameraRoot : MonoBehaviour
     {
         if (startZoomOut)
         {
-            Debug.Log("대기중...");
             yield return new WaitWhile(() => startZoomOut);
         }
 
-        while(cinemachineVirtualCamera.m_Lens.FieldOfView > _cameraFieldOfView)
+        _time = 0f;
+
+        float currentView = cinemachineVirtualCamera.m_Lens.FieldOfView;
+
+        while (cinemachineVirtualCamera.m_Lens.FieldOfView > _cameraFieldOfView)
         {
-            cinemachineVirtualCamera.m_Lens.FieldOfView -= Time.deltaTime * _zoomInspeed;
+            _time += _zoomInspeed * Time.deltaTime;
+
+            cinemachineVirtualCamera.m_Lens.FieldOfView = Mathf.Lerp(currentView, _cameraFieldOfView, _time * _time);
 
             yield return null;
         }

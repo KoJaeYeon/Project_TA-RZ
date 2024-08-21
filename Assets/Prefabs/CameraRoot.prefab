@@ -44,3 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45712d646599c95428037d889555a22c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startZoomOut: 0
+  _zoomOutspeed: 1
+  _zoomInspeed: 150

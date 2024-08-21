@@ -11,7 +11,6 @@ public class PlayerFourthComboAttack : PlayerComboAttack
         PlayerAnimationEvent _event;
         _event = player.GetComponentInChildren<PlayerAnimationEvent>();
         _event.AddEvent(AttackType.fourthAttack, FourthAttack);
-        player.StartCoroutine(GetCamera());
 
         player.StartCoroutine(LoadData("A204"));
     }
@@ -20,15 +19,12 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
     public override IEnumerator LoadData(string idStr)
     {
-        int[] gaugeValue = new int[4];
-
         while (true)
         {
             var comboData = _player.dataManager.GetData(idStr) as PC_Attack;
 
             if (comboData == null)
             {
-                Debug.Log("콤보 데이터를 가져오지 못했습니다.");
                 yield return new WaitForSeconds(1f);
             }
             else
@@ -37,10 +33,7 @@ public class PlayerFourthComboAttack : PlayerComboAttack
                 {
                     comboData =_player.dataManager.GetData($"A20{i+4}") as PC_Attack;
                     _fourthComboData[i] = comboData;
-
-                 
-                }
-                Debug.Log("콤보 데이터를 성공적으로 가져왔습니다.");
+                }   
                 yield break;
             }
         }
@@ -71,10 +64,6 @@ public class PlayerFourthComboAttack : PlayerComboAttack
     private bool _isFillingGauge = true;
     private int index = 0;
     #endregion
-
-    private CinemachineVirtualCamera _virtualCamera;
-    private float _maxView = 90f;
-    private float _currentView;
 
     #region Overlap
     public Vector3 _forward { get; private set; }
@@ -245,18 +234,5 @@ public class PlayerFourthComboAttack : PlayerComboAttack
             _player.CurrentSkill += _currentGetSkillGauge;
         }
 
-    }
-
-    
-
-    IEnumerator GetCamera()
-    {
-        yield return new WaitForSeconds(2f);
-
-        CinemachineBrain brain = _player.MainCamera.GetComponent<CinemachineBrain>();
-
-        var cinemaChineObject = brain.ActiveVirtualCamera.VirtualCameraGameObject;
-
-        _virtualCamera = cinemaChineObject.GetComponent<CinemachineVirtualCamera>();
     }
 }
