@@ -46,4 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startZoomOut: 0
   _zoomOutspeed: 1
-  _zoomInspeed: 150
+  _zoomInspeed: 5
