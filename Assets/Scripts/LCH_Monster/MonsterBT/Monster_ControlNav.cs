@@ -9,33 +9,16 @@ using UnityEngine.AI;
 public class Monster_ControlNav : Action
 {
     [SerializeField] SharedMonster Monster;
-    [SerializeField] NavMeshAgent Nav;
+    [SerializeField] SharedNavmesh Nav;
+
     public override TaskStatus OnUpdate()
     {
-        Nav = GetComponent<NavMeshAgent>();
-        Nav.isStopped = true;
-        // Nav.velocity = Vector3.zero;
-        Nav.velocity = Vector3.zero;
-        Nav.SetDestination(Owner.transform.position);
-        Debug.Log("please");
+        //Nav.Value.isStopped = true;
+        //// Nav.velocity = Vector3.zero;
+        //Nav.Value.velocity = Vector3.zero;
+        //Nav.Value.SetDestination(Owner.transform.position);
+        //Debug.Log("please");
         return TaskStatus.Success;
 
-    }
-}
-
-[TaskCategory("Monster/General")]
-public class Monster_OnNav : Action
-{
-    [SerializeField] SharedMonster Monster;
-    [SerializeField] NavMeshAgent Nav;
-    public override TaskStatus OnUpdate()
-    {
-        Monster.Value.isKnockBack = false;
-
-        Nav = GetComponent<NavMeshAgent>();
-        Nav.isStopped = true;
-        Nav.velocity = Vector3.zero;
-        Nav.SetDestination(Owner.transform.position);
-        return TaskStatus.Success;
     }
 }

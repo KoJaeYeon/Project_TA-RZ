@@ -33,6 +33,7 @@ namespace BehaviorDesigner.Runtime.Tasks
             }
         }
 
+
         public override TaskStatus OnUpdate()
         {
             // The task is done waiting if the time waitDuration has elapsed since the task was started.

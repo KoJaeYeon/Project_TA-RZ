@@ -13,6 +13,7 @@ public class Monster_CoolTime : Conditional
         float currentTime = Time.time;
         if (currentTime - lastAttackTime >= Monster.Value.Mon_Common_CoolTime)
         {
+            //공격쿨타임 
             Debug.Log(Monster.Value.Mon_Common_CoolTime);
             lastAttackTime = currentTime;
             return TaskStatus.Success;

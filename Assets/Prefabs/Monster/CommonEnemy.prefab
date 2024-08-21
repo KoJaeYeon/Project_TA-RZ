@@ -883,6 +883,7 @@ GameObject:
   - component: {fileID: 3379560720759086485}
   - component: {fileID: 3379560720753642681}
   - component: {fileID: 6273317750215575751}
+  - component: {fileID: 6057972813996327038}
   m_Layer: 7
   m_Name: demon_grunt
   m_TagString: Untagged
@@ -1036,7 +1037,19 @@ BoxCollider:
   m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1.3, y: 1.35, z: 1.08}
-  m_Center: {x: 0, y: 0.82, z: 1.12}
+  m_Center: {x: 0, y: 0.82, z: 1.35}
+--- !u!114 &6057972813996327038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3379560720758915509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cef45f2946ffd24aabf2dacf026cad2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3379560720758915511
 GameObject:
   m_ObjectHideFlags: 0
@@ -1053,6 +1066,7 @@ GameObject:
   - component: {fileID: 175445102976115375}
   - component: {fileID: 7897430125240335523}
   - component: {fileID: 2444760024111282628}
+  - component: {fileID: 732606921716334728}
   m_Layer: 7
   m_Name: CommonEnemy
   m_TagString: Monster
@@ -1149,7 +1163,7 @@ MonoBehaviour:
       parentIndex: 
       startIndex: 
       variableStartIndex: 
-      JSONSerialization: '{"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"TargetTransform","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"IsTrack","IsShared":true,"StringmValue":"IsTrack"},{"Type":"BehaviorDesigner.Runtime.SharedMonster","Name":"Monster","IsShared":true,"MonstermValue":0}]}'
+      JSONSerialization: '{"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"TargetTransform","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"IsTrack","IsShared":true,"StringmValue":"IsTrack"},{"Type":"BehaviorDesigner.Runtime.SharedMonster","Name":"Monster","IsShared":true,"MonstermValue":0},{"Type":"BehaviorDesigner.Runtime.SharedNavmesh","Name":"NavmeshAgent","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"waitTime","IsShared":true,"SinglemValue":2},{"Type":"BehaviorDesigner.Runtime.SharedCustomCollider","Name":"Collider","IsShared":true,"BoxCollidermValue":1},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Owner","IsShared":true,"PropertyMapping":"UnityEngine.Transform/gameObject","PropertyMappingOwner":2}]}'
       fieldSerializationData:
         typeName: []
         fieldNameHash: 
@@ -1157,6 +1171,8 @@ MonoBehaviour:
         dataPosition: 
         unityObjects:
         - {fileID: 2036722526376663656}
+        - {fileID: 6273317750215575751}
+        - {fileID: 3379560720758915511}
         byteData: 
         byteDataArray: 
       Version: 1.7.8
@@ -1174,7 +1190,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c5f187acb52704d8a2f05b00e941af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Bt: {fileID: 0}
   Mon_Common_Stat_Hp: 100
   Mon_Common_Damage: 0
   Mon_Common_AttackArea: 0
@@ -1182,11 +1197,15 @@ MonoBehaviour:
   Mon_Common_DetectArea: 5
   Mon_Common_DetectTime: 0
   Mon_Common_MovementSpeed: 3
-  Mon_Common_CoolTime: 3
+  Mon_Common_CoolTime: 2
+  Mon_Knockback_Time: 2
+  Mon_Knockback_Speed: 10
+  isCollsion: 0
   isDamaged: 0
   isAtk: 1
   isKnockBack: 0
   Mon_Common_Hp_Remain: 0
+  targetKnockbackTime: 0
 --- !u!136 &175445102976115375
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1260,6 +1279,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!136 &732606921716334728
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3379560720758915511}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.9
+  m_Height: 2.1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.89, z: 0}
 --- !u!1 &3379560720758915513
 GameObject:
   m_ObjectHideFlags: 0

@@ -39,6 +39,6 @@ public class Skill_Shield : MonoBehaviour
         isActive = true;
         this.value = value;
         boxCollider.isTrigger = true;
-        boxCollider.size *= 1.1f;
+        boxCollider.size *= 1.5f;
     }
 }
