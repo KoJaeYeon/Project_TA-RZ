@@ -23,9 +23,11 @@ public class RootContoller : MonoBehaviour
 
     [HideInInspector] public RootState rootState;
     private BossController _boss;
-    private SpriteRenderer _attackMark;
+    private MeshRenderer _attackMark;
 
-    private readonly int _hashSmash = Animator.StringToHash("Smash");
+    private readonly int _hashActive = Animator.StringToHash("isActive");
+    private readonly int _hashAttackReady = Animator.StringToHash("AttackReady");
+    private readonly int _hashAttack = Animator.StringToHash("Attack");
     private readonly int _hashDie = Animator.StringToHash("Die");
 
     private void Awake()
@@ -34,22 +36,50 @@ public class RootContoller : MonoBehaviour
         _anim = GetComponent<Animator>();
 
         _boss = GetComponentInParent<BossController>();
-        _attackMark = GetComponentInChildren<SpriteRenderer>();
+        _attackMark = GetComponentInChildren<MeshRenderer>();
         _attackMark.gameObject.SetActive(false);
-
-        _maxHp = _boss._maxHp / 4f;
     }
 
     private void OnEnable()
     {
-        rootState = RootState.Hide;
-
-        _hp = _maxHp;    
+        rootState = RootState.Hide;   
     }
 
     private void Start()
     {
+        _maxHp = _boss._maxHp / 4f;
+        _hp = _maxHp;
         StartCoroutine(CheckDistance());
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            rootState = RootState.Emerge;
+            RootAttack(transform.position);
+            Debug.Log("1");
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            MarkSmash(transform.rotation);
+            Debug.Log("2");
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            RootSmash();
+            Debug.Log("3");
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            HideRoot();
+            Debug.Log("4");
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            Die();
+            Debug.Log("5");
+        }
     }
 
     public void RootAttack(Vector3 spawnPos)
@@ -58,6 +88,7 @@ public class RootContoller : MonoBehaviour
 
         transform.position = spawnPos;
         rootState = RootState.Emerge;
+        _anim.SetBool(_hashActive, true);
     }
 
     public void MarkSmash(Quaternion rot)
@@ -65,13 +96,15 @@ public class RootContoller : MonoBehaviour
         if (rootState == RootState.Hide) return;
 
         transform.rotation = rot;
+        _anim.SetTrigger(_hashAttackReady);
         _attackMark.gameObject.SetActive(true);
     }
     public void RootSmash()
     {
         if (rootState == RootState.Hide) return;
 
-        _anim.SetTrigger(_hashSmash);
+        _anim.SetTrigger(_hashAttack);
+        _attackMark.gameObject.SetActive(false);
     }
 
     private IEnumerator CheckDistance()
@@ -92,7 +125,7 @@ public class RootContoller : MonoBehaviour
 
             if (_attackRange < distance)
             {
-                HideRoot();
+                //HideRoot();
             }
         }
     }
@@ -101,6 +134,7 @@ public class RootContoller : MonoBehaviour
     {
         if (rootState == RootState.Hide) return;
 
+        _anim.SetBool(_hashActive, false);
         rootState = RootState.Hide;
     }
 
@@ -120,5 +154,6 @@ public class RootContoller : MonoBehaviour
     private void Die()
     { 
         isDie = true;
+        _anim.SetTrigger(_hashDie);
     }
 }
