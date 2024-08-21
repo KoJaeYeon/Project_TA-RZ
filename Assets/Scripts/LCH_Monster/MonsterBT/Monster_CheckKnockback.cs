@@ -7,7 +7,6 @@ using UnityEngine.AI;
 public class Monster_CheckKnockback : Conditional
 {
     [SerializeField] SharedMonster Monster;
-    [SerializeField] float knockbackForce = 5f;
     [SerializeField] SharedNavmesh Nav;
 
     public override TaskStatus OnUpdate()
@@ -15,7 +14,7 @@ public class Monster_CheckKnockback : Conditional
         if (Monster.Value.isKnockBack==true)
         {
             Nav.Value.enabled = false;
-            Monster.Value.ApplyKnockback(knockbackForce, Monster.Value.Player.transform);
+            Monster.Value.ApplyKnockback(1, Monster.Value.Player.transform);
             return TaskStatus.Success;
         }
 

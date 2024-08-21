@@ -4,17 +4,18 @@ public class Monster_Attack : MonoBehaviour
 {
 
     [Inject] Player Player;
-    [SerializeField] Collider Collider;
+    Collider Collider;
+    Monster _monster;
     private void Awake()
     {
         Collider = GetComponent<Collider>();
+        _monster = GetComponentInParent<Monster>();
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Player.Hit(10, 2, transform);
-            
+            _monster.Attack();            
         }
     }
 

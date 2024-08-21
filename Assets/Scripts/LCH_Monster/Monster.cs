@@ -4,10 +4,17 @@ using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
 using Zenject;
 using System.Collections;
+using UnityEngine.AI;
 
 public class Monster : MonoBehaviour, IHit
 {
-    [SerializeField] BehaviorTree Bt;
+    [Inject] public Player Player { get;}
+    [Inject] DataManager dataManager;
+    BehaviorTree Bt;
+    NavMeshAgent Nav;
+
+    Rigidbody _rigidbody;
+
     public float Mon_Common_Stat_Hp;
     public float Mon_Common_Damage;
     public float Mon_Common_AttackArea;
@@ -22,19 +29,19 @@ public class Monster : MonoBehaviour, IHit
     public bool isAtk;
     public bool isKnockBack;
     public float Mon_Common_Hp_Remain;
-    [Inject] public Player Player { get;}
-    [Inject] DataManager dataManager;
+
+    public float targetTime;
 
     protected Monster_Stat monster_Stat = new Monster_Stat();
     protected string idStr = "E101";
 
-    Rigidbody _rigidbody;
     Coroutine _hitCoroutine;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         Bt = GetComponent<BehaviorTree>();
+        Nav = GetComponent<NavMeshAgent>();
     }
 
     void Start()
@@ -92,10 +99,12 @@ public class Monster : MonoBehaviour, IHit
 
     public void ApplyKnockback(float knockbackDuration, Transform attackerTrans)
     {
-        
+        isKnockBack = true;
+
+        Nav.enabled = false;
+
         _rigidbody.velocity = Vector3.zero;
 
-        
         Vector3 knockBackDirection = transform.position - attackerTrans.position;
 
         knockBackDirection.y = 0;
@@ -109,25 +118,7 @@ public class Monster : MonoBehaviour, IHit
 
     public void Attack()
     {
-        string[] targetLayers = new string[] { "Player", "Dash", "Ghost" };
-        int layer = LayerMask.GetMask(targetLayers);
-        Collider[] colliders = Physics.OverlapSphere(transform.position + transform.forward, Mon_Common_AttackArea, layer);
-
-        if(colliders.Length == 0) return;
-
-        var player = colliders[0].gameObject;
-        var ihit = player.GetComponent<IHit>();
-        ihit?.Hit(Mon_Common_Damage, 1, transform);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log("데미지 받음");
-            isKnockBack = true;
-            Hit(10, 5, transform);
-        }
+        Player.Hit(Mon_Common_Damage, 1, transform);
     }
 
     public IEnumerator WaitForStun(float paralysisTime)

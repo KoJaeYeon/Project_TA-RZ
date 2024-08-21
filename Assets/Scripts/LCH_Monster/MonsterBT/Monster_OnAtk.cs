@@ -18,7 +18,6 @@ public class Monster_OnAtk : Action
     public override void OnStart()
     {
         anim.Play("Atk");
-        collider.Value.enabled = true;
     }
     public override TaskStatus OnUpdate()
     {
@@ -28,17 +27,26 @@ public class Monster_OnAtk : Action
             if (stateInfo.IsName("Atk") == true)
             {
                 animinfo = anim.GetCurrentAnimatorStateInfo(0);
-                if (animinfo.normalizedTime < 0.95f)
+
+                if(animinfo.normalizedTime < 0.32f)
                 {
 
-                    return TaskStatus.Running;
                 }
+                else if (animinfo.normalizedTime < 0.55f)
+                {
+                    collider.Value.enabled = true;
 
+                }
+                else if (animinfo.normalizedTime < 0.95f)
+                {
+                    collider.Value.enabled = false;
+                }
                 else
                 {
                     collider.Value.enabled = false;
                     return TaskStatus.Success;
                 }
+                return TaskStatus.Running;
 
             }
             else if (stateInfo.IsName("get hit from front") == true)
@@ -52,5 +60,10 @@ public class Monster_OnAtk : Action
         }
 
         return TaskStatus.Failure;
+    }
+
+    public override void OnEnd()
+    {
+        collider.Value.enabled = false;
     }
 }
