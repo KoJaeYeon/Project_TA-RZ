@@ -78,16 +78,16 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
     public override void StateEnter()
     {
-        _maxIndex = _player.CurrentAmmo > 5 ? 4 : _player.CurrentAmmo;
+        _maxIndex = _player.CurrentAmmo >= 5 ? 4 : _player.CurrentAmmo;
 
-        if(_player.CurrentLevel == 4)
-        {
-            _maxIndex = 4;
-        }
-
-        if(_player.CurrentAmmo >= 5)
+        if (_maxIndex == 4)
         {
             _maxTime += 2f;
+        }
+
+        if (_player.CurrentLevel == 4)
+        {
+            _maxIndex = 4;
         }
 
         _currentTime = 0f;
