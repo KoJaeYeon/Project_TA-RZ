@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using Zenject;
+using static Cinemachine.DocumentationSortingAttribute;
 
 public class PlayerComboAttack : PlayerState
 {
@@ -33,9 +34,17 @@ public class PlayerComboAttack : PlayerState
 
     protected virtual void ChangeData(int currentLevel)
     {
-        _currentGetSkillGauge = _comboData.Arm_SkillGageGet[currentLevel];
         _currentAtkMultiplier = _comboData.Atk_Multiplier;
         _currentStiffT = _comboData.Atk4_StiffT;
+
+        if (currentLevel == 4)
+        {
+            _currentGetSkillGauge = 0;
+            return;
+        }
+
+        _currentGetSkillGauge = _comboData.Arm_SkillGageGet[currentLevel];
+
     }
 
     #region AnimatorStringToHash

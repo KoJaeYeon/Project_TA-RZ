@@ -41,6 +41,8 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
     private void GetLevelSkillGage(int level, int chargeLevel)
     {
+        level = _isLevel4 ? 4 : level;
+
         if(level == 4)
         {
             _currentGetSkillGauge = 0;
@@ -54,17 +56,10 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
     #region Attack
     private float _maxIndex;
-    private float _maxDelayTime = 2f;
-    private float _currentDelayTime;
-    private float _maxGauge = 4f;
-    private float _gauge;
-    private int _chargeCount;
-    private bool _isFillingGauge = true;
-    private int index = 0;
-
     private float _maxTime = 6f;
     private float _currentTime;
     private bool _isCharge = true;
+    private bool _isLevel4 = false;
     private int _index;
     #endregion
 
@@ -78,16 +73,22 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
     public override void StateEnter()
     {
-        _maxIndex = _player.CurrentAmmo > 5 ? 4 : _player.CurrentAmmo;
+        _maxIndex = _player.CurrentAmmo >= 5 ? 4 : _player.CurrentAmmo;
 
-        if(_player.CurrentLevel == 4)
-        {
-            _maxIndex = 4;
-        }
-
-        if(_player.CurrentAmmo >= 5)
+        if (_maxIndex == 4)
         {
             _maxTime += 2f;
+        }
+
+        if (_player.CurrentLevel == 4)
+        {
+            _isLevel4 = true;
+
+            _maxIndex = 4;
+        }
+        else
+        {
+            _isLevel4 = false;
         }
 
         _currentTime = 0f;
@@ -119,7 +120,7 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
         _maxTime = 6f;
 
-        _player.CurrentAmmo -= _player.IsSkillAcitve[1] ? 0 : index + 1;
+        _player.CurrentAmmo -= _player.IsSkillAcitve[1] ? 0 : _index + 1;
     }
 
     private IEnumerator StartCharge()
@@ -203,10 +204,11 @@ public class PlayerFourthComboAttack : PlayerComboAttack
             Vector3 directionToPlayer = (_player.transform.position - target.transform.position).normalized;
             Vector3 hitPosition = target.transform.position + directionToPlayer * 1f + Vector3.up;
 
-            if(hit != null)
+            if (hit != null)
             {
                 ChangeData(_player.CurrentLevel);
-                hit.Hit(_player.CurrentAtk * _currentAtkMultiplier * _player._PC_Level.Level_Atk_Power_Multiplier, _currentStiffT, _player.transform);
+                PC_Level hitLevel = _isLevel4 ? _player.dataManager.GetData("P505") as PC_Level : _player._PC_Level;
+                hit.Hit(_player.CurrentAtk * _currentAtkMultiplier * hitLevel.Level_Atk_Power_Multiplier, _currentStiffT, _player.transform);
                 isHit = true;
                 GameObject hitEffect = _effect.GetHitEffect();
                 ParticleSystem hitParticle = hitEffect.GetComponent<ParticleSystem>();

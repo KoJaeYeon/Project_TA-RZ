@@ -66,6 +66,7 @@ public class PlayerAnimationEvent : MonoBehaviour
     //네 번째 공격 이펙트
     public void FourthAttack()
     {
+        _effect.Active_FirstEffect();
         _attackDictionary[AttackType.fourthAttack].Invoke();
     }
 
