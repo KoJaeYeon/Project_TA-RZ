@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class Skill_Shield : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class Skill_Shield : MonoBehaviour
     float value;
     BoxCollider boxCollider;
     Vector3 initSize;
+    [Inject] Player player;
 
     private void Awake()
     {
@@ -29,7 +31,7 @@ public class Skill_Shield : MonoBehaviour
             var ihit = other.gameObject.GetComponent<IHit>();
             if (ihit != null)
             {
-                ihit.ApplyKnockback(value, transform);
+                ihit.ApplyKnockback(value, player.transform);
             }
         }
     }
