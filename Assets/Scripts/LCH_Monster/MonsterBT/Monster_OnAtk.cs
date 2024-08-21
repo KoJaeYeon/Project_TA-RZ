@@ -37,7 +37,7 @@ public class Monster_OnAtk : Action
                     collider.Value.enabled = true;
 
                 }
-                else if (animinfo.normalizedTime < 0.95f)
+                else if (animinfo.normalizedTime < 0.80f)
                 {
                     collider.Value.enabled = false;
                 }
