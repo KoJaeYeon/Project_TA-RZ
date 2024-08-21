@@ -1,10 +1,43 @@
+using System.Collections;
 using UnityEngine;
 using Zenject;
 
 public class PlayerComboAttack : PlayerState
 {
     public PlayerComboAttack(Player player) : base(player) { }
-    
+
+    protected PC_Attack _comboData;
+    protected float _currentAtkMultiplier;
+    protected int _currentGetSkillGauge;
+    protected float _currentStiffT;
+
+    public virtual IEnumerator LoadData(string idStr)
+    {
+        while (true)
+        {
+            var comboData = _player.dataManager.GetData(idStr) as PC_Attack;
+
+            if(comboData == null)
+            {
+                Debug.Log("콤보 데이터를 가져오지 못했습니다.");
+                yield return new WaitForSeconds(1f);
+            }
+            else
+            {
+                _comboData = comboData;
+                Debug.Log("콤보 데이터를 성공적으로 가져왔습니다.");
+                yield break;
+            }
+        }
+    }
+
+    protected virtual void ChangeData(int currentLevel)
+    {
+        _currentGetSkillGauge = _comboData.Arm_SkillGageGet[currentLevel];
+        _currentAtkMultiplier = _comboData.Atk_Multiplier;
+        _currentStiffT = _comboData.Atk4_StiffT;
+    }
+
     #region AnimatorStringToHash
     protected AnimatorStateInfo _animatorStateInfo;
 
@@ -27,7 +60,14 @@ public class PlayerComboAttack : PlayerState
         }
         else
             AttackRotation();
-        
+
+        if(nextCombo is State.FourthComboAttack)
+        {
+            if(_player.CurrentAmmo <= 1)
+            {
+                return;
+            }
+        }
 
         if (_inputSystem.IsAttack && _player.IsNext)
         {
@@ -55,7 +95,7 @@ public class PlayerComboAttack : PlayerState
         {
             _state.ChangeState(State.Dash);
         }
-        else if (_inputSystem.IsSkill)
+        else if (_inputSystem.IsSkill && _player.SkillCheck())
         {
             _state.ChangeState(State.Skill);
         }

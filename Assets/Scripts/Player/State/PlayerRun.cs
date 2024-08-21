@@ -65,8 +65,8 @@ public class PlayerRun : PlayerState
     {
         CheckGround();
 
-        if (!_isGround)
-            return;
+        /*if (!_isGround)
+            return;*/
 
         if (!_isAction)
         {
@@ -127,7 +127,7 @@ public class PlayerRun : PlayerState
 
             Vector3 movement = targetDirection.normalized * _currentSpeed;
 
-            movement.y = _rigidBody.velocity.y;
+            movement.y = _rigidBody.velocity.y > 2 ? -5 :  _rigidBody.velocity.y;
 
             _rigidBody.velocity = movement;
 

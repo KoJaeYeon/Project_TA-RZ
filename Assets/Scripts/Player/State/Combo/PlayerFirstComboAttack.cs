@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerFirstComboAttack : PlayerComboAttack
@@ -7,6 +8,8 @@ public class PlayerFirstComboAttack : PlayerComboAttack
         PlayerAnimationEvent _event;
         _event = player.GetComponentInChildren<PlayerAnimationEvent>();
         _event.AddEvent(AttackType.firstAttack, FirstAttack);
+
+        player.StartCoroutine(LoadData("A201"));
     }
 
     #region Overlap
@@ -38,6 +41,11 @@ public class PlayerFirstComboAttack : PlayerComboAttack
         base.StateExit();
     }
 
+    protected override void ChangeData(int currentLevel)
+    {
+        base.ChangeData(currentLevel);
+    }
+
     //첫 번째 공격로직
     private void FirstAttack()
     {
@@ -49,17 +57,19 @@ public class PlayerFirstComboAttack : PlayerComboAttack
 
         Collider[] colliders = Physics.OverlapBox(_boxPosition, _boxSize / 2f, _player.transform.rotation, _enemyLayer);
 
+        bool isHit = false;
         foreach(var target in  colliders)
         {
             IHit hit = target.gameObject.GetComponent<IHit>();
 
             Vector3 directionToPlayer = (_player.transform.position - target.transform.position).normalized;
-            Vector3 hitPosition = target.transform.position + directionToPlayer * 1f;
+            Vector3 hitPosition = target.transform.position + directionToPlayer * 1f + Vector3.up;
 
             if (hit != null)
             {
-                hit.Hit(10f, 5f, _player.transform);
-
+                ChangeData(_player.CurrentLevel);
+                hit.Hit(_player.CurrentAtk * _currentAtkMultiplier * _player._PC_Level.Level_Atk_Power_Multiplier, _currentStiffT, _player.transform);
+                isHit = true;
                 GameObject hitEffect = _effect.GetHitEffect();
                 ParticleSystem hitParticle = hitEffect.GetComponent<ParticleSystem>();
 
@@ -70,6 +80,10 @@ public class PlayerFirstComboAttack : PlayerComboAttack
                 hitParticle.Play();
                 _effect.ReturnHit(hitEffect);
             }
+        }
+        if (isHit)
+        {
+            _player.CurrentSkill += _currentGetSkillGauge;
         }
     }
 

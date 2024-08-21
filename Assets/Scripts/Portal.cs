@@ -45,7 +45,7 @@ public class Portal : MonoBehaviour
     /// </summary>
     void SpritePlayerLook()
     {
-        StageSpriteObject.transform.LookAt(player.transform);
+        StageSpriteObject.transform.LookAt(Camera.main.transform);
         Vector3 LookPlayerAng = StageSpriteObject.transform.eulerAngles;
         LookPlayerAng.x = 0;
         LookPlayerAng.z = 0;

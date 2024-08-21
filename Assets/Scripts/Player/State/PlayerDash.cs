@@ -1,5 +1,7 @@
 using System.Collections;
 using UnityEngine;
+using Zenject;
+using QFX.SFX;
 
 public class PlayerDash : PlayerState
 {
@@ -9,6 +11,8 @@ public class PlayerDash : PlayerState
     private float _dashPower = 15f;
     private float _dashTime;
     private float _maxTime = 0.3f;
+    private float _activateCloneplay = 0.1f;
+    private float _time;
 
     private bool _canDash = true;
 
@@ -16,7 +20,6 @@ public class PlayerDash : PlayerState
 
     public override void StateEnter()
     {       
-
         if (_canDash)
         {
             InitializeDash();
@@ -55,7 +58,16 @@ public class PlayerDash : PlayerState
         if (_rigidBody != null)
         {
             _dashTime += Time.deltaTime;
-           
+
+            _time += Time.deltaTime;
+            
+            if (_time >= _activateCloneplay)
+            {
+                _player.Cloner.MakeClone();
+
+                _time = 0f;
+            }
+
             if (_dashTime >= _maxTime)
             {
                 _rigidBody.velocity = Vector3.zero;
@@ -69,12 +81,20 @@ public class PlayerDash : PlayerState
 
     private void Exit()
     {
+        _player.Cloner.Stop();
         _inputSystem.SetDash(false);
         _dashTime = 0f;
     }
 
     private void Dash()
     {
+        if (_inputSystem.Input == Vector2.zero)
+        {
+            _player.AllgnToCamera();
+        }
+
+        _player.Cloner.Run();
+
         _dashDirection = _player.transform.forward;
 
         Vector3 dash = _dashDirection * _dashPower;
@@ -96,8 +116,12 @@ public class PlayerDash : PlayerState
 
     public override void InputCheck()
     {
-        if (_inputSystem.IsSkill)
+        if (_inputSystem.IsSkill && _player.SkillCheck())
         {
+            _rigidBody.velocity = Vector3.zero;
+
+            _rigidBody.angularVelocity = Vector3.zero;
+
             _state.ChangeState(State.Skill);
         }
     }

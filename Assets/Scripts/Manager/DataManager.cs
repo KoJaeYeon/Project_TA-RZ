@@ -72,6 +72,12 @@ public class DataManager
             case "_PC_Skill_URL":
                 Process_PC_Skill_Data(data);
                 break;
+            case "_PC_Attack_URL":
+                Process_PC_Atatck_Data(data);
+                break;
+            case "_Monster_Stat_URL":
+                Process_Monster_Stat_Data(data);
+                break;
             default:
                 Debug.LogError($"Unknown URL name: {urlName}");
                 break;
@@ -118,7 +124,7 @@ public class DataManager
             AddDataToDataDictionary(idStr, stat);
         }
     }
-
+    
     private void Process_PC_Skill_Data(string data)
     {
         JArray jsonArray = JArray.Parse(data);
@@ -134,6 +140,50 @@ public class DataManager
             AddDataToDataDictionary(idStr, skill);
         }
     }
+
+    private void Process_PC_Atatck_Data(string data)
+    {
+        JArray jsonArray = JArray.Parse(data);
+
+        foreach (var item in jsonArray)
+        {
+            string idStr = item[nameof(PC_Attack.ID)].ToString();
+            float atkMultiplier = ParseFloat(item["PC_Type1_Atk_Multiplier"]);
+            int arm0SkillGageGet = ParseInt(item["PC_Type1_Arm0_SkillGageGet"]);
+            int arm1SkillGageGet = ParseInt(item["PC_Type1_Arm1_SkillGageGet"]);
+            int arm2SkillGageGet = ParseInt(item["PC_Type1_Arm2_SkillGageGet"]);
+            int arm3SkillGageGet = ParseInt(item["PC_Type1_Arm3_SkillGageGet"]);
+            float atk4GageGetMaxT = ParseFloat(item["PC_Type1_Atk4_GageGetMaxT"]);
+            float atk4GageKeepT = ParseFloat(item["PC_Type1_Atk4_GageKeepT"]);
+            float atk4StiffT = ParseFloat(item["PC_Type1_Atk4_StiffT"]);
+            float atk3KnockBackT = ParseFloat(item["PC_Type1_Atk3_KnockBackT"]);
+
+            PC_Attack attack = new PC_Attack(idStr, atkMultiplier, new int[] {arm0SkillGageGet,arm1SkillGageGet,arm2SkillGageGet,arm3SkillGageGet }, atk4GageGetMaxT, atk4GageKeepT, atk4StiffT, atk3KnockBackT);
+            AddDataToDataDictionary(idStr, attack);
+        }
+    }
+
+    private void Process_Monster_Stat_Data(string data)
+    {
+        JArray jsonArray = JArray.Parse(data);
+
+        foreach (var item in jsonArray)
+        {
+            string idStr = item["ID"].ToString();
+            float hp = ParseFloat(item["Mon_Common_Stat_HP"]);
+            float damage = ParseFloat(item["Mon_Common_Stat_Damage"]);
+            float attackArea = ParseFloat(item["Mon_Common_Stat_AttackArea"]);
+            int range = ParseInt(item["Mon_Common_Stat_Range"]);
+            float detectArea = ParseFloat(item["Mon_Common_Stat_DetectArea"]);
+            float detectTime = ParseFloat(item["Mon_Common_Stat_DetectTime"]);
+            float movementSpeed = ParseFloat(item["Mon_Common_Stat_MovementSpeed"]);
+            float cooldown = ParseFloat(item["Mon_Common_Stat_Cooldown"]);
+
+            Monster_Stat stat = new Monster_Stat(idStr, hp, damage, attackArea, range, detectArea, detectTime, movementSpeed, cooldown);
+            AddDataToDataDictionary(idStr, stat);
+        }
+    }
+
 
 
 

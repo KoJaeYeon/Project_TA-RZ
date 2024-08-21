@@ -22,7 +22,11 @@ public class Monster : MonoBehaviour, IHit
     public bool isAtk;
     public bool isKnockBack;
     public float Mon_Common_Hp_Remain;
-    [Inject] public Player Player { get; }
+    [Inject] public Player Player { get;}
+    [Inject] DataManager dataManager;
+
+    protected Monster_Stat monster_Stat = new Monster_Stat();
+    protected string idStr = "E101";
 
     Rigidbody _rigidbody;
     Coroutine _hitCoroutine;
@@ -30,12 +34,41 @@ public class Monster : MonoBehaviour, IHit
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        Bt = GetComponent<BehaviorTree>();
     }
 
     void Start()
     {
         Mon_Common_Hp_Remain = Mon_Common_Stat_Hp;
-        Bt = GetComponent<BehaviorTree>();
+        StartCoroutine(LoadStat());
+    }
+
+    IEnumerator LoadStat()
+    {
+        while (true)
+        {
+            var stat = dataManager.GetStat(idStr) as Monster_Stat;
+            if (stat == null)
+            {
+                Debug.Log($"Monster[{idStr}]의 스탯을 받아오지 못했습니다.");
+                yield return new WaitForSeconds(1f);
+            }
+            else
+            {
+                monster_Stat = stat;
+                Debug.Log("Monster[{idStr}]의 스탯을 성공적으로 받아왔습니다.");
+                Mon_Common_Stat_Hp = monster_Stat.HP;
+                Mon_Common_Hp_Remain = monster_Stat.HP;
+                Mon_Common_Damage = monster_Stat.Damage;
+                Mon_Common_AttackArea = monster_Stat.AttackArea;
+                Mon_Common_Range = monster_Stat.Range;
+                Mon_Common_DetectArea = monster_Stat.DetectArea;
+                Mon_Common_DetectTime = monster_Stat.DetectTime;
+                Mon_Common_MovementSpeed = monster_Stat.MovementSpeed;
+                yield break;
+            }
+
+        }
     }
 
     public void Hit(float damage, float paralysisTime, Transform transform)
@@ -50,6 +83,10 @@ public class Monster : MonoBehaviour, IHit
                 StopCoroutine(_hitCoroutine);
             }
             _hitCoroutine = StartCoroutine(WaitForStun(paralysisTime));
+        }
+        else
+        {
+            gameObject.SetActive(false);
         }
     }
 
@@ -70,7 +107,18 @@ public class Monster : MonoBehaviour, IHit
         _rigidbody.AddForce(knockBack, ForceMode.Impulse);
     }
 
+    public void Attack()
+    {
+        string[] targetLayers = new string[] { "Player", "Dash", "Ghost" };
+        int layer = LayerMask.GetMask(targetLayers);
+        Collider[] colliders = Physics.OverlapSphere(transform.position + transform.forward, Mon_Common_AttackArea, layer);
 
+        if(colliders.Length == 0) return;
+
+        var player = colliders[0].gameObject;
+        var ihit = player.GetComponent<IHit>();
+        ihit?.Hit(Mon_Common_Damage, 1, transform);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -93,5 +141,11 @@ public class Monster : MonoBehaviour, IHit
         {
            // Bt.enabled = true;
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position + transform.forward, Mon_Common_AttackArea);
     }
 }

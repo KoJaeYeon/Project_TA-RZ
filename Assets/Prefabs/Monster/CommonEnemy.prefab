@@ -1064,6 +1064,7 @@ GameObject:
   - component: {fileID: 2524027233888448495}
   - component: {fileID: 7739591162682787326}
   - component: {fileID: 2036722526376663656}
+  - component: {fileID: 175445102976115375}
   - component: {fileID: 7897430125240335523}
   - component: {fileID: 2444760024111282628}
   - component: {fileID: 732606921716334728}
@@ -1204,6 +1205,29 @@ MonoBehaviour:
   isAtk: 1
   isKnockBack: 0
   Mon_Common_Hp_Remain: 0
+--- !u!136 &175445102976115375
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3379560720758915511}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.71
+  m_Height: 2.92
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.36, z: 0}
 --- !u!136 &7897430125240335523
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class CameraRoot : MonoBehaviour
 {
@@ -10,13 +11,28 @@ public class CameraRoot : MonoBehaviour
     [Inject] Player player;
     PlayerInputSystem _input;
 
+    [Inject] public CinemachineVirtualCamera cinemachineVirtualCamera { get; }
+
     Transform _target;
     bool beforeLockOnMode;
+
+    #region ZoomIn/Out
+    Coroutine _zoomCoroutine;
+    bool startZoomOut;
+    [Header("ZoomOutSpeed")]
+    [SerializeField] float _zoomOutspeed;
+    [Header("ZoomInSpeed")]
+    [SerializeField] float _zoomInspeed;
+    float _cameraFieldOfView;
+    float _maxView;
+    #endregion
+
     void Start()
     {        
         _input = player.GetComponent<PlayerInputSystem>();
         beforeLockOnMode = _input.IsLockOn;
         SetCameraToPlayer();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
@@ -86,6 +102,8 @@ public class CameraRoot : MonoBehaviour
             }
         }
 
+        SetCameraToTarget();
+
         return true;
 
     }
@@ -108,10 +126,8 @@ public class CameraRoot : MonoBehaviour
     void SetCameraToPlayer()
     {
         rotation = transform.rotation;
-        CinemachineBrain cineBrain = Camera.main.GetComponent<CinemachineBrain>();
-        var virutalCamera = cineBrain.ActiveVirtualCamera;
-        virutalCamera.Follow = transform;
-        virutalCamera.LookAt = transform;
+        cinemachineVirtualCamera.Follow = transform;
+        cinemachineVirtualCamera.LookAt = transform;
         _input.SetLockOn(false);
     }
 
@@ -134,6 +150,10 @@ public class CameraRoot : MonoBehaviour
         if (_target.gameObject.activeSelf == true)
         {
             transform.LookAt(_target);
+            Vector3 rot = transform.eulerAngles;
+            rot.x = 0;
+            rot.z = 0;
+            transform.eulerAngles = rot;
         }
         else
         {
@@ -143,4 +163,54 @@ public class CameraRoot : MonoBehaviour
             }
         }
     }
+
+    public void StartCameraMovement()
+    {
+        startZoomOut = true;
+
+        _zoomCoroutine = StartCoroutine(ZoomOut());
+    }
+
+    IEnumerator ZoomOut()
+    {
+        _maxView = 90f;
+        _cameraFieldOfView = cinemachineVirtualCamera.m_Lens.FieldOfView;
+
+        while (cinemachineVirtualCamera.m_Lens.FieldOfView < _maxView)
+        {
+            cinemachineVirtualCamera.m_Lens.FieldOfView += Time.deltaTime * _zoomOutspeed;
+
+            yield return null;
+        }
+
+        startZoomOut = false;
+    }
+
+    public void EndCameraMovement()
+    {
+        if(_zoomCoroutine != null)
+        {
+            StopCoroutine(_zoomCoroutine);
+            startZoomOut = false;
+        }
+
+        StartCoroutine(ZoomIn());
+    }
+
+    IEnumerator ZoomIn()
+    {
+        if (startZoomOut)
+        {
+            Debug.Log("대기중...");
+            yield return new WaitWhile(() => startZoomOut);
+        }
+
+        while(cinemachineVirtualCamera.m_Lens.FieldOfView > _cameraFieldOfView)
+        {
+            cinemachineVirtualCamera.m_Lens.FieldOfView -= Time.deltaTime * _zoomInspeed;
+
+            yield return null;
+        }
+    }
+
 }
