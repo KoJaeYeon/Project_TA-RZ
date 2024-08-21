@@ -5,6 +5,7 @@ using BehaviorDesigner.Runtime.Tasks;
 using Zenject;
 using System.Collections;
 using UnityEngine.AI;
+using TMPro;
 
 public class Monster : MonoBehaviour, IHit
 {
@@ -37,6 +38,8 @@ public class Monster : MonoBehaviour, IHit
     protected string idStr = "E101";
 
     Coroutine _hitCoroutine;
+
+    [SerializeField] TextMeshProUGUI TempHPText;
 
     private void Awake()
     {
@@ -82,6 +85,7 @@ public class Monster : MonoBehaviour, IHit
                 Mon_Common_DetectArea = monster_Stat.DetectArea;
                 Mon_Common_DetectTime = monster_Stat.DetectTime;
                 Mon_Common_MovementSpeed = monster_Stat.MovementSpeed;
+                TempHPText.text = Mon_Common_Hp_Remain.ToString();
                 yield break;
             }
 
@@ -92,6 +96,7 @@ public class Monster : MonoBehaviour, IHit
     {
         isDamaged = true;
         Mon_Common_Hp_Remain -= damage;
+        TempHPText.text = Mon_Common_Hp_Remain.ToString();
 
         if (Mon_Common_Hp_Remain > 0)
         {
