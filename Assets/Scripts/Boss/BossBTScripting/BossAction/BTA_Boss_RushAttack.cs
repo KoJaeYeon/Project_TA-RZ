@@ -10,7 +10,7 @@ public class BTA_Boss_RushAttack : BossAction
     [SerializeField] private SharedFloat _dashRange;
 
     private Vector3 _startPos;
-     Vector3 direction;
+    Vector3 direction;
 
     private bool _isDash = false;
 
