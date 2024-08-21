@@ -25,6 +25,7 @@ public class Monster : MonoBehaviour, IHit
     public float Mon_Common_CoolTime;
     public float Mon_Knockback_Time;
     public float Mon_Knockback_Speed;
+    public bool isCollsion = false;
     public bool isDamaged;
     public bool isAtk;
     public bool isKnockBack;
@@ -146,9 +147,17 @@ public class Monster : MonoBehaviour, IHit
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if(other.CompareTag("Player") && other.CompareTag("Shield"))
         {
+            isCollsion = true;
+        }
+    }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player") && other.CompareTag("Shield"))
+        {
+            isCollsion = false;
         }
     }
 
