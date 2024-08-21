@@ -53,6 +53,10 @@ public class Monster_OnAtk : Action
             {
                 return TaskStatus.Failure;
             }
+            else if (stateInfo.IsName("Idle") == true)
+            {
+                return TaskStatus.Failure;
+            }
             else
             {
                 return TaskStatus.Running;

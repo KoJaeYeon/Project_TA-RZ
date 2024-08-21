@@ -113,6 +113,8 @@ public class Monster : MonoBehaviour, IHit
 
         _rigidbody.isKinematic = false;
 
+        gameObject.layer = LayerMask.NameToLayer("MonsterKnockback");
+
         anim.SetTrigger("Damaged");
 
         targetKnockbackTime = Time.time + knockbackDuration;
@@ -136,6 +138,8 @@ public class Monster : MonoBehaviour, IHit
     {
         isKnockBack = false;
         _rigidbody.isKinematic = true;
+        isCollsion = false;
+        gameObject.layer = LayerMask.NameToLayer("Monster");
     }
 
     public void Attack()
