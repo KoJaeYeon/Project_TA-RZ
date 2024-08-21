@@ -12,6 +12,7 @@ public class Monster : MonoBehaviour, IHit
     [Inject] DataManager dataManager;
     BehaviorTree Bt;
     NavMeshAgent Nav;
+    Animator anim;
 
     Rigidbody _rigidbody;
 
@@ -24,7 +25,6 @@ public class Monster : MonoBehaviour, IHit
     public float Mon_Common_MovementSpeed;
     public float Mon_Common_CoolTime;
     public float Mon_Knockback_Time;
-    public float Mon_Knockback_Speed;
     public bool isCollsion = false;
     public bool isDamaged;
     public bool isAtk;
@@ -43,6 +43,7 @@ public class Monster : MonoBehaviour, IHit
         _rigidbody = GetComponent<Rigidbody>();
         Bt = GetComponent<BehaviorTree>();
         Nav = GetComponent<NavMeshAgent>();
+        anim = GetComponent<Animator>();
     }
 
     void Start()
@@ -110,6 +111,8 @@ public class Monster : MonoBehaviour, IHit
     {
         isKnockBack = true;
 
+        anim.SetTrigger("Damaged");
+
         targetKnockbackTime = Time.time + knockbackDuration;
 
         Nav.enabled = false;
@@ -122,7 +125,7 @@ public class Monster : MonoBehaviour, IHit
 
         knockBackDirection.Normalize();
 
-        Vector3 knockBack = knockBackDirection * 5f + Vector3.up * Mon_Knockback_Speed;
+        Vector3 knockBack = (knockBackDirection * 2 + Vector3.up) * 2;
 
         _rigidbody.AddForce(knockBack, ForceMode.Impulse);
     }
@@ -135,7 +138,7 @@ public class Monster : MonoBehaviour, IHit
     public IEnumerator WaitForStun(float paralysisTime)
     {
         //Bt.enabled = false;
-        var anim = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
         anim.SetTrigger("Damaged");
         yield return new WaitForSeconds(paralysisTime);
         isDamaged = false;

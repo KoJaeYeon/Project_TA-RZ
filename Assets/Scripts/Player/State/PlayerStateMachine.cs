@@ -27,6 +27,12 @@ public class PlayerStateMachine : MonoBehaviour
     private PlayerBaseState _state;
 
     public PlayerBaseState CurrentState { get { return _state; } }
+    Player _player;
+
+    private void Awake()
+    {
+        _player = GetComponent<Player>();
+    }
 
     private void Start()
     {
@@ -47,7 +53,7 @@ public class PlayerStateMachine : MonoBehaviour
     //Hit
     public void OnDamagedStateChange()
     {
-        if(false)
+        if(_player.IsSkillAcitve[3] == true)
         {
             return;
         }
@@ -64,7 +70,7 @@ public class PlayerStateMachine : MonoBehaviour
     //KnockBack
     public void OnKnockBackStateChange()
     {
-        if (false)
+        if (_player.IsSkillAcitve[3] == true)
         {
             return;
         }
