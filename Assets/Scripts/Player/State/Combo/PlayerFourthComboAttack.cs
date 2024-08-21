@@ -88,7 +88,7 @@ public class PlayerFourthComboAttack : PlayerComboAttack
     {
         _chargeCount = _player.CurrentAmmo - 1;
 
-        _maxIndex = _chargeCount;
+        _maxIndex = _player.CurrentLevel == 4 ? 4 : _chargeCount;
 
         if(_chargeCount >= 4)
         {
@@ -163,13 +163,20 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
             if (Time.time - _elapsedTime >= 1)
             {
-                index += index == _maxIndex ? 0 : 1;
+                if(_player.CurrentLevel != 4 && _player.CurrentAmmo - 1 <= index)
+                {
 
-                _elapsedTime += 1;
+                }
+                else
+                {
+                    index += index == _maxIndex ? 0 : 1;
 
-                _chargeCount--;
+                    _elapsedTime += 1;
 
-                _effect.ChangeColor(index);
+                    _chargeCount--;
+
+                    _effect.ChangeColor(index);
+                }
             }
             
             _gauge += 0.1f;

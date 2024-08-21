@@ -125,7 +125,7 @@ public class PlayerEffect : MonoBehaviour
 
     public void Active_FourthEffect(float currentAmmo)
     {
-        if (currentAmmo <= 1)
+        if (currentAmmo <= 1 && _player.CurrentLevel != 4)
         {
             return;
         }

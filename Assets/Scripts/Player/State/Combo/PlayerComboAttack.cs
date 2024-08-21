@@ -63,7 +63,7 @@ public class PlayerComboAttack : PlayerState
 
         if(nextCombo is State.FourthComboAttack)
         {
-            if(_player.CurrentAmmo <= 1)
+            if(_player.CurrentAmmo <= 1 && _player.CurrentLevel != 4)
             {
                 return;
             }
