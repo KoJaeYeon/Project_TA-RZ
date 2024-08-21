@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d3c2a0457e682c4d850932b5b797b9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dataManagerPrefab: {fileID: 3678523159022688931, guid: dbc962f1ee759e74dbfcf275bbb4b697,
+    type: 3}
   googleSheetManagerPrefab: {fileID: 3678523159022688931, guid: 3e3f1a7f5cc8291438a61e2a215bee22,
     type: 3}
 --- !u!1 &6238697980584768673
@@ -76,8 +78,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2157133467257977607}
   - {fileID: 8520718328934277098}
+  - {fileID: 2157133467257977607}
   - {fileID: 1454506439972462460}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -95,8 +97,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
-  - {fileID: 8315993531449653818}
   - {fileID: 7195175278930344354}
+  - {fileID: 8315993531449653818}
   - {fileID: 4157357873276117376}
   _installerPrefabs: []
   _autoRun: 1
