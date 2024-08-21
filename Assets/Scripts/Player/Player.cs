@@ -4,6 +4,7 @@ using System.ComponentModel;
 using UnityEngine;
 using Zenject;
 using QFX.SFX;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour, IHit
 {
@@ -199,6 +200,10 @@ public class Player : MonoBehaviour, IHit
         else if (Input.GetKeyDown(KeyCode.P))
         {
             CurrentAmmo += 10;
+        }
+        else if (Input.GetKeyDown(KeyCode.F12))
+        {
+            SceneManager.LoadScene(0);
         }
     }
 

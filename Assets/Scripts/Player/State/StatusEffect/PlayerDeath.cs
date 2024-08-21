@@ -16,7 +16,7 @@ public class PlayerDeath : PlayerStaus
 
         _player.StartCoroutine(DeathUI());
 
-        _player.IsPlayerAlive = false;
+        _player.IsPlayerAlive = false;                
     }
 
     public override void StateUpdate()
@@ -35,6 +35,8 @@ public class PlayerDeath : PlayerStaus
         yield return Pc_Failui_Time;
 
         Debug.Log("사망 UI");
+
+        _player.OnPropertyChanged(nameof(PlayerDeath));
     }
 
 }

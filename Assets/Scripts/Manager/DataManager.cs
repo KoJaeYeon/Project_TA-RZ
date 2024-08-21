@@ -2,7 +2,7 @@ using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DataManager
+public class DataManager : MonoBehaviour
 {
     Dictionary<string, Data> _dataDictionary = new Dictionary<string, Data>();
 

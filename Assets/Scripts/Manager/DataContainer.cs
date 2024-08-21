@@ -1,17 +1,40 @@
 using UnityEngine;
 using Zenject;
 using System.Collections.Generic;
+using Cinemachine;
 
 public class DataContainer : MonoInstaller
 {
+    [SerializeField] GameObject dataManagerPrefab; // 프리팹을 참조하는 public 변수
     [SerializeField] GameObject googleSheetManagerPrefab; // 프리팹을 참조하는 public 변수
 
     public override void InstallBindings()
     {
-        // DataManager를 생성하고 바인딩
-        Container.Bind<DataManager>().AsSingle();
+        // GoogleSheetManager가 이미 존재하는지 체크하고, 없으면 생성하고 바인딩
+        if (FindObjectOfType<DataManager>() == null)
+        {
+            var managerInstance = Container.InstantiatePrefabForComponent<DataManager>(dataManagerPrefab);
+            DontDestroyOnLoad(managerInstance.gameObject);
+            Container.BindInstance(managerInstance).AsSingle().NonLazy();
+        }
+        else
+        {
+            // 이미 존재하는 인스턴스를 바인딩
+            Container.Bind<DataManager>().FromInstance(FindObjectOfType<DataManager>()).AsSingle().NonLazy();
+        }
 
-        // GoogleSheetManager를 프리팹에서 인스턴스화하고 바인딩
-        Container.Bind<GoogleSheetManager>().FromComponentInNewPrefab(googleSheetManagerPrefab).AsSingle().NonLazy();
+
+        // GoogleSheetManager가 이미 존재하는지 체크하고, 없으면 생성하고 바인딩
+        if (FindObjectOfType<GoogleSheetManager>() == null)
+        {
+            var managerInstance = Container.InstantiatePrefabForComponent<GoogleSheetManager>(googleSheetManagerPrefab);
+            DontDestroyOnLoad(managerInstance.gameObject);
+            Container.BindInstance(managerInstance).AsSingle().NonLazy();
+        }
+        else
+        {
+            // 이미 존재하는 인스턴스를 바인딩
+            Container.Bind<GoogleSheetManager>().FromInstance(FindObjectOfType<GoogleSheetManager>()).AsSingle().NonLazy();
+        }
     }
 }
