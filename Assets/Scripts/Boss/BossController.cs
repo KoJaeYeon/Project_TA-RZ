@@ -175,6 +175,9 @@ public class BossController : MonoBehaviour
             if (root.rootState == RootState.Emerge)
                 continue;
 
+            if (root.rootState == RootState.Die)
+                continue;
+
             root.rootState = RootState.Emerge;
             root.RootAttack(_markRoot.gameObject.transform.position);
             break;
@@ -189,6 +192,9 @@ public class BossController : MonoBehaviour
             if (root.rootState == RootState.Hide)
                 continue;
 
+            if (root.rootState == RootState.Die)
+                continue;
+
             root.MarkSmash(_playerTr.position);
         }
     }
@@ -198,6 +204,9 @@ public class BossController : MonoBehaviour
         foreach (var root in _roots)
         {
             if (root.rootState == RootState.Hide)
+                continue;
+
+            if (root.rootState == RootState.Die)
                 continue;
 
             root.RootSmash();

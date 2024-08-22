@@ -6,7 +6,8 @@ using UnityEngine;
 public enum RootState
 { 
     Hide,
-    Emerge
+    Emerge,
+    Die
 }
 
 public class RootContoller : MonoBehaviour
@@ -54,9 +55,19 @@ public class RootContoller : MonoBehaviour
         StartCoroutine(CheckDistance());
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            Hurt(500);
+        }
+    }
+
     public void RootAttack(Vector3 spawnPos)
     {
         if (rootState == RootState.Hide) return;
+
+        if (rootState == RootState.Die) return;
 
         transform.position = spawnPos;
         rootState = RootState.Emerge;
@@ -67,6 +78,8 @@ public class RootContoller : MonoBehaviour
     {
         if (rootState == RootState.Hide) return;
 
+        if (rootState == RootState.Die) return;
+
         transform.rotation = RotateToPlayer(targetPos);
         _anim.SetTrigger(_hashAttackReady);
         _attackMark.gameObject.SetActive(true);
@@ -74,6 +87,8 @@ public class RootContoller : MonoBehaviour
     public void RootSmash()
     {
         if (rootState == RootState.Hide) return;
+
+        if (rootState == RootState.Die) return;
 
         _anim.SetTrigger(_hashAttack);
         _attackMark.gameObject.SetActive(false);
@@ -93,6 +108,8 @@ public class RootContoller : MonoBehaviour
 
             if (rootState == RootState.Hide) continue;
 
+            if (rootState == RootState.Die) break;
+
             float distance = Vector3.Distance(transform.position, _boss.PlayerPos());
 
             if (_attackRange < distance)
@@ -105,6 +122,8 @@ public class RootContoller : MonoBehaviour
     private void HideRoot()
     {
         if (rootState == RootState.Hide) return;
+
+        if (rootState == RootState.Die) return;
 
         _anim.SetBool(_hashActive, false);
         rootState = RootState.Hide;
@@ -136,5 +155,6 @@ public class RootContoller : MonoBehaviour
     { 
         isDie = true;
         _anim.SetTrigger(_hashDie);
+        rootState = RootState.Die;
     }
 }
