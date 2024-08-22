@@ -23,8 +23,9 @@ public class PlayerFourthComboAttack : PlayerComboAttack
         while (true)
         {
             var comboData = _player.dataManager.GetData(idStr) as PC_Attack;
+            var delayData = _player.dataManager.GetData("A500") as PC_Melee;
 
-            if (comboData == null)
+            if (comboData == null || delayData == null)
             {
                 yield return new WaitForSeconds(1f);
             }
@@ -34,7 +35,10 @@ public class PlayerFourthComboAttack : PlayerComboAttack
                 {
                     comboData =_player.dataManager.GetData($"A20{i+4}") as PC_Attack;
                     _fourthComboData[i] = comboData;
-                }   
+                }
+                _nextTime = delayData.Atk4_NextChargeT;
+                _maxTime = delayData.Atk4_ChargeMaxT;
+                Debug.Log($"{_maxTime}, {_nextTime}");
                 yield break;
             }
         }
@@ -57,6 +61,7 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
     #region Attack
     private float _maxIndex;
+    private float _nextTime = 1f;
     private float _maxTime = 6f;
     private float _currentTime;
     private bool _isCharge = true;
@@ -155,7 +160,7 @@ public class PlayerFourthComboAttack : PlayerComboAttack
         {
             yield return new WaitForSeconds(0.1f);
 
-            if(Time.time - _elapsedTime >= 1)
+            if(Time.time - _elapsedTime >= _nextTime)
             {
                 _isDrain = true;
 
@@ -166,7 +171,7 @@ public class PlayerFourthComboAttack : PlayerComboAttack
                 {
                     _index += _index == _maxIndex ? 0 : 1;
 
-                    _elapsedTime += 1;
+                    _elapsedTime += _nextTime;
 
                     _effect.ChangeColor(_index);
                 }
