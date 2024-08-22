@@ -25,7 +25,7 @@ public class RootContoller : MonoBehaviour
     private Vector3 _defaultPos;
 
     [HideInInspector] public RootState rootState;
-    private BossController _boss;
+    [SerializeField] private BossController _boss;
     [SerializeField] private GameObject _attackMark;
 
     private readonly int _hashActive = Animator.StringToHash("isActive");
@@ -39,7 +39,7 @@ public class RootContoller : MonoBehaviour
         _anim = GetComponent<Animator>();
         _defaultPos = transform.position;
 
-        _boss = GetComponentInParent<BossController>();
+        //_boss = GetComponentInParent<BossController>();
         _attackMark.gameObject.SetActive(false);
     }
 
