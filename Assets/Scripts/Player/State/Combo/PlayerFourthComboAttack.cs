@@ -1,4 +1,5 @@
 using Cinemachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -60,7 +61,12 @@ public class PlayerFourthComboAttack : PlayerComboAttack
     private float _currentTime;
     private bool _isCharge = true;
     private bool _isLevel4 = false;
+    private bool _isDrain = false;
     private int _index;
+
+    private float _currentRadius = 1f;
+    private float _maxRadius = 2f;
+    private float _drainSpeed = 2f;
     #endregion
 
     #region Overlap
@@ -102,12 +108,15 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
     public override void StateUpdate()
     {
+        Debug.Log(_isDrain);
         _animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
 
         if (_animatorStateInfo.IsName("Attack_Legend_Anim") &&_animatorStateInfo.normalizedTime >= 0.3f)
         {
             _animator.speed = 0.03f;
         }
+
+        base.StateUpdate();
     }
 
     public override void StateExit()
@@ -119,6 +128,8 @@ public class PlayerFourthComboAttack : PlayerComboAttack
         _inputSystem.SetAttack(false);
 
         _maxTime = 6f;
+
+        _player.drainSystem.OnSetDrainArea(0.7f);
 
         _player.CurrentAmmo -= _player.IsSkillAcitve[1] ? 0 : _index + 1;
     }
@@ -133,6 +144,11 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
         _player.cameraRoot.StartCameraMovement();
 
+        if (_player.IsPlayerFourthAttackDrainAvailable)
+        {
+            _player.StartCoroutine(ChargeDrain());
+        }
+
         float _elapsedTime = Time.time;
 
         while (_isCharge)
@@ -141,6 +157,8 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
             if(Time.time - _elapsedTime >= 1)
             {
+                _isDrain = true;
+
                 bool isNotLevel4AndLowAmmo = _player.CurrentLevel != 4 
                     && _player.CurrentAmmo - 1 <= _index;
 
@@ -162,6 +180,8 @@ public class PlayerFourthComboAttack : PlayerComboAttack
             }
             else if (!_inputSystem.IsAttack)
             {
+                _isDrain = false;
+
                 _player.cameraRoot.EndCameraMovement();
 
                 _animator.speed = 1f;
@@ -177,6 +197,23 @@ public class PlayerFourthComboAttack : PlayerComboAttack
         _animator.speed = 1f;
 
         _state.ChangeState(State.Idle);
+    }
+
+    private IEnumerator ChargeDrain()
+    {        
+        if (!_isDrain)
+        {
+            yield return new WaitWhile(() => !_isDrain);
+        }
+
+        while (_isDrain)
+        {
+            _currentRadius = _maxRadius *_index * 1.2f;
+         
+            _player.drainSystem.OnSetDrainArea(_currentRadius);
+
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
     protected override void ChangeData(int currentLevel)
