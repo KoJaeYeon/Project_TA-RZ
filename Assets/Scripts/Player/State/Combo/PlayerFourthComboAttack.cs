@@ -115,6 +115,8 @@ public class PlayerFourthComboAttack : PlayerComboAttack
         {
             _animator.speed = 0.03f;
         }
+
+        base.StateUpdate();
     }
 
     public override void StateExit()
@@ -142,7 +144,10 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
         _player.cameraRoot.StartCameraMovement();
 
-        _player.StartCoroutine(ChargeDrain());
+        if (_player.IsPlayerFourthAttackDrainAvailable)
+        {
+            _player.StartCoroutine(ChargeDrain());
+        }
 
         float _elapsedTime = Time.time;
 

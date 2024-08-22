@@ -49,6 +49,8 @@ public class Player : MonoBehaviour, IHit
     public bool IsSkillAnimationEnd { get; set; } = true;
     public int CurrentLevel { get; set; }
 
+    public bool IsPlayerFourthAttackDrainAvailable = false;
+
     public float CurrentHP
     {
         get { return _currentHP; }
@@ -201,6 +203,10 @@ public class Player : MonoBehaviour, IHit
         else if (Input.GetKeyDown(KeyCode.P))
         {
             CurrentAmmo += 10;
+        }
+        else if (Input.GetKeyDown(KeyCode.F12))
+        {
+            IsPlayerDrainAvailable = !IsPlayerDrainAvailable;
         }
         else if (Input.GetKeyDown(KeyCode.F12))
         {
