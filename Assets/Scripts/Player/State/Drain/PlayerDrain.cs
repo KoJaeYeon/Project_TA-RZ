@@ -17,8 +17,6 @@ public class PlayerDrain : PlayerState
 
     #region DrainValue
     private float _currentDrainRadius;
-    private float _maxDrainRadius = 5;
-    private float _drainSpeed = 2;
     #endregion
 
     public override void StateEnter()
@@ -98,9 +96,9 @@ public class PlayerDrain : PlayerState
     /// </summary>
     void DrainRangeControl()
     {
-        if (_currentDrainRadius < _maxDrainRadius)
+        if (_currentDrainRadius < _player._playerStat.Drain_MaxRange)
         {
-            _currentDrainRadius += _drainSpeed * Time.deltaTime;            
+            _currentDrainRadius += _player._playerStat.Range_Speed * Time.deltaTime;            
             _drainSystem.OnSetDrainArea(_currentDrainRadius);
         }
     }

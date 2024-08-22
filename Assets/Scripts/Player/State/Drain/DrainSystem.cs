@@ -12,7 +12,6 @@ public class DrainSystem : MonoBehaviour
     [SerializeField] GameObject DrainArea;
 
     SphereCollider _sphereCollider;
-    private float _pull_speed = 1;
 
     private void Awake()
     {
@@ -29,7 +28,7 @@ public class DrainSystem : MonoBehaviour
         foreach (var item in DrainItemList)
         {
             Vector3 drainDir = transform.position - item.transform.position;
-            item.AddForce(drainDir * Time.deltaTime * 1000 * _pull_speed);
+            item.AddForce(drainDir * Time.deltaTime * 1000 * player._playerStat.Pull_Speed);
             float distance = Vector3.Distance(transform.position, item.position);
             if(distance < 1.5f)
             {
@@ -41,7 +40,7 @@ public class DrainSystem : MonoBehaviour
                 }
                 else
                 {
-                    item.AddForce(-drainDir * Time.deltaTime * 1000 * _pull_speed);
+                    item.AddForce(-drainDir * Time.deltaTime * 1000 * player._playerStat.Pull_Speed);
                     item.velocity = Vector3.zero;
                 }
 
