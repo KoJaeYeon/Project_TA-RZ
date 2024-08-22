@@ -204,7 +204,7 @@ public class Player : MonoBehaviour, IHit
         {
             CurrentAmmo += 10;
         }
-        else if (Input.GetKeyDown(KeyCode.F12))
+        else if (Input.GetKeyDown(KeyCode.F11))
         {
             IsPlayerFourthAttackDrainAvailable = !IsPlayerFourthAttackDrainAvailable;
         }
