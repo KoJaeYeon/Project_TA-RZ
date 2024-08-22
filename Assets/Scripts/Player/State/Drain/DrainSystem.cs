@@ -57,6 +57,11 @@ public class DrainSystem : MonoBehaviour
         }
     }
 
+    public void OnSetActiveDrainSystem(bool isActive)
+    {
+        _sphereCollider.enabled = isActive;
+    }
+
     public void OnSetActiveDraintEffect(bool isAcitve)
     {
         foreach (var item in DrainEffect)

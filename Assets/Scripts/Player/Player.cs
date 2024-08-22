@@ -135,6 +135,15 @@ public class Player : MonoBehaviour, IHit
                 return;
 
             _currentAmmo = value;
+
+            if (_currentAmmo == _playerStat.Resource_Own_Num)
+            {
+                drainSystem.OnSetActiveDrainSystem(false);
+            }
+            else
+            {
+                drainSystem.OnSetActiveDrainSystem(true);
+            }
             OnPropertyChanged(nameof(CurrentAmmo));
         }
     }
