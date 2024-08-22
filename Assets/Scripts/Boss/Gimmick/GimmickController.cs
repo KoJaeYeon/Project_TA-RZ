@@ -24,6 +24,8 @@ public class GimmickController : MonoBehaviour
 
     private void Test()
     {
+        if (m_Editor.transform.localScale.x >= _radius) return;
+
         Vector3 scale = m_Editor.transform.localScale;
         scale.x += Time.deltaTime;
         scale.z += Time.deltaTime;
