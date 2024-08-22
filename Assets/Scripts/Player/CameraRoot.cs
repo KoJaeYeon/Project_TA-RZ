@@ -1,6 +1,7 @@
 using Cinemachine;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 public class CameraRoot : MonoBehaviour
@@ -29,6 +30,14 @@ public class CameraRoot : MonoBehaviour
     float _cameraFieldOfView;
     float _maxView;
     #endregion
+    #region lockOn
+    [SerializeField] Image _lockOnUI;
+    #endregion
+
+    private void Awake()
+    {
+        _lockOnUI.gameObject.SetActive(false);
+    }
 
     void Start()
     {        
@@ -59,6 +68,7 @@ public class CameraRoot : MonoBehaviour
             else
             {
                 SetCameraToPlayer();
+                _lockOnUI.gameObject.SetActive(false);
             }
 
             //카메라 입력값 초기화
@@ -142,6 +152,7 @@ public class CameraRoot : MonoBehaviour
         CinemachineBrain cineBrain = Camera.main.GetComponent<CinemachineBrain>();
         var virutalCamera = cineBrain.ActiveVirtualCamera;
         virutalCamera.LookAt = _target.transform;
+        _lockOnUI.gameObject.SetActive(true);
     }
 
     /// <summary>
@@ -157,14 +168,23 @@ public class CameraRoot : MonoBehaviour
             rot.x = 0;
             rot.z = 0;
             transform.eulerAngles = rot;
+            UpdateLockOnUI();
         }
         else
         {
             if (SelectTarget() == false)
             {
                 SetCameraToPlayer();
+                _lockOnUI.gameObject.SetActive(false);
             }
         }
+    }
+
+    private void UpdateLockOnUI()
+    {
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(_target.position + Vector3.up);
+        _lockOnUI.transform.position = screenPos;
+
     }
 
     public void StartCameraMovement()
