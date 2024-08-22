@@ -273,6 +273,17 @@ public class Player : MonoBehaviour, IHit
     {
         return CurrentStamina > 0;
     }
+    //public void DrainCheck()
+    //{
+
+    //    var _animatorStateInfo = animato.GetCurrentAnimatorStateInfo(0);
+
+    //    if (_animatorStateInfo.IsName("Attack_Legend_Anim") && _animatorStateInfo.normalizedTime >= 0.3f)
+    //    {
+    //        _animator.speed = 0.03f;
+    //    }
+    //}
+
 
     public bool SkillCheck()
     {
@@ -283,6 +294,8 @@ public class Player : MonoBehaviour, IHit
     {
         this._PC_Level = _PC_Level;
     }
+
+
 
     public void AllgnToCamera()
     {

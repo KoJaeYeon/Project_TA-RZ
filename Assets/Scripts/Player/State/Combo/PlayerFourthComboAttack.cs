@@ -118,7 +118,7 @@ public class PlayerFourthComboAttack : PlayerComboAttack
     {
         _animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
 
-        if (_animatorStateInfo.IsName("Attack_Legend_Anim") &&_animatorStateInfo.normalizedTime >= 0.3f)
+        if (_animatorStateInfo.IsName("Attack_Legend_Anim") &&_animatorStateInfo.normalizedTime >= 0.3f && _isCharge)
         {
             _animator.speed = 0.03f;
         }
@@ -189,9 +189,18 @@ public class PlayerFourthComboAttack : PlayerComboAttack
             {
                 _isDrain = false;
 
+                _isCharge = false;
+
                 _player.cameraRoot.EndCameraMovement();
 
                 _animator.speed = 1f;
+
+                _animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+
+                while((_animatorStateInfo.IsName("Attack_Legend_Anim") && _animatorStateInfo.normalizedTime <= 0.8f))
+                {
+                    yield return null;
+                }
 
                 _state.ChangeState(State.Idle);
 
@@ -202,6 +211,11 @@ public class PlayerFourthComboAttack : PlayerComboAttack
         _player.cameraRoot.EndCameraMovement();
 
         _animator.speed = 1f;
+
+        while ((_animatorStateInfo.IsName("Attack_Legend_Anim") && _animatorStateInfo.normalizedTime <= 0.8f))
+        {
+            yield return null;
+        }
 
         _state.ChangeState(State.Idle);
     }
