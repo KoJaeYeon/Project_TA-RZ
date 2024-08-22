@@ -14,11 +14,11 @@ public class BTA_Boss_RushAttack : BossAction
 
     private bool _isDash = false;
 
-    private readonly int _hashDash = Animator.StringToHash("DashAttack");
+    private readonly int _hashRush = Animator.StringToHash("Rush");
 
     public override void OnStart()
     {
-        _anim.SetTrigger(_hashDash);
+        _anim.SetBool(_hashRush, true);
 
         _startPos = transform.position;
         _isDash = true;
@@ -39,6 +39,7 @@ public class BTA_Boss_RushAttack : BossAction
             {
                 _rb.velocity = Vector3.zero;
                 _isDash = false;
+                _anim.SetBool(_hashRush, false);
                 return TaskStatus.Success;
             }
         }
