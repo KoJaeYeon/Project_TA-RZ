@@ -1,7 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using Zenject;
-using static Cinemachine.DocumentationSortingAttribute;
 
 public class PlayerComboAttack : PlayerState
 {
