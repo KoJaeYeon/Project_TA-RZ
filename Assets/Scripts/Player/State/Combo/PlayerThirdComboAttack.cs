@@ -108,8 +108,8 @@ public class PlayerThirdComboAttack : PlayerComboAttack
         if (hit != null)
         {
             ChangeData(_player.CurrentLevel);
-            hit.Hit(_player.CurrentAtk * _currentAtkMultiplier * _player._PC_Level.Level_Atk_Power_Multiplier, 0f, _player.transform);
-            hit.ApplyKnockback(1f, other.transform);
+            hit.Hit(_player.CurrentAtk * _currentAtkMultiplier * _player._PC_Level.Level_Atk_Power_Multiplier, _currentStiffT, _player.transform);
+            hit.ApplyKnockback(_currentStiffT, other.transform);
             
             GameObject hitEffect = _effect.GetHitEffect();
             ParticleSystem hitParticle = hitEffect.GetComponent<ParticleSystem>();

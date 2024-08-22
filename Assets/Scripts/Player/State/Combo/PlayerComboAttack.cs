@@ -33,7 +33,7 @@ public class PlayerComboAttack : PlayerState
     protected virtual void ChangeData(int currentLevel)
     {
         _currentAtkMultiplier = _comboData.Atk_Multiplier;
-        _currentStiffT = _comboData.Atk4_StiffT;
+        _currentStiffT = _comboData.AbnStatus_Value;
 
         if (currentLevel == 4)
         {

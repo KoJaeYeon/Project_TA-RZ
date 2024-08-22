@@ -114,6 +114,7 @@ public class Monster : MonoBehaviour, IHit
             {
                 StopCoroutine(_hitCoroutine);
             }
+            Debug.Log(paralysisTime);
             _hitCoroutine = StartCoroutine(WaitForStun(paralysisTime));
         }
         else
@@ -169,10 +170,6 @@ public class Monster : MonoBehaviour, IHit
         _anim.SetTrigger("Damaged");
         yield return new WaitForSeconds(paralysisTime);
         IsDamaged = false;
-        if (!IsDamaged)
-        {
-           // Bt.enabled = true;
-        }
     }
 
     private void OnTriggerEnter(Collider other)

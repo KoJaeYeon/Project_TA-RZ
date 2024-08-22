@@ -227,7 +227,7 @@ public class PlayerFourthComboAttack : PlayerComboAttack
     protected override void ChangeData(int currentLevel)
     {
         _currentAtkMultiplier = _fourthComboData[_index].Atk_Multiplier;
-        _currentStiffT = _fourthComboData[_index].Atk4_StiffT;
+        _currentStiffT = _fourthComboData[_index].AbnStatus_Value;
         GetLevelSkillGage(currentLevel, _index);
     }
 
