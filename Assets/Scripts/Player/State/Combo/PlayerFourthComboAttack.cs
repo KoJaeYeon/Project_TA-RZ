@@ -116,7 +116,6 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
     public override void StateUpdate()
     {
-        Debug.Log(_isDrain);
         _animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
 
         if (_animatorStateInfo.IsName("Attack_Legend_Anim") &&_animatorStateInfo.normalizedTime >= 0.3f)
@@ -259,7 +258,7 @@ public class PlayerFourthComboAttack : PlayerComboAttack
                 ParticleSystem hitParticle = hitEffect.GetComponent<ParticleSystem>();
 
                 hitEffect.transform.position = hitPosition;
-                Quaternion lookRotation = Quaternion.LookRotation(_player.transform.position);
+                Quaternion lookRotation = Quaternion.LookRotation(_player.transform.forward);
                 hitEffect.transform.rotation = lookRotation;
 
                 hitParticle.Play();

@@ -6,7 +6,7 @@ using QFX.SFX;
 public class PlayerDash : PlayerState
 {
     public PlayerDash(Player player) : base(player) { }
-    private WaitForSeconds _coolTime = new WaitForSeconds(0.5f);
+    private WaitForSeconds _coolTime = new WaitForSeconds(0.0f);
 
     private float _dashPower = 15f;
     private float _dashTime;

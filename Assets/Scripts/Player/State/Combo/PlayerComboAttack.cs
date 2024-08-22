@@ -57,6 +57,11 @@ public class PlayerComboAttack : PlayerState
 
     protected void OnComboAttackUpdate(string attackName, State nextCombo)
     {
+        if (!_player.IsNext)
+        {
+            _inputSystem.SetAttack(false);
+        }
+            
         _animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
 
         if (_animatorStateInfo.IsName(attackName) && _animatorStateInfo.normalizedTime >= 0.99f)
@@ -66,9 +71,12 @@ public class PlayerComboAttack : PlayerState
             return;
         }
         else
+        {
             AttackRotation();
+        }
 
-        if(nextCombo is State.FourthComboAttack)
+
+        if (nextCombo is State.FourthComboAttack)
         {
             if(_player.CurrentAmmo <= 1 && _player.CurrentLevel != 4)
             {
