@@ -94,13 +94,13 @@ public class PlayerDash : PlayerState
         }
         else
         {
-            Vector3 inputDirection = new Vector3(_inputSystem.Input.x, 0f, _inputSystem.Input.y).normalized;
-            float _targetRotation;
+            //Vector3 inputDirection = new Vector3(_inputSystem.Input.x, 0f, _inputSystem.Input.y).normalized;
+            //float _targetRotation;
 
-            _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) +
-                _player.MainCamera.transform.eulerAngles.y;
+            //_targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) +
+            //    _player.MainCamera.transform.eulerAngles.y;
 
-            _player.transform.rotation = Quaternion.Euler(0f, _targetRotation, 0f);
+            //_player.transform.rotation = Quaternion.Euler(0f, _targetRotation, 0f);
         }
 
         _player.Cloner.Run();

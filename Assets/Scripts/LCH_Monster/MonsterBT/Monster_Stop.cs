@@ -8,16 +8,9 @@ public class Monster_Stop : Action
 {
     [SerializeField] SharedMonster Monster;
     [SerializeField] SharedNavmesh Nav;
-    int index;
-
-    public override void OnStart()
-    {
-        index = 0;
-    }
 
     public override TaskStatus OnUpdate()
     {
-        Debug.Log(index++);
         // 몬스터와 목표 사이의 거리 계산
         float distanceToTarget = Vector3.Distance(Monster.Value.Player.transform.position, Owner.transform.position);
 
