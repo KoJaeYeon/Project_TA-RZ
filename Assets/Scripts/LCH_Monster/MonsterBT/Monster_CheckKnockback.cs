@@ -9,7 +9,7 @@ public class Monster_CheckKnockback : Conditional
 
     public override TaskStatus OnUpdate()
     {
-        if (Monster.Value.isKnockBack == true)
+        if (Monster.Value.IsKnockBack == true)
         {
             return TaskStatus.Success;
         }

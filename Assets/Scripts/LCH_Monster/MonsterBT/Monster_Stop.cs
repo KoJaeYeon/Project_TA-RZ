@@ -15,11 +15,11 @@ public class Monster_Stop : Action
         float distanceToTarget = Vector3.Distance(Monster.Value.Player.transform.position, Owner.transform.position);
 
         // 목표가 공격 범위 안에 있을 때 NavMeshAgent 멈추기
-        if (distanceToTarget <= Monster.Value.Mon_Common_Range || Monster.Value.isCollsion == true)
+        if (distanceToTarget <= Monster.Value.Mon_Common_Range || Monster.Value.IsCollsion == true)
         {
             Nav.Value.isStopped = true;  // NavMeshAgent 멈추기
             Nav.Value.velocity = Vector3.zero;
-            Monster.Value.isCollsion = false;
+            Monster.Value.IsCollsion = false;
             Debug.Log("멈춤");
             return TaskStatus.Success;  
         }

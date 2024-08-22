@@ -8,7 +8,7 @@ public class Monster_CheckDamaged : Conditional
     // Start is called before the first frame update
     public override TaskStatus OnUpdate()
     {
-        if (Monster.Value.isDamaged == true)
+        if (Monster.Value.IsDamaged == true)
         {
             return TaskStatus.Failure;
         }
