@@ -57,10 +57,7 @@ public class PlayerComboAttack : PlayerState
 
     protected void OnComboAttackUpdate(string attackName, State nextCombo)
     {
-        if (!_player.IsNext)
-        {
-            _inputSystem.SetAttack(false);
-        }
+        
             
         _animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
 
@@ -90,6 +87,11 @@ public class PlayerComboAttack : PlayerState
         }
     }
 
+    public override void StateEnter()
+    {
+        _inputSystem.SetAttack(false);
+    }
+
     protected void ComboAnimation(int hashValue, bool isPlay)
     {
         _animator.SetBool(hashValue, isPlay);
@@ -117,7 +119,7 @@ public class PlayerComboAttack : PlayerState
     }
 
     public override void StateExit()
-    {
+    {        
         _player.CurrentAmmo -= _player.IsSkillAcitve[1] ? 0 : _player._PC_Level.Level_Consumption;
     }
 }

@@ -197,7 +197,7 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
                 _animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
 
-                while((_animatorStateInfo.IsName("Attack_Legend_Anim") && _animatorStateInfo.normalizedTime <= 0.8f))
+                while ((_animatorStateInfo.IsName("Attack_Legend_Anim") && _animatorStateInfo.normalizedTime <= 0.8f))
                 {
                     yield return null;
                 }

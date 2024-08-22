@@ -23,6 +23,8 @@ public class PlayerThirdComboAttack : PlayerComboAttack
 
     public override void StateEnter()
     {
+        base.StateEnter();  
+
         _player.IsNext = false;
 
         _range = _player.CurrentLevel != 4 ? 5f : 10f;
