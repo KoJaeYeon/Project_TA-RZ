@@ -63,8 +63,8 @@ public class DataManager : MonoBehaviour
     {
         switch (urlName)
         {
-            case "_PCStat_URL":
-                Process_PCStat_Data(data);
+            case "_PC_Stat_URL":
+                Process_PC_Stat_Data(data);
                 break;
             case "_PC_Level_URL":
                 Process_PC_Level_Data(data);
@@ -84,7 +84,7 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    private void Process_PCStat_Data(string data)
+    private void Process_PC_Stat_Data(string data)
     {
         JArray jsonArray = JArray.Parse(data);
 
@@ -101,8 +101,11 @@ public class DataManager : MonoBehaviour
             float staminaGain = ParseFloat(item["PC_Common_StaminaGain"]);
             float drainStamina = ParseFloat(item["PC_Common_Drain_Stamina"]);
             float dashStamina = ParseFloat(item["PC_Common_Dash_Stamina"]);
+            float drainMaxRange = ParseFloat(item[nameof(PC_Common_Stat.Drain_MaxRange)]);
+            float rangeSpeed = ParseFloat(item[nameof(PC_Common_Stat.Range_Speed)]);
+            float pullSpeed = ParseFloat(item[nameof(PC_Common_Stat.Pull_Speed)]);
 
-            PC_Common_Stat stat = new PC_Common_Stat(id, type, atkPower, hp, moveSpeed, resouceOwnNum, staminaGain, drainStamina, dashStamina);
+            PC_Common_Stat stat = new PC_Common_Stat(id, type, atkPower, hp, moveSpeed, resouceOwnNum, staminaGain, drainStamina, dashStamina, drainMaxRange, rangeSpeed, pullSpeed);
             AddDataToDataDictionary(idStr, stat);
         }
     }

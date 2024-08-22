@@ -98,6 +98,8 @@ public class Monster : MonoBehaviour, IHit
         Mon_Common_Hp_Remain -= damage;
         TempHPText.text = Mon_Common_Hp_Remain.ToString();
 
+        Debug.Log("hit");
+
         if (Mon_Common_Hp_Remain > 0)
         {
             if(_hitCoroutine != null)
