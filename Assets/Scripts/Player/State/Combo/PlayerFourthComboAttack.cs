@@ -38,6 +38,7 @@ public class PlayerFourthComboAttack : PlayerComboAttack
                 }
                 _nextTime = delayData.Atk4_NextChargeT;
                 _maxTime = delayData.Atk4_ChargeMaxT;
+                Debug.Log($"{_maxTime}, {_nextTime}");
                 yield break;
             }
         }
@@ -170,7 +171,7 @@ public class PlayerFourthComboAttack : PlayerComboAttack
                 {
                     _index += _index == _maxIndex ? 0 : 1;
 
-                    _elapsedTime += 1;
+                    _elapsedTime += _nextTime;
 
                     _effect.ChangeColor(_index);
                 }

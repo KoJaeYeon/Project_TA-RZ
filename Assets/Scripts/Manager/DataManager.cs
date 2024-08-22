@@ -78,6 +78,9 @@ public class DataManager : MonoBehaviour
             case "_Monster_Stat_URL":
                 Process_Monster_Stat_Data(data);
                 break;
+            case "_PC_Melee_URL":
+                Process_PC_Melee_Data(data);
+                break;
             default:
                 Debug.LogError($"Unknown URL name: {urlName}");
                 break;
