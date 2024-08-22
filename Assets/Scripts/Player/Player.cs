@@ -12,6 +12,7 @@ public class Player : MonoBehaviour, IHit
     [Inject] private PlayerManager _playerManager { get; }
     [Inject] public DataManager dataManager { get; }
     [Inject] public CameraRoot cameraRoot { get; }
+    [Inject] public DrainSystem drainSystem { get; }
     #endregion
 
     #region PlayerComponent
@@ -47,6 +48,8 @@ public class Player : MonoBehaviour, IHit
     public float[] _skillCounption { get; private set; } = new float[4] { 25, 50, 75, 100 };
     public bool IsSkillAnimationEnd { get; set; } = true;
     public int CurrentLevel { get; set; }
+
+    public bool IsPlayerFourthAttackDrainAvailable = false;
 
     public float CurrentHP
     {
@@ -200,6 +203,10 @@ public class Player : MonoBehaviour, IHit
         else if (Input.GetKeyDown(KeyCode.P))
         {
             CurrentAmmo += 10;
+        }
+        else if (Input.GetKeyDown(KeyCode.F11))
+        {
+            IsPlayerFourthAttackDrainAvailable = !IsPlayerFourthAttackDrainAvailable;
         }
         else if (Input.GetKeyDown(KeyCode.F12))
         {

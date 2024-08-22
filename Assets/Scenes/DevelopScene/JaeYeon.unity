@@ -241,47 +241,47 @@ PrefabInstance:
     - target: {fileID: 3438836091937741903, guid: e44852ff32c7ef14687c01b75dca3779,
         type: 3}
       propertyPath: _gradients.Array.data[1].key1.b
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3438836091937741903, guid: e44852ff32c7ef14687c01b75dca3779,
         type: 3}
       propertyPath: _gradients.Array.data[1].key1.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3438836091937741903, guid: e44852ff32c7ef14687c01b75dca3779,
-        type: 3}
-      propertyPath: _gradients.Array.data[1].key1.r
-      value: 0.015250206
-      objectReference: {fileID: 0}
-    - target: {fileID: 3438836091937741903, guid: e44852ff32c7ef14687c01b75dca3779,
-        type: 3}
-      propertyPath: _gradients.Array.data[2].key1.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3438836091937741903, guid: e44852ff32c7ef14687c01b75dca3779,
-        type: 3}
-      propertyPath: _gradients.Array.data[2].key1.g
-      value: 0.9433962
-      objectReference: {fileID: 0}
-    - target: {fileID: 3438836091937741903, guid: e44852ff32c7ef14687c01b75dca3779,
-        type: 3}
-      propertyPath: _gradients.Array.data[2].key1.r
-      value: 0.074714646
-      objectReference: {fileID: 0}
-    - target: {fileID: 3438836091937741903, guid: e44852ff32c7ef14687c01b75dca3779,
-        type: 3}
-      propertyPath: _gradients.Array.data[3].key1.b
-      value: 0.980212
-      objectReference: {fileID: 0}
-    - target: {fileID: 3438836091937741903, guid: e44852ff32c7ef14687c01b75dca3779,
-        type: 3}
-      propertyPath: _gradients.Array.data[3].key1.g
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3438836091937741903, guid: e44852ff32c7ef14687c01b75dca3779,
         type: 3}
-      propertyPath: _gradients.Array.data[3].key1.r
+      propertyPath: _gradients.Array.data[1].key1.r
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3438836091937741903, guid: e44852ff32c7ef14687c01b75dca3779,
+        type: 3}
+      propertyPath: _gradients.Array.data[2].key1.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3438836091937741903, guid: e44852ff32c7ef14687c01b75dca3779,
+        type: 3}
+      propertyPath: _gradients.Array.data[2].key1.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3438836091937741903, guid: e44852ff32c7ef14687c01b75dca3779,
+        type: 3}
+      propertyPath: _gradients.Array.data[2].key1.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3438836091937741903, guid: e44852ff32c7ef14687c01b75dca3779,
+        type: 3}
+      propertyPath: _gradients.Array.data[3].key1.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3438836091937741903, guid: e44852ff32c7ef14687c01b75dca3779,
+        type: 3}
+      propertyPath: _gradients.Array.data[3].key1.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3438836091937741903, guid: e44852ff32c7ef14687c01b75dca3779,
+        type: 3}
+      propertyPath: _gradients.Array.data[3].key1.r
+      value: 0.49019608
       objectReference: {fileID: 0}
     - target: {fileID: 3438836091937741903, guid: e44852ff32c7ef14687c01b75dca3779,
         type: 3}
@@ -326,7 +326,7 @@ PrefabInstance:
     - target: {fileID: 3438836091937741903, guid: e44852ff32c7ef14687c01b75dca3779,
         type: 3}
       propertyPath: _gradients.Array.data[4].key1.b
-      value: 0.22745098
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3438836091937741903, guid: e44852ff32c7ef14687c01b75dca3779,
         type: 3}

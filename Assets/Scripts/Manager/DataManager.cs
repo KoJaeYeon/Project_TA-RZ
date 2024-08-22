@@ -78,6 +78,9 @@ public class DataManager : MonoBehaviour
             case "_Monster_Stat_URL":
                 Process_Monster_Stat_Data(data);
                 break;
+            case "_PC_Melee_URL":
+                Process_PC_Melee_Data(data);
+                break;
             default:
                 Debug.LogError($"Unknown URL name: {urlName}");
                 break;
@@ -165,6 +168,22 @@ public class DataManager : MonoBehaviour
             AddDataToDataDictionary(idStr, attack);
         }
     }
+
+    private void Process_PC_Melee_Data(string data)
+    {
+        JArray jsonArray = JArray.Parse(data);
+
+        foreach (var item in jsonArray)
+        {
+            string idStr = item[nameof(PC_Melee.ID)].ToString();
+            float atk4ChargeMaxT = ParseFloat(item[nameof(PC_Melee.Atk4_ChargeMaxT)]);
+            float atk4NextChargeT = ParseFloat(item[nameof(PC_Melee.Atk4_NextChargeT)]);
+
+            PC_Melee skill = new PC_Melee(idStr, atk4ChargeMaxT, atk4NextChargeT);
+            AddDataToDataDictionary(idStr, skill);
+        }
+    }
+
 
     private void Process_Monster_Stat_Data(string data)
     {
