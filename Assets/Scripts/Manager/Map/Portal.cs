@@ -1,23 +1,53 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class Portal : MonoBehaviour
+public class Portal : MonoBehaviour, IChoiceEvent
 {
+    #region InJect
     [Inject] private MapManager _mapManager;
+    [Inject] private UIEvent _uiEvent;
+    #endregion;
 
-    private void Start()
+    private Func<StageType> _choiceUI;
+    private StageType _currentStage;
+
+    private void OnEnable()
     {
-        if(_mapManager == null)
+        if(_uiEvent != null)
         {
-            Debug.Log("맵 매니저를 받아오지 못했습니다.");
+            _uiEvent.RegisterChoiceStageEvent(this);
+        }
+    }
+
+
+    public void GetChoiceStageEvent(bool isAddEvent, Func<StageType> callBack)
+    {
+        if (isAddEvent)
+        {
+            _choiceUI += callBack;
         }
         else
         {
-            //_mapManager.SetStage();
+            _choiceUI -= callBack;  
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            StageType result = _choiceUI.Invoke();
+
+            _currentStage = result;
+
+            Debug.Log($"선택된 스테이지는{_currentStage}");
+        }
+    }
+
+    #region JYCode
     //[SerializeField] StageType StageType;
     //[SerializeField] Sprite[] StageSpriteArr;
 
@@ -90,4 +120,5 @@ public class Portal : MonoBehaviour
     //        ChangeStage();
     //    }
     //}
+    #endregion
 }
