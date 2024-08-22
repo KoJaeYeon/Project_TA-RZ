@@ -206,7 +206,7 @@ public class Player : MonoBehaviour, IHit
         }
         else if (Input.GetKeyDown(KeyCode.F12))
         {
-            IsPlayerDrainAvailable = !IsPlayerDrainAvailable;
+            IsPlayerFourthAttackDrainAvailable = !IsPlayerFourthAttackDrainAvailable;
         }
         else if (Input.GetKeyDown(KeyCode.F12))
         {
