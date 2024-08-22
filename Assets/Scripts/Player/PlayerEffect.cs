@@ -30,11 +30,6 @@ public class PlayerEffect : MonoBehaviour
         InitializePlayerEffect();
     }
 
-    private void Update()
-    {
-        
-    }
-
     private void InitializePlayerEffect()
     {
         //_attackEffectDic ??= new(); 또 다른 초기화 방법.
@@ -149,6 +144,19 @@ public class PlayerEffect : MonoBehaviour
         fourEffect.SetActive(false);
     }
 
+    public void Active_FinishEffect()
+    {
+        GameObject finishEffect = GetAttackEffect(AttackType.finishAttack);
+        ParticleSystem effectParticle = finishEffect.GetComponent<ParticleSystem>();
+
+        finishEffect.transform.localRotation = Quaternion.identity;
+        finishEffect.transform.localPosition = Vector3.zero;
+        finishEffect.transform.parent = null;
+        effectParticle .Play();
+
+        StartCoroutine(ReturnFinishEffect(finishEffect));
+    }
+
     #region Get
     private GameObject GetAttackEffect(AttackType attackType)
     {
@@ -198,6 +206,13 @@ public class PlayerEffect : MonoBehaviour
         yield return _returnTime;
 
         effect.transform.SetParent(GetAttackEffectTransform(AttackType.thirdAttack));
+    }
+
+    private IEnumerator ReturnFinishEffect(GameObject effect)
+    {
+        yield return new WaitForSeconds(1.5f);
+
+        effect.transform.SetParent(GetAttackEffectTransform(AttackType.finishAttack));
     }
 
     #endregion
