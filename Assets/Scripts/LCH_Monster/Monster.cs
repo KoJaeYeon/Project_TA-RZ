@@ -32,6 +32,9 @@ public class Monster : MonoBehaviour, IHit
     public bool isKnockBack;
     public float Mon_Common_Hp_Remain;
 
+    [Header("조절")]
+    [SerializeField] float dsaf;
+
     public float targetKnockbackTime;
 
     protected Monster_Stat monster_Stat = new Monster_Stat();

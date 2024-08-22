@@ -18,11 +18,14 @@ public class PlayerFirstComboAttack : PlayerComboAttack
     public Vector3 _boxSize { get; private set; } = new Vector3(1f, 1f, 2f);
     private Vector3 _additionalPosition = new Vector3(0f, 1f, 0.5f);
     private LayerMask _enemyLayer;
+    public float _attackRange_Multiplier = 1f;
     #endregion
 
     public override void StateEnter()
     {
         _player.IsNext = false;
+
+        _attackRange_Multiplier = _player.CurrentLevel != 4 ? 1f : 2f;
 
         ComboAnimation(_firstCombo, true);
     }
@@ -55,7 +58,7 @@ public class PlayerFirstComboAttack : PlayerComboAttack
 
         _enemyLayer = LayerMask.GetMask("Monster");
 
-        Collider[] colliders = Physics.OverlapBox(_boxPosition, _boxSize / 2f, _player.transform.rotation, _enemyLayer);
+        Collider[] colliders = Physics.OverlapBox(_boxPosition, _boxSize / 2f * _attackRange_Multiplier, _player.transform.rotation, _enemyLayer);
 
         bool isHit = false;
         foreach(var target in  colliders)

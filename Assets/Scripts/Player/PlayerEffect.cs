@@ -90,6 +90,8 @@ public class PlayerEffect : MonoBehaviour
 
         firstEffect.transform.localPosition = Vector3.zero;
         firstEffect.transform.localRotation = Quaternion.identity;
+        firstEffect.transform.localScale = Vector3.one;
+        firstEffect.transform.localScale *= _player.CurrentLevel != 4 ? 1 : 2;
         firstEffect.transform.parent = null;
         effectParticle.Play();
 
@@ -103,6 +105,8 @@ public class PlayerEffect : MonoBehaviour
 
         secondEffect.transform.localPosition = Vector3.zero;
         secondEffect.transform.localRotation = Quaternion.identity;
+        secondEffect.transform.localScale = Vector3.one;
+        secondEffect.transform.localScale *= _player.CurrentLevel != 4 ? 1 : 2;
         secondEffect.transform.parent = null;
         effectParticle.Play();
 
@@ -116,6 +120,8 @@ public class PlayerEffect : MonoBehaviour
 
         thirdEffect.transform.localPosition = Vector3.zero;
         thirdEffect.transform.localRotation = Quaternion.Euler(-90f, 0f, 0f);
+        thirdEffect.transform.localScale = Vector3.one;
+        thirdEffect.transform.localScale *= _player.CurrentLevel != 4 ? 1 : 2;
 
         thirdEffect.transform.parent = null;
         effectParticle.Play();

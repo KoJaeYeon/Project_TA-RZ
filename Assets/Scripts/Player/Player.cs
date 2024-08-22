@@ -352,13 +352,14 @@ public class Player : MonoBehaviour, IHit
             Vector3 boxposition = firstCombo._boxPosition;
             Vector3 boxSize = firstCombo._boxSize;
             Quaternion boxrotation = transform.rotation;
+            float _attackRange_Multiplier = firstCombo._attackRange_Multiplier;
 
             Matrix4x4 originalMatrix = Gizmos.matrix;
 
             Gizmos.matrix = Matrix4x4.TRS(boxposition, boxrotation, Vector3.one);
 
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(Vector3.zero, boxSize);
+            Gizmos.DrawWireCube(Vector3.zero, boxSize * _attackRange_Multiplier);
 
             Gizmos.matrix = originalMatrix; 
         }
@@ -369,13 +370,14 @@ public class Player : MonoBehaviour, IHit
             Vector3 boxposition = secondCombo._boxPosition;
             Vector3 boxSize = secondCombo._boxSize;
             Quaternion boxrotation = transform.rotation;
+            float _attackRange_Multiplier = secondCombo._attackRange_Multiplier;
 
             Matrix4x4 originalMatrix = Gizmos.matrix;
 
             Gizmos.matrix = Matrix4x4.TRS(boxposition, boxrotation, Vector3.one);
 
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(Vector3.zero, boxSize);
+            Gizmos.DrawWireCube(Vector3.zero, boxSize* _attackRange_Multiplier);
 
             Gizmos.matrix = originalMatrix;
         }
@@ -427,7 +429,7 @@ public class Player : MonoBehaviour, IHit
 
             Gizmos.DrawLine(bottom + forward * thirdCombo._range, top + forward * thirdCombo._range);
 
-            //Gizmos.DrawWireSphere(transform.position, thirdCombo._range);
+            Gizmos.DrawWireSphere(transform.position, thirdCombo._range);
         }
 
         else if(_state.CurrentState is PlayerFourthComboAttack)
@@ -437,13 +439,14 @@ public class Player : MonoBehaviour, IHit
             Vector3 boxposition = fourthCombo._boxPosition;
             Vector3 boxSize = fourthCombo._boxSize;
             Quaternion boxrotation = transform.rotation;
+            float _attackRange_Multiplier = fourthCombo._attackRange_Multiplier;
 
             Matrix4x4 originalMatrix = Gizmos.matrix;
 
             Gizmos.matrix = Matrix4x4.TRS(boxposition, boxrotation, Vector3.one);
 
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(Vector3.zero, boxSize);
+            Gizmos.DrawWireCube(Vector3.zero, boxSize * _attackRange_Multiplier);
 
             Gizmos.matrix = originalMatrix;
         }

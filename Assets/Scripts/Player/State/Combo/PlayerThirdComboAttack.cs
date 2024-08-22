@@ -25,6 +25,8 @@ public class PlayerThirdComboAttack : PlayerComboAttack
     {
         _player.IsNext = false;
 
+        _range = _player.CurrentLevel != 4 ? 5f : 10f;
+
         ComboAnimation(_thirdCombo, true);
     }
 
