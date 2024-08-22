@@ -138,7 +138,6 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
         _player.drainSystem.OnSetDrainArea(0.7f);
 
-        _player.CurrentAmmo -= _player.IsSkillAcitve[1] ? 0 : _index + 1;
     }
 
     private IEnumerator StartCharge()
@@ -284,5 +283,6 @@ public class PlayerFourthComboAttack : PlayerComboAttack
             _player.CurrentSkill += _currentGetSkillGauge;
         }
 
+        _player.CurrentAmmo -= _player.IsSkillAcitve[1] || _isLevel4 ? 0 : _index + 1;
     }
 }

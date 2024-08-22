@@ -42,8 +42,6 @@ public class PlayerThirdComboAttack : PlayerComboAttack
     public override void StateExit()
     {
         ComboAnimation(_thirdCombo, false);
-
-        base.StateExit();
     }
 
     protected override void ChangeData(int currentLevel)
@@ -71,6 +69,9 @@ public class PlayerThirdComboAttack : PlayerComboAttack
         {
             _player.CurrentSkill += _currentGetSkillGauge;
         }
+
+        _player.CurrentAmmo -= _player.IsSkillAcitve[1] ? 0 : _player._PC_Level.Level_Consumption;
+
     }
 
     //부채꼴 판정

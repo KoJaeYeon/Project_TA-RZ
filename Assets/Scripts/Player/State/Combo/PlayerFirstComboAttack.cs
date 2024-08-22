@@ -42,8 +42,6 @@ public class PlayerFirstComboAttack : PlayerComboAttack
     public override void StateExit()
     {
         ComboAnimation(_firstCombo, false);
-
-        base.StateExit();
     }
 
     protected override void ChangeData(int currentLevel)
@@ -91,6 +89,8 @@ public class PlayerFirstComboAttack : PlayerComboAttack
         {
             _player.CurrentSkill += _currentGetSkillGauge;
         }
+
+        _player.CurrentAmmo -= _player.IsSkillAcitve[1] ? 0 : _player._PC_Level.Level_Consumption;
     }
 
 }
