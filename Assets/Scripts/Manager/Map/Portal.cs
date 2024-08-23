@@ -9,7 +9,7 @@ public class Portal : MonoBehaviour, IChoiceEvent
     #region InJect
     [Inject] private UIEvent _uiEvent;
     #endregion;
-    private Action<GameObject> _choiceUI;
+    private Action<Player> _choiceUI;
 
     private void OnEnable()
     {
@@ -23,11 +23,11 @@ public class Portal : MonoBehaviour, IChoiceEvent
     {
         if(Input.GetKeyDown(KeyCode.H))
         {
-            _uiEvent.RequestChangeProgressBar(0.25f);
+            _uiEvent.RequestChangeProgressBar(0.33f);
         }
     }
 
-    public void GetChoiceStageEvent(bool isAddEvent, Action<GameObject> callBack)
+    public void GetChoiceStageEvent(bool isAddEvent, Action<Player> callBack)
     {
         if (isAddEvent)
         {
@@ -43,9 +43,9 @@ public class Portal : MonoBehaviour, IChoiceEvent
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            GameObject playerObject = other.gameObject;
+            Player player = other.gameObject.GetComponent<Player>();
 
-            _choiceUI.Invoke(playerObject); 
+            _choiceUI.Invoke(player); 
         }
     }
 

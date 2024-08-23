@@ -36,7 +36,7 @@ public class UIEvent
         _choiceStageEvent = null;
     }
 
-    public void AddEventChoiceStageEvent(bool isAddEvent, Action<GameObject> callBack)
+    public void AddEventChoiceStageEvent(bool isAddEvent, Action<Player> callBack)
     {
         if(_choiceStageEvent == null)
         {
