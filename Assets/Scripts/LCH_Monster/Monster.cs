@@ -4,41 +4,78 @@ using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
 using Zenject;
 using System.Collections;
+using UnityEngine.AI;
+using TMPro;
 
 public class Monster : MonoBehaviour, IHit
 {
-    [SerializeField] BehaviorTree Bt;
-    public float Mon_Common_Stat_Hp;
-    public float Mon_Common_Damage;
-    public float Mon_Common_AttackArea;
-    public float Mon_Common_Range;
-    public float Mon_Common_DetectArea;
-    public float Mon_Common_DetectTime;
-    public float Mon_Common_MovementSpeed;
-    public float Mon_Common_CoolTime;
-
-    public bool isDamaged;
-    public bool isAtk;
-    public bool isKnockBack;
-    public float Mon_Common_Hp_Remain;
     [Inject] public Player Player { get;}
-    [Inject] DataManager dataManager;
+    [Inject] DataManager _dataManager;
+    BehaviorTree _bt;
+    NavMeshAgent Nav;
+    Animator _anim;
+    Rigidbody _rigidbody;
+
+    public float Mon_Common_Stat_Hp { get; set; }
+    public float Mon_Common_Damage { get; set; }
+    public float Mon_Common_AttackArea { get; set; }
+    public float Mon_Common_Range { get; set; }
+    public float Mon_Common_DetectArea { get; set; }
+    public float Mon_Common_DetectTime { get; set; }
+    public float Mon_Common_MovementSpeed { get; set; }
+    public float Mon_Common_CoolTime { get; set; }
+    public float Mon_Knockback_Time { get; set; }
+    public bool IsCollsion { get; set; } = false;
+    public bool IsDamaged { get; set; }
+    public bool IsAtk { get; set; }
+    public bool IsKnockBack { get; set; }
+    public float Mon_Common_Hp_Remain { get; set; }
+
+
+    [Header("공격 경직시간 조절")]
+    [SerializeField] float Attack_Stiff_Time = 1;
+    [Header("넉백 조절")]
+    [SerializeField] float Knockback_Horizontal_Distance = 4f;
+    [SerializeField] float Knockback_Vertical_Distance = 2f;
+
+    public float ApplyingKnockbackTime { get; set; }
+    public float ApplyingStiffTime { get; set; }
 
     protected Monster_Stat monster_Stat = new Monster_Stat();
     protected string idStr = "E101";
 
+    Coroutine _hitCoroutine;
+
+    [Header("개발자 인스펙터")]
+    [SerializeField] TextMeshProUGUI TempHPText;
+
+    private void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+        _bt = GetComponent<BehaviorTree>();
+        Nav = GetComponent<NavMeshAgent>();
+        _anim = GetComponent<Animator>();
+    }
+
     void Start()
     {
         Mon_Common_Hp_Remain = Mon_Common_Stat_Hp;
-        Bt = GetComponent<BehaviorTree>();
         StartCoroutine(LoadStat());
+    }
+
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.V))
+        {
+            ApplyKnockback(2, Player.transform);
+        }
     }
 
     IEnumerator LoadStat()
     {
         while (true)
         {
-            var stat = dataManager.GetStat(idStr) as Monster_Stat;
+            var stat = _dataManager.GetStat(idStr) as Monster_Stat;
             if (stat == null)
             {
                 Debug.Log($"Monster[{idStr}]의 스탯을 받아오지 못했습니다.");
@@ -56,6 +93,7 @@ public class Monster : MonoBehaviour, IHit
                 Mon_Common_DetectArea = monster_Stat.DetectArea;
                 Mon_Common_DetectTime = monster_Stat.DetectTime;
                 Mon_Common_MovementSpeed = monster_Stat.MovementSpeed;
+                TempHPText.text = Mon_Common_Hp_Remain.ToString();
                 yield break;
             }
 
@@ -64,12 +102,20 @@ public class Monster : MonoBehaviour, IHit
 
     public void Hit(float damage, float paralysisTime, Transform transform)
     {
-        isDamaged = true;
+        IsDamaged = true;
         Mon_Common_Hp_Remain -= damage;
+        TempHPText.text = Mon_Common_Hp_Remain.ToString();
+
+        Debug.Log("hit");
 
         if (Mon_Common_Hp_Remain > 0)
         {
-            StartCoroutine(WaitForStun(paralysisTime));
+            if(_hitCoroutine != null)
+            {
+                StopCoroutine(_hitCoroutine);
+            }
+            Debug.Log(paralysisTime);
+            _hitCoroutine = StartCoroutine(WaitForStun(paralysisTime));
         }
         else
         {
@@ -77,51 +123,60 @@ public class Monster : MonoBehaviour, IHit
         }
     }
 
-    public void ApplyKnockback(float knockbackForce, Transform attackerTrans)
+    public void ApplyKnockback(float knockbackDuration, Transform attackerTrans)
     {
-        var rb = GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            Vector3 knockbackDirection = (transform.position - attackerTrans.position).normalized;
+        IsKnockBack = true;
 
-            rb.AddForce(knockbackDirection * knockbackForce, ForceMode.Impulse);
-        }
+        _rigidbody.isKinematic = false;
+
+        gameObject.layer = LayerMask.NameToLayer("MonsterKnockback");
+
+        _anim.SetTrigger("Damaged");
+
+        ApplyingKnockbackTime = Time.time + knockbackDuration;
+
+        Nav.enabled = false;
+
+        _rigidbody.velocity = Vector3.zero;
+
+        Vector3 knockBackDirection = transform.position - attackerTrans.position;
+
+        knockBackDirection.y = 0;
+
+        knockBackDirection.Normalize();
+
+        Vector3 knockBack = (knockBackDirection * Knockback_Horizontal_Distance + Vector3.up * Knockback_Vertical_Distance);
+
+        _rigidbody.AddForce(knockBack, ForceMode.Impulse);
+    }
+
+    public void KnockbackEnd()
+    {
+        IsKnockBack = false;
+        _rigidbody.isKinematic = true;
+        IsCollsion = false;
+        gameObject.layer = LayerMask.NameToLayer("Monster");
     }
 
     public void Attack()
     {
-        string[] targetLayers = new string[] { "Player", "Dash", "Ghost" };
-        int layer = LayerMask.GetMask(targetLayers);
-        Collider[] colliders = Physics.OverlapSphere(transform.position + transform.forward, Mon_Common_AttackArea, layer);
-
-        if(colliders.Length == 0) return;
-
-        var player = colliders[0].gameObject;
-        var ihit = player.GetComponent<IHit>();
-        ihit?.Hit(Mon_Common_Damage, 1, transform);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log("데미지 받음");
-            isKnockBack = true;
-            Hit(10, 5, transform);
-            //ApplyKnockback(Player.gameObject.transform.position, 1f); 
-        }
+        Player.Hit(Mon_Common_Damage, Attack_Stiff_Time, transform);
     }
 
     public IEnumerator WaitForStun(float paralysisTime)
     {
         //Bt.enabled = false;
-        var anim = GetComponent<Animator>();
-        anim.SetTrigger("Damaged");
+        _anim = GetComponent<Animator>();
+        _anim.SetTrigger("Damaged");
         yield return new WaitForSeconds(paralysisTime);
-        isDamaged = false;
-        if (!isDamaged)
+        IsDamaged = false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Player") || other.CompareTag("Shield"))
         {
-           // Bt.enabled = true;
+            IsCollsion = true;
         }
     }
 

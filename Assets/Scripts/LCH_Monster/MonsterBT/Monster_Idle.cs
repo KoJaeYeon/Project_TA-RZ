@@ -9,7 +9,7 @@ public class Monster_Idle : Action
 {
 
     [SerializeField] SharedMonster Monster;
-    [SerializeField] NavMeshAgent Nav;
+    [SerializeField] SharedNavmesh Nav;
     public override TaskStatus OnUpdate()
     {
         Vector3 ownerPos = Owner.transform.position;
@@ -18,13 +18,10 @@ public class Monster_Idle : Action
 
         float distance = Vector3.Distance(ownerPos, targetPos);
         
-        if (Nav == null)
-        {
-            Nav = GetComponent<NavMeshAgent>();
-        }
+        
         if (distance >= Monster.Value.Mon_Common_DetectArea)
         {
-            Nav.SetDestination(Owner.transform.position);
+            Nav.Value.SetDestination(Owner.transform.position);
             return TaskStatus.Running;
 
         }

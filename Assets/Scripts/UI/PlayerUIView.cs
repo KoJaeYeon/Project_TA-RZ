@@ -1,9 +1,7 @@
-using System.Collections;
 using System.ComponentModel;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using ViewModel.Extensions;
 using Zenject;
 
 public class PlayerUIView : MonoBehaviour
@@ -15,6 +13,8 @@ public class PlayerUIView : MonoBehaviour
     [SerializeField] TextMeshProUGUI Resource_OwnNum_Text;
     [SerializeField]
     GameObject[] GageImages;
+    [Header("Panel")]
+    [SerializeField] GameOverPanel GameOverPanel;
 
     [Inject] private Player _player;
         
@@ -64,6 +64,9 @@ public class PlayerUIView : MonoBehaviour
                 break;
             case nameof(_player._playerStat.Resource_Own_Num):
                 Resource_OwnNum_Text.text = _player._playerStat.Resource_Own_Num.ToString("000");
+                break;
+            case nameof(PlayerDeath):
+                GameOverPanel.gameObject.SetActive(true);
                 break;
 
         }

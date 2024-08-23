@@ -1,4 +1,5 @@
 using Cinemachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,6 @@ public class PlayerFourthComboAttack : PlayerComboAttack
         PlayerAnimationEvent _event;
         _event = player.GetComponentInChildren<PlayerAnimationEvent>();
         _event.AddEvent(AttackType.fourthAttack, FourthAttack);
-        player.StartCoroutine(GetCamera());
 
         player.StartCoroutine(LoadData("A204"));
     }
@@ -20,15 +20,13 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
     public override IEnumerator LoadData(string idStr)
     {
-        int[] gaugeValue = new int[4];
-
         while (true)
         {
             var comboData = _player.dataManager.GetData(idStr) as PC_Attack;
+            var delayData = _player.dataManager.GetData("A500") as PC_Melee;
 
-            if (comboData == null)
+            if (comboData == null || delayData == null)
             {
-                Debug.Log("콤보 데이터를 가져오지 못했습니다.");
                 yield return new WaitForSeconds(1f);
             }
             else
@@ -37,19 +35,19 @@ public class PlayerFourthComboAttack : PlayerComboAttack
                 {
                     comboData =_player.dataManager.GetData($"A20{i+4}") as PC_Attack;
                     _fourthComboData[i] = comboData;
-
-                 
                 }
-                Debug.Log("콤보 데이터를 성공적으로 가져왔습니다.");
+                _nextTime = delayData.Atk4_NextChargeT;
+                _maxTime = delayData.Atk4_ChargeMaxT;
+                Debug.Log($"{_maxTime}, {_nextTime}");
                 yield break;
             }
         }
     }
 
-   
-
     private void GetLevelSkillGage(int level, int chargeLevel)
     {
+        level = _isLevel4 ? 4 : level;
+
         if(level == 4)
         {
             _currentGetSkillGauge = 0;
@@ -63,18 +61,18 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
     #region Attack
     private float _maxIndex;
-    private float _maxDelayTime = 2f;
-    private float _currentDelayTime;
-    private float _maxGauge = 4f;
-    private float _gauge;
-    private int _chargeCount;
-    private bool _isFillingGauge = true;
-    private int index = 0;
-    #endregion
+    private float _nextTime = 1f;
+    private float _maxTime = 6f;
+    private float _currentTime;
+    private bool _isCharge = true;
+    private bool _isLevel4 = false;
+    private bool _isDrain = false;
+    private int _index;
 
-    private CinemachineVirtualCamera _virtualCamera;
-    private float _maxView = 90f;
-    private float _currentView;
+    private float _currentRadius = 1f;
+    private float _maxRadius = 2f;
+    private float _drainSpeed = 2f;
+    #endregion
 
     #region Overlap
     public Vector3 _forward { get; private set; }
@@ -82,54 +80,50 @@ public class PlayerFourthComboAttack : PlayerComboAttack
     public Vector3 _boxSize { get; private set; } = new Vector3(2f, 1.5f, 10f);
     public Vector3 _additionalPosition = new Vector3(0f, 1f, 1f);
     private LayerMask _enemyLayer;
+    public float _attackRange_Multiplier = 1f;
     #endregion
 
     public override void StateEnter()
     {
-        _chargeCount = _player.CurrentAmmo - 1;
+        _attackRange_Multiplier = _player.CurrentLevel != 4 ? 1f : 2f;
 
-        _maxIndex = _chargeCount;
+        _maxIndex = _player.CurrentAmmo >= 5 ? 4 : _player.CurrentAmmo;
 
-        if(_chargeCount >= 4)
+        if (_maxIndex == 4)
         {
-            _maxDelayTime += 2f;
+            _maxTime += 2f;
         }
 
-        _currentDelayTime = 0f;
+        if (_player.CurrentLevel == 4)
+        {
+            _isLevel4 = true;
 
-        _gauge = 0f;
+            _maxIndex = 4;
+        }
+        else
+        {
+            _isLevel4 = false;
+        }
 
-        _isFillingGauge = true;
+        _currentTime = 0f;
+
+        _isCharge = true;
 
         ComboAnimation(_fourthCombo, true);
 
-        _player.StartCoroutine(GaugeAmount());
+        _player.StartCoroutine(StartCharge());
     }
 
     public override void StateUpdate()
     {
         _animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
 
-        if (_animatorStateInfo.IsName("Attack_Legend_Anim") &&_animatorStateInfo.normalizedTime >= 0.3f)
+        if (_animatorStateInfo.IsName("Attack_Legend_Anim") &&_animatorStateInfo.normalizedTime >= 0.3f && _isCharge)
         {
             _animator.speed = 0.03f;
         }
-        
-        if (!_isFillingGauge)
-        {
-            if (!_inputSystem.IsAttack || _currentDelayTime >= _maxDelayTime)
-            {
-                _player.cameraRoot.EndCameraMovement();
 
-                _animator.speed = 1f;
-
-                _state.ChangeState(State.Idle);
-
-                return;
-            }
-
-            _currentDelayTime += Time.deltaTime;
-        }
+        base.StateUpdate();
     }
 
     public override void StateExit()
@@ -140,63 +134,113 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
         _inputSystem.SetAttack(false);
 
-        _maxDelayTime = 2f;
+        _maxTime = 6f;
 
-        _player.CurrentAmmo -= _player.IsSkillAcitve[1] ? 0 : index + 1;
+        _player.drainSystem.OnSetDrainArea(0.7f);
+
     }
 
-    private IEnumerator GaugeAmount()
+    private IEnumerator StartCharge()
     {
         _effect.Active_FourthEffect(_player.CurrentAmmo);
 
-        index = 0;
+        _index = 0;
 
-        _effect.ChangeColor(index);
+        _effect.ChangeColor(_index);
 
         _player.cameraRoot.StartCameraMovement();
 
+        if (_player.IsPlayerFourthAttackDrainAvailable)
+        {
+            _player.StartCoroutine(ChargeDrain());
+        }
+
         float _elapsedTime = Time.time;
 
-        while (_isFillingGauge)
-        {          
+        while (_isCharge)
+        {
             yield return new WaitForSeconds(0.1f);
 
-            if (Time.time - _elapsedTime >= 1)
+            if(Time.time - _elapsedTime >= _nextTime)
             {
-                index += index == _maxIndex ? 0 : 1;
+                _isDrain = true;
 
-                _elapsedTime += 1;
+                bool isNotLevel4AndLowAmmo = _player.CurrentLevel != 4 
+                    && _player.CurrentAmmo - 1 <= _index;
 
-                _chargeCount--;
+                if (!isNotLevel4AndLowAmmo)
+                {
+                    _index += _index == _maxIndex ? 0 : 1;
 
-                _effect.ChangeColor(index);
+                    _elapsedTime += _nextTime;
+
+                    _effect.ChangeColor(_index);
+                }
             }
-            
-            _gauge += 0.1f;
 
-            if(_gauge >= _maxGauge)
+            _currentTime += 0.1f;
+
+            if(_currentTime >= _maxTime)
             {
-                _isFillingGauge = false;
-                yield break;
+                _isCharge = false;
             }
-            else if(!_inputSystem.IsAttack)
+            else if (!_inputSystem.IsAttack)
             {
+                _isDrain = false;
+
+                _isCharge = false;
+
                 _player.cameraRoot.EndCameraMovement();
 
                 _animator.speed = 1f;
 
+                _animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+
+                while ((_animatorStateInfo.IsName("Attack_Legend_Anim") && _animatorStateInfo.normalizedTime <= 0.8f))
+                {
+                    yield return null;
+                }
+
                 _state.ChangeState(State.Idle);
 
                 yield break;
-            }           
+            }
+        }
+
+        _player.cameraRoot.EndCameraMovement();
+
+        _animator.speed = 1f;
+
+        while ((_animatorStateInfo.IsName("Attack_Legend_Anim") && _animatorStateInfo.normalizedTime <= 0.8f))
+        {
+            yield return null;
+        }
+
+        _state.ChangeState(State.Idle);
+    }
+
+    private IEnumerator ChargeDrain()
+    {        
+        if (!_isDrain)
+        {
+            yield return new WaitWhile(() => !_isDrain);
+        }
+
+        while (_isDrain)
+        {
+            _currentRadius = _maxRadius *_index * 1.2f;
+         
+            _player.drainSystem.OnSetDrainArea(_currentRadius);
+
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
     protected override void ChangeData(int currentLevel)
     {
-        _currentAtkMultiplier = _fourthComboData[index].Atk_Multiplier;
-        _currentStiffT = _fourthComboData[index].Atk4_StiffT;
-        GetLevelSkillGage(currentLevel, index);
+        _currentAtkMultiplier = _fourthComboData[_index].Atk_Multiplier;
+        _currentStiffT = _fourthComboData[_index].AbnStatus_Value;
+        GetLevelSkillGage(currentLevel, _index);
     }
 
     private void FourthAttack()
@@ -207,7 +251,7 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
         _enemyLayer = LayerMask.GetMask("Monster");
 
-        Collider[] colliders = Physics.OverlapBox(_boxPosition, _boxSize /2f, _player.transform.rotation, _enemyLayer);
+        Collider[] colliders = Physics.OverlapBox(_boxPosition, _boxSize /2f * _attackRange_Multiplier, _player.transform.rotation, _enemyLayer);
 
         bool isHit = false;
         foreach(var target in  colliders)
@@ -217,16 +261,17 @@ public class PlayerFourthComboAttack : PlayerComboAttack
             Vector3 directionToPlayer = (_player.transform.position - target.transform.position).normalized;
             Vector3 hitPosition = target.transform.position + directionToPlayer * 1f + Vector3.up;
 
-            if(hit != null)
+            if (hit != null)
             {
                 ChangeData(_player.CurrentLevel);
-                hit.Hit(_player.CurrentAtk * _currentAtkMultiplier * _player._PC_Level.Level_Atk_Power_Multiplier, _currentStiffT, _player.transform);
+                PC_Level hitLevel = _isLevel4 ? _player.dataManager.GetData("P505") as PC_Level : _player._PC_Level;
+                hit.Hit(_player.CurrentAtk * _currentAtkMultiplier * hitLevel.Level_Atk_Power_Multiplier, _currentStiffT, _player.transform);
                 isHit = true;
                 GameObject hitEffect = _effect.GetHitEffect();
                 ParticleSystem hitParticle = hitEffect.GetComponent<ParticleSystem>();
 
                 hitEffect.transform.position = hitPosition;
-                Quaternion lookRotation = Quaternion.LookRotation(_player.transform.position);
+                Quaternion lookRotation = Quaternion.LookRotation(_player.transform.forward);
                 hitEffect.transform.rotation = lookRotation;
 
                 hitParticle.Play();
@@ -238,18 +283,6 @@ public class PlayerFourthComboAttack : PlayerComboAttack
             _player.CurrentSkill += _currentGetSkillGauge;
         }
 
-    }
-
-    
-
-    IEnumerator GetCamera()
-    {
-        yield return new WaitForSeconds(2f);
-
-        CinemachineBrain brain = _player.MainCamera.GetComponent<CinemachineBrain>();
-
-        var cinemaChineObject = brain.ActiveVirtualCamera.VirtualCameraGameObject;
-
-        _virtualCamera = cinemaChineObject.GetComponent<CinemachineVirtualCamera>();
+        _player.CurrentAmmo -= _player.IsSkillAcitve[1] || _isLevel4 ? 0 : _index + 1;
     }
 }

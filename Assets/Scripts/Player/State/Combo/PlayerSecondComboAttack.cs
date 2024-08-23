@@ -19,11 +19,15 @@ public class PlayerSecondComboAttack : PlayerComboAttack
     public Vector3 _boxSize { get; private set; } = new Vector3(1f, 1f, 2.5f);
     private Vector3 _additionalPosition = new Vector3(0f, 1f, 0.7f);
     private LayerMask _enemyLayer;
+    public float _attackRange_Multiplier = 1f;
     #endregion
 
     public override void StateEnter()
     {
+        base.StateEnter();
         _player.IsNext = false;
+
+        _attackRange_Multiplier = _player.CurrentLevel != 4 ? 1f : 2f;
 
         ComboAnimation(_secondCombo, true);
     }
@@ -38,8 +42,6 @@ public class PlayerSecondComboAttack : PlayerComboAttack
     public override void StateExit()
     {
         ComboAnimation(_secondCombo, false);
-
-        base.StateExit();
     }
 
     protected override void ChangeData(int currentLevel)
@@ -56,7 +58,7 @@ public class PlayerSecondComboAttack : PlayerComboAttack
 
         _enemyLayer = LayerMask.GetMask("Monster");
 
-        Collider[] colliders = Physics.OverlapBox(_boxPosition, _boxSize / 2f, _player.transform.rotation, _enemyLayer);
+        Collider[] colliders = Physics.OverlapBox(_boxPosition, _boxSize / 2f * _attackRange_Multiplier, _player.transform.rotation, _enemyLayer);
 
         bool isHit = false;
         foreach (var target in colliders)
@@ -87,6 +89,8 @@ public class PlayerSecondComboAttack : PlayerComboAttack
         {
             _player.CurrentSkill += _currentGetSkillGauge;
         }
+
+        _player.CurrentAmmo -= _player.IsSkillAcitve[1] ? 0 : _player._PC_Level.Level_Consumption;
     }
 }
 

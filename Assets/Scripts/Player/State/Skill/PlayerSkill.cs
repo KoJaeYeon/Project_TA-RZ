@@ -69,6 +69,7 @@ public class PlayerSkill : PlayerState
 
         if(skillIndex == 3)
         {
+            _rigidBody.velocity = Vector3.down * 9;
             if (_animatorStateInfo.IsName("Skill_3_2") && _animatorStateInfo.normalizedTime >= 0.99f || _player.IsSkillAnimationEnd)
             {
                 _state.ChangeState(State.Idle);

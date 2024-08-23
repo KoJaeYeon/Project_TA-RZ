@@ -6,7 +6,7 @@ using QFX.SFX;
 public class PlayerDash : PlayerState
 {
     public PlayerDash(Player player) : base(player) { }
-    private WaitForSeconds _coolTime = new WaitForSeconds(0.5f);
+    private WaitForSeconds _coolTime = new WaitForSeconds(0.0f);
 
     private float _dashPower = 15f;
     private float _dashTime;
@@ -91,6 +91,16 @@ public class PlayerDash : PlayerState
         if (_inputSystem.Input == Vector2.zero)
         {
             _player.AllgnToCamera();
+        }
+        else
+        {
+            Vector3 inputDirection = new Vector3(_inputSystem.Input.x, 0f, _inputSystem.Input.y).normalized;
+            float _targetRotation;
+
+            _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
+                _player.MainCamera.transform.eulerAngles.y;
+
+            _player.transform.rotation = Quaternion.Euler(0f, _targetRotation, 0f);
         }
 
         _player.Cloner.Run();

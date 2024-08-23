@@ -2,7 +2,7 @@ using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DataManager
+public class DataManager : MonoBehaviour
 {
     Dictionary<string, Data> _dataDictionary = new Dictionary<string, Data>();
 
@@ -63,8 +63,8 @@ public class DataManager
     {
         switch (urlName)
         {
-            case "_PCStat_URL":
-                Process_PCStat_Data(data);
+            case "_PC_Stat_URL":
+                Process_PC_Stat_Data(data);
                 break;
             case "_PC_Level_URL":
                 Process_PC_Level_Data(data);
@@ -78,13 +78,16 @@ public class DataManager
             case "_Monster_Stat_URL":
                 Process_Monster_Stat_Data(data);
                 break;
+            case "_PC_Melee_URL":
+                Process_PC_Melee_Data(data);
+                break;
             default:
                 Debug.LogError($"Unknown URL name: {urlName}");
                 break;
         }
     }
 
-    private void Process_PCStat_Data(string data)
+    private void Process_PC_Stat_Data(string data)
     {
         JArray jsonArray = JArray.Parse(data);
 
@@ -101,8 +104,11 @@ public class DataManager
             float staminaGain = ParseFloat(item["PC_Common_StaminaGain"]);
             float drainStamina = ParseFloat(item["PC_Common_Drain_Stamina"]);
             float dashStamina = ParseFloat(item["PC_Common_Dash_Stamina"]);
+            float drainMaxRange = ParseFloat(item[nameof(PC_Common_Stat.Drain_MaxRange)]);
+            float rangeSpeed = ParseFloat(item[nameof(PC_Common_Stat.Range_Speed)]);
+            float pullSpeed = ParseFloat(item[nameof(PC_Common_Stat.Pull_Speed)]);
 
-            PC_Common_Stat stat = new PC_Common_Stat(id, type, atkPower, hp, moveSpeed, resouceOwnNum, staminaGain, drainStamina, dashStamina);
+            PC_Common_Stat stat = new PC_Common_Stat(id, type, atkPower, hp, moveSpeed, resouceOwnNum, staminaGain, drainStamina, dashStamina, drainMaxRange, rangeSpeed, pullSpeed);
             AddDataToDataDictionary(idStr, stat);
         }
     }
@@ -155,13 +161,28 @@ public class DataManager
             int arm3SkillGageGet = ParseInt(item["PC_Type1_Arm3_SkillGageGet"]);
             float atk4GageGetMaxT = ParseFloat(item["PC_Type1_Atk4_GageGetMaxT"]);
             float atk4GageKeepT = ParseFloat(item["PC_Type1_Atk4_GageKeepT"]);
-            float atk4StiffT = ParseFloat(item["PC_Type1_Atk4_StiffT"]);
-            float atk3KnockBackT = ParseFloat(item["PC_Type1_Atk3_KnockBackT"]);
+            float abnStatusValue = ParseFloat(item["PC_Type1_AbnStatus_Value"]);
 
-            PC_Attack attack = new PC_Attack(idStr, atkMultiplier, new int[] {arm0SkillGageGet,arm1SkillGageGet,arm2SkillGageGet,arm3SkillGageGet }, atk4GageGetMaxT, atk4GageKeepT, atk4StiffT, atk3KnockBackT);
+            PC_Attack attack = new PC_Attack(idStr, atkMultiplier, new int[] {arm0SkillGageGet,arm1SkillGageGet,arm2SkillGageGet,arm3SkillGageGet }, atk4GageGetMaxT, atk4GageKeepT, abnStatusValue);
             AddDataToDataDictionary(idStr, attack);
         }
     }
+
+    private void Process_PC_Melee_Data(string data)
+    {
+        JArray jsonArray = JArray.Parse(data);
+
+        foreach (var item in jsonArray)
+        {
+            string idStr = item[nameof(PC_Melee.ID)].ToString();
+            float atk4ChargeMaxT = ParseFloat(item[nameof(PC_Melee.Atk4_ChargeMaxT)]);
+            float atk4NextChargeT = ParseFloat(item[nameof(PC_Melee.Atk4_NextChargeT)]);
+
+            PC_Melee skill = new PC_Melee(idStr, atk4ChargeMaxT, atk4NextChargeT);
+            AddDataToDataDictionary(idStr, skill);
+        }
+    }
+
 
     private void Process_Monster_Stat_Data(string data)
     {

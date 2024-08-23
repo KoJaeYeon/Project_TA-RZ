@@ -23,7 +23,11 @@ public class PlayerThirdComboAttack : PlayerComboAttack
 
     public override void StateEnter()
     {
+        base.StateEnter();  
+
         _player.IsNext = false;
+
+        _range = _player.CurrentLevel != 4 ? 5f : 10f;
 
         ComboAnimation(_thirdCombo, true);
     }
@@ -38,8 +42,6 @@ public class PlayerThirdComboAttack : PlayerComboAttack
     public override void StateExit()
     {
         ComboAnimation(_thirdCombo, false);
-
-        base.StateExit();
     }
 
     protected override void ChangeData(int currentLevel)
@@ -67,6 +69,9 @@ public class PlayerThirdComboAttack : PlayerComboAttack
         {
             _player.CurrentSkill += _currentGetSkillGauge;
         }
+
+        _player.CurrentAmmo -= _player.IsSkillAcitve[1] ? 0 : _player._PC_Level.Level_Consumption;
+
     }
 
     //부채꼴 판정
@@ -106,8 +111,8 @@ public class PlayerThirdComboAttack : PlayerComboAttack
         if (hit != null)
         {
             ChangeData(_player.CurrentLevel);
-            hit.Hit(_player.CurrentAtk * _currentAtkMultiplier * _player._PC_Level.Level_Atk_Power_Multiplier, 0f, _player.transform);
-            hit.ApplyKnockback(1f, other.transform);
+            hit.Hit(_player.CurrentAtk * _currentAtkMultiplier * _player._PC_Level.Level_Atk_Power_Multiplier, _currentStiffT, _player.transform);
+            hit.ApplyKnockback(_currentStiffT, other.transform);
             
             GameObject hitEffect = _effect.GetHitEffect();
             ParticleSystem hitParticle = hitEffect.GetComponent<ParticleSystem>();

@@ -8,23 +8,20 @@ using UnityEngine.AI;
 public class Monster_Track : Action
 {
     [SerializeField] SharedMonster Monster;
-    [SerializeField] NavMeshAgent Nav;
+    [SerializeField] SharedNavmesh Nav;
     public override TaskStatus OnUpdate()
     {
         if(Monster.Value.Player.transform == null)
         {
             return TaskStatus.Failure;
         }
-        if (Nav == null)
-        {
-            Nav = GetComponent<NavMeshAgent>();
-        }
+     
 
         if (Monster.Value.Player.transform != null)
         {
-
-            Nav.speed = Monster.Value.Mon_Common_MovementSpeed;
-            Nav.SetDestination(Monster.Value.Player.transform.position);
+            Nav.Value.isStopped = false;  // NavMeshAgent 다시 움직이기
+            Nav.Value.speed = Monster.Value.Mon_Common_MovementSpeed;
+            Nav.Value.SetDestination(Monster.Value.Player.transform.position);
             return TaskStatus.Success;
         }
         else

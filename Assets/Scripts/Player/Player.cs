@@ -4,6 +4,7 @@ using System.ComponentModel;
 using UnityEngine;
 using Zenject;
 using QFX.SFX;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour, IHit
 {
@@ -11,6 +12,7 @@ public class Player : MonoBehaviour, IHit
     [Inject] private PlayerManager _playerManager { get; }
     [Inject] public DataManager dataManager { get; }
     [Inject] public CameraRoot cameraRoot { get; }
+    [Inject] public DrainSystem drainSystem { get; }
     #endregion
 
     #region PlayerComponent
@@ -46,6 +48,8 @@ public class Player : MonoBehaviour, IHit
     public float[] _skillCounption { get; private set; } = new float[4] { 25, 50, 75, 100 };
     public bool IsSkillAnimationEnd { get; set; } = true;
     public int CurrentLevel { get; set; }
+
+    public bool IsPlayerFourthAttackDrainAvailable = false;
 
     public float CurrentHP
     {
@@ -131,6 +135,15 @@ public class Player : MonoBehaviour, IHit
                 return;
 
             _currentAmmo = value;
+
+            if (_currentAmmo == _playerStat.Resource_Own_Num)
+            {
+                drainSystem.OnSetActiveDrainSystem(false);
+            }
+            else
+            {
+                drainSystem.OnSetActiveDrainSystem(true);
+            }
             OnPropertyChanged(nameof(CurrentAmmo));
         }
     }
@@ -200,6 +213,14 @@ public class Player : MonoBehaviour, IHit
         {
             CurrentAmmo += 10;
         }
+        else if (Input.GetKeyDown(KeyCode.F11))
+        {
+            IsPlayerFourthAttackDrainAvailable = !IsPlayerFourthAttackDrainAvailable;
+        }
+        else if (Input.GetKeyDown(KeyCode.F12))
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 
     private void InitializePlayer()
@@ -252,6 +273,17 @@ public class Player : MonoBehaviour, IHit
     {
         return CurrentStamina > 0;
     }
+    //public void DrainCheck()
+    //{
+
+    //    var _animatorStateInfo = animato.GetCurrentAnimatorStateInfo(0);
+
+    //    if (_animatorStateInfo.IsName("Attack_Legend_Anim") && _animatorStateInfo.normalizedTime >= 0.3f)
+    //    {
+    //        _animator.speed = 0.03f;
+    //    }
+    //}
+
 
     public bool SkillCheck()
     {
@@ -262,6 +294,8 @@ public class Player : MonoBehaviour, IHit
     {
         this._PC_Level = _PC_Level;
     }
+
+
 
     public void AllgnToCamera()
     {
@@ -274,29 +308,22 @@ public class Player : MonoBehaviour, IHit
 
     IEnumerator LoadStat()
     {
-        while (true)
-        {
-            var stat = dataManager.GetStat("P101") as PC_Common_Stat;
-            if (stat == null)
-            {
-                Debug.Log("Player의 스탯을 받아오지 못했습니다.");
-                yield return new WaitForSeconds(1f);
-            }
-            else
-            {
-                _playerStat = stat;
-                Debug.Log("Player의 스탯을 성공적으로 받아왔습니다.");
-                CurrentAtk = _playerStat.Atk_Power;                
-                CurrentHP = _playerStat.HP;
-                HP = _playerStat.HP;
-                CurrentStamina = 100;
-                CurrentSkill = 0;
-                CurrentAmmo = 0;
-                OnPropertyChanged(nameof(stat.Resource_Own_Num));
-                yield break;
-            }
+        yield return new WaitWhile(() => {
+            Debug.Log("Player의 데이터를 받아오는 중입니다.");
+            return dataManager.GetStat("P101") == null;
+        });
 
-        }
+        var stat = dataManager.GetStat("P101") as PC_Common_Stat;
+        _playerStat = stat;
+        Debug.Log("Player의 스탯을 성공적으로 받아왔습니다.");
+        CurrentAtk = _playerStat.Atk_Power;
+        CurrentHP = _playerStat.HP;
+        HP = _playerStat.HP;
+        CurrentStamina = 100;
+        CurrentSkill = 0;
+        CurrentAmmo = 0;
+        OnPropertyChanged(nameof(stat.Resource_Own_Num));
+        yield break;
     }
 
     IEnumerator LoadSkillCounsumption()
@@ -340,13 +367,14 @@ public class Player : MonoBehaviour, IHit
             Vector3 boxposition = firstCombo._boxPosition;
             Vector3 boxSize = firstCombo._boxSize;
             Quaternion boxrotation = transform.rotation;
+            float _attackRange_Multiplier = firstCombo._attackRange_Multiplier;
 
             Matrix4x4 originalMatrix = Gizmos.matrix;
 
             Gizmos.matrix = Matrix4x4.TRS(boxposition, boxrotation, Vector3.one);
 
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(Vector3.zero, boxSize);
+            Gizmos.DrawWireCube(Vector3.zero, boxSize * _attackRange_Multiplier);
 
             Gizmos.matrix = originalMatrix; 
         }
@@ -357,13 +385,14 @@ public class Player : MonoBehaviour, IHit
             Vector3 boxposition = secondCombo._boxPosition;
             Vector3 boxSize = secondCombo._boxSize;
             Quaternion boxrotation = transform.rotation;
+            float _attackRange_Multiplier = secondCombo._attackRange_Multiplier;
 
             Matrix4x4 originalMatrix = Gizmos.matrix;
 
             Gizmos.matrix = Matrix4x4.TRS(boxposition, boxrotation, Vector3.one);
 
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(Vector3.zero, boxSize);
+            Gizmos.DrawWireCube(Vector3.zero, boxSize* _attackRange_Multiplier);
 
             Gizmos.matrix = originalMatrix;
         }
@@ -415,7 +444,7 @@ public class Player : MonoBehaviour, IHit
 
             Gizmos.DrawLine(bottom + forward * thirdCombo._range, top + forward * thirdCombo._range);
 
-            //Gizmos.DrawWireSphere(transform.position, thirdCombo._range);
+            Gizmos.DrawWireSphere(transform.position, thirdCombo._range);
         }
 
         else if(_state.CurrentState is PlayerFourthComboAttack)
@@ -425,13 +454,14 @@ public class Player : MonoBehaviour, IHit
             Vector3 boxposition = fourthCombo._boxPosition;
             Vector3 boxSize = fourthCombo._boxSize;
             Quaternion boxrotation = transform.rotation;
+            float _attackRange_Multiplier = fourthCombo._attackRange_Multiplier;
 
             Matrix4x4 originalMatrix = Gizmos.matrix;
 
             Gizmos.matrix = Matrix4x4.TRS(boxposition, boxrotation, Vector3.one);
 
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(Vector3.zero, boxSize);
+            Gizmos.DrawWireCube(Vector3.zero, boxSize * _attackRange_Multiplier);
 
             Gizmos.matrix = originalMatrix;
         }
@@ -456,9 +486,7 @@ public class Player : MonoBehaviour, IHit
         }
         else
         {
-            CurrentHP -= damage;
-
-            if (IsSkillAcitve[3] == true) return;
+            CurrentHP -= damage;            
 
             PlayerHit.Pc_Stiff_Time = paralysisTime;
 
