@@ -1253,7 +1253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83c5845cfd1d1464c889ce98f63cfcd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hitEffect: {fileID: 4035903591278710484, guid: aa122f157eac1c8428ae5db8a315ccd8,
+  _hitEffect: {fileID: 5024009746357069194, guid: f9b03fe45cf9fe947a25a73b2af00812,
     type: 3}
   _effectPosition: {fileID: 1096371256798846863}
   _attackEffectArray:
@@ -3962,6 +3962,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ComboEffectPosition
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465876780682976278, guid: ef69b473580c4c44a80e093a748510df,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465876780682976278, guid: ef69b473580c4c44a80e093a748510df,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.781
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

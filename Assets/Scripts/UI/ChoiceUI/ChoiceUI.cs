@@ -74,6 +74,8 @@ public class ChoiceUI : MonoBehaviour
 
         stageUI.SetActive(false);
 
+        _uiEvent.RequestChangeProgressBar(0.25f);
+
         _mapManager.SetStage(_currentStage, playerObject);
     }
 
