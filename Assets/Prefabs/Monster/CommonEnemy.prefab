@@ -1238,8 +1238,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Attack_Stiff_Time: 1
-  Knockback_Horizontal_Distance: 4
-  Knockback_Vertical_Distance: 2
+  Knockback_Horizontal_Distance: 6
+  Knockback_Vertical_Distance: 3
   TempHPText: {fileID: 6334617907628527674}
 --- !u!95 &3379560720749539961
 Animator:
