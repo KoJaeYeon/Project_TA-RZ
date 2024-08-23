@@ -2633,6 +2633,7 @@ MonoBehaviour:
   _stage1: {fileID: 0}
   _stage2: {fileID: 0}
   _stage3: {fileID: 0}
+  _startPosition: []
 --- !u!4 &1290157076
 Transform:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System;
+using UnityEngine;
 
 public interface IChoiceEvent
 {
-    public void GetChoiceStageEvent(bool isAddEvent, Func<StageType> callBack);
+    public void GetChoiceStageEvent(bool isAddEvent, Action<GameObject> callBack);
 }

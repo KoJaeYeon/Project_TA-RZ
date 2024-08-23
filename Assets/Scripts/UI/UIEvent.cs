@@ -6,12 +6,15 @@ using UnityEngine;
 public class UIEvent
 {
     private IChoiceEvent _choiceStageEvent;
+    private Action<float> _progressCallBack;
+    
 
     public void NullTest()
     {
         Debug.Log("널아님");
     }
 
+    #region ChoiceEvent
     public void RegisterChoiceStageEvent(IChoiceEvent choiceStageEvent)
     {
         if (_choiceStageEvent != null)
@@ -33,7 +36,7 @@ public class UIEvent
         _choiceStageEvent = null;
     }
 
-    public void AddEventChoiceStageEvent(bool isAddEvent, Func<StageType> callBack)
+    public void AddEventChoiceStageEvent(bool isAddEvent, Action<GameObject> callBack)
     {
         if(_choiceStageEvent == null)
         {
@@ -48,6 +51,26 @@ public class UIEvent
 
         _choiceStageEvent.GetChoiceStageEvent(isAddEvent, callBack);
     }
+    #endregion
 
+    #region ProgressUIEvent
+    //이 메서드 호출
+    public void RequestChangeProgressBar(float currentValue)
+    {
+        _progressCallBack?.Invoke(currentValue);
+    }
+
+    public void RegisterChangeProgressUI(ProgressUIViewModel viewModel)
+    {
+        _progressCallBack += viewModel.OnResponseChangeCurrentStage;
+    }
+
+    public void UnRegisterChangeProgressUI(ProgressUIViewModel viewModel)
+    {
+        _progressCallBack -= viewModel.OnResponseChangeCurrentStage;
+    }
+    #endregion
 
 }
+
+
