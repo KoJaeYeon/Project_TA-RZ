@@ -3,51 +3,36 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
+
 public class MapManager : MonoBehaviour
 {
-   
+    private Stage _currentStage;
 
-    [Header("Stage1")]
-    [SerializeField] private GameObject _stage1;
+    private float _progressValue;
+
+    private StageType _currentStageType;
+
+    public float ProgressValue 
+    {
+        get { return _progressValue; }
+        set {  _progressValue = value; } 
+    }
+
+    private void Awake()
+    {
+        _progressValue = 0f;
+    }
+
+    public void SetStage(StageType newStage, Player player, float currentProgress)
+    {
+        _currentStageType = newStage;
+
+
+
+
+
+
+    }
+
     
-
-    [Header("Stage2")]
-    [SerializeField] private GameObject _stage2;
-    
-
-    [Header("Stage3")]
-    [SerializeField] private GameObject _stage3;
-
-    [Header("StageStartPosition")]
-    [SerializeField] private Transform[] _startPosition;
-    
-
-    private void Start()
-    {
-        InitializeMapManager();
-    }
-
-    private void InitializeMapManager()
-    {
-
-    }
-
-    public void SetStage(StageType newStage, GameObject playerObject)
-    {
-        Debug.Log("스테이지 시작");
-
-
-
-
-    }
-
-    private void ActiveObject()
-    {
-
-    }
-
-    private void DeActiveObject()
-    {
-
-    }
 }
