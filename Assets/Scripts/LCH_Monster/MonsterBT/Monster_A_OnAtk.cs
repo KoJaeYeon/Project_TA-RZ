@@ -11,7 +11,6 @@ public class Monster_A_OnAtk : Action
     [SerializeField] SharedMonster_A Monster;
     public override TaskStatus OnUpdate()
     {
-        var targetTransform = Monster.Value.Player.transform.position;
         Monster.Value.StartAtk();        
         return TaskStatus.Success;
     }

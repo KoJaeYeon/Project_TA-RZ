@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 627314663591663135}
   - component: {fileID: 7290984718087113410}
   - component: {fileID: 7323405881788347100}
+  - component: {fileID: 5699379824372410059}
   m_Layer: 0
-  m_Name: Cylinder (1)
+  m_Name: Range
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -83,6 +84,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5699379824372410059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 955243857650550895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 252107adf7a3a1a44ae016fe07d62084, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  growDuration: 1
+  targetScale: {x: 1, y: 1, z: 1}
 --- !u!1 &6540185830517008484
 GameObject:
   m_ObjectHideFlags: 0
