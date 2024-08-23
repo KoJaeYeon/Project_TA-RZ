@@ -59,7 +59,7 @@ public class RootContoller : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            Hurt(500);
+            Hurt(100);
         }
     }
 
@@ -112,7 +112,7 @@ public class RootContoller : MonoBehaviour
 
             float distance = Vector3.Distance(transform.position, _boss.PlayerPos());
 
-            if (_attackRange < distance)
+            if (_attackRange < distance && !_boss.isGimmick)
             {
                 HideRoot();
             }
