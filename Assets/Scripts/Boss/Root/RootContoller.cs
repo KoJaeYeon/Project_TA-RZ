@@ -57,7 +57,7 @@ public class RootContoller : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.H))
         {
             Hurt(100);
         }
