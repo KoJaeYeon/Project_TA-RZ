@@ -7,6 +7,7 @@ using UnityEngine;
 public class BTC_Boss_StandartPhaseHp : BossConditional
 {
     [SerializeField] private SharedFloat _standardHp;
+    [SerializeField] private BossPhase _phase;
 
     public override TaskStatus OnUpdate()
     {
@@ -17,6 +18,8 @@ public class BTC_Boss_StandartPhaseHp : BossConditional
         }
 
         if (_owner.CheckPhase(_standardHp.Value)) return TaskStatus.Running;
+
+        _boss.Value.phase = _phase;
 
         return TaskStatus.Failure;
     }
