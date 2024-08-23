@@ -50,7 +50,6 @@ public class PlayerSkill : PlayerState
         {
             //액티브 스킬
             _player.IsSkillAcitve[skillIndex - 1] = false;
-            _skillSystem.SetActive_Skiil_Effect(skillIndex, false);
         }
     }
 
@@ -165,6 +164,7 @@ public class PlayerSkill : PlayerState
         {
             yield return new WaitForSeconds(_PC_Skill.Skill_Value[0]);
             _animator.SetTrigger(_skill_3);
+            _skillSystem.SetActive_Skiil_Effect(skillIndex, false);
         }
         else
         {
