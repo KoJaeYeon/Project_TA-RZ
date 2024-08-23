@@ -6,24 +6,17 @@ using Zenject;
 
 public class ChoiceUI : MonoBehaviour
 {
-    [Header("ChoiceUI_Triple")]
-    [SerializeField] private GameObject _tripleUI;
+    [Header("Normal")]
+    [SerializeField] private GameObject _normalStageUI;
 
-    [Header("ChoiceUI_Dual_QE")]
-    [SerializeField] private GameObject _dualQE;
-
-    [Header("ChoiceUI_Dual_QN")]
-    [SerializeField] private GameObject _dualQN;
-
-    [Header("ChoiceUI_Dual_EN")]
-    [SerializeField] private GameObject _dualEN;
-
-    [Header("ChoiceUI_Boss")]
-    [SerializeField] private GameObject _bossUI;
+    [Header("Boss")]
+    [SerializeField] private GameObject _bossStageUI;
 
     [Inject] private UIEvent _uiEvent;
+    [Inject] private MapManager _mapManager;
 
-    private List<GameObject> _uiList;
+    private List<GameObject> _normalList;
+    private List<GameObject> _bossList;
 
     private StageType _currentStage;
 
@@ -41,44 +34,54 @@ public class ChoiceUI : MonoBehaviour
 
     private void InitializeChoiceUI()
     {
-        _uiList = new List<GameObject>();   
+        _normalList = new List<GameObject>();
 
-        foreach(Transform childTransform in gameObject.transform)
+        foreach(Transform normalChild in _normalStageUI.transform)
         {
-            childTransform.gameObject.SetActive(false);
-
-            if(childTransform.gameObject != _bossUI)
+            if(_normalStageUI != null)
             {
-                _uiList.Add(childTransform.gameObject);
+                normalChild.gameObject.SetActive(false);
+                _normalList.Add(normalChild.gameObject);
+            }
+        }
+
+        _bossList = new List<GameObject>();
+
+        foreach(Transform bossChild in _bossStageUI.transform)
+        {
+            if(_bossStageUI != null)
+            {
+                bossChild.gameObject.SetActive(false);
+                _bossList.Add(bossChild.gameObject);
             }
         }
     }
 
-    public StageType SetStage()
+    public void SetStage(GameObject playerObject)
     {
         _isChoice = false;
 
-        GameObject stageUI = RandomUI();
-
-        stageUI.SetActive(true);
-
-        StartCoroutine(IsChoice(stageUI));
-
-        return _currentStage;
+        StartCoroutine(ChoiceStage(playerObject));
     }
 
-    private IEnumerator IsChoice(GameObject stageUI)
+    private IEnumerator ChoiceStage(GameObject playerObject)
     {
+        GameObject stageUI = RandomUI();
+        
+        stageUI.SetActive(true);
+
         yield return new WaitWhile(() => !_isChoice);
 
         stageUI.SetActive(false);
+
+        _mapManager.SetStage(_currentStage, playerObject);
     }
 
     private GameObject RandomUI()
     {
-        int randomValue = Random.Range(0, _uiList.Count);
+        int randomValue = Random.Range(0, _normalList.Count);
 
-        GameObject randomUIobject = _uiList[randomValue];
+        GameObject randomUIobject = _normalList[randomValue];
 
         return randomUIobject;
     }

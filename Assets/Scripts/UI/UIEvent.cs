@@ -33,7 +33,7 @@ public class UIEvent
         _choiceStageEvent = null;
     }
 
-    public void AddEventChoiceStageEvent(bool isAddEvent, Func<StageType> callBack)
+    public void AddEventChoiceStageEvent(bool isAddEvent, Action<GameObject> callBack)
     {
         if(_choiceStageEvent == null)
         {
