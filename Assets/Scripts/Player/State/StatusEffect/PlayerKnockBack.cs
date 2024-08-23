@@ -46,7 +46,7 @@ public class PlayerKnockBack : PlayerStaus
 
         knockBackDirection.Normalize();
 
-        Vector3 knockBack = (knockBackDirection + Vector3.up) * Pc_Knock_Back_Speed;
+        Vector3 knockBack = (knockBackDirection * _player.Knockback_Horizontal_Distance + Vector3.up *_player.Knockback_Vertical_Distance) * Pc_Knock_Back_Speed;
 
         _rigidBody.AddForce(knockBack, ForceMode.Impulse);
 
