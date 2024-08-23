@@ -19,6 +19,14 @@ public class Portal : MonoBehaviour, IChoiceEvent
         }
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.H))
+        {
+            _uiEvent.RequestChangeProgressBar(0.25f);
+        }
+    }
+
     public void GetChoiceStageEvent(bool isAddEvent, Action<GameObject> callBack)
     {
         if (isAddEvent)
