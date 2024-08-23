@@ -1072,10 +1072,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6148404288403476671}
+  - component: {fileID: 5411905780768912091}
   - component: {fileID: 1707387346318436322}
   - component: {fileID: 6576206917759432424}
   - component: {fileID: 2484112474229117287}
-  - component: {fileID: 5411905780768912091}
   - component: {fileID: 1379528210817464482}
   - component: {fileID: 1389090638243306268}
   - component: {fileID: 3438836091937741903}
@@ -1106,6 +1106,23 @@ Transform:
   - {fileID: 4785585584180145284}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5411905780768912091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3740475152086547784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a70d51fbf2356f645a6cb8773c400e94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerAttackRange:
+  - 1
+  - 1
+  - 1
+  - 1
 --- !u!114 &1707387346318436322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1187,21 +1204,6 @@ CapsuleCollider:
   m_Height: 1.6
   m_Direction: 1
   m_Center: {x: 0, y: 0.8, z: 0}
---- !u!114 &5411905780768912091
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3740475152086547784}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a70d51fbf2356f645a6cb8773c400e94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _currentAmmo: 0
-  _currentSkill: 0
-  IsPlayerFourthAttackDrainAvailable: 0
 --- !u!114 &1379528210817464482
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ public class PlayerFourthComboAttack : PlayerComboAttack
         _event.AddEvent(AttackType.fourthAttack, FourthAttack);
 
         player.StartCoroutine(LoadData("A204"));
+        _boxSize *= _player.PlayerAttackRange[3];
     }
 
     private PC_Attack[] _fourthComboData = new PC_Attack[5];

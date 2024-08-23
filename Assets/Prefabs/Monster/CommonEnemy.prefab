@@ -1237,9 +1237,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c5f187acb52704d8a2f05b00e941af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attack_Stiff_Time: 0
-  knockback_Horizontal_Distance: 4
-  knockback_Vertical_Distance: 8
+  Attack_Stiff_Time: 1
+  Knockback_Horizontal_Distance: 4
+  Knockback_Vertical_Distance: 2
   TempHPText: {fileID: 6334617907628527674}
 --- !u!95 &3379560720749539961
 Animator:

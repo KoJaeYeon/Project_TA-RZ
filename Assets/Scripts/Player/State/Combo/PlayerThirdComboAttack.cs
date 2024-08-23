@@ -11,6 +11,7 @@ public class PlayerThirdComboAttack : PlayerComboAttack
         _event.AddEvent(AttackType.thirdAttack, ThirdAttack);
 
         player.StartCoroutine(LoadData("A203"));
+        rangeMultiplier *= _player.PlayerAttackRange[2];
     }
 
     #region Overlap
@@ -19,6 +20,7 @@ public class PlayerThirdComboAttack : PlayerComboAttack
     public float _height { get; private set; } = 5f;
     public float _segments { get; private set; } = 10f;
     private LayerMask _enemyLayer;
+    private float rangeMultiplier = 1;
     #endregion
 
     public override void StateEnter()
@@ -27,7 +29,7 @@ public class PlayerThirdComboAttack : PlayerComboAttack
 
         _player.IsNext = false;
 
-        _range = _player.CurrentLevel != 4 ? 5f : 10f;
+        _range = _player.CurrentLevel != 4 ? 5f * rangeMultiplier : 10f * rangeMultiplier;
 
         ComboAnimation(_thirdCombo, true);
     }
