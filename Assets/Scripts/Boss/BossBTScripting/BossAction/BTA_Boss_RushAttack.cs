@@ -24,6 +24,8 @@ public class BTA_Boss_RushAttack : BossAction
         _isDash = true;
 
         direction = _owner.SetRushDirection();
+
+        _rb.isKinematic = false;
     }
 
     public override TaskStatus OnUpdate()
@@ -40,6 +42,7 @@ public class BTA_Boss_RushAttack : BossAction
                 _rb.velocity = Vector3.zero;
                 _isDash = false;
                 _anim.SetBool(_hashRush, false);
+                _rb.isKinematic = true;
                 return TaskStatus.Success;
             }
         }

@@ -273,6 +273,22 @@ public class BossController : MonoBehaviour
 
     #region Phase2
 
+    //Phase1 잔재 삭제
+    public void InActiveOnPhaseTwo()
+    { 
+        _gimmick.gameObject.SetActive(false);
+        _markRoot.SetActive(false);
+        foreach (var root in _roots)
+        {
+            root.gameObject.SetActive(false);
+        }
+        foreach (var explosion in _firstExplosion)
+        {
+            explosion.SetActive(false);
+        }
+        _secondExplosion.SetActive(false);
+    }
+
     //보스 대쉬 공격
     public void DrawRushTrail()
     {
