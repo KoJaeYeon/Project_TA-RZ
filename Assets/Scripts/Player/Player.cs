@@ -9,7 +9,6 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour, IHit
 {
     #region InJect
-    [Inject] private PlayerManager _playerManager { get; }
     [Inject] public DataManager dataManager { get; }
     [Inject] public CameraRoot cameraRoot { get; }
     [Inject] public DrainSystem drainSystem { get; }
@@ -225,7 +224,6 @@ public class Player : MonoBehaviour, IHit
 
     private void InitializePlayer()
     {
-        _playerManager.SetPlayerObject(gameObject);
         StartCoroutine(LoadStat());
         StartCoroutine(LoadSkillCounsumption());
     }
