@@ -114,7 +114,7 @@ public class PlayerThirdComboAttack : PlayerComboAttack
         {
             ChangeData(_player.CurrentLevel);
             hit.Hit(_player.CurrentAtk * _currentAtkMultiplier * _player._PC_Level.Level_Atk_Power_Multiplier, _currentStiffT, _player.transform);
-            hit.ApplyKnockback(_currentStiffT, other.transform);
+            hit.ApplyKnockback(_currentStiffT, _player.transform);
             
             GameObject hitEffect = _effect.GetHitEffect();
             ParticleSystem hitParticle = hitEffect.GetComponent<ParticleSystem>();

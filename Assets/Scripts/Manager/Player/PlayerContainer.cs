@@ -5,8 +5,6 @@ public class PlayerContainer : MonoInstaller
 {
     public override void InstallBindings()
     {
-        Container.Bind<PlayerUIViewModel>().AsSingle();
-
         if(FindObjectOfType<Player>() != null)
         {
             Container.Bind<Player>().FromComponentInHierarchy().AsSingle();
