@@ -5,6 +5,7 @@ using UnityEngine;
 using Zenject;
 using QFX.SFX;
 using UnityEngine.SceneManagement;
+using BehaviorDesigner.Runtime.ObjectDrawers;
 
 public class Player : MonoBehaviour, IHit
 {
@@ -36,10 +37,14 @@ public class Player : MonoBehaviour, IHit
     #endregion
 
     #region PlayerValue
+    [Header("공격 사거리 배율 조절")]
+    [Range(0, 5)][SerializeField] float[] playerAttackRange = new float[4] {1,1,1,1};
+    public float[] PlayerAttackRange { get { return playerAttackRange; } }
+
     public SFX_MotionCloner Cloner { get { return _cloner; } }
-    [SerializeField] int _currentAmmo;
+    int _currentAmmo;
     float _currentHP;
-    [SerializeField] float _currentSkill;
+    float _currentSkill;
     float _currentStamina;
     public float CurrentAtk { get; set; }
     public bool IsActiveStaminaRecovery { get; set; } = true;
@@ -49,7 +54,8 @@ public class Player : MonoBehaviour, IHit
     public bool IsSkillAnimationEnd { get; set; } = true;
     public int CurrentLevel { get; set; }
 
-    public bool IsPlayerFourthAttackDrainAvailable = false;
+    //블루칩 기능
+    public bool IsPlayerFourthAttackDrainAvailable { get; set; } = false;
 
     public float CurrentHP
     {
