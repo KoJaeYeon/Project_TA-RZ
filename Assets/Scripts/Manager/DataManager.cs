@@ -161,10 +161,9 @@ public class DataManager : MonoBehaviour
             int arm3SkillGageGet = ParseInt(item["PC_Type1_Arm3_SkillGageGet"]);
             float atk4GageGetMaxT = ParseFloat(item["PC_Type1_Atk4_GageGetMaxT"]);
             float atk4GageKeepT = ParseFloat(item["PC_Type1_Atk4_GageKeepT"]);
-            float atk4StiffT = ParseFloat(item["PC_Type1_Atk4_StiffT"]);
-            float atk3KnockBackT = ParseFloat(item["PC_Type1_Atk3_KnockBackT"]);
+            float abnStatusValue = ParseFloat(item["PC_Type1_AbnStatus_Value"]);
 
-            PC_Attack attack = new PC_Attack(idStr, atkMultiplier, new int[] {arm0SkillGageGet,arm1SkillGageGet,arm2SkillGageGet,arm3SkillGageGet }, atk4GageGetMaxT, atk4GageKeepT, atk4StiffT, atk3KnockBackT);
+            PC_Attack attack = new PC_Attack(idStr, atkMultiplier, new int[] {arm0SkillGageGet,arm1SkillGageGet,arm2SkillGageGet,arm3SkillGageGet }, atk4GageGetMaxT, atk4GageKeepT, abnStatusValue);
             AddDataToDataDictionary(idStr, attack);
         }
     }

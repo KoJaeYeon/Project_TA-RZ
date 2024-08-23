@@ -135,6 +135,15 @@ public class Player : MonoBehaviour, IHit
                 return;
 
             _currentAmmo = value;
+
+            if (_currentAmmo == _playerStat.Resource_Own_Num)
+            {
+                drainSystem.OnSetActiveDrainSystem(false);
+            }
+            else
+            {
+                drainSystem.OnSetActiveDrainSystem(true);
+            }
             OnPropertyChanged(nameof(CurrentAmmo));
         }
     }
@@ -264,6 +273,17 @@ public class Player : MonoBehaviour, IHit
     {
         return CurrentStamina > 0;
     }
+    //public void DrainCheck()
+    //{
+
+    //    var _animatorStateInfo = animato.GetCurrentAnimatorStateInfo(0);
+
+    //    if (_animatorStateInfo.IsName("Attack_Legend_Anim") && _animatorStateInfo.normalizedTime >= 0.3f)
+    //    {
+    //        _animator.speed = 0.03f;
+    //    }
+    //}
+
 
     public bool SkillCheck()
     {
@@ -274,6 +294,8 @@ public class Player : MonoBehaviour, IHit
     {
         this._PC_Level = _PC_Level;
     }
+
+
 
     public void AllgnToCamera()
     {
@@ -352,13 +374,14 @@ public class Player : MonoBehaviour, IHit
             Vector3 boxposition = firstCombo._boxPosition;
             Vector3 boxSize = firstCombo._boxSize;
             Quaternion boxrotation = transform.rotation;
+            float _attackRange_Multiplier = firstCombo._attackRange_Multiplier;
 
             Matrix4x4 originalMatrix = Gizmos.matrix;
 
             Gizmos.matrix = Matrix4x4.TRS(boxposition, boxrotation, Vector3.one);
 
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(Vector3.zero, boxSize);
+            Gizmos.DrawWireCube(Vector3.zero, boxSize * _attackRange_Multiplier);
 
             Gizmos.matrix = originalMatrix; 
         }
@@ -369,13 +392,14 @@ public class Player : MonoBehaviour, IHit
             Vector3 boxposition = secondCombo._boxPosition;
             Vector3 boxSize = secondCombo._boxSize;
             Quaternion boxrotation = transform.rotation;
+            float _attackRange_Multiplier = secondCombo._attackRange_Multiplier;
 
             Matrix4x4 originalMatrix = Gizmos.matrix;
 
             Gizmos.matrix = Matrix4x4.TRS(boxposition, boxrotation, Vector3.one);
 
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(Vector3.zero, boxSize);
+            Gizmos.DrawWireCube(Vector3.zero, boxSize* _attackRange_Multiplier);
 
             Gizmos.matrix = originalMatrix;
         }
@@ -427,7 +451,7 @@ public class Player : MonoBehaviour, IHit
 
             Gizmos.DrawLine(bottom + forward * thirdCombo._range, top + forward * thirdCombo._range);
 
-            //Gizmos.DrawWireSphere(transform.position, thirdCombo._range);
+            Gizmos.DrawWireSphere(transform.position, thirdCombo._range);
         }
 
         else if(_state.CurrentState is PlayerFourthComboAttack)
@@ -437,13 +461,14 @@ public class Player : MonoBehaviour, IHit
             Vector3 boxposition = fourthCombo._boxPosition;
             Vector3 boxSize = fourthCombo._boxSize;
             Quaternion boxrotation = transform.rotation;
+            float _attackRange_Multiplier = fourthCombo._attackRange_Multiplier;
 
             Matrix4x4 originalMatrix = Gizmos.matrix;
 
             Gizmos.matrix = Matrix4x4.TRS(boxposition, boxrotation, Vector3.one);
 
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(Vector3.zero, boxSize);
+            Gizmos.DrawWireCube(Vector3.zero, boxSize * _attackRange_Multiplier);
 
             Gizmos.matrix = originalMatrix;
         }

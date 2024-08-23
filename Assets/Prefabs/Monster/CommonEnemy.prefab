@@ -1193,10 +1193,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3379560720759086487}
+  - component: {fileID: 2036722526376663656}
   - component: {fileID: 3379560720749539961}
   - component: {fileID: 2524027233888448495}
   - component: {fileID: 7739591162682787326}
-  - component: {fileID: 2036722526376663656}
   - component: {fileID: 175445102976115375}
   - component: {fileID: 2444760024111282628}
   m_Layer: 7
@@ -1225,6 +1225,22 @@ Transform:
   - {fileID: 8435793000468884280}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2036722526376663656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3379560720758915511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66c5f187acb52704d8a2f05b00e941af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attack_Stiff_Time: 0
+  knockback_Horizontal_Distance: 4
+  knockback_Vertical_Distance: 8
+  TempHPText: {fileID: 6334617907628527674}
 --- !u!95 &3379560720749539961
 Animator:
   serializedVersion: 5
@@ -1311,34 +1327,6 @@ MonoBehaviour:
       Version: 1.7.8
   gizmoViewMode: 2
   showBehaviorDesignerGizmo: 1
---- !u!114 &2036722526376663656
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3379560720758915511}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66c5f187acb52704d8a2f05b00e941af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Mon_Common_Stat_Hp: 100
-  Mon_Common_Damage: 0
-  Mon_Common_AttackArea: 0
-  Mon_Common_Range: 2
-  Mon_Common_DetectArea: 5
-  Mon_Common_DetectTime: 0
-  Mon_Common_MovementSpeed: 3
-  Mon_Common_CoolTime: 2
-  Mon_Knockback_Time: 2
-  isCollsion: 0
-  isDamaged: 0
-  isAtk: 1
-  isKnockBack: 0
-  Mon_Common_Hp_Remain: 0
-  targetKnockbackTime: 0
-  TempHPText: {fileID: 6334617907628527674}
 --- !u!136 &175445102976115375
 CapsuleCollider:
   m_ObjectHideFlags: 0

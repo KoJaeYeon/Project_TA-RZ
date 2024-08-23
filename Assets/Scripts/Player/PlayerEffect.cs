@@ -30,11 +30,6 @@ public class PlayerEffect : MonoBehaviour
         InitializePlayerEffect();
     }
 
-    private void Update()
-    {
-        
-    }
-
     private void InitializePlayerEffect()
     {
         //_attackEffectDic ??= new(); 또 다른 초기화 방법.
@@ -90,6 +85,8 @@ public class PlayerEffect : MonoBehaviour
 
         firstEffect.transform.localPosition = Vector3.zero;
         firstEffect.transform.localRotation = Quaternion.identity;
+        firstEffect.transform.localScale = Vector3.one;
+        firstEffect.transform.localScale *= _player.CurrentLevel != 4 ? 1 : 2;
         firstEffect.transform.parent = null;
         effectParticle.Play();
 
@@ -103,6 +100,8 @@ public class PlayerEffect : MonoBehaviour
 
         secondEffect.transform.localPosition = Vector3.zero;
         secondEffect.transform.localRotation = Quaternion.identity;
+        secondEffect.transform.localScale = Vector3.one;
+        secondEffect.transform.localScale *= _player.CurrentLevel != 4 ? 1 : 2;
         secondEffect.transform.parent = null;
         effectParticle.Play();
 
@@ -116,6 +115,8 @@ public class PlayerEffect : MonoBehaviour
 
         thirdEffect.transform.localPosition = Vector3.zero;
         thirdEffect.transform.localRotation = Quaternion.Euler(-90f, 0f, 0f);
+        thirdEffect.transform.localScale = Vector3.one;
+        thirdEffect.transform.localScale *= _player.CurrentLevel != 4 ? 1 : 2;
 
         thirdEffect.transform.parent = null;
         effectParticle.Play();
@@ -141,6 +142,19 @@ public class PlayerEffect : MonoBehaviour
     {
         GameObject fourEffect = GetAttackEffect(AttackType.fourthAttack);
         fourEffect.SetActive(false);
+    }
+
+    public void Active_FinishEffect()
+    {
+        GameObject finishEffect = GetAttackEffect(AttackType.finishAttack);
+        ParticleSystem effectParticle = finishEffect.GetComponent<ParticleSystem>();
+
+        finishEffect.transform.localRotation = Quaternion.identity;
+        finishEffect.transform.localPosition = Vector3.zero;
+        finishEffect.transform.parent = null;
+        effectParticle .Play();
+
+        StartCoroutine(ReturnFinishEffect(finishEffect));
     }
 
     #region Get
@@ -192,6 +206,13 @@ public class PlayerEffect : MonoBehaviour
         yield return _returnTime;
 
         effect.transform.SetParent(GetAttackEffectTransform(AttackType.thirdAttack));
+    }
+
+    private IEnumerator ReturnFinishEffect(GameObject effect)
+    {
+        yield return new WaitForSeconds(1.5f);
+
+        effect.transform.SetParent(GetAttackEffectTransform(AttackType.finishAttack));
     }
 
     #endregion

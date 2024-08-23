@@ -10,11 +10,11 @@ public class Monster_CheckState : Conditional
 
     public override TaskStatus OnUpdate()
     {
-        if (Monster.Value.isKnockBack==true)
+        if (Monster.Value.IsKnockBack==true)
         {
             return TaskStatus.Failure;
         }
-        else if(Monster.Value.isDamaged==true)
+        else if(Monster.Value.IsDamaged==true)
         {
             return TaskStatus.Failure;
         }

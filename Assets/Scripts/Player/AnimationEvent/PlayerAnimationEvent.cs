@@ -9,7 +9,8 @@ public enum AttackType
     firstAttack,
     secondAttack,
     thirdAttack,
-    fourthAttack
+    fourthAttack,
+    finishAttack
 }
 
 public class PlayerAnimationEvent : MonoBehaviour
@@ -18,8 +19,6 @@ public class PlayerAnimationEvent : MonoBehaviour
     private Player _player;
     private PlayerEffect _effect;
     private Dictionary<AttackType, Action> _attackDictionary = new Dictionary<AttackType, Action>();
-
-    
 
     private void Start()
     {
@@ -66,7 +65,8 @@ public class PlayerAnimationEvent : MonoBehaviour
     //네 번째 공격 이펙트
     public void FourthAttack()
     {
-        _effect.Active_FirstEffect();
+        //_effect.Active_FirstEffect();
+        _effect.Active_FinishEffect();
         _attackDictionary[AttackType.fourthAttack].Invoke();
     }
 

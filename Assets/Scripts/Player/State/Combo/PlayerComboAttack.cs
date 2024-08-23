@@ -33,7 +33,7 @@ public class PlayerComboAttack : PlayerState
     protected virtual void ChangeData(int currentLevel)
     {
         _currentAtkMultiplier = _comboData.Atk_Multiplier;
-        _currentStiffT = _comboData.Atk4_StiffT;
+        _currentStiffT = _comboData.AbnStatus_Value;
 
         if (currentLevel == 4)
         {
@@ -57,6 +57,8 @@ public class PlayerComboAttack : PlayerState
 
     protected void OnComboAttackUpdate(string attackName, State nextCombo)
     {
+        
+            
         _animatorStateInfo = _animator.GetCurrentAnimatorStateInfo(0);
 
         if (_animatorStateInfo.IsName(attackName) && _animatorStateInfo.normalizedTime >= 0.99f)
@@ -66,9 +68,12 @@ public class PlayerComboAttack : PlayerState
             return;
         }
         else
+        {
             AttackRotation();
+        }
 
-        if(nextCombo is State.FourthComboAttack)
+
+        if (nextCombo is State.FourthComboAttack)
         {
             if(_player.CurrentAmmo <= 1 && _player.CurrentLevel != 4)
             {
@@ -80,6 +85,11 @@ public class PlayerComboAttack : PlayerState
         {
             _state.ChangeState(nextCombo);
         }
+    }
+
+    public override void StateEnter()
+    {
+        _inputSystem.SetAttack(false);
     }
 
     protected void ComboAnimation(int hashValue, bool isPlay)
@@ -106,10 +116,5 @@ public class PlayerComboAttack : PlayerState
         {
             _state.ChangeState(State.Skill);
         }
-    }
-
-    public override void StateExit()
-    {
-        _player.CurrentAmmo -= _player.IsSkillAcitve[1] ? 0 : _player._PC_Level.Level_Consumption;
     }
 }

@@ -4,6 +4,6 @@ public class MapContainer : MonoInstaller
 {
     public override void InstallBindings()
     {
-        Container.Bind<MapManager>().FromNewComponentOnNewGameObject().AsSingle();
+        Container.Bind<MapManager>().FromComponentInHierarchy().AsSingle();
     }
 }

@@ -9,7 +9,7 @@ public class Monster_OnNav : Action
     [SerializeField] SharedNavmesh Nav;
     public override TaskStatus OnUpdate()
     {
-        if (Time.time < Monster.Value.targetKnockbackTime)
+        if (Time.time < Monster.Value.ApplyingKnockbackTime)
         {
             return TaskStatus.Running;
         }

@@ -18,11 +18,16 @@ public class PlayerFirstComboAttack : PlayerComboAttack
     public Vector3 _boxSize { get; private set; } = new Vector3(1f, 1f, 2f);
     private Vector3 _additionalPosition = new Vector3(0f, 1f, 0.5f);
     private LayerMask _enemyLayer;
+    public float _attackRange_Multiplier = 1f;
     #endregion
 
     public override void StateEnter()
     {
+        base.StateEnter();
+
         _player.IsNext = false;
+
+        _attackRange_Multiplier = _player.CurrentLevel != 4 ? 1f : 2f;
 
         ComboAnimation(_firstCombo, true);
     }
@@ -37,8 +42,6 @@ public class PlayerFirstComboAttack : PlayerComboAttack
     public override void StateExit()
     {
         ComboAnimation(_firstCombo, false);
-
-        base.StateExit();
     }
 
     protected override void ChangeData(int currentLevel)
@@ -55,7 +58,7 @@ public class PlayerFirstComboAttack : PlayerComboAttack
 
         _enemyLayer = LayerMask.GetMask("Monster");
 
-        Collider[] colliders = Physics.OverlapBox(_boxPosition, _boxSize / 2f, _player.transform.rotation, _enemyLayer);
+        Collider[] colliders = Physics.OverlapBox(_boxPosition, _boxSize / 2f * _attackRange_Multiplier, _player.transform.rotation, _enemyLayer);
 
         bool isHit = false;
         foreach(var target in  colliders)
@@ -69,7 +72,7 @@ public class PlayerFirstComboAttack : PlayerComboAttack
             {
                 ChangeData(_player.CurrentLevel);
                 hit.Hit(_player.CurrentAtk * _currentAtkMultiplier * _player._PC_Level.Level_Atk_Power_Multiplier, _currentStiffT, _player.transform);
-                Debug.Log($"player.CurrentAtk : {_player.CurrentAtk}, _currentAtkMultiplier : {_currentAtkMultiplier}, _player._PC_Level.Level_Atk_Power_Multiplier : {_player._PC_Level.Level_Atk_Power_Multiplier}");
+                //Debug.Log($"player.CurrentAtk : {_player.CurrentAtk}, _currentAtkMultiplier : {_currentAtkMultiplier}, _player._PC_Level.Level_Atk_Power_Multiplier : {_player._PC_Level.Level_Atk_Power_Multiplier}");
                 isHit = true;
                 GameObject hitEffect = _effect.GetHitEffect();
                 ParticleSystem hitParticle = hitEffect.GetComponent<ParticleSystem>();
@@ -86,6 +89,8 @@ public class PlayerFirstComboAttack : PlayerComboAttack
         {
             _player.CurrentSkill += _currentGetSkillGauge;
         }
+
+        _player.CurrentAmmo -= _player.IsSkillAcitve[1] ? 0 : _player._PC_Level.Level_Consumption;
     }
 
 }
