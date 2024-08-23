@@ -19,6 +19,7 @@ public struct BossPattern
 public class BossController : MonoBehaviour
 {
     [Header("기본 정보")]
+    public BossPhase phase;
     public float _maxHp;
     [SerializeField] private float _hp;
     [HideInInspector] public float _hpPercent;
@@ -35,6 +36,7 @@ public class BossController : MonoBehaviour
     [SerializeField] private float _phaseTwoPer;
 
     [Header("1페이즈 기믹")]
+    [SerializeField] private GimmickController _gimmick;
     public float gimmickDamage;
     [SerializeField] private float _gimmickCoolDown;
     public bool isCoolGimmick;
@@ -77,10 +79,10 @@ public class BossController : MonoBehaviour
     private NavMeshAgent _nav;
     private BehaviorTree _bt;
 
-    private BossPhase _phase;
-
     private Transform _playerTr;
     private TrailRenderer _trail;
+
+    public bool isGimmick;
 
     private readonly int _hashPhase = Animator.StringToHash("");
     private readonly int _hashAttack = Animator.StringToHash("");
@@ -108,6 +110,7 @@ public class BossController : MonoBehaviour
         _trail = GetComponentInChildren<TrailRenderer>();
         _trail.Clear();
         _trail.gameObject.SetActive(false);
+        _gimmick.gameObject.SetActive(false);
         _markRoot.SetActive(false);
         foreach (var explosion in _firstExplosion) 
         { 
@@ -138,21 +141,22 @@ public class BossController : MonoBehaviour
 
     private void OnEnable()
     {
-        _phase = BossPhase.Phase1;
+        phase = BossPhase.Phase1;
 
         _hp = _maxHp;
+        _hpPercent = _hp / _maxHp * 100;
     }
 
     #region 테스트
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _hp = 1000;
-        }
-        _hpPercent = _hp / _maxHp * 100;
-    }
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Space))
+    //    {
+    //        _hp = 1000;
+    //    }
+    //    _hpPercent = _hp / _maxHp * 100;
+    //}  
 
     #endregion 테스트
 
@@ -160,6 +164,19 @@ public class BossController : MonoBehaviour
 
     #region Phase1
 
+    //기믹 범위 표시
+    public void MarkGimmick()
+    { 
+        _gimmick.gameObject.SetActive(true);
+        isGimmick = true;
+    }
+    //기믹 실행부
+    public void ActiveGimmick()
+    { 
+        _gimmick.gameObject.SetActive(false);
+        isGimmick = false;
+        StartCoroutine(CoCheckCoolTime(_gimmickCoolDown, CoolDown.gimmick));
+    }
     //뿌리공격 범위 표시
     public void MarkActiveRoot()
     { 
@@ -398,6 +415,8 @@ public class BossController : MonoBehaviour
 
     public void Hurt(float damage)
     {
+        if (phase == BossPhase.Phase1 && _gimmick.gameObject.activeSelf) _gimmick.OnActivateCombat();
+
         _hp -= damage;
         _hpPercent = _hp / _maxHp * 100;
     }
