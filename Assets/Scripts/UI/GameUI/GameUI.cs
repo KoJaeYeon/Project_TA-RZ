@@ -141,7 +141,7 @@ public class GameUI : MonoBehaviour
 
         _uiEvent.RequestChangeProgressBar(0.33f);
 
-        _mapManager.SetStage(_currentStage, player, _currentProgressvalue);
+        _mapManager.ChoiceMap(_currentStage, player, _currentProgressvalue);
     }
 
     private GameObject BossUI()
