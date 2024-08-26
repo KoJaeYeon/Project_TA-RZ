@@ -470,4 +470,16 @@ public class BossController : MonoBehaviour
         yield return new WaitForSeconds(time);
         SetBoolCooldown(coolDown, false);
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, 22.4f);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, 16.75f);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, 11.15f);
+    }
 }
