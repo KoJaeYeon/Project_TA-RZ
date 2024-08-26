@@ -75,11 +75,17 @@ public class DataManager : MonoBehaviour
             case "_PC_Attack_URL":
                 Process_PC_Atatck_Data(data);
                 break;
+            case "_PC_Melee_URL":
+                Process_PC_Melee_Data(data);
+                break;
             case "_Monster_Stat_URL":
                 Process_Monster_Stat_Data(data);
                 break;
-            case "_PC_Melee_URL":
-                Process_PC_Melee_Data(data);
+            case "_Monster_Ability":
+                Process_Monster_Ability_Data(data);
+                break;
+            case "_Map_Stat_URL":
+                Process_Map_Stat_Data(data);
                 break;
             default:
                 Debug.LogError($"Unknown URL name: {urlName}");
@@ -205,6 +211,37 @@ public class DataManager : MonoBehaviour
         }
     }
 
+    private void Process_Monster_Ability_Data(string data)
+    {
+        JArray jsonArray = JArray.Parse(data);
+
+        foreach (var item in jsonArray)
+        {
+            string idStr = item[nameof(Monster_Ability.ID)].ToString();
+            float stat_HPMag = ParseFloat(item[nameof(Monster_Ability.Stat_HPMag)]);
+            float stat_DmgMag = ParseFloat(item[nameof(Monster_Ability.Stat_DmgMag)]);
+            float stat_MSMag = ParseFloat(item[nameof(Monster_Ability.Stat_MSMag)]);
+            float stat_CDMag = ParseFloat(item[nameof(Monster_Ability.Stat_CDMag)]);
+
+            Monster_Ability ability = new Monster_Ability(idStr, stat_HPMag, stat_DmgMag, stat_MSMag, stat_CDMag);
+            AddDataToDataDictionary(idStr, ability);
+        }
+    }
+
+
+    private void Process_Map_Stat_Data(string data)
+    {
+        JArray jsonArray = JArray.Parse(data);
+
+        foreach (var item in jsonArray)
+        {
+            string idStr = item[nameof(Map_Stat.ID)].ToString();
+            float stat_Multiply_Value = ParseFloat(item[nameof(Map_Stat.Stat_Multiply_Value)]);
+
+            Map_Stat mapStat = new Map_Stat(idStr, stat_Multiply_Value);
+            AddDataToDataDictionary(idStr, mapStat);
+        }
+    }
 
 
 

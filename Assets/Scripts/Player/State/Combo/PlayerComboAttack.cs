@@ -117,9 +117,4 @@ public class PlayerComboAttack : PlayerState
             _state.ChangeState(State.Skill);
         }
     }
-
-    public override void StateExit()
-    {        
-        _player.CurrentAmmo -= _player.IsSkillAcitve[1] ? 0 : _player._PC_Level.Level_Consumption;
-    }
 }
