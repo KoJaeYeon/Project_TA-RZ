@@ -26,6 +26,7 @@ public class PlayerSecondComboAttack : PlayerComboAttack
     public override void StateEnter()
     {
         base.StateEnter();
+
         _player.IsNext = false;
 
         _attackRange_Multiplier = _player.CurrentLevel != 4 ? 1f : 2f;
