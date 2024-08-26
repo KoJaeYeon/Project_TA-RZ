@@ -1238,8 +1238,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Attack_Stiff_Time: 1
-  Knockback_Horizontal_Distance: 4
-  Knockback_Vertical_Distance: 2
+  Knockback_Horizontal_Distance: 6
+  Knockback_Vertical_Distance: 3
   TempHPText: {fileID: 6334617907628527674}
 --- !u!95 &3379560720749539961
 Animator:
@@ -2537,6 +2537,7 @@ GameObject:
   - component: {fileID: 5915926139024243563}
   - component: {fileID: 4305441223787177695}
   - component: {fileID: 5121869068283221229}
+  - component: {fileID: 4079036286589770672}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2627,3 +2628,15 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &4079036286589770672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5315237581186924610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac35dee5d76d85c4ca905a6ecf4d68de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

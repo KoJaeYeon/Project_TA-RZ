@@ -39,6 +39,11 @@ public class Player : MonoBehaviour, IHit
     [Header("공격 사거리 배율 조절")]
     [Range(0, 5)][SerializeField] float[] playerAttackRange = new float[4] {1,1,1,1};
     public float[] PlayerAttackRange { get { return playerAttackRange; } }
+    [Header("플레이어 넉백 거리 조절")]
+    [SerializeField] float knockback_Horizontal_Distance = 1f;
+    [SerializeField] float knockback_Vertical_Distance = 1f;
+    public float Knockback_Horizontal_Distance { get { return knockback_Horizontal_Distance; } }
+    public float Knockback_Vertical_Distance { get { return knockback_Vertical_Distance; } }
 
     public SFX_MotionCloner Cloner { get { return _cloner; } }
     int _currentAmmo;

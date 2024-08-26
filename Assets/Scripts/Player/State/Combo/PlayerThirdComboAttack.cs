@@ -16,7 +16,7 @@ public class PlayerThirdComboAttack : PlayerComboAttack
 
     #region Overlap
     public float _range { get; private set; } = 5f;
-    public float _angle { get; private set; } = 60f;
+    public float _angle { get; private set; } = 120f;
     public float _height { get; private set; } = 5f;
     public float _segments { get; private set; } = 10f;
     private LayerMask _enemyLayer;
@@ -114,7 +114,7 @@ public class PlayerThirdComboAttack : PlayerComboAttack
         {
             ChangeData(_player.CurrentLevel);
             hit.Hit(_player.CurrentAtk * _currentAtkMultiplier * _player._PC_Level.Level_Atk_Power_Multiplier, _currentStiffT, _player.transform);
-            hit.ApplyKnockback(_currentStiffT, other.transform);
+            hit.ApplyKnockback(_currentStiffT, _player.transform);
             
             GameObject hitEffect = _effect.GetHitEffect();
             ParticleSystem hitParticle = hitEffect.GetComponent<ParticleSystem>();

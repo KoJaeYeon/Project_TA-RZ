@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,6 +29,11 @@ public class PlayerEffect : MonoBehaviour
     private void Start()
     {
         InitializePlayerEffect();
+    }
+
+    private void OnDestroy()
+    {
+        _material.color = _gradients[1].colorKeys[1].color;
     }
 
     private void InitializePlayerEffect()

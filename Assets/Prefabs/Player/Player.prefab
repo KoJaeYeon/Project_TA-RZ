@@ -1123,6 +1123,8 @@ MonoBehaviour:
   - 1
   - 1
   - 1
+  Knockback_Horizontal_Distance: 1
+  Knockback_Vertical_Distance: 1
 --- !u!114 &1707387346318436322
 MonoBehaviour:
   m_ObjectHideFlags: 0
