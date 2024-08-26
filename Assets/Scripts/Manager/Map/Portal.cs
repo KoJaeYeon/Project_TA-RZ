@@ -45,7 +45,9 @@ public class Portal : MonoBehaviour, IChoiceEvent
         {
             Player player = other.gameObject.GetComponent<Player>();
 
-            _choiceUI.Invoke(player); 
+            _choiceUI.Invoke(player);
+
+            this.gameObject.SetActive(false);
         }
     }
 
