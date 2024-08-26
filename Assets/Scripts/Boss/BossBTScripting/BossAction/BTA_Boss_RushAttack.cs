@@ -39,14 +39,28 @@ public class BTA_Boss_RushAttack : BossAction
 
             if (distance >= _dashRange.Value)
             {
-                _rb.velocity = Vector3.zero;
                 _isDash = false;
-                _anim.SetBool(_hashRush, false);
-                _rb.isKinematic = true;
-                return TaskStatus.Success;
             }
         }
 
+        if (!_isDash)
+        {
+            _rb.velocity = Vector3.zero;
+            _anim.SetBool(_hashRush, false);
+            _rb.isKinematic = true;
+            return TaskStatus.Success;
+        }
+
         return TaskStatus.Running;
+    }
+
+    public override void OnCollisionEnter(Collision collision)
+    {
+        {
+            if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Wall"))
+            {
+                _isDash = false;
+            }
+        }
     }
 }
