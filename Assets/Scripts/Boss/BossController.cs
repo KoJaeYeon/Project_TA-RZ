@@ -196,7 +196,7 @@ public class BossController : MonoBehaviour
                 continue;
 
             root.rootState = RootState.Emerge;
-            root.RootAttack(_markRoot.gameObject.transform.position);
+            root.RootAttack(_markRoot.gameObject.transform.position + Vector3.one * 0.1f);
             break;
         }
         StartCoroutine(CoCheckCoolTime(_rootCoolDown, CoolDown.rootAttack));
