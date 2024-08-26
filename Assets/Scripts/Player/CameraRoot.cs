@@ -49,6 +49,11 @@ public class CameraRoot : MonoBehaviour
 
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.F10))
+        {
+            Cursor.lockState = Cursor.lockState == CursorLockMode.None ? CursorLockMode.Locked : CursorLockMode.None;
+        }
+
         CheckLockOnModeChange();
         UpdateCameraRootTransform();
     }
