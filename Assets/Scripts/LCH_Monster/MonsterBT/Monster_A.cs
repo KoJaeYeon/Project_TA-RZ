@@ -11,6 +11,7 @@ public class Monster_A : Monster,IHit
     private void Awake()
     {
         _poolManager.CreatePool(atkPrefab);
+        StartCoroutine(Ex());
     }
 
     public void StartAtk()
@@ -20,8 +21,11 @@ public class Monster_A : Monster,IHit
         atkObject.transform.position = playerPosition;
     }
 
-    private IEnumerator WaitAtk(float coolTime)
+    IEnumerator Ex()
     {
-        yield return new WaitForSeconds(coolTime);
+        Mon_Common_CoolTime = 2.0f;
+        Mon_Common_Range = 10.0f;
+        yield return new WaitForSeconds(3f);
+        
     }
 }

@@ -93,6 +93,7 @@ public class Monster : MonoBehaviour, IHit
         {
             ApplyKnockback(2, Player.transform);
         }
+        Debug.Log($"몬스터의 쿨타임? : { Mon_Common_CoolTime}");
     }
 
     /// <summary>
@@ -122,6 +123,17 @@ public class Monster : MonoBehaviour, IHit
             //    monster_Stat = stat;
             //    Mon_Common_Stat_Hp = monster_Stat.HP;
             //}
+            else if (stat==null&&monsterAbility==MonsterAbility.Power)
+            {
+                Mon_Common_Stat_Hp = monster_Stat.HP*2.5f;
+                Mon_Common_Hp_Remain = monster_Stat.HP;
+                Mon_Common_Damage = monster_Stat.Damage * 2.5f;
+                Mon_Common_AttackArea = monster_Stat.AttackArea * 2.5f;
+                Mon_Common_Range = monster_Stat.Range * 2.5f;
+                Mon_Common_DetectArea = monster_Stat.DetectArea * 2.5f;
+                Mon_Common_DetectTime = monster_Stat.DetectTime * 2.5f;
+                Mon_Common_MovementSpeed = monster_Stat.MovementSpeed * 2.5f;
+            }
             else
             {
                 monster_Stat = stat;
