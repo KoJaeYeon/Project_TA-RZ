@@ -10,6 +10,8 @@ public class PlayerFirstComboAttack : PlayerComboAttack
         _event.AddEvent(AttackType.firstAttack, FirstAttack);
 
         player.StartCoroutine(LoadData("A201"));
+
+        _boxSize *= _player.PlayerAttackRange[0];
     }
 
     #region Overlap

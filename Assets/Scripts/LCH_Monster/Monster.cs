@@ -49,7 +49,7 @@ public class Monster : MonoBehaviour, IHit
 
 
     [Header("공격 경직시간 조절")]
-    [SerializeField] float Attack_Stiff_Time;
+    [SerializeField] float Attack_Stiff_Time = 1;
     [Header("넉백 조절")]
     [SerializeField] float Knockback_Horizontal_Distance = 4f;
     [SerializeField] float Knockback_Vertical_Distance = 2f;

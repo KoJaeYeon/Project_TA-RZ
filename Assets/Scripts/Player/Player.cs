@@ -5,11 +5,11 @@ using UnityEngine;
 using Zenject;
 using QFX.SFX;
 using UnityEngine.SceneManagement;
+using BehaviorDesigner.Runtime.ObjectDrawers;
 
 public class Player : MonoBehaviour, IHit
 {
     #region InJect
-    [Inject] private PlayerManager _playerManager { get; }
     [Inject] public DataManager dataManager { get; }
     [Inject] public CameraRoot cameraRoot { get; }
     [Inject] public DrainSystem drainSystem { get; }
@@ -36,10 +36,19 @@ public class Player : MonoBehaviour, IHit
     #endregion
 
     #region PlayerValue
+    [Header("공격 사거리 배율 조절")]
+    [Range(0, 5)][SerializeField] float[] playerAttackRange = new float[4] {1,1,1,1};
+    public float[] PlayerAttackRange { get { return playerAttackRange; } }
+    [Header("플레이어 넉백 거리 조절")]
+    [SerializeField] float knockback_Horizontal_Distance = 1f;
+    [SerializeField] float knockback_Vertical_Distance = 1f;
+    public float Knockback_Horizontal_Distance { get { return knockback_Horizontal_Distance; } }
+    public float Knockback_Vertical_Distance { get { return knockback_Vertical_Distance; } }
+
     public SFX_MotionCloner Cloner { get { return _cloner; } }
-    [SerializeField] int _currentAmmo;
+    int _currentAmmo;
     float _currentHP;
-    [SerializeField] float _currentSkill;
+    float _currentSkill;
     float _currentStamina;
     public float CurrentAtk { get; set; }
     public bool IsActiveStaminaRecovery { get; set; } = true;
@@ -49,7 +58,8 @@ public class Player : MonoBehaviour, IHit
     public bool IsSkillAnimationEnd { get; set; } = true;
     public int CurrentLevel { get; set; }
 
-    public bool IsPlayerFourthAttackDrainAvailable = false;
+    //블루칩 기능
+    public bool IsPlayerFourthAttackDrainAvailable { get; set; } = false;
 
     public float CurrentHP
     {
@@ -225,7 +235,6 @@ public class Player : MonoBehaviour, IHit
 
     private void InitializePlayer()
     {
-        _playerManager.SetPlayerObject(gameObject);
         StartCoroutine(LoadStat());
         StartCoroutine(LoadSkillCounsumption());
     }
@@ -308,29 +317,22 @@ public class Player : MonoBehaviour, IHit
 
     IEnumerator LoadStat()
     {
-        while (true)
-        {
-            var stat = dataManager.GetStat("P101") as PC_Common_Stat;
-            if (stat == null)
-            {
-                Debug.Log("Player의 스탯을 받아오지 못했습니다.");
-                yield return new WaitForSeconds(1f);
-            }
-            else
-            {
-                _playerStat = stat;
-                Debug.Log("Player의 스탯을 성공적으로 받아왔습니다.");
-                CurrentAtk = _playerStat.Atk_Power;                
-                CurrentHP = _playerStat.HP;
-                HP = _playerStat.HP;
-                CurrentStamina = 100;
-                CurrentSkill = 0;
-                CurrentAmmo = 0;
-                OnPropertyChanged(nameof(stat.Resource_Own_Num));
-                yield break;
-            }
+        yield return new WaitWhile(() => {
+            Debug.Log("Player의 데이터를 받아오는 중입니다.");
+            return dataManager.GetStat("P101") == null;
+        });
 
-        }
+        var stat = dataManager.GetStat("P101") as PC_Common_Stat;
+        _playerStat = stat;
+        Debug.Log("Player의 스탯을 성공적으로 받아왔습니다.");
+        CurrentAtk = _playerStat.Atk_Power;
+        CurrentHP = _playerStat.HP;
+        HP = _playerStat.HP;
+        CurrentStamina = 100;
+        CurrentSkill = 0;
+        CurrentAmmo = 0;
+        OnPropertyChanged(nameof(stat.Resource_Own_Num));
+        yield break;
     }
 
     IEnumerator LoadSkillCounsumption()

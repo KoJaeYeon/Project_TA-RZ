@@ -7,12 +7,9 @@ using Zenject;
 public class Portal : MonoBehaviour, IChoiceEvent
 {
     #region InJect
-    [Inject] private MapManager _mapManager;
     [Inject] private UIEvent _uiEvent;
     #endregion;
-
-    private Func<StageType> _choiceUI;
-    private StageType _currentStage;
+    private Action<Player> _choiceUI;
 
     private void OnEnable()
     {
@@ -22,8 +19,15 @@ public class Portal : MonoBehaviour, IChoiceEvent
         }
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.H))
+        {
+            _uiEvent.RequestChangeProgressBar(0.33f);
+        }
+    }
 
-    public void GetChoiceStageEvent(bool isAddEvent, Func<StageType> callBack)
+    public void GetChoiceStageEvent(bool isAddEvent, Action<Player> callBack)
     {
         if (isAddEvent)
         {
@@ -39,11 +43,9 @@ public class Portal : MonoBehaviour, IChoiceEvent
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            StageType result = _choiceUI.Invoke();
+            Player player = other.gameObject.GetComponent<Player>();
 
-            _currentStage = result;
-
-            Debug.Log($"선택된 스테이지는{_currentStage}");
+            _choiceUI.Invoke(player); 
         }
     }
 
