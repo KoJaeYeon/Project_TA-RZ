@@ -27,6 +27,8 @@ public class PlayerInputSystem : MonoBehaviour
     public bool IsLockOn { get { return isLockOn; } }
     public bool IsSkill { get { return isSkill; } }
 
+    float clampDelta = 15f;
+
     private void OnMove(InputValue input)
     {
         SetMove(input.Get<Vector2>());  
@@ -101,7 +103,8 @@ public class PlayerInputSystem : MonoBehaviour
     }
 
     private void SetLook(float delta)
-    {
+    {        
+        delta = Mathf.Clamp(delta, -clampDelta, clampDelta);
         deltaLook += delta;
     }
 
