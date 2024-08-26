@@ -17,7 +17,7 @@ public class BTC_Boss_StandartPhaseHp : BossConditional
             return TaskStatus.Failure;
         }
 
-        if (_owner.CheckPhase(_standardHp.Value)) return TaskStatus.Running;
+        if (_owner.CheckPhase(_standardHp.Value)) return TaskStatus.Success;
 
         _boss.Value.phase = _phase;
 
