@@ -6,9 +6,25 @@ using Zenject;
 using System.Collections;
 using UnityEngine.AI;
 using TMPro;
-
+using UnityEngine.ProBuilder.MeshOperations;
+public enum MonsterAbility
+{
+    Original,
+    Speed,
+    Power,
+    Shield,
+}
+public enum MonsterType
+{
+    Basic,
+    Supply,
+    Few
+}
 public class Monster : MonoBehaviour, IHit
 {
+    [Header("몬스터 타입")]
+    [SerializeField] MonsterType Type;
+    [SerializeField] MonsterAbility Ability;
     [Inject] public Player Player { get;}
     [Inject] DataManager _dataManager;
     BehaviorTree _bt;
@@ -59,8 +75,16 @@ public class Monster : MonoBehaviour, IHit
 
     void Start()
     {
+        if (Type == MonsterType.Supply)
+        {
+            gameObject.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
+        }
+        if (Type == MonsterType.Few)
+        {
+            gameObject.transform.localScale = new Vector3(1.6f, 1.6f, 1.6f);
+        }
         Mon_Common_Hp_Remain = Mon_Common_Stat_Hp;
-        StartCoroutine(LoadStat());
+        OnSetMonsterStat(MonsterAbility.Speed,MonsterType.Basic);
     }
 
     void Update()
@@ -69,22 +93,54 @@ public class Monster : MonoBehaviour, IHit
         {
             ApplyKnockback(2, Player.transform);
         }
+        Debug.Log($"몬스터의 쿨타임? : { Mon_Common_CoolTime}");
     }
 
-    IEnumerator LoadStat()
+    /// <summary>
+    /// 몬스터 생성 시 스탯을 결정해주는 함수
+    /// </summary>
+    /// <param name="monsterAbility"></param>
+    /// <param name="monsterType"></param>
+    public void OnSetMonsterStat(MonsterAbility monsterAbility, MonsterType monsterType)
+    {
+        StartCoroutine(LoadStat(monsterAbility, monsterType));
+    }
+
+    IEnumerator LoadStat(MonsterAbility monsterAbility, MonsterType monsterType)
     {
         while (true)
         {
             var stat = _dataManager.GetStat(idStr) as Monster_Stat;
+            ///나중에 따로 스탯이 생기면 몬스터의 배율을 적용해 줄 부분
+            var data = _dataManager.GetData($"S10{(int)monsterAbility}") as PC_Level;
             if (stat == null)
             {
                 Debug.Log($"Monster[{idStr}]의 스탯을 받아오지 못했습니다.");
                 yield return new WaitForSeconds(1f);
             }
+            //else if (stat == null && Type == MonsterType.Supply)
+            //{
+            //    monster_Stat = stat;
+            //    Mon_Common_Stat_Hp = monster_Stat.HP;
+            //}
+            else if (stat==null&&monsterAbility==MonsterAbility.Power)
+            {
+                Mon_Common_Stat_Hp = monster_Stat.HP*2.5f;
+                Mon_Common_Hp_Remain = monster_Stat.HP;
+                Mon_Common_Damage = monster_Stat.Damage * 2.5f;
+                Mon_Common_AttackArea = monster_Stat.AttackArea * 2.5f;
+                Mon_Common_Range = monster_Stat.Range * 2.5f;
+                Mon_Common_DetectArea = monster_Stat.DetectArea * 2.5f;
+                Mon_Common_DetectTime = monster_Stat.DetectTime * 2.5f;
+                Mon_Common_MovementSpeed = monster_Stat.MovementSpeed * 2.5f;
+            }
             else
             {
                 monster_Stat = stat;
                 Debug.Log("Monster[{idStr}]의 스탯을 성공적으로 받아왔습니다.");
+                //Mon_Common_Stat_Hp = monster_Stat.HP * data.Level_Atk_Power_Multiplier;
+                //이런식으로 스탯 * 배율 받아와서 적용시켜주면 됨
+
                 Mon_Common_Stat_Hp = monster_Stat.HP;
                 Mon_Common_Hp_Remain = monster_Stat.HP;
                 Mon_Common_Damage = monster_Stat.Damage;
@@ -93,10 +149,10 @@ public class Monster : MonoBehaviour, IHit
                 Mon_Common_DetectArea = monster_Stat.DetectArea;
                 Mon_Common_DetectTime = monster_Stat.DetectTime;
                 Mon_Common_MovementSpeed = monster_Stat.MovementSpeed;
-                TempHPText.text = Mon_Common_Hp_Remain.ToString();
+                //TempHPText.text = Mon_Common_Hp_Remain.ToString();
                 yield break;
             }
-
+            
         }
     }
 
