@@ -100,7 +100,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4231939912280197847
 Transform:
   m_ObjectHideFlags: 0
@@ -130,13 +130,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e6b3f196eb5df64daf894ebbe9bb103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StageType: 2
-  StageSpriteArr:
-  - {fileID: 21300000, guid: 9403c461a1fd69d4c840ec7fd891187f, type: 3}
-  - {fileID: 21300000, guid: 31fe5411477eb4b45af26a3a3551ba51, type: 3}
-  - {fileID: 21300000, guid: c0a9cc645d4900a4da7c20560f54c523, type: 3}
-  - {fileID: 21300000, guid: 7402d20cd6e93c047bf438addd984995, type: 3}
-  StageSpriteObject: {fileID: 3607160101937754034}
 --- !u!136 &3325614517149112105
 CapsuleCollider:
   m_ObjectHideFlags: 0

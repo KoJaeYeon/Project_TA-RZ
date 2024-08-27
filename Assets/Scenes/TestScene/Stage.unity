@@ -920,6 +920,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6767242955523599247, guid: df055a838efe5724abfa0644a31f8dd3,
+        type: 3}
+      propertyPath: _debugMonster
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6767242955523599247, guid: df055a838efe5724abfa0644a31f8dd3,
+        type: 3}
+      propertyPath: _debugResource
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6767242955523599247, guid: df055a838efe5724abfa0644a31f8dd3,
+        type: 3}
+      propertyPath: _mixList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6767242955523599247, guid: df055a838efe5724abfa0644a31f8dd3,
+        type: 3}
+      propertyPath: _debugClass.Array.size
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

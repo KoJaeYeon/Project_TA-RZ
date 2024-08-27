@@ -109,23 +109,23 @@ public class Stage : MonoBehaviour
         yield return new WaitUntil(() => (_itemDataReady && _monsterDataReady));
 
         SetArea();
-        SpawnMonster();
-        SpawnItem();
+        //SpawnMonster();
+        //SpawnItem();
 
-        //if (_debugMonster && _debugResource) //디버그 코드
-        //{
-        //    SpawnMonster();
-        //    SpawnItem();
-        //}
-        //if(_debugMonster && !_debugResource)
-        //{
-        //    SpawnMonster();
-        //}
-        //if(!_debugMonster && _debugResource)
-        //{
-        //    SpawnItem();
-        //}
-        
+        if (_debugMonster && _debugResource) //디버그 코드
+        {
+            SpawnMonster();
+            SpawnItem();
+        }
+        if (_debugMonster && !_debugResource)
+        {
+            SpawnMonster();
+        }
+        if (!_debugMonster && _debugResource)
+        {
+            SpawnItem();
+        }
+
     }
 
     private IEnumerator SetItemData(string idStr)
@@ -333,12 +333,18 @@ public class Stage : MonoBehaviour
                     }
                 }
             }
+
             index++; //디버그 코드
         }
     }
 
     private void DeBugList(Map_Monster_Mix debugData, int index)
     {
+        if(_debugClass.Count < index)
+        {
+            return;
+        }
+
         _debugClass[index]._mixData = $"{debugData.Mon_Monster[0]},{debugData.Mon_Monster[1]},{debugData.Mon_Monster[2]},{debugData.Mon_Monster[3]}";
     }
 
