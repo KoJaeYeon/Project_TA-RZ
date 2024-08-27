@@ -16,11 +16,17 @@ public class ProgressUIViewModel
         get { return _currentProgress; }
         set
         {
+            _currentProgress += value;
+
             if(_currentProgress > _maxProgress)
             {
+                _currentProgress = _maxProgress;
+
+                OnPropertyChanged(nameof(CurrentProgress));
+
                 return;
             }
-            _currentProgress += value;
+
             OnPropertyChanged(nameof(CurrentProgress));
         }
     }

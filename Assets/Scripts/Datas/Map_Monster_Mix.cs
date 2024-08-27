@@ -1,22 +1,25 @@
-public class Map_Stat : Data
+using System.Collections.Generic;
+
+public class Map_Monster_Mix : Data
 {
     public string ID { get; }
-    public float Stat_Multiply_Value { get; }
+    public List<int> Mon_Monster { get; }
 
-    public Map_Stat() : this("E201", 1f)
+    public Map_Monster_Mix() : this("L301", new List<int> {4,4,3,4 })
     {
     }
 
-    public Map_Stat(
+    public Map_Monster_Mix(
         string id,
-        float stat_StageMag)
+        List<int> mon_Monster)
     {
         ID = id;
-        Stat_Multiply_Value = stat_StageMag;
+        Mon_Monster = mon_Monster;
     }
 
     public override string ToString()
     {
-        return $"ID: {ID}, stat StageMag: {Stat_Multiply_Value}";
+        string Mon_Monster_String = Mon_Monster.Count > 0 ? string.Join(", ", Mon_Monster) : "None";
+        return $"ID: {ID}, mon_Monster: {Mon_Monster_String}";
     }
 }

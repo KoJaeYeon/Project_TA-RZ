@@ -107,6 +107,8 @@ public class GameUI : MonoBehaviour
     {
         if (args.PropertyName == nameof(_progressView.CurrentProgress))
         {
+            _currentProgressvalue = _progressView.CurrentProgress;
+
             _progressBar.fillAmount = _progressView.CurrentProgress;
         }
     }
@@ -139,9 +141,7 @@ public class GameUI : MonoBehaviour
 
         _currentUI.SetActive(false);
 
-        _uiEvent.RequestChangeProgressBar(0.33f);
-
-        _mapManager.ChoiceMap(_currentStage, player, _currentProgressvalue);
+        _mapManager.ChoiceMap(_currentStage, player);
     }
 
     private GameObject BossUI()
