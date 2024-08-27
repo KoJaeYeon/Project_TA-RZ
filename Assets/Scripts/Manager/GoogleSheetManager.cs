@@ -15,6 +15,7 @@ public class GoogleSheetManager : MonoBehaviour
     const string _Monster_Stat_URL = "https://script.google.com/macros/s/AKfycbzpl1LyCn504Guowz3d5ttyCyWPzqfhWvgNhYVg6kby4loIIf8Triar3JWCaxHh42be/exec";
     const string _Monster_Ability = "https://script.google.com/macros/s/AKfycbxpGKWuflt68ZnuXWpqoYMQM_3-gr6d-HtHLYmVLS9ZnBU4xjhO3ysaiK_hrs6tNwQ1/exec";
     const string _Map_Stat_URL = "https://script.google.com/macros/s/AKfycbz1OvZKBC5yz-p_UeX9163KMK0T5FrcAdlBHLxn-XJZzQ7YYZMM7TX5Jh0C_KaIDaf2/exec";
+    const string _Map_Monster_Mix_URL = "https://script.google.com/macros/s/AKfycbzUwoyAd5bnZIs87lu6gskqM7IGkcA4AxV9k3knroFsN4IzUPAuHKZXAPi0r8ll4KCV/exec";
     const string _String_Data_URL = "https://script.google.com/macros/s/AKfycbwc6eo7YQ2DYoRLU3pPmsCELjTKwbStfeQH5AcsEhQlC_2xEDIZEHRmgBVwEJmUMNs/exec";
 
     
@@ -23,7 +24,7 @@ public class GoogleSheetManager : MonoBehaviour
     [SerializeField] bool TryConnectSheet;
     [SerializeField] bool TryLoadData;
 
-    [Inject] DataManager dataManager;    
+    [Inject] DataManager dataManager;
 
     void Start()
     {
@@ -37,6 +38,7 @@ public class GoogleSheetManager : MonoBehaviour
             StartCoroutine(SaveJsonData(nameof(_Monster_Stat_URL), _Monster_Stat_URL));
             StartCoroutine(SaveJsonData(nameof(_Monster_Ability), _Monster_Ability));
             StartCoroutine(SaveJsonData(nameof(_Map_Stat_URL), _Map_Stat_URL));
+            StartCoroutine(SaveJsonData(nameof(_Map_Monster_Mix_URL), _Map_Monster_Mix_URL));
             StartCoroutine(SaveJsonData(nameof(_String_Data_URL), _String_Data_URL));
             return;
         }
@@ -51,6 +53,7 @@ public class GoogleSheetManager : MonoBehaviour
             RequestJsonRead(nameof(_Monster_Stat_URL));
             RequestJsonRead(nameof(_Monster_Ability));
             RequestJsonRead(nameof(_Map_Stat_URL));
+            RequestJsonRead(nameof(_Map_Monster_Mix_URL));
             RequestJsonRead(nameof(_String_Data_URL));
         }
         else
@@ -63,6 +66,7 @@ public class GoogleSheetManager : MonoBehaviour
             StartCoroutine(RequestSJsonAPI(nameof(_Monster_Stat_URL), _Monster_Stat_URL));
             StartCoroutine(RequestSJsonAPI(nameof(_Monster_Ability), _Monster_Ability));
             StartCoroutine(RequestSJsonAPI(nameof(_Map_Stat_URL), _Map_Stat_URL));
+            StartCoroutine(RequestSJsonAPI(nameof(_Map_Monster_Mix_URL), _Map_Monster_Mix_URL));
             StartCoroutine(RequestSJsonAPI(nameof(_String_Data_URL), _String_Data_URL));
         }
     }

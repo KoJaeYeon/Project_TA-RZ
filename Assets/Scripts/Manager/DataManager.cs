@@ -117,6 +117,9 @@ public class DataManager : MonoBehaviour
             case "_Map_Stat_URL":
                 Process_Map_Stat_Data(data);
                 break;
+            case "_Map_Monster_Mix_URL":
+                Process_Monster_Mix_Data(data);
+                break;
             case "_String_Data_URL":
                 Process_String_Data(data);
                 break;
@@ -272,6 +275,23 @@ public class DataManager : MonoBehaviour
             float stat_Multiply_Value = ParseFloat(item[nameof(Map_Stat.Stat_Multiply_Value)]);
 
             Map_Stat mapStat = new Map_Stat(idStr, stat_Multiply_Value);
+            AddDataToDataDictionary(idStr, mapStat);
+        }
+    }
+
+    private void Process_Monster_Mix_Data(string data)
+    {
+        JArray jsonArray = JArray.Parse(data);
+
+        foreach (var item in jsonArray)
+        {
+            string idStr = item[nameof(Map_Monster_Mix.ID)].ToString();
+            int mon_MonsterB = ParseInt(item[$"{nameof(Map_Monster_Mix.Mon_Monster)}B"]);
+            int mon_MonsterC = ParseInt(item[$"{nameof(Map_Monster_Mix.Mon_Monster)}C"]);
+            int mon_MonsterD = ParseInt(item[$"{nameof(Map_Monster_Mix.Mon_Monster)}D"]);
+            int mon_MonsterA = ParseInt(item[$"{nameof(Map_Monster_Mix.Mon_Monster)}A"]);
+
+            Map_Monster_Mix mapStat = new Map_Monster_Mix(idStr, new int[] { mon_MonsterB, mon_MonsterC, mon_MonsterD, mon_MonsterA });
             AddDataToDataDictionary(idStr, mapStat);
         }
     }
