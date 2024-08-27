@@ -2833,7 +2833,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6760548604663676265}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -760.92554, y: -722.63293, z: -26.530031}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2856,6 +2856,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _normalStageUI: {fileID: 1042800238459438358}
   _bossStageUI: {fileID: 4200202475446569799}
+  _progressUI: {fileID: 3942804258873057218}
   _progressImage: {fileID: 8106641100072057936}
 --- !u!1 &7101762318279103550
 GameObject:

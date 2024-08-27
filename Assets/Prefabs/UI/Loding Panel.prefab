@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 868, y: -300}
+  m_AnchoredPosition: {x: 833.84, y: -300}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4680227907448935555
@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 667657131638871218}
   - component: {fileID: 5594710537320959808}
   - component: {fileID: 6955581052374764155}
+  - component: {fileID: 3389256945833959585}
   m_Layer: 5
   m_Name: Loding Panel
   m_TagString: Untagged
@@ -152,6 +153,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3389256945833959585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2219166514726600763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0721e9591ad798f43ae54aa3354de9d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _loadImage: {fileID: 8050558552544523353}
 --- !u!1 &6006297475062188127
 GameObject:
   m_ObjectHideFlags: 0
@@ -186,7 +200,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 914, y: -405}
+  m_AnchoredPosition: {x: 877.8, y: -405}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &382096961018126703

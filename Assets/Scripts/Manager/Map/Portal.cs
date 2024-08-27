@@ -19,14 +19,6 @@ public class Portal : MonoBehaviour, IChoiceEvent
         }
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.H))
-        {
-            _uiEvent.RequestChangeProgressBar(0.33f);
-        }
-    }
-
     public void GetChoiceStageEvent(bool isAddEvent, Action<Player> callBack)
     {
         if (isAddEvent)
@@ -45,8 +37,11 @@ public class Portal : MonoBehaviour, IChoiceEvent
         {
             Player player = other.gameObject.GetComponent<Player>();
 
-            _choiceUI.Invoke(player);
-
+            if(player != null)
+            {
+                _choiceUI.Invoke(player);
+            }
+            
             this.gameObject.SetActive(false);
         }
     }

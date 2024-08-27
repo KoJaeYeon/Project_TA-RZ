@@ -15,6 +15,7 @@ public class GameUI : MonoBehaviour
     [SerializeField] private GameObject _bossStageUI;
 
     [Header("ProgressUI")]
+    [SerializeField] private GameObject _progressUI;
     [SerializeField] private Image _progressImage;
 
     [Inject] private UIEvent _uiEvent;
@@ -70,6 +71,8 @@ public class GameUI : MonoBehaviour
         _progressBar = _progressImage;
 
         _progressBar.fillAmount = _mapManager.ProgressValue;
+
+        _progressUI.SetActive(false);
     }
 
     private void InitializeChoiceUIOnEnable()
@@ -135,11 +138,19 @@ public class GameUI : MonoBehaviour
             _currentUI = BossUI();
         }
         
+        _progressUI.SetActive(true);
+
         _currentUI.SetActive(true);
+
+        Cursor.lockState = CursorLockMode.None;
 
         yield return new WaitWhile(() => !_isChoice);
 
+        _progressUI.SetActive(false);
+
         _currentUI.SetActive(false);
+
+        Cursor.lockState = CursorLockMode.Locked;
 
         _mapManager.ChoiceMap(_currentStage, player);
     }

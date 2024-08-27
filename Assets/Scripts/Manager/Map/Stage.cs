@@ -69,6 +69,8 @@ public class Stage : MonoBehaviour
     #endregion
     private void Awake()
     {
+        _portal.SetActive(false);
+
         _mapManager.SetStage(this);
 
         _object = gameObject.GetComponent<StageObject>();
@@ -79,9 +81,7 @@ public class Stage : MonoBehaviour
 
     private void Start()
     {
-        _currentStage = StageType.Normal;
-
-        _portal.SetActive(false);
+        _currentStage = _mapManager.GetStageType();
 
         StartCoroutine(SpawnObject());
     }
