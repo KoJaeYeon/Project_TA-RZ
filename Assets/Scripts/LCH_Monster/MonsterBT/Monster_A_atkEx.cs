@@ -5,15 +5,13 @@ using Zenject;
 public class Monster_A_atkEx : MonoBehaviour
 {
     private float growDuration = 2.0f;  
-    private Vector3 targetScale = new Vector3(2f, 0.1f, 2f);
-
+    private Vector3 targetScale = new Vector3(1f, 0.1f, 1f);
+    [SerializeField] GameObject explosionPrefab;
     private void OnEnable()
     {
-        transform.localScale = Vector3.zero;
-
         StartCoroutine(GrowOverTime());
     }
-
+    
     private IEnumerator GrowOverTime()
     {
         Vector3 initialScale = transform.localScale;
@@ -23,9 +21,15 @@ public class Monster_A_atkEx : MonoBehaviour
         {
             transform.localScale = Vector3.Lerp(initialScale, targetScale, timeElapsed / growDuration);
             timeElapsed += Time.deltaTime;
+            
             yield return null;  
         }
-
-        transform.localScale = targetScale;
+       // poolManager.DequeueObject(explosionPrefab);
+        if(transform.localScale == targetScale)
+        {
+            yield return null;
+        }
     }
+
+    
 }
