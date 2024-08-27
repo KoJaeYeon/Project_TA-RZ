@@ -16,6 +16,7 @@ public class GoogleSheetManager : MonoBehaviour
     const string _Monster_Ability_URL = "https://script.google.com/macros/s/AKfycbxpGKWuflt68ZnuXWpqoYMQM_3-gr6d-HtHLYmVLS9ZnBU4xjhO3ysaiK_hrs6tNwQ1/exec";
     const string _Boss_Skill_URL = "https://script.google.com/macros/s/AKfycbwcdLKS6d9L0sOINAHbevkJHb2-bqNwknRrwxoKPeT1TilaP0lYTnMhFxr9Vq3u1cjY/exec";
     const string _Map_Stat_URL = "https://script.google.com/macros/s/AKfycbz1OvZKBC5yz-p_UeX9163KMK0T5FrcAdlBHLxn-XJZzQ7YYZMM7TX5Jh0C_KaIDaf2/exec";
+    const string _Map_Stage_Level_URL = "https://script.google.com/macros/s/AKfycbzbOFeGM3D-Ux-dr982PRL4Tn_7EgcCGjlKAF3StH2rfIZBrKnLhiLjcZ51zdJxJ8cyqQ/exec";
     const string _Map_Monster_Mix_URL = "https://script.google.com/macros/s/AKfycbzUwoyAd5bnZIs87lu6gskqM7IGkcA4AxV9k3knroFsN4IzUPAuHKZXAPi0r8ll4KCV/exec";
     const string _String_Data_URL = "https://script.google.com/macros/s/AKfycbwc6eo7YQ2DYoRLU3pPmsCELjTKwbStfeQH5AcsEhQlC_2xEDIZEHRmgBVwEJmUMNs/exec";
 
@@ -40,6 +41,7 @@ public class GoogleSheetManager : MonoBehaviour
             StartCoroutine(SaveJsonData(nameof(_Monster_Ability_URL), _Monster_Ability_URL));
             StartCoroutine(SaveJsonData(nameof(_Boss_Skill_URL), _Boss_Skill_URL));
             StartCoroutine(SaveJsonData(nameof(_Map_Stat_URL), _Map_Stat_URL));
+            StartCoroutine(SaveJsonData(nameof(_Map_Stage_Level_URL), _Map_Stage_Level_URL));
             StartCoroutine(SaveJsonData(nameof(_Map_Monster_Mix_URL), _Map_Monster_Mix_URL));
             StartCoroutine(SaveJsonData(nameof(_String_Data_URL), _String_Data_URL));
             return;
@@ -56,6 +58,7 @@ public class GoogleSheetManager : MonoBehaviour
             RequestJsonRead(nameof(_Monster_Ability_URL));
             RequestJsonRead(nameof(_Boss_Skill_URL));
             RequestJsonRead(nameof(_Map_Stat_URL));
+            RequestJsonRead(nameof(_Map_Stage_Level_URL));
             RequestJsonRead(nameof(_Map_Monster_Mix_URL));
             RequestJsonRead(nameof(_String_Data_URL));
         }
@@ -70,6 +73,7 @@ public class GoogleSheetManager : MonoBehaviour
             StartCoroutine(RequestSJsonAPI(nameof(_Monster_Ability_URL), _Monster_Ability_URL));
             StartCoroutine(RequestSJsonAPI(nameof(_Boss_Skill_URL), _Boss_Skill_URL));
             StartCoroutine(RequestSJsonAPI(nameof(_Map_Stat_URL), _Map_Stat_URL));
+            StartCoroutine(RequestSJsonAPI(nameof(_Map_Stage_Level_URL), _Map_Stage_Level_URL));
             StartCoroutine(RequestSJsonAPI(nameof(_Map_Monster_Mix_URL), _Map_Monster_Mix_URL));
             StartCoroutine(RequestSJsonAPI(nameof(_String_Data_URL), _String_Data_URL));
         }

@@ -120,6 +120,9 @@ public class DataManager : MonoBehaviour
             case "_Map_Stat_URL":
                 Process_Map_Stat_Data(data);
                 break;
+            case "_Map_Stage_Level_URL":
+                Process_Map_Stage_Level_Data(data);
+                break;
             case "_Map_Monster_Mix_URL":
                 Process_Monster_Mix_Data(data);
                 break;
@@ -131,6 +134,8 @@ public class DataManager : MonoBehaviour
                 break;
         }
     }
+
+    #region Data Parsing Process
 
     private void Process_PC_Stat_Data(string data)
     {
@@ -298,6 +303,22 @@ public class DataManager : MonoBehaviour
         }
     }
 
+    private void Process_Map_Stage_Level_Data(string data)
+    {
+        JArray jsonArray = JArray.Parse(data);
+
+        foreach (var item in jsonArray)
+        {
+            string idStr = item[nameof(Map_Stage_Level.ID)].ToString();
+            int level_Enemy_Create_2Panel_Count = ParseInt(item[nameof(Map_Stage_Level.Level_Enemy_Create_2Panel_Count)]);
+            int level_Enemy_Create_6Panel_Count = ParseInt(item[nameof(Map_Stage_Level.Level_Enemy_Create_6Panel_Count)]);
+            int level_Enemy_Create_9Panel_Count = ParseInt(item[nameof(Map_Stage_Level.Level_Enemy_Create_9Panel_Count)]);
+
+            Map_Stage_Level mapStat = new Map_Stage_Level(idStr, level_Enemy_Create_2Panel_Count, level_Enemy_Create_6Panel_Count, level_Enemy_Create_9Panel_Count);
+            AddDataToDataDictionary(idStr, mapStat);
+        }
+    }
+
     private void Process_Monster_Mix_Data(string data)
     {
         JArray jsonArray = JArray.Parse(data);
@@ -327,9 +348,9 @@ public class DataManager : MonoBehaviour
             AddStringToStringDictionary(idStr, str);
         }
     }
+    #endregion
 
-
-
+    #region Parse Data
     private List<T> parseList<T>(JToken token)
     {
         List<T> result = new List<T>();
@@ -383,4 +404,5 @@ public class DataManager : MonoBehaviour
         }
         return result;
     }
+    #endregion
 }
