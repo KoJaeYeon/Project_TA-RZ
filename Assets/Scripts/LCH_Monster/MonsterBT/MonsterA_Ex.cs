@@ -13,13 +13,13 @@ public class MonsterA_Ex : MonoBehaviour
             return;
         }
         IHit hitable = other.GetComponent<IHit>();
-
+        var df =  GetComponentInParent<Monster_A>();
         if (hitable == null)
         {
             Debug.LogError("Player does not implement IHit interface");
             return;
         }
         // Hit 메서드 호출
-        hitable.Hit(20f, 0, transform);
+        hitable.Hit(df.Mon_Common_Damage, 0, df.transform);
     }
 }

@@ -26,10 +26,10 @@ public class Monster : MonoBehaviour, IHit
     [Inject] DataManager _dataManager;
     BehaviorTree _bt;
     NavMeshAgent Nav;
-    Animator _anim;
     Rigidbody _rigidbody;
     Stage _stage;
 
+    public Animator Anim { get; set; }
     public float Mon_Common_Stat_Hp { get; set; }
     public float Mon_Common_Damage { get; set; }
     public float Mon_Common_AttackArea { get; set; }
@@ -61,15 +61,18 @@ public class Monster : MonoBehaviour, IHit
 
     Coroutine _hitCoroutine;
 
-    [Header("개발자 인스펙터")]
-    [SerializeField] TextMeshProUGUI TempHPText;
+   // [Header("개발자 인스펙터")]
+    //[SerializeField] TextMeshProUGUI TempHPText;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _bt = GetComponent<BehaviorTree>();
         Nav = GetComponent<NavMeshAgent>();
-        _anim = GetComponent<Animator>();
+
+        //int rand = Random.Range(0, 4);
+        //transform.GetChild(rand).gameObject.SetActive(true);
+        Anim = GetComponentInChildren<Animator>();
     }
 
     void Start()
@@ -83,6 +86,10 @@ public class Monster : MonoBehaviour, IHit
             gameObject.transform.localScale = new Vector3(1.6f, 1.6f, 1.6f);
         }
         Mon_Common_Hp_Remain = Mon_Common_Stat_Hp;
+        if(Ability == MonsterAbility.Speed)
+        {
+            transform.GetChild(3).gameObject.SetActive(true);
+        }
         OnSetMonsterStat(MonsterAbility.Speed,MonsterType.Basic);
     }
 
@@ -152,7 +159,7 @@ public class Monster : MonoBehaviour, IHit
     {
         IsDamaged = true;
         Mon_Common_Hp_Remain -= damage;
-        TempHPText.text = Mon_Common_Hp_Remain.ToString();
+        //TempHPText.text = Mon_Common_Hp_Remain.ToString();
 
         Debug.Log("hit");
 
@@ -185,7 +192,7 @@ public class Monster : MonoBehaviour, IHit
 
         gameObject.layer = LayerMask.NameToLayer("MonsterKnockback");
 
-        _anim.SetTrigger("Damaged");
+        Anim.SetTrigger("Damaged");
 
         ApplyingKnockbackTime = Time.time + knockbackDuration;
 
@@ -220,8 +227,7 @@ public class Monster : MonoBehaviour, IHit
     public IEnumerator WaitForStun(float paralysisTime)
     {
         //Bt.enabled = false;
-        _anim = GetComponent<Animator>();
-        _anim.SetTrigger("Damaged");
+        Anim.SetTrigger("Damaged");
         yield return new WaitForSeconds(paralysisTime);
         IsDamaged = false;
     }
