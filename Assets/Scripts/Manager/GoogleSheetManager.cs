@@ -64,6 +64,8 @@ public class GoogleSheetManager : MonoBehaviour
             RequestJsonRead(nameof(_Map_Monster_Mix_URL));
             RequestJsonRead(nameof(_Map_Resource_URL));
             RequestJsonRead(nameof(_String_Data_URL));
+
+            StartCoroutine(CountJsonLoadData());
         }
         else
         {
@@ -131,6 +133,22 @@ public class GoogleSheetManager : MonoBehaviour
             var path = Path.Combine(Application.dataPath, $"Resources/Datas/{urlName}.json");
             File.WriteAllText(path, data);
             Debug.Log($"{path}위치에 {urlName} 저장 완료");
+        }
+    }
+
+    public IEnumerator CountJsonLoadData()
+    {
+        const string url = "https://script.google.com/macros/s/AKfycby-XbpUpXvOGRGxgRm2aKNbRbvbl9r8N-D7_Y6QtGHvHayaYGbkYKsk_So9aARsRjgd/exec";
+        UnityWebRequest www = UnityWebRequest.Get(url);
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError(www.error);
+        }
+        else
+        {
+            Debug.Log("Get성공");
         }
     }
 

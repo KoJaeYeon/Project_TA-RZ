@@ -1,12 +1,15 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using Zenject;
 
 public class UIEvent
 {
+    [Inject] Player player { get; }
+
     private IChoiceEvent _choiceStageEvent;
     private Action<float> _progressCallBack;
+    public BlueChipUI BlueChipUI { get; private set; }
     
 
     public void NullTest()
@@ -68,6 +71,26 @@ public class UIEvent
     public void UnRegisterChangeProgressUI(ProgressUIViewModel viewModel)
     {
         _progressCallBack -= viewModel.OnResponseChangeCurrentStage;
+    }
+    #endregion
+
+    #region BlueChipEvent
+    public void RegisterBlueChipUI(BlueChipUI blueChipUI)
+    {
+        BlueChipUI = blueChipUI;
+    }
+
+    public void ActiveBlueChipUI()
+    {
+        BlueChipUI.gameObject.SetActive(true);
+    }
+    #endregion
+
+    #region PlayerControl
+    public void SetActivePlayerControl(bool isActive)
+    {
+        var input = player.GetComponent<PlayerInput>();
+        input.enabled = isActive;
     }
     #endregion
 
