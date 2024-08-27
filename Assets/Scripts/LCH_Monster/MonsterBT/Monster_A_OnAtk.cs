@@ -23,7 +23,7 @@ public class Monster_A_OnAtk : Action
     {
         
         Monster.Value.StartAtk();
-        Monster.Value.PlayExplosion();
+        
         return TaskStatus.Success;
     }
 }
