@@ -35,12 +35,28 @@ public class Stage : MonoBehaviour
         public int[] _resourceCountArray; //A,B,C 아이템 비율에 따라 생성되어야 하는 각 아이템의 수를 저장하는 배열.
     }
 
+    [System.Serializable]
+    public class DebugClass
+    {
+        public string _mixData;
+    }
+
     #region InJect
     [Inject]
     private MapManager _mapManager;
     [Inject]
     private DataManager _dataManager;
     #endregion
+
+    [Header("DeBug")]
+    [Header("Resource")]
+    [SerializeField] private bool _debugResource;
+    [Header("Monster")]
+    [SerializeField] private bool _debugMonster;
+    [Header("Data")]
+    [SerializeField] private List<DebugClass> _debugClass;
+    [Header("StageType")]
+    [SerializeField] private StageType _deBugStageType;
 
     [Header("GameLevel")]
     [SerializeField] private GameLevel _level;
@@ -80,6 +96,8 @@ public class Stage : MonoBehaviour
     private void Start()
     {
         _currentStage = StageType.Normal;
+        
+        _deBugStageType = _currentStage;//디버그 코드
 
         _portal.SetActive(false);
 
@@ -93,6 +111,21 @@ public class Stage : MonoBehaviour
         SetArea();
         SpawnMonster();
         SpawnItem();
+
+        //if (_debugMonster && _debugResource) //디버그 코드
+        //{
+        //    SpawnMonster();
+        //    SpawnItem();
+        //}
+        //if(_debugMonster && !_debugResource)
+        //{
+        //    SpawnMonster();
+        //}
+        //if(!_debugMonster && _debugResource)
+        //{
+        //    SpawnItem();
+        //}
+        
     }
 
     private IEnumerator SetItemData(string idStr)
@@ -266,7 +299,7 @@ public class Stage : MonoBehaviour
 
                 _selectMonsterArea.Add(_partitions[index]);
             }
-
+            
         }
     }
 
@@ -279,11 +312,11 @@ public class Stage : MonoBehaviour
     private void SpawnMonster()
     {
         _spawnMonsters = new HashSet<GameObject>();
-
+        int index = 0;//디버그 코드
         foreach(var partition in _selectMonsterArea)
         {
             Map_Monster_Mix randomData = GetRandomData(_currentStage);
-
+            DeBugList(randomData, index); //디버그 코드
             for(int i = 0; i < randomData.Mon_Monster.Count; i++)
             {
                 for(int k = 0; k < randomData.Mon_Monster[i]; k++)
@@ -300,13 +333,19 @@ public class Stage : MonoBehaviour
                     }
                 }
             }
+            index++; //디버그 코드
         }
+    }
+
+    private void DeBugList(Map_Monster_Mix debugData, int index)
+    {
+        _debugClass[index]._mixData = $"{debugData.Mon_Monster[0]},{debugData.Mon_Monster[1]},{debugData.Mon_Monster[2]},{debugData.Mon_Monster[3]}";
     }
 
     private void SpawnItem()
     {
-        _spawnItems = new List<GameObject>();   
-
+        _spawnItems = new List<GameObject>();
+        
         foreach(var partition in _selectItemArea)
         {
             for(int i = 0; i < partition._resourceCountArray.Length; i++)
