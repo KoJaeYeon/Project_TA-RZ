@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 200708198922894966}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -35, y: 0, z: -25}
+  m_LocalPosition: {x: 0, y: 0, z: 42}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -179,81 +179,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2c91ee8917d4f24cb3af6dc6c763e7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _level: 2
+  _level: 0
   _partitions:
   - _centerPosition: {fileID: 1687272404175759710}
-    _mapSizeX: 10
-    _mapSizeZ: 10
+    _mapSizeX: 20
+    _mapSizeZ: 20
     _maxResourceCount: 0
     _resourceA_Ratio: 0
     _resourceB_Ratio: 0
     _resourceC_Ratio: 0
     _resourceCountArray: 
   - _centerPosition: {fileID: 6938612907129982755}
-    _mapSizeX: 10
-    _mapSizeZ: 10
+    _mapSizeX: 20
+    _mapSizeZ: 20
     _maxResourceCount: 0
     _resourceA_Ratio: 0
     _resourceB_Ratio: 0
     _resourceC_Ratio: 0
     _resourceCountArray: 
-  - _centerPosition: {fileID: 1710223772779790326}
-    _mapSizeX: 10
-    _mapSizeZ: 10
-    _maxResourceCount: 0
-    _resourceA_Ratio: 0
-    _resourceB_Ratio: 0
-    _resourceC_Ratio: 0
-    _resourceCountArray: 
-  - _centerPosition: {fileID: 3660816468917273742}
-    _mapSizeX: 10
-    _mapSizeZ: 10
-    _maxResourceCount: 0
-    _resourceA_Ratio: 0
-    _resourceB_Ratio: 0
-    _resourceC_Ratio: 0
-    _resourceCountArray: 
-  - _centerPosition: {fileID: 2931911865893457250}
-    _mapSizeX: 10
-    _mapSizeZ: 10
-    _maxResourceCount: 0
-    _resourceA_Ratio: 0
-    _resourceB_Ratio: 0
-    _resourceC_Ratio: 0
-    _resourceCountArray: 
-  - _centerPosition: {fileID: 6367733870495237187}
-    _mapSizeX: 10
-    _mapSizeZ: 10
-    _maxResourceCount: 0
-    _resourceA_Ratio: 0
-    _resourceB_Ratio: 0
-    _resourceC_Ratio: 0
-    _resourceCountArray: 
-  - _centerPosition: {fileID: 4310980270501462802}
-    _mapSizeX: 10
-    _mapSizeZ: 10
-    _maxResourceCount: 0
-    _resourceA_Ratio: 0
-    _resourceB_Ratio: 0
-    _resourceC_Ratio: 0
-    _resourceCountArray: 
-  - _centerPosition: {fileID: 1815072178502964000}
-    _mapSizeX: 10
-    _mapSizeZ: 10
-    _maxResourceCount: 0
-    _resourceA_Ratio: 0
-    _resourceB_Ratio: 0
-    _resourceC_Ratio: 0
-    _resourceCountArray: 
-  - _centerPosition: {fileID: 8184302090120704610}
-    _mapSizeX: 10
-    _mapSizeZ: 10
-    _maxResourceCount: 0
-    _resourceA_Ratio: 0
-    _resourceB_Ratio: 0
-    _resourceC_Ratio: 0
-    _resourceCountArray: 
-  _portal: {fileID: 821587182360049249, guid: 1c6127be647f6f14c95ab2d7e19a1feb, type: 3}
+  _portal: {fileID: 0}
 --- !u!114 &8188335126287835600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,13 +211,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _monsterCount: 30
-  _meleeAttackmonster: {fileID: 6632230140461714979, guid: 35ffe9e505b042049be067cb20761716,
+  _meleeAttackmonster: {fileID: 1330345219028747955, guid: 69e047a444aef4b4b8b74e41f61aeffd,
     type: 3}
-  _meleeExplosionmonster: {fileID: 1667371999577229360, guid: 7df855cac54836b4f9e11523936f8f07,
+  _meleeExplosionmonster: {fileID: 1330345219028747955, guid: 69e047a444aef4b4b8b74e41f61aeffd,
     type: 3}
-  _chargeMonster: {fileID: 4497306570829095016, guid: 4a8fb6705b75472438819c1ae8dda91c,
+  _chargeMonster: {fileID: 1330345219028747955, guid: 69e047a444aef4b4b8b74e41f61aeffd,
     type: 3}
-  _longRangeMonster: {fileID: 3934892403602968664, guid: 59fdb7e8c143df549bb165b589319787,
+  _longRangeMonster: {fileID: 1330345219028747955, guid: 69e047a444aef4b4b8b74e41f61aeffd,
     type: 3}
   _itemCount: 50
   _items:
@@ -367,7 +311,7 @@ Transform:
   m_GameObject: {fileID: 4069878262764183716}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -35, y: 0, z: -35}
+  m_LocalPosition: {x: 0, y: 0, z: -42}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

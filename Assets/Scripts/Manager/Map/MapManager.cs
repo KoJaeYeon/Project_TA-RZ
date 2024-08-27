@@ -8,15 +8,21 @@ using UnityEngine.SceneManagement;
 
 public class MapManager : MonoBehaviour
 {
+    #region InJect
     [Inject]
     private UIEvent _uiEvent;
+    #endregion
+
+    #region Component
     private Stage _currentStage;
     private Player _player;
+    #endregion
 
+    #region Value
     private float _progressValue;
     public float ProgressValue { get; set; }
-
     private StageType _currentStageType;
+    #endregion
 
     private void Awake()
     {
@@ -52,16 +58,9 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    public void RequestChangeProgressValue(float value)
-    {
-        _progressValue += value;
-
-        _uiEvent.RequestChangeProgressBar(value);
-    }
-
     private void LoadSceneBeginning()
     {
-
+        LoadingScene.LoadScene("Beginning");
     }
 
     private void LoadSceneMiddle()
@@ -82,5 +81,12 @@ public class MapManager : MonoBehaviour
     public StageType GetStageType()
     {
         return _currentStageType;
+    }
+
+    public void RequestChangeProgressValue(float value)
+    {
+        _progressValue += value;
+
+        _uiEvent.RequestChangeProgressBar(value);
     }
 }

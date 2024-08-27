@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
+using Zenject;
 
 public static class QueueExtensions
 {
@@ -43,6 +44,8 @@ public class Pool
 public class PoolManager : MonoBehaviour
 {
     private Dictionary<string, Pool> _objectPools = new Dictionary<string, Pool>();
+    [Inject]
+    public DiContainer _di;
 
     //몬스터가 죽었을 때 Action 같은 이벤트로 죽었음을 알려준다 bool 값
     //풀을 생성하는 메서드. 프리팹의 이름으로 풀을 생성한다.
@@ -61,7 +64,7 @@ public class PoolManager : MonoBehaviour
 
         for (int i = 0; i < count; i++) //아이템을 생성하고 큐에 넣는 부분
         {
-            GameObject item = Instantiate(prefab, _objectPools[itemType]._transform);
+            GameObject item = _di.InstantiatePrefab(prefab, _objectPools[itemType]._transform);
             item.name = itemType;
             _objectPools[itemType]._queue.EnqueuePool(item.GetComponent<Component>());
             _objectPools[itemType]._count++;
