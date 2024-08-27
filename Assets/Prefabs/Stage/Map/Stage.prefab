@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2c91ee8917d4f24cb3af6dc6c763e7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _level: 2
+  _level: 0
   _partitions:
   - _centerPosition: {fileID: 0}
     _mapSizeX: 10

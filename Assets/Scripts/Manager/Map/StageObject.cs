@@ -11,6 +11,13 @@ public enum MonsterList
     _longRangeMonster
 }
 
+public enum ItemList
+{
+    _resourceA,
+    _resourceB, 
+    _resourceC,
+}
+
 public class StageObject : MonoBehaviour
 {
   
@@ -29,6 +36,10 @@ public class StageObject : MonoBehaviour
     [SerializeField] private GameObject[] _items;
 
     private Dictionary<MonsterList, GameObject> _monsterDictionary = new Dictionary<MonsterList, GameObject>();
+    private Dictionary<ItemList, GameObject> _itemDictionary = new Dictionary<ItemList, GameObject>();
+
+    private List<GameObject> _spawnMonsters = new List<GameObject>();
+    private List<GameObject> _spawnItems = new List<GameObject>();  
 
     private void Awake()
     {
@@ -38,28 +49,52 @@ public class StageObject : MonoBehaviour
 
     private void CreateMonster()
     {
-        _poolManager.CreatePool(_meleeAttackmonster, _monsterCount);
-        _poolManager.CreatePool(_meleeExplosionmonster, _monsterCount);
-        _poolManager.CreatePool(_chargeMonster, _monsterCount);
-        _poolManager.CreatePool(_longRangeMonster, _monsterCount);
+        var monsters = new (MonsterList, GameObject)[]
+        {
+            (MonsterList._meleeAttackmonster, _meleeAttackmonster),
+            (MonsterList._meleeExplosionmonster, _meleeExplosionmonster),
+            (MonsterList._chargeMonster, _chargeMonster),
+            (MonsterList._longRangeMonster, _longRangeMonster)
+        };
 
-        AddMonster();
+        AddMonster(monsters, _monsterCount, _monsterDictionary);
+    }
+
+    private void AddMonster((MonsterList, GameObject)[] monsters, int count,
+     Dictionary<MonsterList, GameObject> monsterDictionary = null)
+    {
+        foreach (var (monsterType, monsterObject) in monsters)
+        {
+            _poolManager.CreatePool(monsterObject, count);
+            monsterDictionary?.Add(monsterType, monsterObject);
+        }
     }
 
     private void CreateItem()
     {
-        for(int i = 0; i < _items.Length; i++)
+        var items = new (ItemList, GameObject)[]
         {
-            _poolManager.CreatePool(_items[i], _itemCount);
+            (ItemList._resourceA, _items[0]),
+            (ItemList._resourceB, _items[1]),
+            (ItemList._resourceC, _items[2]),
+        };
+
+        AddItem(items, _itemCount, _itemDictionary);
+    }
+
+    private void AddItem((ItemList, GameObject)[] items, int count,
+        Dictionary<ItemList, GameObject> itemDictionary = null)
+    {
+        foreach(var (itemType, itemObject) in items)
+        {
+            _poolManager.CreatePool(itemObject, count);
+            itemDictionary?.Add(itemType, itemObject);
         }
     }
 
-    private void AddMonster()
+    public void RegisterMonster()
     {
-        _monsterDictionary.Add(MonsterList._meleeAttackmonster, _meleeAttackmonster);
-        _monsterDictionary.Add(MonsterList._meleeExplosionmonster, _meleeExplosionmonster);
-        _monsterDictionary.Add(MonsterList._chargeMonster, _chargeMonster);
-        _monsterDictionary.Add(MonsterList._longRangeMonster, _longRangeMonster);
+
     }
 
     public GameObject GetMonster(MonsterList monsterType)
@@ -70,17 +105,23 @@ public class StageObject : MonoBehaviour
         }
         else
         {
-            return null;
+            _poolManager.CreatePool(monsterPrefab, _monsterCount);
+
+            return _poolManager.DequeueObject(monsterPrefab);
         }
     }
 
-    public GameObject GetItem()
+    public GameObject GetItem(ItemList itemType)
     {
-        int randomIndex = Random.Range(0, _items.Length);
+        if(_itemDictionary.TryGetValue(itemType, out GameObject itemPrefab))
+        {
+            return _poolManager.DequeueObject(itemPrefab);
+        }
+        else
+        {
+            _poolManager.CreatePool(itemPrefab, _itemCount);
 
-        GameObject item = _poolManager.DequeueObject(_items[randomIndex]);
-
-        return item;
+            return _poolManager.DequeueObject(itemPrefab);
+        }
     }
-
 }

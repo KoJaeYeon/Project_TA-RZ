@@ -78,7 +78,6 @@ public class Stage : MonoBehaviour
     private List<GameObject> _spawnMonsters;
     private List<GameObject> _spawnItems;
 
-
     private void Awake()
     {
         _mapManager.SetStage(this);
@@ -267,11 +266,24 @@ public class Stage : MonoBehaviour
                 {
                     Vector3 spawnPosition = GetRandomSpawnPosition(partition._centerPosition, partition._mapSizeX, partition._mapSizeZ);
 
-                    GameObject item = _object.GetItem();
-
-                    item.transform.position = spawnPosition;
-
-                    _spawnItems.Add(item);
+                    switch (i)
+                    {
+                        case (int)ItemList._resourceA:
+                            GameObject itemA = _object.GetItem(ItemList._resourceA);
+                            itemA.transform.position = spawnPosition;
+                            _spawnItems.Add(itemA);
+                            break;
+                        case (int)ItemList._resourceB:
+                            GameObject itemB = _object.GetItem(ItemList._resourceB);
+                            itemB.transform.position = spawnPosition;
+                            _spawnItems.Add(itemB);
+                            break;
+                        case (int)ItemList._resourceC:
+                            GameObject itemC = _object.GetItem(ItemList._resourceC);
+                            itemC.transform.position = spawnPosition;
+                            _spawnItems.Add(itemC);
+                            break;
+                    }
                 }
             }
         }
@@ -311,11 +323,6 @@ public class Stage : MonoBehaviour
     }
 
     private void SpawnElite(Vector3 spawnPosition)
-    {
-
-    }
-
-    public void MonsterDeath(GameObject monster)
     {
 
     }
