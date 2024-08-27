@@ -9,7 +9,7 @@ public class StringData : MonoBehaviour
     [Inject]
     DataManager _dataManager;
     [SerializeField] string IDStr;
-    private void Awake()
+    private void Start()
     {
         StartCoroutine(LoadString());
     }

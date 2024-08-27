@@ -7,6 +7,7 @@ public class UIEvent
 {
     private IChoiceEvent _choiceStageEvent;
     private Action<float> _progressCallBack;
+    public BlueChipUI BlueChipUI { get; private set; }
     
 
     public void NullTest()
@@ -68,6 +69,18 @@ public class UIEvent
     public void UnRegisterChangeProgressUI(ProgressUIViewModel viewModel)
     {
         _progressCallBack -= viewModel.OnResponseChangeCurrentStage;
+    }
+    #endregion
+
+    #region BlueChipEvent
+    public void RegisterBlueChipUI(BlueChipUI blueChipUI)
+    {
+        BlueChipUI = blueChipUI;
+    }
+
+    public void ActiveBlueChipUI()
+    {
+        BlueChipUI.gameObject.SetActive(true);
     }
     #endregion
 
