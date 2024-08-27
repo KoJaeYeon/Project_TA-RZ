@@ -6,7 +6,7 @@ using System;
 using Zenject;
 
 [System.Serializable]
-public enum GameLevel
+public enum GameLevel //게임 레벨
 {
     Beginning,
     Middle,
@@ -86,7 +86,8 @@ public class Stage : MonoBehaviour
         StartCoroutine(SpawnObject());
     }
 
-    private IEnumerator SpawnObject()
+    //오브젝트를 스폰하는 코루틴
+    private IEnumerator SpawnObject() 
     {
         yield return new WaitUntil(() => (_itemDataReady && _monsterDataReady));
 
@@ -157,7 +158,8 @@ public class Stage : MonoBehaviour
 
     }
 
-    private void AddMonsterData(StageType stageType, Map_Monster_Mix data)
+    //딕셔너리에 몬스터 조합 정보를 넣는 메서드
+    private void AddMonsterData(StageType stageType, Map_Monster_Mix data) 
     {
         if (!_monsterDataDictionary.ContainsKey(stageType))
         {
@@ -167,6 +169,7 @@ public class Stage : MonoBehaviour
         _monsterDataDictionary[stageType].Add(data);
     }
 
+    //랜덤한 조합 정보를 가져오는 메서드
     private Map_Monster_Mix GetRandomData(StageType currentStage)
     {
         List<Map_Monster_Mix> dataList = _monsterDataDictionary[currentStage];
@@ -176,6 +179,7 @@ public class Stage : MonoBehaviour
         return dataList[randomIndex];
     }
 
+    //각 구역에 스폰할 아이템을 결정하는 메서드
     private void SetPartitionsItemArea()
     {
         _selectItemArea = new List<Partition>();
@@ -213,6 +217,7 @@ public class Stage : MonoBehaviour
         }
     }
   
+    //몬스터가 스폰할 구역을 결정하는 메서드
     private void SetPartitionsMonsterArea(GameLevel level)
     {
         _selectMonsterArea = new List<Partition>();
@@ -276,6 +281,7 @@ public class Stage : MonoBehaviour
         SetPartitionsMonsterArea(_level);
     }
 
+    //몬스터 스폰 메서드
     private void SpawnMonster()
     {
         _spawnMonsters = new HashSet<GameObject>();
@@ -303,6 +309,7 @@ public class Stage : MonoBehaviour
         }
     }
 
+    //아이템 스폰 메서드
     private void SpawnItem()
     {
         _spawnItems = new List<GameObject>();   
@@ -340,6 +347,7 @@ public class Stage : MonoBehaviour
         Debug.Log(_spawnItems.Count);
     }
 
+    //스폰된 몬스터를 해쉬셋에 등록하는 메서드
     private void RegisterMonster(GameObject monster)
     {
         Monster monsterComponent = monster.GetComponent<Monster>();
@@ -349,6 +357,7 @@ public class Stage : MonoBehaviour
         _spawnMonsters.Add(monster);
     }
 
+    //스폰된 몬스터에서 등록을 해제하는 메서드
     public void UnRegisterMonster(GameObject monster)
     {
         if (_spawnMonsters.Contains(monster))
@@ -363,6 +372,7 @@ public class Stage : MonoBehaviour
         }
     }
 
+    //중앙 포지션을 기준으로 구역의 크기를 결정하고 몬스터나 아이템이 스폰할 좌표를 반환하는 메서드
     private Vector3 GetRandomSpawnPosition(Transform centerPosition, float mapSizeX, float mapSizeZ)
     {
         float randomPosX = UnityEngine.Random.Range(-mapSizeX / 2, mapSizeX / 2);
