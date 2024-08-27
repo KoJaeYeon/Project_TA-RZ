@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public enum MonsterList
+public enum MonsterList //순서 변경X
 {
     _meleeAttackmonster,
     _meleeExplosionmonster,
@@ -11,7 +11,7 @@ public enum MonsterList
     _longRangeMonster
 }
 
-public enum ItemList
+public enum ItemList //순서 변경X
 {
     _resourceA,
     _resourceB, 
@@ -37,9 +37,6 @@ public class StageObject : MonoBehaviour
 
     private Dictionary<MonsterList, GameObject> _monsterDictionary = new Dictionary<MonsterList, GameObject>();
     private Dictionary<ItemList, GameObject> _itemDictionary = new Dictionary<ItemList, GameObject>();
-
-    private List<GameObject> _spawnMonsters = new List<GameObject>();
-    private List<GameObject> _spawnItems = new List<GameObject>();  
 
     private void Awake()
     {
@@ -90,11 +87,6 @@ public class StageObject : MonoBehaviour
             _poolManager.CreatePool(itemObject, count);
             itemDictionary?.Add(itemType, itemObject);
         }
-    }
-
-    public void RegisterMonster()
-    {
-
     }
 
     public GameObject GetMonster(MonsterList monsterType)

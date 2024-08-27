@@ -10,23 +10,8 @@ public enum GameLevel
 {
     Beginning,
     Middle,
-    Final
-}
-
-public struct TestData
-{
-    public int _maxResourceCount { get; }
-    public float _resourceA_Ratio { get; }
-    public float _resourceB_Ratio { get; }
-    public float _resourceC_Ratio { get; }
-
-    public TestData(int maxResourceCount, float resourceA_Ratio, float resourceB_Ratio, float resourceC_Ratio)
-    {
-        _maxResourceCount = maxResourceCount;
-        _resourceA_Ratio = resourceA_Ratio;
-        _resourceB_Ratio = resourceB_Ratio;
-        _resourceC_Ratio = resourceC_Ratio;
-    }
+    Final,
+    Boss
 }
 
 public class Stage : MonoBehaviour
@@ -43,9 +28,9 @@ public class Stage : MonoBehaviour
         [HideInInspector]
         public float _resourceA_Ratio; //A 아이템 비율
         [HideInInspector]
-        public float _resourceB_Ration; //B 아이템 비율
+        public float _resourceB_Ratio; //B 아이템 비율
         [HideInInspector]
-        public float _resourceC_Ration; //C 아이템 비율
+        public float _resourceC_Ratio; //C 아이템 비율
         [HideInInspector]
         public int[] _resourceCountArray; //A,B,C 아이템 비율에 따라 생성되어야 하는 각 아이템의 수를 저장하는 배열.
     }
@@ -63,77 +48,132 @@ public class Stage : MonoBehaviour
     [Header("PartitionList")]
     [SerializeField] private List<Partition> _partitions; //각 구역 리스트.
 
-    [Header("MonsterSpwanCount")]
-    [SerializeField] private int _monsterSpawncount;
-
     [Header("PortalObject")]
     [SerializeField] private GameObject _portal;
 
     private StageType _currentStage;
-    private TestData[] _testDataStruct;
 
     private StageObject _object;
     private List<Partition> _selectMonsterArea;
     private List<Partition> _selectItemArea;
-    private List<GameObject> _spawnMonsters;
+    private HashSet<GameObject> _spawnMonsters;
     private List<GameObject> _spawnItems;
 
+    #region StageData
+    private Dictionary<StageType, List<Map_Monster_Mix>> _monsterDataDictionary;
+    private Map_Resource _itemData;
+    //private int _totalResource;
+    private bool _itemDataReady = false;
+    private bool _monsterDataReady = false;
+
+    #endregion
     private void Awake()
     {
         _mapManager.SetStage(this);
 
         _object = gameObject.GetComponent<StageObject>();
 
-        SetTestMapData(_level);
+        StartCoroutine(SetItemData($"R{1+(int)_level}01"));
+        StartCoroutine(SetMonsterData());
     }
 
     private void Start()
     {
         _currentStage = StageType.Normal;
 
-        SpawnObject();
+        _portal.SetActive(false);
+
+        StartCoroutine(SpawnObject());
     }
 
-   
-    private void SpawnObject()
+    private IEnumerator SpawnObject()
     {
+        yield return new WaitUntil(() => (_itemDataReady && _monsterDataReady));
+
         SetArea();
         SpawnMonster();
         SpawnItem();
     }
 
-    //임시 데이터
-    private void SetTestMapData(GameLevel level)
+    private IEnumerator SetItemData(string idStr)
     {
-        switch (level)
+        while (true)
         {
-            case GameLevel.Beginning:
-                _testDataStruct = new TestData[2];
-                _testDataStruct[0] = new TestData(20, 33f, 33f, 34f);
-                _testDataStruct[1] = new TestData(30, 33f, 33f, 34f);
-                break;
-            case GameLevel.Middle:
-                _testDataStruct = new TestData[6];
-                _testDataStruct[0] = new TestData(30, 33f, 33f, 34f);
-                _testDataStruct[1] = new TestData(25, 33f, 33f, 34f);
-                _testDataStruct[2] = new TestData(25, 33f, 33f, 34f);
-                _testDataStruct[3] = new TestData(25, 33f, 33f, 34f);
-                _testDataStruct[4] = new TestData(25, 33f, 33f, 34f);
-                _testDataStruct[5] = new TestData(25, 33f, 33f, 34f);
-                break;
-            case GameLevel.Final:
-                _testDataStruct = new TestData[9];
-                _testDataStruct[0] = new TestData(30, 33f, 33f, 34f);
-                _testDataStruct[1] = new TestData(30, 33f, 33f, 34f);
-                _testDataStruct[2] = new TestData(30, 33f, 33f, 34f);
-                _testDataStruct[3] = new TestData(30, 33f, 33f, 34f);
-                _testDataStruct[4] = new TestData(30, 33f, 33f, 34f);
-                _testDataStruct[5] = new TestData(30, 33f, 33f, 34f);
-                _testDataStruct[6] = new TestData(30, 33f, 33f, 34f);
-                _testDataStruct[7] = new TestData(30, 33f, 33f, 34f);
-                _testDataStruct[8] = new TestData(30, 33f, 33f, 34f);
-                break;
+            var itemData = _dataManager.GetData(idStr) as Map_Resource;
+
+            if(itemData == null)
+            {
+                yield return new WaitForSeconds(1f);
+                Debug.Log("현재 스테이지의 아이템 데이터를 읽어오지 못했습니다.");
+            }
+            else
+            {
+                Debug.Log("현재 스테이지의 아이템 데이터를 읽어왔습니다.");
+                _itemData = itemData;
+                _itemDataReady = true;
+                yield break;
+            }
         }
+    }
+
+    private IEnumerator SetMonsterData()
+    {
+        _monsterDataDictionary = new Dictionary<StageType, List<Map_Monster_Mix>>();
+
+        while (true)
+        {
+            var monsterData = _dataManager.GetData("L301") as Map_Monster_Mix;
+
+            if(monsterData == null)
+            {
+                yield return new WaitForSeconds(1f);
+                Debug.Log("몬스터 데이터를 읽어오지 못했습니다.");
+            }
+            else
+            {
+                for(int i = 0; i < 9; i++)
+                {
+                    monsterData = _dataManager.GetData($"L30{i + 1}") as Map_Monster_Mix;
+
+                    if(i < 3)
+                    {
+                        AddMonsterData(StageType.Quantity, monsterData);
+                    }
+                    else if(i < 6)
+                    {
+                        AddMonsterData(StageType.Normal, monsterData);
+                    }
+                    else
+                    {
+                        AddMonsterData(StageType.Elite, monsterData);
+                    }
+                }
+
+                Debug.Log("몬스터 데이터를 성공적으로 읽어왔습니다.");
+                _monsterDataReady = true;
+                yield break;
+            }
+        }
+
+    }
+
+    private void AddMonsterData(StageType stageType, Map_Monster_Mix data)
+    {
+        if (!_monsterDataDictionary.ContainsKey(stageType))
+        {
+            _monsterDataDictionary[stageType] = new List<Map_Monster_Mix>();
+        }
+
+        _monsterDataDictionary[stageType].Add(data);
+    }
+
+    private Map_Monster_Mix GetRandomData(StageType currentStage)
+    {
+        List<Map_Monster_Mix> dataList = _monsterDataDictionary[currentStage];
+
+        int randomIndex = UnityEngine.Random.Range(0, dataList.Count);
+
+        return dataList[randomIndex];
     }
 
     private void SetPartitionsItemArea()
@@ -142,19 +182,19 @@ public class Stage : MonoBehaviour
 
         for (int i = 0; i < _partitions.Count; i++)
         {
-            if( i < _testDataStruct.Length)
+            if( i < _itemData.Map_Panel_Resources_Ratio.Count)
             {
-                var testData = _testDataStruct[i];
+                var panelData = _itemData;
                 var partition = _partitions[i];
 
-                partition._maxResourceCount = testData._maxResourceCount;
-                partition._resourceA_Ratio = testData._resourceA_Ratio / 100f;
-                partition._resourceB_Ration = testData._resourceB_Ratio / 100f;
-                partition._resourceC_Ration = testData._resourceC_Ratio / 100f;
+                partition._maxResourceCount = panelData.Map_Panel_Resources_Ratio[i];
+                partition._resourceA_Ratio = panelData.Map_Resources_type_Ratio[0] / 100f;
+                partition._resourceB_Ratio = panelData.Map_Resources_type_Ratio[1] / 100f;
+                partition._resourceC_Ratio = panelData.Map_Resources_type_Ratio[2] / 100f;
 
                 int resourceA = Mathf.FloorToInt(partition._resourceA_Ratio * partition._maxResourceCount);
-                int resourceB = Mathf.FloorToInt(partition._resourceB_Ration * partition._maxResourceCount);
-                int resourceC = Mathf.FloorToInt(partition._resourceC_Ration * partition._maxResourceCount);
+                int resourceB = Mathf.FloorToInt(partition._resourceB_Ratio * partition._maxResourceCount);
+                int resourceC = Mathf.FloorToInt(partition._resourceC_Ratio * partition._maxResourceCount);
 
                 int total = resourceA + resourceB + resourceC;
 
@@ -238,17 +278,26 @@ public class Stage : MonoBehaviour
 
     private void SpawnMonster()
     {
-        _spawnMonsters = new List<GameObject>();
+        _spawnMonsters = new HashSet<GameObject>();
 
         foreach(var partition in _selectMonsterArea)
         {
-            for(int i = 0; i < _monsterSpawncount; i++)
-            {
-                Vector3 spawnPosition = GetRandomSpawnPosition(partition._centerPosition, partition._mapSizeX, partition._mapSizeZ);
+            Map_Monster_Mix randomData = GetRandomData(_currentStage);
 
-                if(spawnPosition != null)
+            for(int i = 0; i < randomData.Mon_Monster.Count; i++)
+            {
+                for(int k = 0; k < randomData.Mon_Monster[i]; k++)
                 {
-                    InstantiateMonster(_currentStage, spawnPosition);
+                    Vector3 spawnPosition = GetRandomSpawnPosition(partition._centerPosition, partition._mapSizeX, partition._mapSizeZ);
+
+                    if(spawnPosition != null)
+                    {
+                        GameObject monster = _object.GetMonster((MonsterList)i);
+
+                        monster.transform.position = spawnPosition;
+
+                        RegisterMonster(monster);
+                    }
                 }
             }
         }
@@ -291,40 +340,27 @@ public class Stage : MonoBehaviour
         Debug.Log(_spawnItems.Count);
     }
 
-    private void InstantiateMonster(StageType stageType, Vector3 spawnPosition)
+    private void RegisterMonster(GameObject monster)
     {
-        switch(stageType)
+        Monster monsterComponent = monster.GetComponent<Monster>();
+
+        monsterComponent.IsSpawn(this);
+
+        _spawnMonsters.Add(monster);
+    }
+
+    public void UnRegisterMonster(GameObject monster)
+    {
+        if (_spawnMonsters.Contains(monster))
         {
-            case StageType.Normal:
-                SpawnNormal(spawnPosition);
-                break;
-            case StageType.Quantity:
-                SpawnQuantity(spawnPosition);
-                break;
-            case StageType.Elite:
-                SpawnElite(spawnPosition);
-                break;
+            _spawnMonsters.Remove(monster);
+
+            if(_spawnMonsters.Count == 0)
+            {
+                _mapManager.RequestChangeProgressValue(0.33f);
+                _portal.SetActive(true);
+            }
         }
-    }
-
-    private void SpawnNormal(Vector3 spawnPosition)
-    {
-        //몬스터 조합 데이터를 가져와서 조합에 해당하는 몬스터를 생성.
-        GameObject testMonster = _object.GetMonster(MonsterList._meleeAttackmonster);
-
-        testMonster.transform.position = spawnPosition;
-
-        _spawnMonsters.Add(testMonster);
-    }
-
-    private void SpawnQuantity(Vector3 spawnPosition)
-    {
-
-    }
-
-    private void SpawnElite(Vector3 spawnPosition)
-    {
-
     }
 
     private Vector3 GetRandomSpawnPosition(Transform centerPosition, float mapSizeX, float mapSizeZ)

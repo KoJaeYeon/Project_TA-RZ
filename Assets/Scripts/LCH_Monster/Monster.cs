@@ -31,6 +31,7 @@ public class Monster : MonoBehaviour, IHit
     NavMeshAgent Nav;
     Animator _anim;
     Rigidbody _rigidbody;
+    Stage _stage;
 
     public float Mon_Common_Stat_Hp { get; set; }
     public float Mon_Common_Damage { get; set; }
@@ -46,6 +47,7 @@ public class Monster : MonoBehaviour, IHit
     public bool IsAtk { get; set; }
     public bool IsKnockBack { get; set; }
     public float Mon_Common_Hp_Remain { get; set; }
+    private bool _isSpawn = false;
 
 
     [Header("공격 경직시간 조절")]
@@ -175,6 +177,12 @@ public class Monster : MonoBehaviour, IHit
         }
         else
         {
+            if (_isSpawn)
+            {
+                _isSpawn = false;
+
+                _stage.UnRegisterMonster(this.gameObject);
+            }
             gameObject.SetActive(false);
         }
     }
@@ -228,6 +236,15 @@ public class Monster : MonoBehaviour, IHit
         IsDamaged = false;
     }
 
+    public void IsSpawn(Stage stage)
+    {
+        if (!_isSpawn)
+        {
+            _isSpawn = true;
+            _stage = stage;
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player") || other.CompareTag("Shield"))
@@ -241,4 +258,5 @@ public class Monster : MonoBehaviour, IHit
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position + transform.forward, Mon_Common_AttackArea);
     }
+
 }
