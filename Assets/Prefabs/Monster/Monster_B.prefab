@@ -1226,7 +1226,7 @@ GameObject:
   - component: {fileID: 9080336735922375758}
   - component: {fileID: 4462640136778864781}
   - component: {fileID: 377270267417151656}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1616,7 +1616,7 @@ GameObject:
   - component: {fileID: 1327125583418918885}
   - component: {fileID: 5730702997159829918}
   - component: {fileID: 3420685072983603030}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AtkCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2233,7 +2233,7 @@ GameObject:
   - component: {fileID: 6659172608454570299}
   - component: {fileID: 2360261172983186185}
   - component: {fileID: 6867558611653413972}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3229,7 +3229,7 @@ GameObject:
   - component: {fileID: 2990597760128755437}
   - component: {fileID: 2574721081478736956}
   - component: {fileID: 7034099009981739234}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3622,7 +3622,7 @@ GameObject:
   - component: {fileID: 4283437451672132740}
   - component: {fileID: 6687012982437230243}
   - component: {fileID: 3475873616000485342}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5722,7 +5722,6 @@ MonoBehaviour:
   Attack_Stiff_Time: 1
   Knockback_Horizontal_Distance: 6
   Knockback_Vertical_Distance: 3
-  TempHPText: {fileID: 3475873616000485342}
 --- !u!95 &5274631460982744477
 Animator:
   serializedVersion: 5
@@ -7131,7 +7130,7 @@ GameObject:
   - component: {fileID: 7313317752953041153}
   - component: {fileID: 6829152785172610785}
   - component: {fileID: 7847734752928060530}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7690,7 +7689,6 @@ MonoBehaviour:
   Attack_Stiff_Time: 0
   Knockback_Horizontal_Distance: 4
   Knockback_Vertical_Distance: 2
-  TempHPText: {fileID: 7034099009981739234}
 --- !u!95 &7094950030895520611
 Animator:
   serializedVersion: 5
@@ -8148,7 +8146,6 @@ MonoBehaviour:
   Attack_Stiff_Time: 0
   Knockback_Horizontal_Distance: 4
   Knockback_Vertical_Distance: 2
-  TempHPText: {fileID: 3884800906854490929}
 --- !u!95 &4943321709910652379
 Animator:
   serializedVersion: 5
@@ -8906,7 +8903,7 @@ GameObject:
   - component: {fileID: 8125726764379554810}
   - component: {fileID: 3938059567925129783}
   - component: {fileID: 3884800906854490929}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9329,7 +9326,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2680956458383480918
 Transform:
   m_ObjectHideFlags: 0
@@ -10136,9 +10133,9 @@ GameObject:
   - component: {fileID: 2415666816103282643}
   - component: {fileID: 7576428823058744024}
   - component: {fileID: 7495430728768903733}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Monster_B
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10180,7 +10177,6 @@ MonoBehaviour:
   Attack_Stiff_Time: 0
   Knockback_Horizontal_Distance: 4
   Knockback_Vertical_Distance: 2
-  TempHPText: {fileID: 0}
 --- !u!195 &6643401399047252378
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -10231,7 +10227,7 @@ MonoBehaviour:
       parentIndex: 
       startIndex: 
       variableStartIndex: 
-      JSONSerialization: '{"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"TargetTransform","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"IsTrack","IsShared":true,"StringmValue":"IsTrack"},{"Type":"BehaviorDesigner.Runtime.SharedMonster","Name":"Monster","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedNavmesh","Name":"NavmeshAgent","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"waitTime","IsShared":true,"SinglemValue":2},{"Type":"BehaviorDesigner.Runtime.SharedCustomCollider","Name":"Collider","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Owner","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedMonster_A","Name":"Monster_A","IsShared":true}]}'
+      JSONSerialization: '{"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedTransform","Name":"TargetTransform","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedString","Name":"IsTrack","IsShared":true,"StringmValue":"IsTrack"},{"Type":"BehaviorDesigner.Runtime.SharedMonster","Name":"Monster","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedNavmesh","Name":"NavmeshAgent","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"waitTime","IsShared":true,"SinglemValue":2},{"Type":"BehaviorDesigner.Runtime.SharedCustomCollider","Name":"Collider","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":"Owner","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedMonster_A","Name":"Monster_A","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedAnimator","Name":"Animator","IsShared":true}]}'
       fieldSerializationData:
         typeName: []
         fieldNameHash: 

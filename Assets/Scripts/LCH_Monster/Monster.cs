@@ -70,13 +70,14 @@ public class Monster : MonoBehaviour, IHit
         _bt = GetComponent<BehaviorTree>();
         Nav = GetComponent<NavMeshAgent>();
 
-        //int rand = Random.Range(0, 4);
-        //transform.GetChild(rand).gameObject.SetActive(true);
-        Anim = GetComponentInChildren<Animator>();
+        int rand = Random.Range(0, 4);
+        transform.GetChild(rand).gameObject.SetActive(true);
     }
 
     void Start()
     {
+        Anim = GetComponentInChildren<Animator>();
+
         if (Type == MonsterType.Supply)
         {
             gameObject.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);

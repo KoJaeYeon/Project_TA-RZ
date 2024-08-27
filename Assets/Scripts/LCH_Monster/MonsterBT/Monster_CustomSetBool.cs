@@ -13,7 +13,7 @@ public class Monster_Anim_CustomSetBool : Action
     {
         if (anim == null)
         {
-            anim = Owner.GetComponentInChildren<Animator>();
+            anim.Value = Owner.GetComponentInChildren<Animator>();
             anim.Value.SetBool("IsTrack", BoolValue.Value);
             return TaskStatus.Success;
         }
