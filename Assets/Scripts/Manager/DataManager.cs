@@ -111,8 +111,11 @@ public class DataManager : MonoBehaviour
             case "_Monster_Stat_URL":
                 Process_Monster_Stat_Data(data);
                 break;
-            case "_Monster_Ability":
+            case "_Monster_Ability_URL":
                 Process_Monster_Ability_Data(data);
+                break;
+            case "_Boss_Skill_URL":
+                Process_Boss_Skill_Data(data);
                 break;
             case "_Map_Stat_URL":
                 Process_Map_Stat_Data(data);
@@ -260,6 +263,22 @@ public class DataManager : MonoBehaviour
             float stat_CDMag = ParseFloat(item[nameof(Monster_Ability.Stat_CDMag)]);
 
             Monster_Ability ability = new Monster_Ability(idStr, stat_HPMag, stat_DmgMag, stat_MSMag, stat_CDMag);
+            AddDataToDataDictionary(idStr, ability);
+        }
+    }
+
+    private void Process_Boss_Skill_Data(string data)
+    {
+        JArray jsonArray = JArray.Parse(data);
+
+        foreach (var item in jsonArray)
+        {
+            string idStr = item[nameof(Boss_Skill.ID)].ToString();
+            float skill_Casting = ParseFloat(item[nameof(Boss_Skill.Skill_Casting)]);
+            float skill_Range = ParseFloat(item[nameof(Boss_Skill.Skill_Range)]);
+            float skill_Damage = ParseFloat(item[nameof(Boss_Skill.Skill_Damage)]);
+
+            Boss_Skill ability = new Boss_Skill(idStr, skill_Casting, skill_Range, skill_Damage);
             AddDataToDataDictionary(idStr, ability);
         }
     }
