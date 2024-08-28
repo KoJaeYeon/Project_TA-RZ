@@ -266,7 +266,8 @@ public class PlayerFourthComboAttack : PlayerComboAttack
             {
                 ChangeData(_player.CurrentLevel);
                 PC_Level hitLevel = _isLevel4 ? _player.dataManager.GetData("P505") as PC_Level : _player._PC_Level;
-                hit.Hit(_player.CurrentAtk * _currentAtkMultiplier * hitLevel.Level_Atk_Power_Multiplier, _currentStiffT, _player.transform);
+                float damage = _player.CurrentAtk * _currentAtkMultiplier * hitLevel.Level_Atk_Power_Multiplier;
+                hit.Hit(damage, _currentStiffT, _player.transform);
                 isHit = true;
                 GameObject hitEffect = _effect.GetHitEffect();
                 ParticleSystem hitParticle = hitEffect.GetComponent<ParticleSystem>();
@@ -277,6 +278,8 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
                 hitParticle.Play();
                 _effect.ReturnHit(hitEffect);
+
+                PrintDamageText(damage, target.transform);
             }
         }
         if (isHit)

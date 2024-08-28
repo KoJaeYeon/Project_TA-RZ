@@ -74,7 +74,8 @@ public class PlayerSecondComboAttack : PlayerComboAttack
             if (hit != null)
             {
                 ChangeData(_player.CurrentLevel);
-                hit.Hit(_player.CurrentAtk * _currentAtkMultiplier * _player._PC_Level.Level_Atk_Power_Multiplier, _currentStiffT, _player.transform);
+                float damage = _player.CurrentAtk * _currentAtkMultiplier * _player._PC_Level.Level_Atk_Power_Multiplier;
+                hit.Hit(damage, _currentStiffT, _player.transform);
                 isHit = true;
                 GameObject hitEffect = _effect.GetHitEffect();
                 ParticleSystem hitParticle = hitEffect.GetComponent<ParticleSystem>();
@@ -85,6 +86,8 @@ public class PlayerSecondComboAttack : PlayerComboAttack
 
                 hitParticle.Play();
                 _effect.ReturnHit(hitEffect);
+
+                PrintDamageText(damage, target.transform);
             }
         }
         if (isHit)

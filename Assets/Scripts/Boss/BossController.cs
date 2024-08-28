@@ -3,22 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using BehaviorDesigner.Runtime;
+using Zenject;
 
 public enum BossPhase
 { 
     Phase1, Phase2
 }
 
-public struct BossPattern
-{
-    public string patternName;
-    public float cooltime;
-
-}
-
 public class BossController : MonoBehaviour
 {
+    [Inject] Boss_MarkManager markManager { get; }
+
     [Header("기본 정보")]
+    public BossPhase phase;
     public float _maxHp;
     [SerializeField] private float _hp;
     [HideInInspector] public float _hpPercent;
@@ -35,6 +32,7 @@ public class BossController : MonoBehaviour
     [SerializeField] private float _phaseTwoPer;
 
     [Header("1페이즈 기믹")]
+    [SerializeField] private GimmickController _gimmick;
     public float gimmickDamage;
     [SerializeField] private float _gimmickCoolDown;
     public bool isCoolGimmick;
@@ -49,7 +47,9 @@ public class BossController : MonoBehaviour
     [SerializeField] private float _smashCoolDown;
     public bool isCoolSmash;
     [Header("1페이즈 폭발")]
-    [SerializeField] private GameObject _explosion;
+    [SerializeField] private GameObject[] _firstExplosion;
+    [SerializeField] private GameObject _secondExplosion;
+    [SerializeField] private float _explosionTime;
     public float explosionDamage;
     [SerializeField] private float _explosionCoolDown;
     public bool isCoolExplosion;
@@ -75,10 +75,10 @@ public class BossController : MonoBehaviour
     private NavMeshAgent _nav;
     private BehaviorTree _bt;
 
-    private BossPhase _phase;
-
     private Transform _playerTr;
     private TrailRenderer _trail;
+
+    public bool isGimmick;
 
     private readonly int _hashPhase = Animator.StringToHash("");
     private readonly int _hashAttack = Animator.StringToHash("");
@@ -97,6 +97,13 @@ public class BossController : MonoBehaviour
 
     private void Awake()
     {
+        _gimmick = markManager.mark_Gimmick.GetComponent<GimmickController>();
+        _markRoot = markManager.mark_RootAttack;
+        _firstExplosion = markManager.mark_FirstExplosion;
+        _secondExplosion = markManager.mark_SecondExplosion;
+        _swingMark = markManager.mark_Swing;
+        _smashMark = markManager.mark_smash;
+
         _rb = GetComponent<Rigidbody>();
         _anim = GetComponent<Animator>();
         _nav = GetComponent<NavMeshAgent>();
@@ -106,15 +113,22 @@ public class BossController : MonoBehaviour
         _trail = GetComponentInChildren<TrailRenderer>();
         _trail.Clear();
         _trail.gameObject.SetActive(false);
-        //_markRoot.SetActive(false);
+        _gimmick.gameObject.SetActive(false);
+        _markRoot.SetActive(false);
+        foreach (var explosion in _firstExplosion) 
+        { 
+            explosion.SetActive(false);
+        }
+        _secondExplosion.SetActive(false);
         _swingMark.SetActive(false);
         _smashMark.SetActive(false);
-
+    
         _bt.SetVariableValue("Phase1_Per", _phaseOnePer);
         _bt.SetVariableValue("Phase2_Per", _phaseTwoPer);
         _bt.SetVariableValue("Attack_Distance", _attackRange);
         _bt.SetVariableValue("Rush_Distance", _rushDistance);
         _bt.SetVariableValue("Trace_Distance", _traceDistance);
+        _bt.SetVariableValue("Root_Distance", _roots[0]._attackRange);
 
         _bt.SetVariableValue("RushSpeed", _rushSpeed);
         _bt.SetVariableValue("RushRange", _rushRange);
@@ -130,21 +144,22 @@ public class BossController : MonoBehaviour
 
     private void OnEnable()
     {
-        _phase = BossPhase.Phase1;
+        phase = BossPhase.Phase1;
 
         _hp = _maxHp;
+        _hpPercent = _hp / _maxHp * 100;
     }
 
     #region 테스트
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _hp = 1000;
-        }
-        _hpPercent = _hp / _maxHp * 100;
-    }
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Space))
+    //    {
+    //        _hp = 1000;
+    //    }
+    //    _hpPercent = _hp / _maxHp * 100;
+    //}  
 
     #endregion 테스트
 
@@ -152,34 +167,60 @@ public class BossController : MonoBehaviour
 
     #region Phase1
 
-    public void MarkActiveRoot()
-    {
-        //_markRoot.gameObject.transform.position = _playerTr.position;
-        //_markRoot.gameObject.SetActive(true);
+    //기믹 범위 표시
+    public void MarkGimmick()
+    { 
+        _gimmick.transform.position = transform.position;
+        _gimmick.transform.rotation = transform.rotation;
+        _gimmick.gameObject.SetActive(true);
+        isGimmick = true;
     }
+    //기믹 실행부
+    public void ActiveGimmick()
+    { 
+        _gimmick.gameObject.SetActive(false);
+        isGimmick = false;
+        StartCoroutine(CoCheckCoolTime(_gimmickCoolDown, CoolDown.gimmick));
+    }
+    //뿌리공격 범위 표시
+    public void MarkActiveRoot()
+    { 
+        _markRoot.gameObject.transform.position = _playerTr.position;
+        _markRoot.gameObject.SetActive(true);
+    }
+    //뿌리공격 실행부
     public void ActiveRoot()
     {
+        _markRoot.gameObject.SetActive(false);
         foreach (var root in _roots)
         {
             if (root.rootState == RootState.Emerge)
                 continue;
 
+            if (root.rootState == RootState.Die)
+                continue;
+
             root.rootState = RootState.Emerge;
-            root.RootAttack(_markRoot.gameObject.transform.position);
+            root.RootAttack(_markRoot.gameObject.transform.position + Vector3.one * 0.1f);
             break;
         }
         StartCoroutine(CoCheckCoolTime(_rootCoolDown, CoolDown.rootAttack));
     }
-    public void MarkSmash()
+    //내려치기 범위표시
+    public void MarkRootSmash()
     {
         foreach (var root in _roots)
         {
             if (root.rootState == RootState.Hide)
                 continue;
 
-            root.MarkSmash(RotateToPlayer());
+            if (root.rootState == RootState.Die)
+                continue;
+
+            root.MarkSmash(_playerTr.position);
         }
     }
+    //내려치기 실행부
     public void RootSmash()
     {
         foreach (var root in _roots)
@@ -187,13 +228,36 @@ public class BossController : MonoBehaviour
             if (root.rootState == RootState.Hide)
                 continue;
 
+            if (root.rootState == RootState.Die)
+                continue;
+
             root.RootSmash();
         }
         StartCoroutine(CoCheckCoolTime(_smashCoolDown, CoolDown.smash));
     }
-    public void Explosion()
+    //폭발 공격1 범위표시
+    public void MarkFirstExplosion()
     {
-        _explosion.SetActive(true);
+        foreach (var explosion in _firstExplosion)
+        {
+            explosion.transform.position = transform.position;
+            explosion.SetActive(true);
+        }
+    }
+    //폭발 공격1 실행부
+    public void FirstExplosion()
+    {
+        foreach (var explosion in _firstExplosion)
+        {
+            explosion.SetActive(false);
+        }
+
+        _secondExplosion.SetActive(true);
+    }
+    //폭발 공격2 실행부
+    public void SecondExplosion()
+    {
+        _secondExplosion.SetActive(false);
         StartCoroutine(CoCheckCoolTime(_explosionCoolDown, CoolDown.explosion));
     }
 
@@ -214,6 +278,22 @@ public class BossController : MonoBehaviour
     }
 
     #region Phase2
+
+    //Phase1 잔재 삭제
+    public void InActiveOnPhaseTwo()
+    { 
+        _gimmick.gameObject.SetActive(false);
+        _markRoot.SetActive(false);
+        foreach (var root in _roots)
+        {
+            root.gameObject.SetActive(false);
+        }
+        foreach (var explosion in _firstExplosion)
+        {
+            explosion.SetActive(false);
+        }
+        _secondExplosion.SetActive(false);
+    }
 
     //보스 대쉬 공격
     public void DrawRushTrail()
@@ -241,7 +321,9 @@ public class BossController : MonoBehaviour
 
     //휘두르기
     public void DrawSwing(bool isActive)
-    { 
+    {
+        _swingMark.transform.position = transform.position;
+        _swingMark.transform.rotation = transform.rotation;
         _swingMark.SetActive(isActive);
     }
     public void SwingCool()
@@ -251,7 +333,9 @@ public class BossController : MonoBehaviour
 
     //내려치기
     public void DrawSmash(bool isActive)
-    { 
+    {
+        _smashMark.transform.position = transform.position;
+        _smashMark.transform.rotation = transform.rotation;
         _smashMark.SetActive(isActive);
     }
     public void SmashCool()
@@ -294,6 +378,55 @@ public class BossController : MonoBehaviour
 
         return false;
     }
+    //뿌리 활성화 확인 (전부 활성화 되있는지)
+    public bool CheckAllRoot()
+    { 
+        if (_playerTr == null) return false;
+
+        int count = 0;
+
+        foreach (var root in _roots)
+        {
+            if (root.rootState == RootState.Emerge)
+            {
+                count++;
+            }
+        }
+
+        if (count < _roots.Length) return true;
+
+        return false;
+    }
+    //뿌리 활성화 확인
+    public bool CheckRootActive()
+    {
+        if (_playerTr == null) return false;
+
+        foreach (var root in _roots)
+        {
+            if (root.rootState == RootState.Emerge)
+            { 
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    //뿌리 거리 체크
+    public bool CheckRootDistance(float range)
+    {
+        if (_playerTr == null) return false;
+
+        foreach (var root in _roots)
+        {
+            float distance = Vector3.Distance(root.gameObject.transform.position, _playerTr.position);
+
+            if (distance <= range) return true;
+        }
+
+        return false;
+    }
 
     #endregion BTC
 
@@ -308,6 +441,8 @@ public class BossController : MonoBehaviour
 
     public void Hurt(float damage)
     {
+        if (phase == BossPhase.Phase1 && _gimmick.gameObject.activeSelf) _gimmick.OnActivateCombat();
+
         _hp -= damage;
         _hpPercent = _hp / _maxHp * 100;
     }
@@ -344,5 +479,17 @@ public class BossController : MonoBehaviour
         SetBoolCooldown(coolDown, true);
         yield return new WaitForSeconds(time);
         SetBoolCooldown(coolDown, false);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, 22.4f);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, 16.75f);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, 11.15f);
     }
 }

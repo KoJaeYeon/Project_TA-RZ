@@ -5,3 +5,13 @@ public enum StageType
     Elite,
     Boss
 }
+
+public enum DamageType
+{
+    Normal,
+    Explosive,
+    Ice,
+    Electricity,
+    Poison,
+    BlackHole
+}

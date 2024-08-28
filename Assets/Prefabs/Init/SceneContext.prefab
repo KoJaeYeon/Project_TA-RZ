@@ -301,3 +301,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _poolManager: {fileID: 8278449765957682552, guid: c29b71cf957c4bc4fb26e094e216dfab,
     type: 3}
+  UIPoolManager: {fileID: 8413269345177394378, guid: 5a38f1989b37fc74dade505e70f12312,
+    type: 3}

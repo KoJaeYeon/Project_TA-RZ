@@ -18,7 +18,7 @@ public class DashTrail : MonoBehaviour
     private void OnEnable()
     {
         _defaultTr = transform.parent;
-        transform.position = _defaultTr.position;
+        transform.position = _defaultTr.position + Vector3.up;
         transform.rotation = _defaultTr.rotation;
         Vector3 rotation = transform.eulerAngles;
         rotation.x = -0.1f;

@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum RootState
 { 
     Hide,
-    Emerge
+    Emerge,
+    Die
 }
 
 public class RootContoller : MonoBehaviour
@@ -14,16 +16,17 @@ public class RootContoller : MonoBehaviour
     [SerializeField] private float _maxHp;
     public float damage;
     [SerializeField] private float _attackTime;
-    [SerializeField] private float _attackRange;
+    public float _attackRange;
 
     private bool isDie = false;
 
     private Rigidbody _rb;
     private Animator _anim;
+    private Vector3 _defaultPos;
 
     [HideInInspector] public RootState rootState;
-    private BossController _boss;
-    private MeshRenderer _attackMark;
+    [SerializeField] private BossController _boss;
+    [SerializeField] private GameObject _attackMark;
 
     private readonly int _hashActive = Animator.StringToHash("isActive");
     private readonly int _hashAttackReady = Animator.StringToHash("AttackReady");
@@ -34,9 +37,9 @@ public class RootContoller : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _anim = GetComponent<Animator>();
+        _defaultPos = transform.position;
 
-        _boss = GetComponentInParent<BossController>();
-        _attackMark = GetComponentInChildren<MeshRenderer>();
+        //_boss = GetComponentInParent<BossController>();
         _attackMark.gameObject.SetActive(false);
     }
 
@@ -54,31 +57,9 @@ public class RootContoller : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.H))
         {
-            rootState = RootState.Emerge;
-            RootAttack(transform.position);
-            Debug.Log("1");
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            MarkSmash(transform.rotation);
-            Debug.Log("2");
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            RootSmash();
-            Debug.Log("3");
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            HideRoot();
-            Debug.Log("4");
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            Die();
-            Debug.Log("5");
+            Hurt(100);
         }
     }
 
@@ -86,22 +67,28 @@ public class RootContoller : MonoBehaviour
     {
         if (rootState == RootState.Hide) return;
 
+        if (rootState == RootState.Die) return;
+
         transform.position = spawnPos;
         rootState = RootState.Emerge;
         _anim.SetBool(_hashActive, true);
     }
 
-    public void MarkSmash(Quaternion rot)
+    public void MarkSmash(Vector3 targetPos)
     {
         if (rootState == RootState.Hide) return;
 
-        transform.rotation = rot;
+        if (rootState == RootState.Die) return;
+
+        transform.rotation = RotateToPlayer(targetPos);
         _anim.SetTrigger(_hashAttackReady);
         _attackMark.gameObject.SetActive(true);
     }
     public void RootSmash()
     {
         if (rootState == RootState.Hide) return;
+
+        if (rootState == RootState.Die) return;
 
         _anim.SetTrigger(_hashAttack);
         _attackMark.gameObject.SetActive(false);
@@ -121,11 +108,13 @@ public class RootContoller : MonoBehaviour
 
             if (rootState == RootState.Hide) continue;
 
+            if (rootState == RootState.Die) break;
+
             float distance = Vector3.Distance(transform.position, _boss.PlayerPos());
 
-            if (_attackRange < distance)
+            if (_attackRange < distance && !_boss.isGimmick)
             {
-                //HideRoot();
+                HideRoot();
             }
         }
     }
@@ -134,8 +123,19 @@ public class RootContoller : MonoBehaviour
     {
         if (rootState == RootState.Hide) return;
 
+        if (rootState == RootState.Die) return;
+
         _anim.SetBool(_hashActive, false);
         rootState = RootState.Hide;
+    }
+
+    private Quaternion RotateToPlayer(Vector3 targetPos)
+    {
+        Vector3 direction = (targetPos - transform.position);
+        direction.y = 0;
+        direction.Normalize();
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        return rotation;
     }
 
     public void Hurt(float damage)
@@ -155,5 +155,6 @@ public class RootContoller : MonoBehaviour
     { 
         isDie = true;
         _anim.SetTrigger(_hashDie);
+        rootState = RootState.Die;
     }
 }
