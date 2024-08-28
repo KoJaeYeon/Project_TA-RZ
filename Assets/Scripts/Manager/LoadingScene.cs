@@ -33,20 +33,21 @@ public class LoadingScene : MonoBehaviour
 
     private IEnumerator LoadSceneProcess()
     {
-        AsyncOperation op = SceneManager.LoadSceneAsync(_nextScene);
+        AsyncOperation op = SceneManager.LoadSceneAsync(_nextScene, LoadSceneMode.Additive);
 
-        op.allowSceneActivation = false;
-
-        while (!op.isDone)
+        while(true)
         {
+            Debug.Log($"op : {op}, opDone:{op.isDone}, opProgress: {op.progress}");
             yield return null;
 
-            if(op.progress >= 0.9f && _isLoad)
+            if (op.isDone)
             {
-                op.allowSceneActivation = true;
+                _isLoad = true;
                 yield break;
             }
+
         }
+
     }
 
     private IEnumerator ImageBlink()
@@ -54,10 +55,10 @@ public class LoadingScene : MonoBehaviour
         float duration = 0.3f;
         Color color = _loadImage.color;
 
-        float totalBlinkTime = 5f;
+        //float totalBlinkTime = 5f;
         float elapsedBlinkTime = 0f;
 
-        while(elapsedBlinkTime < totalBlinkTime)
+        while (_isLoad == false)
         {
             yield return StartCoroutine(FadeImage(color, 1f, duration));
 
@@ -66,8 +67,11 @@ public class LoadingScene : MonoBehaviour
             elapsedBlinkTime += duration * 2;
         }
 
-        _isLoad = true;
+        yield return StartCoroutine(FadeImage(color, 1f, duration));
 
+        yield return StartCoroutine(FadeImage(color, 0f, duration));
+
+        AsyncOperation op = SceneManager.UnloadSceneAsync("LoadingScene");
     }
 
     private IEnumerator FadeImage(Color color, float targetAlpa, float duration)
