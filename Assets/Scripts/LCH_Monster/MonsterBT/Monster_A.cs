@@ -11,15 +11,12 @@ public class Monster_A : Monster, IHit
     [SerializeField] private float growDuration;  // 커지는 데 걸리는 시간
     private Vector3 targetScale = new Vector3(2f, 0.1f, 2f);  // 목표 크기
 
-    private void Update()
-    {
-        // 임시로 설정함
-        Mon_Common_Range = 10;
-        Mon_Common_CoolTime = 4;
-    }
+
+    
     protected override void Awake()
     {
         base.Awake();
+        idStr = "E102";
         var monsterAEx = explosionPrefab.GetComponent<MonsterA_Ex>();
         if (monsterAEx != null)
         {
@@ -35,14 +32,24 @@ public class Monster_A : Monster, IHit
             atkPrefab.transform.position = playerPosition;
             atkPrefab.SetActive(true);
             atkPrefab.transform.parent = null;
-            
+
             StartCoroutine(GrowOverTime(atkPrefab));
         }
     }
+    public override void Hit(float damage, float paralysisTime, Transform transform)
+    {
+        base.Hit(damage, paralysisTime, transform);
+        if (Mon_Common_Hp_Remain <= 0)
+        {
+            atkPrefab.transform.parent = this.transform;
+            explosionPrefab.transform.parent = this.transform;
+            atkPrefab.SetActive(true);
+            explosionPrefab.SetActive(false);
 
+        }
+    }
     private IEnumerator GrowOverTime(GameObject atkObject)
     {
-
         Vector3 initialScale = atkObject.transform.localScale;
         float timeElapsed = 0f;
 
@@ -53,9 +60,12 @@ public class Monster_A : Monster, IHit
             yield return null;
         }
 
-        atkObject.transform.localScale = targetScale; // Ensure final scale is set
-        atkObject.SetActive(false);
-        PlayExplosion(atkObject.transform);
+        if (timeElapsed >= growDuration)
+        {
+            atkObject.SetActive(false);
+            PlayExplosion(atkObject.transform);
+
+        }
     }
 
     public void PlayExplosion(Transform targetTrans)
@@ -65,15 +75,18 @@ public class Monster_A : Monster, IHit
             explosionPrefab.transform.parent = null;
             explosionPrefab.transform.position = targetTrans.position;
             explosionPrefab.SetActive(true);
+
             var particle = explosionPrefab.GetComponent<ParticleSystem>();
 
             if (particle != null)
             {
                 particle.Play();
                 StartCoroutine(WaitForParticleToFinish(particle, explosionPrefab));
+
             }
         }
     }
+
 
     private IEnumerator WaitForParticleToFinish(ParticleSystem particle, GameObject explosion)
     {
@@ -82,17 +95,5 @@ public class Monster_A : Monster, IHit
 
         explosion.SetActive(false);
     }
-    //public override void Hit(float damage, float paralysisTime, Transform transform)
-    //{
-    //    base.Hit(damage, paralysisTime, transform);
-    //    if (Mon_Common_Stat_Hp <= 0)
-    //    {
-    //        OnDestroy();
-    //    }
-    //}
-    //private void OnDestroy()
-    //{
-    //    atkPrefab.SetActive(false);
-    //    explosionPrefab.SetActive(false);
-    //}
+    
 }

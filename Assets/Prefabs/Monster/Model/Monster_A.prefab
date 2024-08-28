@@ -2023,7 +2023,7 @@ MonoBehaviour:
   Knockback_Vertical_Distance: 2
   atkPrefab: {fileID: 5859596967597927552}
   explosionPrefab: {fileID: 739683436975676488}
-  growDuration: 2
+  growDuration: 1.9
 --- !u!136 &3677069109103963087
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2320,6 +2320,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2268303826831188308, guid: a1a36200a3c61b34b9abfaed1373f4cc,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2363,17 +2368,17 @@ PrefabInstance:
     - target: {fileID: 8983352173363516246, guid: c20f0d03ff8a8f1408d87528924e520d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.748894
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8983352173363516246, guid: c20f0d03ff8a8f1408d87528924e520d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.007
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8983352173363516246, guid: c20f0d03ff8a8f1408d87528924e520d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8.031
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8983352173363516246, guid: c20f0d03ff8a8f1408d87528924e520d,
         type: 3}

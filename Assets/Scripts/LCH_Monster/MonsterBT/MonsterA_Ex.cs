@@ -12,7 +12,7 @@ public class MonsterA_Ex : MonoBehaviour
 
     private void OnEnable()
     {
-        StartCoroutine(OffCollider());
+        //StartCoroutine(OffCollider());
     }
     private void OnDisable()
     {

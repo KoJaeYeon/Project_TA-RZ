@@ -149,6 +149,7 @@ public class Monster : MonoBehaviour, IHit
                 Mon_Common_DetectArea = monster_Stat.DetectArea;
                 Mon_Common_DetectTime = monster_Stat.DetectTime;
                 Mon_Common_MovementSpeed = monster_Stat.MovementSpeed;
+                Mon_Common_CoolTime = monster_Stat.Cooldown;
                 //TempHPText.text = Mon_Common_Hp_Remain.ToString();
                 yield break;
             }

@@ -31,10 +31,11 @@ public class Monster_A_atkEx : MonoBehaviour
        // poolManager.DequeueObject(explosionPrefab);
         if(transform.localScale == targetScale)
         {
+            gameObject.SetActive(false);
             yield return null;
         }
-        yield return new WaitForSeconds(growDuration);
-        gameObject.SetActive(false);
+        //yield return new WaitForSeconds(growDuration);
+        //gameObject.SetActive(false);
     }
 
 
