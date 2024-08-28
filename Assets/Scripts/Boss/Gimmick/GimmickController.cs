@@ -7,6 +7,7 @@ using UnityEngine.ProBuilder;
 public class GimmickController : MonoBehaviour
 {
     [SerializeField] private float _radius;
+    private float _result;
     [SerializeField] private float _downValue;
     [SerializeField] private float _upValue;
 
@@ -18,6 +19,7 @@ public class GimmickController : MonoBehaviour
     private void Awake()
     {
         _scale = transform.localScale;
+        _result = (float)Mathf.Sqrt(_radius * _radius + _radius * _radius);
     }
 
     private void OnEnable()
@@ -47,7 +49,7 @@ public class GimmickController : MonoBehaviour
 
     private void OnActivateNonCombat()
     {
-        if (transform.localScale.x >= _radius) return;
+        if (transform.localScale.x >= _result) return;
 
         ChangedScale(true, _upValue);
     }
