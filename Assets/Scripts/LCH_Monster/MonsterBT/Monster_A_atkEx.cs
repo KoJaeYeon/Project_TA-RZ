@@ -1,3 +1,4 @@
+using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
 using System.Collections;
 using UnityEngine;
 using Zenject;
@@ -32,7 +33,9 @@ public class Monster_A_atkEx : MonoBehaviour
         {
             yield return null;
         }
+        yield return new WaitForSeconds(growDuration);
+        gameObject.SetActive(false);
     }
 
-    
+
 }

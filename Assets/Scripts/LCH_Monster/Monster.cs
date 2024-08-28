@@ -156,7 +156,7 @@ public class Monster : MonoBehaviour, IHit
         }
     }
 
-    public void Hit(float damage, float paralysisTime, Transform transform)
+    public virtual void Hit(float damage, float paralysisTime, Transform transform)
     {
         IsDamaged = true;
         Mon_Common_Hp_Remain -= damage;

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 using Zenject;
 
 public class Monster_A : Monster, IHit
@@ -16,19 +17,32 @@ public class Monster_A : Monster, IHit
         Mon_Common_Range = 10;
         Mon_Common_CoolTime = 4;
     }
-
+    protected override void Awake()
+    {
+        base.Awake();
+        var monsterAEx = explosionPrefab.GetComponent<MonsterA_Ex>();
+        if (monsterAEx != null)
+        {
+            monsterAEx.Initialize(this);
+        }
+    }
     public void StartAtk()
     {
         if (atkPrefab != null)
         {
-            atkPrefab.transform.position = Player.transform.position;
+            Vector3 playerPosition = Player.transform.position;
+
+            atkPrefab.transform.position = playerPosition;
             atkPrefab.SetActive(true);
+            atkPrefab.transform.parent = null;
+            
             StartCoroutine(GrowOverTime(atkPrefab));
         }
     }
 
     private IEnumerator GrowOverTime(GameObject atkObject)
     {
+
         Vector3 initialScale = atkObject.transform.localScale;
         float timeElapsed = 0f;
 
@@ -48,6 +62,7 @@ public class Monster_A : Monster, IHit
     {
         if (explosionPrefab != null)
         {
+            explosionPrefab.transform.parent = null;
             explosionPrefab.transform.position = targetTrans.position;
             explosionPrefab.SetActive(true);
             var particle = explosionPrefab.GetComponent<ParticleSystem>();
@@ -57,16 +72,27 @@ public class Monster_A : Monster, IHit
                 particle.Play();
                 StartCoroutine(WaitForParticleToFinish(particle, explosionPrefab));
             }
-
         }
     }
 
     private IEnumerator WaitForParticleToFinish(ParticleSystem particle, GameObject explosion)
     {
-        // 파티클이 재생되는 동안 대기
-        yield return new WaitUntil(() => !particle.isPlaying);
+        yield return new WaitForSeconds(2f);
+        //yield return new WaitUntil(() => !particle.isPlaying);
 
-        // 파티클 재생이 끝나면 오브젝트를 비활성화
         explosion.SetActive(false);
     }
+    //public override void Hit(float damage, float paralysisTime, Transform transform)
+    //{
+    //    base.Hit(damage, paralysisTime, transform);
+    //    if (Mon_Common_Stat_Hp <= 0)
+    //    {
+    //        OnDestroy();
+    //    }
+    //}
+    //private void OnDestroy()
+    //{
+    //    atkPrefab.SetActive(false);
+    //    explosionPrefab.SetActive(false);
+    //}
 }
