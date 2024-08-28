@@ -20,7 +20,7 @@ public class MapManager : MonoBehaviour
 
     #region Value
     private float _progressValue;
-    public float ProgressValue { get; set; }
+    public float ProgressValue { get { return _progressValue; } set { _progressValue = value; } }
     private StageType _currentStageType;
     #endregion
 
