@@ -1,3 +1,4 @@
+using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
 using System.Collections;
 using UnityEngine;
 using Zenject;
@@ -6,12 +7,15 @@ public class Monster_A_atkEx : MonoBehaviour
 {
     private float growDuration = 2.0f;  
     private Vector3 targetScale = new Vector3(1f, 0.1f, 1f);
-    [SerializeField] GameObject explosionPrefab;
     private void OnEnable()
     {
+        transform.localScale = Vector3.zero;
         StartCoroutine(GrowOverTime());
     }
-    
+    private void OnDisable()
+    {
+        transform.localScale = Vector3.zero;
+    }
     private IEnumerator GrowOverTime()
     {
         Vector3 initialScale = transform.localScale;
@@ -27,9 +31,12 @@ public class Monster_A_atkEx : MonoBehaviour
        // poolManager.DequeueObject(explosionPrefab);
         if(transform.localScale == targetScale)
         {
+            gameObject.SetActive(false);
             yield return null;
         }
+        //yield return new WaitForSeconds(growDuration);
+        //gameObject.SetActive(false);
     }
 
-    
+
 }

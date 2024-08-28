@@ -18,12 +18,11 @@ public class Monster_A_OnAtk : Action
     public override void OnStart()
     {
         animator.Play("Atk");
+       
     }
     public override TaskStatus OnUpdate()
     {
-        
         Monster.Value.StartAtk();
-        
         return TaskStatus.Success;
     }
 }

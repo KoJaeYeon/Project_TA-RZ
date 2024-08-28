@@ -7,26 +7,26 @@ public class Monster_OnAtk : Action
 {
     [SerializeField] SharedMonster monster;
     [SerializeField] SharedCustomCollider collider;
+    [SerializeField] SharedAnimator anim;
     // Start is called before the first frame update
-    Animator anim;
     AnimatorStateInfo animinfo;
-    public override void OnAwake()
-    {
-        anim = GetComponent<Animator>();
-    }
+    //public override void OnAwake()
+    //{
+    //    anim = Owner.GetComponentInChildren<Animator>();
+    //}
 
     public override void OnStart()
     {
-        anim.Play("Atk");
+        anim.Value.Play("Atk");
     }
     public override TaskStatus OnUpdate()
     {
-        if (monster != null)
+        if (monster.Value != null)
         {
-            var stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+            var stateInfo = anim.Value.GetCurrentAnimatorStateInfo(0);
             if (stateInfo.IsName("Atk") == true)
             {
-                animinfo = anim.GetCurrentAnimatorStateInfo(0);
+                animinfo = anim.Value.GetCurrentAnimatorStateInfo(0);
 
                 if(animinfo.normalizedTime < 0.32f)
                 {

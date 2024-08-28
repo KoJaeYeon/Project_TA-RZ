@@ -3,7 +3,6 @@ using Zenject;
 public class Monster_Attack : MonoBehaviour
 {
 
-    [Inject] Player Player;
     Collider Collider;
     Monster _monster;
     private void Awake()

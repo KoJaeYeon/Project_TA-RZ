@@ -1,9 +1,14 @@
 using Zenject;
+using UnityEngine;
 
 public class PoolContainer : MonoInstaller
 {
+    [SerializeField]
+    private GameObject _poolManager;
+
     public override void InstallBindings()
     {
-        Container.Bind<PoolManager>().FromNewComponentOnNewGameObject().AsSingle();
+            var managerInstance = Container.InstantiatePrefabForComponent<PoolManager>(_poolManager);
+            Container.BindInstance(managerInstance).AsSingle().NonLazy();
     }
 }

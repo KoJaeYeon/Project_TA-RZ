@@ -5,19 +5,19 @@ using UnityEngine;
 [TaskCategory("Monster/Anim")]
 public class Monster_Anim_CustomSetBool : Action
 {
-    [SerializeField] Animator anim;
+    [SerializeField] SharedAnimator anim;
     [SerializeField] SharedBool BoolValue;
     // Start is called before the first frame update
 
     public override TaskStatus OnUpdate()
     {
-        if (anim == null)
+        if (anim.Value == null)
         {
-            anim = GetComponent<Animator>();
-            anim.SetBool("IsTrack", BoolValue.Value);
+            anim.Value = Owner.GetComponentInChildren<Animator>();
+            anim.Value.SetBool("IsTrack", BoolValue.Value);
             return TaskStatus.Success;
         }
-            anim.SetBool("IsTrack", BoolValue.Value);
+            anim.Value.SetBool("IsTrack", BoolValue.Value);
             return TaskStatus.Success;
     }
 }
