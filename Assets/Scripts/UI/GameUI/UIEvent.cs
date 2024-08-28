@@ -52,6 +52,7 @@ public class UIEvent
             Debug.Log("callBack 함수가 null입니다.");
         }
 
+        Debug.Log("IChoiceEvent가 등록되었습니다.");
         _choiceStageEvent.GetChoiceStageEvent(isAddEvent, callBack);
     }
     #endregion

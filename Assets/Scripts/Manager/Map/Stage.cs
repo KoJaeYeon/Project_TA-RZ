@@ -51,6 +51,9 @@ public class Stage : MonoBehaviour
     [Header("PortalObject")]
     [SerializeField] private GameObject _portal;
 
+    [Header("GameUI")]
+    [SerializeField] private GameObject _gameUI;
+
     private StageType _currentStage;
 
     private StageObject _object;
@@ -359,6 +362,7 @@ public class Stage : MonoBehaviour
             {
                 _mapManager.RequestChangeProgressValue(0.33f);
                 _portal.SetActive(true);
+                _gameUI.SetActive(true);
             }
         }
     }
