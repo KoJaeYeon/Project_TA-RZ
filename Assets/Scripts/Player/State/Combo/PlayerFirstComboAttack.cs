@@ -73,7 +73,8 @@ public class PlayerFirstComboAttack : PlayerComboAttack
             if (hit != null)
             {
                 ChangeData(_player.CurrentLevel);
-                hit.Hit(_player.CurrentAtk * _currentAtkMultiplier * _player._PC_Level.Level_Atk_Power_Multiplier, _currentStiffT, _player.transform);
+                float damage = _player.CurrentAtk * _currentAtkMultiplier * _player._PC_Level.Level_Atk_Power_Multiplier;
+                hit.Hit(damage, _currentStiffT, _player.transform);
                 //Debug.Log($"player.CurrentAtk : {_player.CurrentAtk}, _currentAtkMultiplier : {_currentAtkMultiplier}, _player._PC_Level.Level_Atk_Power_Multiplier : {_player._PC_Level.Level_Atk_Power_Multiplier}");
                 isHit = true;
                 GameObject hitEffect = _effect.GetHitEffect();
@@ -85,6 +86,8 @@ public class PlayerFirstComboAttack : PlayerComboAttack
 
                 hitParticle.Play();
                 _effect.ReturnHit(hitEffect);
+
+                PrintDamageText(damage, target.transform);
             }
         }
         if (isHit)

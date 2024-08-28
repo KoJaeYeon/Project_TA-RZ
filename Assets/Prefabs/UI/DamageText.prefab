@@ -126,7 +126,6 @@ GameObject:
   - component: {fileID: 1027355737864333962}
   - component: {fileID: 3798217188613079562}
   - component: {fileID: 4820120296251866035}
-  - component: {fileID: 7152675166034229265}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -251,20 +250,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &7152675166034229265
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5465494349405400216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e8357c87090dc947bd42d6b6a7661bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 20
-  _parent: {fileID: 0}
 --- !u!1 &6130903702492313105
 GameObject:
   m_ObjectHideFlags: 0
@@ -274,6 +259,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5493409109476826156}
+  - component: {fileID: 5017581632299675148}
   m_Layer: 0
   m_Name: DamageText
   m_TagString: Untagged
@@ -297,3 +283,17 @@ Transform:
   - {fileID: 5744944641080242897}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5017581632299675148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6130903702492313105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e8357c87090dc947bd42d6b6a7661bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 20
+  _parent: {fileID: 6130903702492313105}

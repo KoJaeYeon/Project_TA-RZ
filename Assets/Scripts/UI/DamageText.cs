@@ -13,7 +13,6 @@ public class DamageText : MonoBehaviour
     public int damage;
     [Inject]
     PoolManager _poolManager;
-    [SerializeField] GameObject _parent;
 
     // Start is called before the first frame update
     void Awake()
@@ -22,14 +21,27 @@ public class DamageText : MonoBehaviour
         alphaSpeed = 2.0f;
         destroyTime = 2.0f;
 
-        text = GetComponent<TextMeshProUGUI>();
-        alpha = text.color;
-        text.text = damage.ToString();
+        text = GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private void OnEnable()
     {
         StartCoroutine(DisableObject());
+    }
+
+    public void OnSetData(float damage, DamageType damageType, Transform targetTrans)
+    {
+        text.text = ((int)damage).ToString();
+        switch(damageType)
+        {
+            case DamageType.Normal:
+                alpha = Color.white;
+                transform.position = targetTrans.position;// + targetTrans.forward;
+                break;
+            case DamageType.Poison:
+                break;
+        }
+        text.color = alpha;
     }
 
     // Update is called once per frame
@@ -48,6 +60,6 @@ public class DamageText : MonoBehaviour
 
     private void DestroyObject()
     {
-        _poolManager.EnqueueObject(_parent);
+        _poolManager.EnqueueObject(gameObject);
     }
 }
