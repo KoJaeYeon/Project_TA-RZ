@@ -66,6 +66,8 @@ public class GameUI : MonoBehaviour
             _progressView.RegisterChangeProgressUIOnEnable();
 
             _progressBar = _progressImage;
+
+            _progressBar.fillAmount = 0;
         }
     }
 
