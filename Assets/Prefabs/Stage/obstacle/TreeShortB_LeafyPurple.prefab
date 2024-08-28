@@ -177,6 +177,7 @@ GameObject:
   - component: {fileID: 497212}
   - component: {fileID: 3324660}
   - component: {fileID: 2331654}
+  - component: {fileID: 1705008435286873506}
   m_Layer: 0
   m_Name: TreeShortB (1)
   m_TagString: Untagged
@@ -249,6 +250,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1705008435286873506
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 156122}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: aa15dc7f1ff9fbb44a532c33c277c0a2, type: 3}
 --- !u!1 &181106
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,8 +281,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 450230}
-  - component: {fileID: 5318995877549394701}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TreeShortB_LeafyPurple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -286,28 +308,6 @@ Transform:
   - {fileID: 475916}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &5318995877549394701
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 181106}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!1 &190466
 GameObject:
   m_ObjectHideFlags: 0

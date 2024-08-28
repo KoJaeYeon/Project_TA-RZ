@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3303860}
   - component: {fileID: 2342232}
   - component: {fileID: -3732757121502264397}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PathStoneA
   m_TagString: Untagged
   m_Icon: {fileID: 0}

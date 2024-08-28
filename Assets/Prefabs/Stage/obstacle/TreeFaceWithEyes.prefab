@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3346552}
   - component: {fileID: 2355686}
   - component: {fileID: 3160662446795246078}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TreeFaceWithEyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3381904}
   - component: {fileID: 2348860}
   - component: {fileID: 7193001101617240896}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ThornyVine
   m_TagString: Untagged
   m_Icon: {fileID: 0}

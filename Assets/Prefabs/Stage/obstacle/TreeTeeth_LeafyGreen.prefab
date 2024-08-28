@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 474124}
   - component: {fileID: 3350006}
   - component: {fileID: 2321018}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlantGreenBush (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 452260}
   - component: {fileID: 3317176}
   - component: {fileID: 2392652}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlantGreenBush (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 462726}
   - component: {fileID: 3374054}
   - component: {fileID: 2394400}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlantGreenBush (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 436938}
   - component: {fileID: 3383598}
   - component: {fileID: 2310648}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlantGreenBush (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -343,7 +343,8 @@ GameObject:
   - component: {fileID: 405378}
   - component: {fileID: 3373314}
   - component: {fileID: 2321540}
-  m_Layer: 0
+  - component: {fileID: 4086104474424717392}
+  m_Layer: 8
   m_Name: FeatureTreeTeeth (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -415,6 +416,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &4086104474424717392
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 147212}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: f7f82ccc4dd2c854281400b5f637e254, type: 3}
 --- !u!1 &152080
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,7 +449,7 @@ GameObject:
   - component: {fileID: 404212}
   - component: {fileID: 3341222}
   - component: {fileID: 2359094}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlantGreenBush (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -509,7 +532,7 @@ GameObject:
   - component: {fileID: 418946}
   - component: {fileID: 3317130}
   - component: {fileID: 2313402}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlantGreenBush (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -592,7 +615,7 @@ GameObject:
   - component: {fileID: 429618}
   - component: {fileID: 3354614}
   - component: {fileID: 2320696}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlantGreenBush (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -673,8 +696,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 499130}
-  - component: {fileID: 7096250101426540259}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TreeTeeth_LeafyGreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -704,25 +726,3 @@ Transform:
   - {fileID: 418946}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &7096250101426540259
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 194550}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}

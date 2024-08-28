@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3358844}
   - component: {fileID: 2362980}
   - component: {fileID: 6280131924773050878}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TreeShortB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
