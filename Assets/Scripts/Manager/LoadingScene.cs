@@ -1,3 +1,4 @@
+using BehaviorDesigner.Runtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +24,11 @@ public class LoadingScene : MonoBehaviour
         _nextScene = sceneName;
 
         SceneManager.LoadScene("LoadingScene");
+        var bm = FindObjectOfType<BehaviorManager>();
+        if(bm != null)
+        {
+            DontDestroyOnLoad(bm);
+        }
     }
 
     private void Start()
