@@ -40,42 +40,49 @@ public class MapManager : MonoBehaviour
 
         _player = player;
 
-        if(_progressValue < 0.33f)
+        if(_progressValue <= 0.33f)
         {
+            Debug.Log("초반부");
             LoadSceneBeginning();
         }
-        else if(_progressValue < 0.66f)
+        else if(_progressValue <= 0.66f)
         {
+            Debug.Log("중반부");
             LoadSceneMiddle();
         }
         else if(_progressValue <= 0.99f)
         {
+            Debug.Log("후반부");
             LoadSceneFinal();
         }
         else
         {
+            Debug.Log("보스");
             LoadSceneBoss();
         }
     }
 
     private void LoadSceneBeginning()
     {
+        Debug.Log("로드씬");
         LoadingScene.LoadScene("Beginning");
     }
 
     private void LoadSceneMiddle()
     {
+        Debug.Log("로드씬");
 
     }
 
     private void LoadSceneFinal()
     {
+        Debug.Log("로드씬");
 
     }
 
     private void LoadSceneBoss()
     {
-
+        Debug.Log("로드씬");
     }
 
     public StageType GetStageType()

@@ -47,12 +47,6 @@ public class GameUI : MonoBehaviour
         InitializeChoiceUIOnEnable();
     }
 
-    private void Start()
-    {
-        InitialzeProgressUIStart();
-        InitializeChoiceUIStart();
-    }
-
     #region Initialize
     private void InitializeProgressUIOnEnable()
     {
@@ -64,10 +58,7 @@ public class GameUI : MonoBehaviour
 
             _progressView.RegisterChangeProgressUIOnEnable();
         }
-    }
 
-    private void InitialzeProgressUIStart()
-    {
         _progressBar = _progressImage;
 
         _progressBar.fillAmount = _mapManager.ProgressValue;
@@ -77,6 +68,8 @@ public class GameUI : MonoBehaviour
 
     private void InitializeChoiceUIOnEnable()
     {
+        _uiEvent.AddEventChoiceStageEvent(true, SetStage);
+
         _normalList = new List<GameObject>();
 
         foreach (Transform normalChild in _normalStageUI.transform)
@@ -100,10 +93,6 @@ public class GameUI : MonoBehaviour
         }
     }
 
-    private void InitializeChoiceUIStart()
-    {
-        _uiEvent.AddEventChoiceStageEvent(true, SetStage);
-    }
     #endregion
 
     private void ChangeProgressBar(object sender, PropertyChangedEventArgs args)
@@ -153,6 +142,8 @@ public class GameUI : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         _mapManager.ChoiceMap(_currentStage, player);
+
+        this.gameObject.SetActive(false);
     }
 
     private GameObject BossUI()
