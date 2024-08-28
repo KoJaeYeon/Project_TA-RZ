@@ -69,12 +69,7 @@ public class PoolManager : MonoBehaviour
             _objectPools[itemType]._queue.EnqueuePool(item.GetComponent<Component>());
             _objectPools[itemType]._count++;
         }
-    }
-
-    public void CreateMap(List<Transform> transList)
-    {
-
-    }
+    } 
 
     //사용한 오브젝트를 다시 풀에 반환하는 메서드
     public void EnqueueObject(GameObject item)
