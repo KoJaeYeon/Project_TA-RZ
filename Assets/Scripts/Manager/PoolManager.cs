@@ -118,7 +118,7 @@ public class PoolManager : MonoBehaviour
         //컴포넌트 형식으로 저장했기 때문에 Dequeue역시 컴포넌트 형식으로 가져옴.
         Component? dequeueObject = _objectPools[itemType]._queue.DequeuePool();
 
-        if(dequeueObject != null)
+        if (dequeueObject != null)
         {
             return dequeueObject.gameObject; //오브젝트 반환
         }

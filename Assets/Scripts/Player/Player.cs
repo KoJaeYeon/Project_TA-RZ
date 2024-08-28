@@ -37,7 +37,7 @@ public class Player : MonoBehaviour, IHit
 
     #region PlayerValue
     [Header("공격 사거리 배율 조절")]
-    [Range(0, 5)][SerializeField] float[] playerAttackRange = new float[4] {1,1,1,1};
+    [Range(0, 2005)][SerializeField] float[] playerAttackRange = new float[4] {1,1,1,1};
     public float[] PlayerAttackRange { get { return playerAttackRange; } }
     [Header("플레이어 넉백 거리 조절")]
     [SerializeField] float knockback_Horizontal_Distance = 1f;

@@ -114,7 +114,9 @@ public class GameUI : MonoBehaviour
 
         input.enabled = false;
 
-        if (_currentProgressvalue < 0.66f)
+        float currentProgressValue = _mapManager.ProgressValue;
+
+        if (currentProgressValue <= 0.99f)
         {
             _currentUI = RandomUI();
         }
@@ -126,8 +128,6 @@ public class GameUI : MonoBehaviour
         _progressUI.SetActive(true);
 
         _currentUI.SetActive(true);
-
-        float currentProgressValue = _mapManager.ProgressValue;
 
         _uiEvent.RequestChangeProgressBar(currentProgressValue);
 

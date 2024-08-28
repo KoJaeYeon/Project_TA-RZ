@@ -91,13 +91,14 @@ public class Stage : MonoBehaviour
     {
         yield return new WaitUntil(() => (_itemDataReady && _monsterDataReady));
 
-        SetArea();
+        SetPartitionsItemArea();
+        SetPartitionsMonsterArea(_level);
 
-        if(_currentStage != StageType.Boss)
+        if (_currentStage != StageType.Boss)
         {
             SpawnMonster();
         }
-        
+
         SpawnItem();
     }
 
@@ -276,12 +277,7 @@ public class Stage : MonoBehaviour
         }
     }
 
-    private void SetArea()
-    {
-        SetPartitionsItemArea();
-        SetPartitionsMonsterArea(_level);
-    }
-
+  
     private void SpawnMonster()
     {
         _spawnMonsters = new HashSet<GameObject>();

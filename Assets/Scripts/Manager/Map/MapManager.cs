@@ -5,9 +5,21 @@ using UnityEngine;
 using Zenject;
 using UnityEngine.SceneManagement;
 
+public enum StartPosition
+{
+    Beginning,
+    Middle,
+    Final
+}
 
 public class MapManager : MonoBehaviour
 {
+    [Header("Map")]
+    [SerializeField] private List<GameObject> _mapList;
+
+    [Header("ResetPosition")]
+    [SerializeField] private Transform[] _resetPosition;
+
     #region InJect
     [Inject]
     private UIEvent _uiEvent;
@@ -19,15 +31,40 @@ public class MapManager : MonoBehaviour
     #endregion
 
     #region Value
-    private float _progressValue;
-    public float ProgressValue { get { return _progressValue; } set { _progressValue = value; } }
+    public float ProgressValue { get; set; }
     private StageType _currentStageType;
     #endregion
 
+    private Dictionary<StartPosition, Transform> _resetPositionDictionary;
+
     private void Awake()
     {
-        _progressValue = 0f;
+        InitializeMapManager();
     }
+
+    private void InitializeMapManager()
+    {
+        ResetPositionToDictionary();
+    }
+
+    #region Initialize
+    private void ResetPositionToDictionary()
+    {
+        if(_resetPosition.Length != System.Enum.GetValues(typeof(StartPosition)).Length)
+        {
+            Debug.Log("enum 길이와 Transform 배열의 크기가 일치하지 않습니다.");
+            return;
+        }
+
+        _resetPositionDictionary = new Dictionary<StartPosition, Transform>();
+
+        for(int i = 0; i < _resetPosition.Length; i++)
+        {
+            _resetPositionDictionary.Add((StartPosition)i, _resetPosition[i]);
+        }
+    }
+
+    #endregion
 
     public void SetStage(Stage currentStage)
     {
@@ -40,17 +77,17 @@ public class MapManager : MonoBehaviour
 
         _player = player;
 
-        if(_progressValue <= 0.33f)
+        if(ProgressValue <= 0.33f)
         {
             Debug.Log("초반부");
             LoadSceneBeginning();
         }
-        else if(_progressValue <= 0.66f)
+        else if(ProgressValue <= 0.66f)
         {
             Debug.Log("중반부");
             LoadSceneMiddle();
         }
-        else if(_progressValue <= 0.99f)
+        else if(ProgressValue <= 0.99f)
         {
             Debug.Log("후반부");
             LoadSceneFinal();
@@ -86,4 +123,6 @@ public class MapManager : MonoBehaviour
     {
         return _currentStageType;
     }
+
+ 
 }
