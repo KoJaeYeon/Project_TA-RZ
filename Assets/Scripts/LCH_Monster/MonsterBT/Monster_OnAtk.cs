@@ -21,7 +21,7 @@ public class Monster_OnAtk : Action
     }
     public override TaskStatus OnUpdate()
     {
-        if (monster != null)
+        if (monster.Value != null)
         {
             var stateInfo = anim.Value.GetCurrentAnimatorStateInfo(0);
             if (stateInfo.IsName("Atk") == true)
