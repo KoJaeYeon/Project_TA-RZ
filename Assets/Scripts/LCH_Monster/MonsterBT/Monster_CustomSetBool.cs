@@ -11,7 +11,7 @@ public class Monster_Anim_CustomSetBool : Action
 
     public override TaskStatus OnUpdate()
     {
-        if (anim == null)
+        if (anim.Value == null)
         {
             anim.Value = Owner.GetComponentInChildren<Animator>();
             anim.Value.SetBool("IsTrack", BoolValue.Value);
