@@ -60,14 +60,14 @@ public class PoolManager : MonoBehaviour
             pool.transform.SetParent(this.transform);
             pool.name = prefab.name + "Pool";
             _objectPools.Add(itemType, new Pool(pool.transform)); //딕셔너리에 풀 추가
-        }
 
-        for (int i = 0; i < count; i++) //아이템을 생성하고 큐에 넣는 부분
-        {
-            GameObject item = _di.InstantiatePrefab(prefab, _objectPools[itemType]._transform);
-            item.name = itemType;
-            _objectPools[itemType]._queue.EnqueuePool(item.GetComponent<Component>());
-            _objectPools[itemType]._count++;
+            for (int i = 0; i < count; i++) //아이템을 생성하고 큐에 넣는 부분
+            {
+                GameObject item = _di.InstantiatePrefab(prefab, _objectPools[itemType]._transform);
+                item.name = itemType;
+                _objectPools[itemType]._queue.EnqueuePool(item.GetComponent<Component>());
+                _objectPools[itemType]._count++;
+            }
         }
     } 
 

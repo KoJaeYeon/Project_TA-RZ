@@ -1,16 +1,21 @@
 using Zenject;
+using UnityEngine;
 
 public class MapContainer : MonoInstaller
 {
+    [SerializeField] private GameObject _mapManagerPrefab;
+
     public override void InstallBindings()
     {
-        if(FindObjectOfType<MapManager>() != null)
+        if(FindObjectOfType<MapManager>() == null)
         {
-            Container.Bind<MapManager>().FromComponentInHierarchy().AsSingle();
+            var mapManager = Container.InstantiatePrefabForComponent<MapManager>(_mapManagerPrefab);
+            DontDestroyOnLoad(mapManager.gameObject);
+            Container.BindInstance(mapManager).AsSingle().NonLazy();
         }
         else
         {
-            Container.Bind<MapManager>().FromNewComponentOnNewGameObject().AsSingle();
+            Container.Bind<MapManager>().FromInstance(FindAnyObjectByType<MapManager>()).AsSingle().NonLazy();
         }
     }
 }

@@ -86,11 +86,4 @@ public class MapManager : MonoBehaviour
     {
         return _currentStageType;
     }
-
-    public void RequestChangeProgressValue(float value)
-    {
-        _progressValue += value;
-
-        _uiEvent.RequestChangeProgressBar(value);
-    }
 }

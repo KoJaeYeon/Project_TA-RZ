@@ -50,6 +50,8 @@ public class GameUI : MonoBehaviour
     #region Initialize
     private void InitializeProgressUIOnEnable()
     {
+        _progressBar = _progressImage;
+
         if (_progressView == null)
         {
             _progressView =  _container.Instantiate<ProgressUIViewModel>();
@@ -58,12 +60,6 @@ public class GameUI : MonoBehaviour
 
             _progressView.RegisterChangeProgressUIOnEnable();
         }
-
-        _progressBar = _progressImage;
-
-        _progressBar.fillAmount = _mapManager.ProgressValue;
-
-        _progressUI.SetActive(false);
     }
 
     private void InitializeChoiceUIOnEnable()
@@ -126,10 +122,14 @@ public class GameUI : MonoBehaviour
         {
             _currentUI = BossUI();
         }
-        
+
         _progressUI.SetActive(true);
 
         _currentUI.SetActive(true);
+
+        float currentProgressValue = _mapManager.ProgressValue;
+
+        _uiEvent.RequestChangeProgressBar(currentProgressValue);
 
         Cursor.lockState = CursorLockMode.None;
 

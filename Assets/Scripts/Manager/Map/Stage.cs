@@ -363,7 +363,7 @@ public class Stage : MonoBehaviour
 
             if(_spawnMonsters.Count == 0)
             {
-                _mapManager.RequestChangeProgressValue(0.33f);
+                _mapManager.ProgressValue += 0.33f;
 
                 StageClear();
             }

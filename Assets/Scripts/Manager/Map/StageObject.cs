@@ -30,6 +30,7 @@ public class StageObject : MonoBehaviour
     [SerializeField] private GameObject _meleeExplosionmonster;
     [SerializeField] private GameObject _chargeMonster;
     [SerializeField] private GameObject _longRangeMonster;
+   
 
     [Header("Item")]
     [SerializeField] private int _itemCount;
@@ -116,4 +117,5 @@ public class StageObject : MonoBehaviour
             return _poolManager.DequeueObject(itemPrefab);
         }
     }
+
 }
