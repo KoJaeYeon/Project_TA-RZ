@@ -51,9 +51,6 @@ public class Stage : MonoBehaviour
     [Header("PortalObject")]
     [SerializeField] private GameObject _portal;
 
-    [Header("GameUI")]
-    [SerializeField] private GameObject _gameUI;
-
     private StageType _currentStage;
 
     private StageObject _object;
@@ -65,24 +62,22 @@ public class Stage : MonoBehaviour
     #region StageData
     private Dictionary<StageType, List<Map_Monster_Mix>> _monsterDataDictionary;
     private Map_Resource _itemData;
-    //private int _totalResource;
     private bool _itemDataReady = false;
     private bool _monsterDataReady = false;
 
     #endregion
-    private void Awake()
+    private void Start()
     {
-        _mapManager.SetStage(this);
-
         _object = gameObject.GetComponent<StageObject>();
 
         StartCoroutine(SetItemData($"R{1+(int)_level}01"));
+
         StartCoroutine(SetMonsterData());
     }
 
-    private void Start()
+    public void StartStage(StageType newStage)
     {
-        _currentStage = _mapManager.GetStageType();
+        _currentStage = newStage;
 
         StartCoroutine(SpawnObject());
     }
@@ -93,12 +88,8 @@ public class Stage : MonoBehaviour
 
         SetPartitionsItemArea();
         SetPartitionsMonsterArea(_level);
-
-        if (_currentStage != StageType.Boss)
-        {
-            SpawnMonster();
-        }
-
+        
+        SpawnMonster();
         SpawnItem();
     }
 
@@ -280,6 +271,11 @@ public class Stage : MonoBehaviour
   
     private void SpawnMonster()
     {
+        if(_currentStage is StageType.Boss)
+        {
+            return;
+        }
+
         _spawnMonsters = new HashSet<GameObject>();
 
         foreach(var partition in _selectMonsterArea)
@@ -368,12 +364,11 @@ public class Stage : MonoBehaviour
 
     private void StageClear()
     {
-        bool setactive = _portal != null && _gameUI != null;
+        bool setactive = _portal != null;
 
         if (setactive)
         {
             _portal.SetActive(true);
-            _gameUI.SetActive(true);
         }
     }
 

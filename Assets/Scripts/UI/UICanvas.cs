@@ -7,9 +7,11 @@ public class UICanvas : MonoBehaviour
 {
     [Inject] UIEvent UIEvent;
     [SerializeField] BlueChipUI BlueChipUI;
+    [SerializeField] GameUI GameUI;
 
     public void Awake()
     {
         UIEvent.RegisterBlueChipUI(BlueChipUI);
+        UIEvent.RegisterGameUI(GameUI);
     }
 }

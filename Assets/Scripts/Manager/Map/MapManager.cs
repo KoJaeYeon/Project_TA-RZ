@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 using Zenject;
-using UnityEngine.SceneManagement;
 
-public enum StartPosition
+public enum MapType
 {
+    Lobby,
     Beginning,
     Middle,
     Final
@@ -15,114 +15,120 @@ public enum StartPosition
 public class MapManager : MonoBehaviour
 {
     [Header("Map")]
-    [SerializeField] private List<GameObject> _mapList;
+    [SerializeField] private GameObject[] _mapArray;
 
-    [Header("ResetPosition")]
-    [SerializeField] private Transform[] _resetPosition;
+    private Dictionary<MapType, GameObject> _mapDictionary;
 
-    #region InJect
-    [Inject]
-    private UIEvent _uiEvent;
-    #endregion
-
-    #region Component
-    private Stage _currentStage;
-    private Player _player;
-    #endregion
-
-    #region Value
     public float ProgressValue { get; set; }
-    private StageType _currentStageType;
-    #endregion
 
-    private Dictionary<StartPosition, Transform> _resetPositionDictionary;
+    private StageType _currentStageType;
+    private GameObject _currentMap;
 
     private void Awake()
     {
         InitializeMapManager();
     }
 
-    private void InitializeMapManager()
+    private void Start()
     {
-        ResetPositionToDictionary();
+        _currentMap = GetMap(MapType.Lobby);
     }
 
     #region Initialize
-    private void ResetPositionToDictionary()
+
+    private void InitializeMapManager()
     {
-        if(_resetPosition.Length != System.Enum.GetValues(typeof(StartPosition)).Length)
-        {
-            Debug.Log("enum 길이와 Transform 배열의 크기가 일치하지 않습니다.");
-            return;
-        }
+        _mapDictionary = new Dictionary<MapType, GameObject>();
 
-        _resetPositionDictionary = new Dictionary<StartPosition, Transform>();
-
-        for(int i = 0; i < _resetPosition.Length; i++)
+        var map = new (MapType, GameObject)[]
         {
-            _resetPositionDictionary.Add((StartPosition)i, _resetPosition[i]);
+            (MapType.Lobby, _mapArray[0]),
+            (MapType.Beginning, _mapArray[1]),
+            (MapType.Middle, _mapArray[2]),
+            (MapType.Final, _mapArray[3]),
+        };
+
+        AddMap(map, _mapDictionary);
+    }
+
+    private void AddMap((MapType, GameObject)[] map,
+        Dictionary<MapType, GameObject> mapDictionary = null)
+    {
+        foreach (var (mapType, mapObject) in map)
+        {
+            mapDictionary?.Add(mapType, mapObject);
         }
     }
 
     #endregion
 
-    public void SetStage(Stage currentStage)
-    {
-        _currentStage = currentStage;
-    }
-
-    public void ChoiceMap(StageType newStage, Player player)
+    public void ChangeMap(StageType newStage)
     {
         _currentStageType = newStage;
 
-        _player = player;
+        _currentMap.SetActive(false);
 
         if(ProgressValue <= 0.33f)
         {
-            Debug.Log("초반부");
-            LoadSceneBeginning();
+            _currentMap = GetMap(MapType.Beginning);
+
+            _currentMap.SetActive(true);
+
+            Stage beginning = _currentMap.GetComponentInChildren<Stage>();
+
+            beginning.StartStage(_currentStageType);
         }
         else if(ProgressValue <= 0.66f)
         {
-            Debug.Log("중반부");
-            LoadSceneMiddle();
+            _currentMap = GetMap(MapType.Middle);
+
+            _currentMap.SetActive(true);
+
+            Stage middle = _currentMap.GetComponentInChildren<Stage>();
+
+            middle.StartStage(_currentStageType);
         }
         else if(ProgressValue <= 0.99f)
         {
-            Debug.Log("후반부");
-            LoadSceneFinal();
+            _currentMap = GetMap(MapType.Final);
+
+            _currentMap.SetActive(true);
+
+            Stage final = _currentMap.GetComponentInChildren<Stage>();
+
+            final.StartStage(_currentStageType);
         }
         else
         {
             Debug.Log("보스");
-            LoadSceneBoss();
         }
     }
 
-    private void LoadSceneBeginning()
+    public void LobbyMap()
     {
-        LoadingScene.LoadScene("Beginning");
+        GameObject lobby = GetMap(MapType.Lobby);
+
+        _currentMap.SetActive(false);
+
+        _currentMap = lobby;
+
+        _currentMap.SetActive(true);
     }
 
-    private void LoadSceneMiddle()
+
+    private GameObject GetMap(MapType mapType)
     {
-        LoadingScene.LoadScene("Middle");
+        if (_mapDictionary.TryGetValue(mapType, out GameObject map))
+        {
+            GameObject mapPrefab = map;
+
+            return mapPrefab;
+        }
+        else
+            return null;
     }
 
-    private void LoadSceneFinal()
-    {
-        LoadingScene.LoadScene("Final");
-    }
 
-    private void LoadSceneBoss()
-    {
-        LoadingScene.LoadScene("Boss");
-    }
-
-    public StageType GetStageType()
-    {
-        return _currentStageType;
-    }
 
  
 }
