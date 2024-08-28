@@ -3,21 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using BehaviorDesigner.Runtime;
+using Zenject;
 
 public enum BossPhase
 { 
     Phase1, Phase2
 }
 
-public struct BossPattern
-{
-    public string patternName;
-    public float cooltime;
-
-}
-
 public class BossController : MonoBehaviour
 {
+    [Inject] Boss_MarkManager markManager { get; }
+
     [Header("기본 정보")]
     public BossPhase phase;
     public float _maxHp;
@@ -101,6 +97,13 @@ public class BossController : MonoBehaviour
 
     private void Awake()
     {
+        _gimmick = markManager.mark_Gimmick.GetComponent<GimmickController>();
+        _markRoot = markManager.mark_RootAttack;
+        _firstExplosion = markManager.mark_FirstExplosion;
+        _secondExplosion = markManager.mark_SecondExplosion;
+        _swingMark = markManager.mark_Swing;
+        _smashMark = markManager.mark_smash;
+
         _rb = GetComponent<Rigidbody>();
         _anim = GetComponent<Animator>();
         _nav = GetComponent<NavMeshAgent>();
@@ -119,7 +122,7 @@ public class BossController : MonoBehaviour
         _secondExplosion.SetActive(false);
         _swingMark.SetActive(false);
         _smashMark.SetActive(false);
-
+    
         _bt.SetVariableValue("Phase1_Per", _phaseOnePer);
         _bt.SetVariableValue("Phase2_Per", _phaseTwoPer);
         _bt.SetVariableValue("Attack_Distance", _attackRange);
@@ -167,6 +170,8 @@ public class BossController : MonoBehaviour
     //기믹 범위 표시
     public void MarkGimmick()
     { 
+        _gimmick.transform.position = transform.position;
+        _gimmick.transform.rotation = transform.rotation;
         _gimmick.gameObject.SetActive(true);
         isGimmick = true;
     }
@@ -235,6 +240,7 @@ public class BossController : MonoBehaviour
     {
         foreach (var explosion in _firstExplosion)
         {
+            explosion.transform.position = transform.position;
             explosion.SetActive(true);
         }
     }
@@ -315,7 +321,9 @@ public class BossController : MonoBehaviour
 
     //휘두르기
     public void DrawSwing(bool isActive)
-    { 
+    {
+        _swingMark.transform.position = transform.position;
+        _swingMark.transform.rotation = transform.rotation;
         _swingMark.SetActive(isActive);
     }
     public void SwingCool()
@@ -325,7 +333,9 @@ public class BossController : MonoBehaviour
 
     //내려치기
     public void DrawSmash(bool isActive)
-    { 
+    {
+        _smashMark.transform.position = transform.position;
+        _smashMark.transform.rotation = transform.rotation;
         _smashMark.SetActive(isActive);
     }
     public void SmashCool()
