@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
+using Zenject;
 
 public static class QueueExtensions
 {
@@ -43,6 +44,8 @@ public class Pool
 public class PoolManager : MonoBehaviour
 {
     private Dictionary<string, Pool> _objectPools = new Dictionary<string, Pool>();
+    [Inject]
+    public DiContainer _di;
 
     //몬스터가 죽었을 때 Action 같은 이벤트로 죽었음을 알려준다 bool 값
     //풀을 생성하는 메서드. 프리팹의 이름으로 풀을 생성한다.
@@ -57,21 +60,16 @@ public class PoolManager : MonoBehaviour
             pool.transform.SetParent(this.transform);
             pool.name = prefab.name + "Pool";
             _objectPools.Add(itemType, new Pool(pool.transform)); //딕셔너리에 풀 추가
+
+            for (int i = 0; i < count; i++) //아이템을 생성하고 큐에 넣는 부분
+            {
+                GameObject item = _di.InstantiatePrefab(prefab, _objectPools[itemType]._transform);
+                item.name = itemType;
+                _objectPools[itemType]._queue.EnqueuePool(item.GetComponent<Component>());
+                _objectPools[itemType]._count++;
+            }
         }
-
-        for (int i = 0; i < count; i++) //아이템을 생성하고 큐에 넣는 부분
-        {
-            GameObject item = Instantiate(prefab, _objectPools[itemType]._transform);
-            item.name = itemType;
-            _objectPools[itemType]._queue.EnqueuePool(item.GetComponent<Component>());
-            _objectPools[itemType]._count++;
-        }
-    }
-
-    public void CreateMap(List<Transform> transList)
-    {
-
-    }
+    } 
 
     //사용한 오브젝트를 다시 풀에 반환하는 메서드
     public void EnqueueObject(GameObject item)

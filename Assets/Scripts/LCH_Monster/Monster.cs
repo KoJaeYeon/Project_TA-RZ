@@ -1,12 +1,9 @@
-using System;
 using UnityEngine;
 using BehaviorDesigner.Runtime;
-using BehaviorDesigner.Runtime.Tasks;
 using Zenject;
 using System.Collections;
 using UnityEngine.AI;
 using TMPro;
-using UnityEngine.ProBuilder.MeshOperations;
 public enum MonsterAbility
 {
     Original,
@@ -29,9 +26,10 @@ public class Monster : MonoBehaviour, IHit
     [Inject] DataManager _dataManager;
     BehaviorTree _bt;
     NavMeshAgent Nav;
-    Animator _anim;
     Rigidbody _rigidbody;
+    Stage _stage;
 
+    public Animator Anim { get; set; }
     public float Mon_Common_Stat_Hp { get; set; }
     public float Mon_Common_Damage { get; set; }
     public float Mon_Common_AttackArea { get; set; }
@@ -46,6 +44,7 @@ public class Monster : MonoBehaviour, IHit
     public bool IsAtk { get; set; }
     public bool IsKnockBack { get; set; }
     public float Mon_Common_Hp_Remain { get; set; }
+    private bool _isSpawn = false;
 
 
     [Header("공격 경직시간 조절")]
@@ -62,19 +61,23 @@ public class Monster : MonoBehaviour, IHit
 
     Coroutine _hitCoroutine;
 
-    [Header("개발자 인스펙터")]
-    [SerializeField] TextMeshProUGUI TempHPText;
+   // [Header("개발자 인스펙터")]
+    //[SerializeField] TextMeshProUGUI TempHPText;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _bt = GetComponent<BehaviorTree>();
         Nav = GetComponent<NavMeshAgent>();
-        _anim = GetComponent<Animator>();
+
+        int rand = Random.Range(0, 4);
+        transform.GetChild(rand).gameObject.SetActive(true);
     }
 
     void Start()
     {
+        Anim = GetComponentInChildren<Animator>();
+
         if (Type == MonsterType.Supply)
         {
             gameObject.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
@@ -84,6 +87,10 @@ public class Monster : MonoBehaviour, IHit
             gameObject.transform.localScale = new Vector3(1.6f, 1.6f, 1.6f);
         }
         Mon_Common_Hp_Remain = Mon_Common_Stat_Hp;
+        if(Ability == MonsterAbility.Speed)
+        {
+            transform.GetChild(3).gameObject.SetActive(true);
+        }
         OnSetMonsterStat(MonsterAbility.Speed,MonsterType.Basic);
     }
 
@@ -125,14 +132,7 @@ public class Monster : MonoBehaviour, IHit
             //}
             else if (stat==null&&monsterAbility==MonsterAbility.Power)
             {
-                Mon_Common_Stat_Hp = monster_Stat.HP*2.5f;
-                Mon_Common_Hp_Remain = monster_Stat.HP;
-                Mon_Common_Damage = monster_Stat.Damage * 2.5f;
-                Mon_Common_AttackArea = monster_Stat.AttackArea * 2.5f;
-                Mon_Common_Range = monster_Stat.Range * 2.5f;
-                Mon_Common_DetectArea = monster_Stat.DetectArea * 2.5f;
-                Mon_Common_DetectTime = monster_Stat.DetectTime * 2.5f;
-                Mon_Common_MovementSpeed = monster_Stat.MovementSpeed * 2.5f;
+                
             }
             else
             {
@@ -149,6 +149,7 @@ public class Monster : MonoBehaviour, IHit
                 Mon_Common_DetectArea = monster_Stat.DetectArea;
                 Mon_Common_DetectTime = monster_Stat.DetectTime;
                 Mon_Common_MovementSpeed = monster_Stat.MovementSpeed;
+                Mon_Common_CoolTime = monster_Stat.Cooldown;
                 //TempHPText.text = Mon_Common_Hp_Remain.ToString();
                 yield break;
             }
@@ -156,11 +157,11 @@ public class Monster : MonoBehaviour, IHit
         }
     }
 
-    public void Hit(float damage, float paralysisTime, Transform transform)
+    public virtual void Hit(float damage, float paralysisTime, Transform transform)
     {
         IsDamaged = true;
         Mon_Common_Hp_Remain -= damage;
-        TempHPText.text = Mon_Common_Hp_Remain.ToString();
+        //TempHPText.text = Mon_Common_Hp_Remain.ToString();
 
         Debug.Log("hit");
 
@@ -175,6 +176,12 @@ public class Monster : MonoBehaviour, IHit
         }
         else
         {
+            if (_isSpawn)
+            {
+                _isSpawn = false;
+
+                _stage.UnRegisterMonster(this.gameObject);
+            }
             gameObject.SetActive(false);
         }
     }
@@ -187,7 +194,7 @@ public class Monster : MonoBehaviour, IHit
 
         gameObject.layer = LayerMask.NameToLayer("MonsterKnockback");
 
-        _anim.SetTrigger("Damaged");
+        Anim.SetTrigger("Damaged");
 
         ApplyingKnockbackTime = Time.time + knockbackDuration;
 
@@ -222,10 +229,18 @@ public class Monster : MonoBehaviour, IHit
     public IEnumerator WaitForStun(float paralysisTime)
     {
         //Bt.enabled = false;
-        _anim = GetComponent<Animator>();
-        _anim.SetTrigger("Damaged");
+        Anim.SetTrigger("Damaged");
         yield return new WaitForSeconds(paralysisTime);
         IsDamaged = false;
+    }
+
+    public void IsSpawn(Stage stage)
+    {
+        if (!_isSpawn)
+        {
+            _isSpawn = true;
+            _stage = stage;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -241,4 +256,5 @@ public class Monster : MonoBehaviour, IHit
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position + transform.forward, Mon_Common_AttackArea);
     }
+
 }

@@ -1,11 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
 public class PlayerInputSystem : MonoBehaviour
 {
     [Header("InputSystem")]
     [SerializeField] private Vector2 _input;
-
     [Header("Dash")]
     [SerializeField] private bool isDash;
     [Header("Drain")]
@@ -28,6 +28,13 @@ public class PlayerInputSystem : MonoBehaviour
     public bool IsSkill { get { return isSkill; } }
 
     float clampDelta = 15f;
+
+    Player _player;
+
+    private void Awake()
+    {
+        _player = GetComponent<Player>();
+    }
 
     private void OnMove(InputValue input)
     {
@@ -80,6 +87,11 @@ public class PlayerInputSystem : MonoBehaviour
         bool isPressed = input.isPressed;
 
         SetSkill(isPressed);
+    }
+
+    private void OnInteract(InputValue input)
+    {
+        _player.Interact();
     }
 
     private void SetMove(Vector2 value)

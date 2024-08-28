@@ -5,7 +5,6 @@ using UnityEngine;
 using Zenject;
 using QFX.SFX;
 using UnityEngine.SceneManagement;
-using BehaviorDesigner.Runtime.ObjectDrawers;
 
 public class Player : MonoBehaviour, IHit
 {
@@ -22,6 +21,7 @@ public class Player : MonoBehaviour, IHit
     private Camera _camera;
     
 
+    public IInteractable Interactable { get; set; }
     public PC_Common_Stat _playerStat { get; private set; } = new PC_Common_Stat();
     public PC_Level _PC_Level { get; private set; } = new PC_Level();
     public Camera MainCamera { get { return _camera; } }
@@ -262,7 +262,15 @@ public class Player : MonoBehaviour, IHit
         _state.AddState(State.KnockBack, new PlayerKnockBack(this));
         _state.AddState(State.Death, new PlayerDeath(this));
     }
+    public void Interact()
+    {
+        Interactable?.Interact();
+    }
 
+    public bool StaminaCheck()
+    {
+        return CurrentStamina > 0;
+    }
     IEnumerator StaminaDelay()
     {
         IsActiveStaminaRecovery = false;
@@ -278,10 +286,7 @@ public class Player : MonoBehaviour, IHit
         }
     }
 
-    public bool StaminaCheck()
-    {
-        return CurrentStamina > 0;
-    }
+
     //public void DrainCheck()
     //{
 
@@ -312,6 +317,7 @@ public class Player : MonoBehaviour, IHit
 
         cameraRoot.transform.rotation = transform.rotation;
     }
+
 
     #region PlayerLoad
 

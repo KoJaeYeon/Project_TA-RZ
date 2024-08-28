@@ -18,6 +18,7 @@ public class GoogleSheetManager : MonoBehaviour
     const string _Map_Stat_URL = "https://script.google.com/macros/s/AKfycbz1OvZKBC5yz-p_UeX9163KMK0T5FrcAdlBHLxn-XJZzQ7YYZMM7TX5Jh0C_KaIDaf2/exec";
     const string _Map_Stage_Level_URL = "https://script.google.com/macros/s/AKfycbzbOFeGM3D-Ux-dr982PRL4Tn_7EgcCGjlKAF3StH2rfIZBrKnLhiLjcZ51zdJxJ8cyqQ/exec";
     const string _Map_Monster_Mix_URL = "https://script.google.com/macros/s/AKfycbzUwoyAd5bnZIs87lu6gskqM7IGkcA4AxV9k3knroFsN4IzUPAuHKZXAPi0r8ll4KCV/exec";
+    const string _Map_Resource_URL = "https://script.google.com/macros/s/AKfycbyBpasBT-mlQojB5gkPoeNPrgam0dBfPaHhHEdLrTxvVPmDiAmkIZVyRhoz8bBOXz4d/exec";
     const string _String_Data_URL = "https://script.google.com/macros/s/AKfycbwc6eo7YQ2DYoRLU3pPmsCELjTKwbStfeQH5AcsEhQlC_2xEDIZEHRmgBVwEJmUMNs/exec";
 
     
@@ -43,6 +44,7 @@ public class GoogleSheetManager : MonoBehaviour
             StartCoroutine(SaveJsonData(nameof(_Map_Stat_URL), _Map_Stat_URL));
             StartCoroutine(SaveJsonData(nameof(_Map_Stage_Level_URL), _Map_Stage_Level_URL));
             StartCoroutine(SaveJsonData(nameof(_Map_Monster_Mix_URL), _Map_Monster_Mix_URL));
+            StartCoroutine(SaveJsonData(nameof(_Map_Resource_URL), _Map_Resource_URL));
             StartCoroutine(SaveJsonData(nameof(_String_Data_URL), _String_Data_URL));
             return;
         }
@@ -60,7 +62,10 @@ public class GoogleSheetManager : MonoBehaviour
             RequestJsonRead(nameof(_Map_Stat_URL));
             RequestJsonRead(nameof(_Map_Stage_Level_URL));
             RequestJsonRead(nameof(_Map_Monster_Mix_URL));
+            RequestJsonRead(nameof(_Map_Resource_URL));
             RequestJsonRead(nameof(_String_Data_URL));
+
+            StartCoroutine(CountJsonLoadData());
         }
         else
         {
@@ -75,6 +80,7 @@ public class GoogleSheetManager : MonoBehaviour
             StartCoroutine(RequestSJsonAPI(nameof(_Map_Stat_URL), _Map_Stat_URL));
             StartCoroutine(RequestSJsonAPI(nameof(_Map_Stage_Level_URL), _Map_Stage_Level_URL));
             StartCoroutine(RequestSJsonAPI(nameof(_Map_Monster_Mix_URL), _Map_Monster_Mix_URL));
+            StartCoroutine(RequestSJsonAPI(nameof(_Map_Resource_URL), _Map_Resource_URL));
             StartCoroutine(RequestSJsonAPI(nameof(_String_Data_URL), _String_Data_URL));
         }
     }
@@ -127,6 +133,22 @@ public class GoogleSheetManager : MonoBehaviour
             var path = Path.Combine(Application.dataPath, $"Resources/Datas/{urlName}.json");
             File.WriteAllText(path, data);
             Debug.Log($"{path}위치에 {urlName} 저장 완료");
+        }
+    }
+
+    public IEnumerator CountJsonLoadData()
+    {
+        const string url = "https://script.google.com/macros/s/AKfycby-XbpUpXvOGRGxgRm2aKNbRbvbl9r8N-D7_Y6QtGHvHayaYGbkYKsk_So9aARsRjgd/exec";
+        UnityWebRequest www = UnityWebRequest.Get(url);
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError(www.error);
+        }
+        else
+        {
+            Debug.Log("Get성공");
         }
     }
 

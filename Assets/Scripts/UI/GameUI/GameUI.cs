@@ -15,6 +15,7 @@ public class GameUI : MonoBehaviour
     [SerializeField] private GameObject _bossStageUI;
 
     [Header("ProgressUI")]
+    [SerializeField] private GameObject _progressUI;
     [SerializeField] private Image _progressImage;
 
     [Inject] private UIEvent _uiEvent;
@@ -46,15 +47,11 @@ public class GameUI : MonoBehaviour
         InitializeChoiceUIOnEnable();
     }
 
-    private void Start()
-    {
-        InitialzeProgressUIStart();
-        InitializeChoiceUIStart();
-    }
-
     #region Initialize
     private void InitializeProgressUIOnEnable()
     {
+        _progressBar = _progressImage;
+
         if (_progressView == null)
         {
             _progressView =  _container.Instantiate<ProgressUIViewModel>();
@@ -65,15 +62,10 @@ public class GameUI : MonoBehaviour
         }
     }
 
-    private void InitialzeProgressUIStart()
-    {
-        _progressBar = _progressImage;
-
-        _progressBar.fillAmount = _mapManager.ProgressValue;
-    }
-
     private void InitializeChoiceUIOnEnable()
     {
+        _uiEvent.AddEventChoiceStageEvent(true, SetStage);
+
         _normalList = new List<GameObject>();
 
         foreach (Transform normalChild in _normalStageUI.transform)
@@ -97,16 +89,14 @@ public class GameUI : MonoBehaviour
         }
     }
 
-    private void InitializeChoiceUIStart()
-    {
-        _uiEvent.AddEventChoiceStageEvent(true, SetStage);
-    }
     #endregion
 
     private void ChangeProgressBar(object sender, PropertyChangedEventArgs args)
     {
         if (args.PropertyName == nameof(_progressView.CurrentProgress))
         {
+            _currentProgressvalue = _progressView.CurrentProgress;
+
             _progressBar.fillAmount = _progressView.CurrentProgress;
         }
     }
@@ -132,16 +122,28 @@ public class GameUI : MonoBehaviour
         {
             _currentUI = BossUI();
         }
-        
+
+        _progressUI.SetActive(true);
+
         _currentUI.SetActive(true);
+
+        float currentProgressValue = _mapManager.ProgressValue;
+
+        _uiEvent.RequestChangeProgressBar(currentProgressValue);
+
+        Cursor.lockState = CursorLockMode.None;
 
         yield return new WaitWhile(() => !_isChoice);
 
+        _progressUI.SetActive(false);
+
         _currentUI.SetActive(false);
 
-        _uiEvent.RequestChangeProgressBar(0.33f);
+        Cursor.lockState = CursorLockMode.Locked;
 
-        _mapManager.ChoiceMap(_currentStage, player, _currentProgressvalue);
+        _mapManager.ChoiceMap(_currentStage, player);
+
+        this.gameObject.SetActive(false);
     }
 
     private GameObject BossUI()

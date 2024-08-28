@@ -17,7 +17,7 @@ public class Monster_CheckDamaged : Conditional
         {
             return TaskStatus.Running;
         }
-        else
+        else 
         {
             return TaskStatus.Failure;
         }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public enum MonsterList
+public enum MonsterList //순서 변경X
 {
     _meleeAttackmonster,
     _meleeExplosionmonster,
@@ -11,7 +11,7 @@ public enum MonsterList
     _longRangeMonster
 }
 
-public enum ItemList
+public enum ItemList //순서 변경X
 {
     _resourceA,
     _resourceB, 
@@ -30,6 +30,7 @@ public class StageObject : MonoBehaviour
     [SerializeField] private GameObject _meleeExplosionmonster;
     [SerializeField] private GameObject _chargeMonster;
     [SerializeField] private GameObject _longRangeMonster;
+   
 
     [Header("Item")]
     [SerializeField] private int _itemCount;
@@ -37,9 +38,6 @@ public class StageObject : MonoBehaviour
 
     private Dictionary<MonsterList, GameObject> _monsterDictionary = new Dictionary<MonsterList, GameObject>();
     private Dictionary<ItemList, GameObject> _itemDictionary = new Dictionary<ItemList, GameObject>();
-
-    private List<GameObject> _spawnMonsters = new List<GameObject>();
-    private List<GameObject> _spawnItems = new List<GameObject>();  
 
     private void Awake()
     {
@@ -92,11 +90,6 @@ public class StageObject : MonoBehaviour
         }
     }
 
-    public void RegisterMonster()
-    {
-
-    }
-
     public GameObject GetMonster(MonsterList monsterType)
     {
         if(_monsterDictionary.TryGetValue(monsterType, out GameObject monsterPrefab))
@@ -124,4 +117,5 @@ public class StageObject : MonoBehaviour
             return _poolManager.DequeueObject(itemPrefab);
         }
     }
+
 }

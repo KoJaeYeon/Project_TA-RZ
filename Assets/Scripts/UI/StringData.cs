@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,7 +9,7 @@ public class StringData : MonoBehaviour
     [Inject]
     DataManager _dataManager;
     [SerializeField] string IDStr;
-    private void Awake()
+    private void Start()
     {
         StartCoroutine(LoadString());
     }

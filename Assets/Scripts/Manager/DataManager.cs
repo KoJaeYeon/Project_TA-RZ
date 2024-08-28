@@ -126,6 +126,9 @@ public class DataManager : MonoBehaviour
             case "_Map_Monster_Mix_URL":
                 Process_Monster_Mix_Data(data);
                 break;
+            case "_Map_Resource_URL":
+                Process_Map_Resource_Data(data);
+                break;
             case "_String_Data_URL":
                 Process_String_Data(data);
                 break;
@@ -331,7 +334,25 @@ public class DataManager : MonoBehaviour
             int mon_MonsterD = ParseInt(item[$"{nameof(Map_Monster_Mix.Mon_Monster)}D"]);
             int mon_MonsterA = ParseInt(item[$"{nameof(Map_Monster_Mix.Mon_Monster)}A"]);
 
-            Map_Monster_Mix mapStat = new Map_Monster_Mix(idStr, new int[] { mon_MonsterB, mon_MonsterC, mon_MonsterD, mon_MonsterA });
+            Map_Monster_Mix mapStat = new Map_Monster_Mix(idStr, new List<int> { mon_MonsterB, mon_MonsterC, mon_MonsterD, mon_MonsterA });
+            AddDataToDataDictionary(idStr, mapStat);
+        }
+    }
+
+    private void Process_Map_Resource_Data(string data)
+    {
+        JArray jsonArray = JArray.Parse(data);
+
+        foreach (var item in jsonArray)
+        {
+            string idStr = item[nameof(Map_Resource.ID)].ToString();
+            int Map_Total_Resources = ParseInt(item[nameof(Map_Resource.Map_Total_Resources)]);
+            float map_Resources_type_Ratio_A = ParseFloat(item[$"{nameof(Map_Resource.Map_Resources_type_Ratio)}_A"]);
+            float map_Resources_type_Ratio_B = ParseFloat(item[$"{nameof(Map_Resource.Map_Resources_type_Ratio)}_B"]);
+            float map_Resources_type_Ratio_C = ParseFloat(item[$"{nameof(Map_Resource.Map_Resources_type_Ratio)}_C"]);
+            List<int> mon_MonsterD = parseList<int>(item[nameof(Map_Resource.Map_Panel_Resources_Ratio)]);
+
+            Map_Resource mapStat = new Map_Resource(idStr, Map_Total_Resources, new List<float> { map_Resources_type_Ratio_A, map_Resources_type_Ratio_B, map_Resources_type_Ratio_C }, mon_MonsterD);
             AddDataToDataDictionary(idStr, mapStat);
         }
     }
