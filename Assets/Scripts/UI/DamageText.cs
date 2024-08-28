@@ -56,6 +56,7 @@ public class DamageText : MonoBehaviour
     IEnumerator DisableObject()
     {
         yield return new WaitForSeconds(destroyTime);
+        DestroyObject();
     }
 
     private void DestroyObject()
