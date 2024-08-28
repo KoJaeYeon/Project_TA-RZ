@@ -71,7 +71,7 @@ public class LoadingScene : MonoBehaviour
 
         yield return StartCoroutine(FadeImage(color, 0f, duration));
 
-        AsyncOperation op = SceneManager.UnloadSceneAsync("LoadingScene");
+        SceneManager.UnloadSceneAsync("LoadingScene");
     }
 
     private IEnumerator FadeImage(Color color, float targetAlpa, float duration)
