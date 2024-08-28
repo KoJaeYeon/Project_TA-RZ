@@ -77,7 +77,7 @@ public class Monster_A : Monster, IHit
 
     private IEnumerator WaitForParticleToFinish(ParticleSystem particle, GameObject explosion)
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(growDuration);
         //yield return new WaitUntil(() => !particle.isPlaying);
 
         explosion.SetActive(false);
