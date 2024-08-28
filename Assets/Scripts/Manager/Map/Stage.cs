@@ -51,6 +51,8 @@ public class Stage : MonoBehaviour
     [Header("DeBug")]
     [Header("Resource")]
     [SerializeField] private bool _debugResource;
+    [Header("Total_Resource")]
+    [SerializeField] private int _totalResource;
     [Header("Monster")]
     [SerializeField] private bool _debugMonster;
     [Header("Data")]
@@ -95,9 +97,7 @@ public class Stage : MonoBehaviour
 
     private void Start()
     {
-        _currentStage = StageType.Normal;
-        
-        _deBugStageType = _currentStage;//디버그 코드
+        _currentStage = _deBugStageType; //디버그 코드 
 
         _portal.SetActive(false);
 
@@ -382,6 +382,7 @@ public class Stage : MonoBehaviour
             }
         }
 
+        _totalResource = _spawnItems.Count;
         Debug.Log(_spawnItems.Count);
     }
 
