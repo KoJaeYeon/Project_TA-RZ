@@ -92,6 +92,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7609e0accf1b234591393bb4bf23d11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mapManagerPrefab: {fileID: 6682144552714447870, guid: a24464662de936e4884f73d6a160c6e9,
+    type: 3}
 --- !u!1 &3232827850884884956
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,8 +192,8 @@ MonoBehaviour:
   - {fileID: 7195175278930344354}
   - {fileID: 8315993531449653818}
   - {fileID: 4157357873276117376}
-  - {fileID: 66544136487805803}
   - {fileID: 816090843084538235}
+  - {fileID: 66544136487805803}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -297,3 +299,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e28ccf89bbdb4b4b844c820eb9144e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _poolManager: {fileID: 8278449765957682552, guid: c29b71cf957c4bc4fb26e094e216dfab,
+    type: 3}

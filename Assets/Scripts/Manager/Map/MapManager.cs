@@ -64,36 +64,26 @@ public class MapManager : MonoBehaviour
 
     private void LoadSceneBeginning()
     {
-        Debug.Log("로드씬");
         LoadingScene.LoadScene("Beginning");
     }
 
     private void LoadSceneMiddle()
     {
-        Debug.Log("로드씬");
-
+        LoadingScene.LoadScene("Middle");
     }
 
     private void LoadSceneFinal()
     {
-        Debug.Log("로드씬");
-
+        LoadingScene.LoadScene("Final");
     }
 
     private void LoadSceneBoss()
     {
-        Debug.Log("로드씬");
+        LoadingScene.LoadScene("Boss");
     }
 
     public StageType GetStageType()
     {
         return _currentStageType;
-    }
-
-    public void RequestChangeProgressValue(float value)
-    {
-        _progressValue += value;
-
-        _uiEvent.RequestChangeProgressBar(value);
     }
 }

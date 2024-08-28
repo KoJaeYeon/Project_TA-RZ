@@ -72,8 +72,6 @@ public class Stage : MonoBehaviour
     #endregion
     private void Awake()
     {
-        _portal.SetActive(false);
-
         _mapManager.SetStage(this);
 
         _object = gameObject.GetComponent<StageObject>();
@@ -94,7 +92,12 @@ public class Stage : MonoBehaviour
         yield return new WaitUntil(() => (_itemDataReady && _monsterDataReady));
 
         SetArea();
-        SpawnMonster();
+
+        if(_currentStage != StageType.Boss)
+        {
+            SpawnMonster();
+        }
+        
         SpawnItem();
     }
 
@@ -360,10 +363,21 @@ public class Stage : MonoBehaviour
 
             if(_spawnMonsters.Count == 0)
             {
-                _mapManager.RequestChangeProgressValue(0.33f);
-                _portal.SetActive(true);
-                _gameUI.SetActive(true);
+                _mapManager.ProgressValue += 0.33f;
+
+                StageClear();
             }
+        }
+    }
+
+    private void StageClear()
+    {
+        bool setactive = _portal != null && _gameUI != null;
+
+        if (setactive)
+        {
+            _portal.SetActive(true);
+            _gameUI.SetActive(true);
         }
     }
 
