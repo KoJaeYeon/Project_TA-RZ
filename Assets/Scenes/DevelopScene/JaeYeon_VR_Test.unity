@@ -2125,6 +2125,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 1283058298573481144, guid: 2aa2d26c3704b9846843d781910c57cc,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3725708268258419153, guid: 2aa2d26c3704b9846843d781910c57cc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2174,6 +2179,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6975158853731361386, guid: 2aa2d26c3704b9846843d781910c57cc,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
