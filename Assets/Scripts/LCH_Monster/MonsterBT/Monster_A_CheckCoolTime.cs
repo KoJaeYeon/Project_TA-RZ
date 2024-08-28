@@ -6,15 +6,14 @@ using UnityEngine.AI;
 public class Monster_A_CheckCoolTime : Conditional
 {
     [SerializeField] SharedMonster_A Monster;
-    private float lastAttackTime = -Mathf.Infinity;
 
     public override TaskStatus OnUpdate()
     {
         float currentTime = Time.time;
-        if (currentTime - lastAttackTime >= Monster.Value.Mon_Common_CoolTime)
+        if (currentTime - Monster.Value.LastAttackTime >= Monster.Value.Mon_Common_CoolTime)
         {
             //공격쿨타임 
-            lastAttackTime = currentTime;
+            Monster.Value.LastAttackTime = Time.time + 10f;
             return TaskStatus.Success;
         }
         else

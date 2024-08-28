@@ -11,7 +11,7 @@ public class Monster_A : Monster, IHit
     [SerializeField] private float growDuration;  // 커지는 데 걸리는 시간
     private Vector3 targetScale = new Vector3(2f, 0.1f, 2f);  // 목표 크기
 
-
+    public float LastAttackTime { get; set; }
     
     protected override void Awake()
     {
@@ -23,6 +23,7 @@ public class Monster_A : Monster, IHit
             monsterAEx.Initialize(this);
         }
     }
+
     public void StartAtk()
     {
         if (atkPrefab != null)
@@ -36,6 +37,7 @@ public class Monster_A : Monster, IHit
             StartCoroutine(GrowOverTime(atkPrefab));
         }
     }
+
     public override void Hit(float damage, float paralysisTime, Transform transform)
     {
         base.Hit(damage, paralysisTime, transform);
@@ -48,6 +50,28 @@ public class Monster_A : Monster, IHit
 
         }
     }
+    
+
+    public void PlayExplosion(Transform targetTrans)
+    {
+        if (explosionPrefab != null)
+        {
+            explosionPrefab.transform.parent = null;
+            explosionPrefab.transform.position = targetTrans.position;
+            explosionPrefab.SetActive(true);
+            LastAttackTime = Time.time;
+
+            var particle = explosionPrefab.GetComponent<ParticleSystem>();
+
+            if (particle != null)
+            {
+                particle.Play();
+                StartCoroutine(WaitForParticleToFinish(particle, explosionPrefab));
+
+            }
+        }
+    }
+
     private IEnumerator GrowOverTime(GameObject atkObject)
     {
         Vector3 initialScale = atkObject.transform.localScale;
@@ -67,26 +91,6 @@ public class Monster_A : Monster, IHit
 
         }
     }
-
-    public void PlayExplosion(Transform targetTrans)
-    {
-        if (explosionPrefab != null)
-        {
-            explosionPrefab.transform.parent = null;
-            explosionPrefab.transform.position = targetTrans.position;
-            explosionPrefab.SetActive(true);
-
-            var particle = explosionPrefab.GetComponent<ParticleSystem>();
-
-            if (particle != null)
-            {
-                particle.Play();
-                StartCoroutine(WaitForParticleToFinish(particle, explosionPrefab));
-
-            }
-        }
-    }
-
 
     private IEnumerator WaitForParticleToFinish(ParticleSystem particle, GameObject explosion)
     {
