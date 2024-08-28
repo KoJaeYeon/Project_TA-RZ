@@ -12,7 +12,7 @@ public class MonsterA_Ex : MonoBehaviour
 
     private void OnEnable()
     {
-        //StartCoroutine(OffCollider());
+        StartCoroutine(OffCollider());
     }
     private void OnDisable()
     {
@@ -41,9 +41,9 @@ public class MonsterA_Ex : MonoBehaviour
     }
 
     
-    IEnumerator OffCollider()
+    private IEnumerator OffCollider()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         collider.enabled = false;
     }
 }
