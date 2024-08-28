@@ -3,9 +3,12 @@ using BehaviorDesigner.Runtime.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class BTA_Boss_RushAttack : BossAction
 {
+    [Inject] Player _player;
+
     [SerializeField] private SharedFloat _dashSpeed;
     [SerializeField] private SharedFloat _dashRange;
 
@@ -56,11 +59,14 @@ public class BTA_Boss_RushAttack : BossAction
 
     public override void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Wall"))
         {
-            if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Wall"))
+            _isDash = false;
+
+            if (collision.gameObject.CompareTag("Player"))
             {
-                _isDash = false;
+                _player.Hit(_owner.rushDamage, 1f, _owner.transform);
             }
-        }
+        }     
     }
 }
