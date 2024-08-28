@@ -158,10 +158,11 @@ public class PoolManager : MonoBehaviour
                 EnqueueObject(dequeueObject.gameObject);
 
                 //새로운 프리팹 생성 후 반환
-                var newPrefab = Instantiate(dequeueObject.gameObject);
+                var newPrefab = _di.InstantiatePrefab(dequeueObject.gameObject);
                 newPrefab.name = prefabName;
                 return newPrefab; //복제된 오브젝트 반환
             }
+            dequeueObject.gameObject.SetActive(true);
             return dequeueObject.gameObject; //오브젝트 반환
         }
         return null;
