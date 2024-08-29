@@ -9,6 +9,7 @@ public class UIEvent
     
     private Action<float> _progressCallBack;
     private GameUI _gameUI;
+    public LoadingUI _loadUI { get; private set; }
     public BlueChipUI BlueChipUI { get; private set; }
     
     #region ChoiceEvent
@@ -61,6 +62,12 @@ public class UIEvent
     }
     #endregion
 
+    #region LoadUI
+    public void RegisterLoadUI(LoadingUI loadingUI)
+    {
+        _loadUI = loadingUI;
+    }
+    #endregion
 }
 
 

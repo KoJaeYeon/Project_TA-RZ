@@ -4,7 +4,7 @@ using System.ComponentModel;
 using UnityEngine;
 using Zenject;
 
-public enum MapType
+public enum MapType //순서 변경X
 {
     Lobby,
     Beginning,
@@ -16,14 +16,21 @@ public enum MapType
 public class MapManager : MonoBehaviour
 {
     [Header("Map")]
-    [SerializeField] private GameObject[] _mapArray;
+    [SerializeField] private string[] _mapNameArray;
 
-    private Dictionary<MapType, GameObject> _mapDictionary;
+    private Dictionary<MapType, string> _mapNameDictionary;
 
     public float ProgressValue { get; set; }
 
     private StageType _currentStageType;
+    private string _mapName;
     private GameObject _currentMap;
+
+    [Inject]
+    public DiContainer _di;
+    [Inject]
+    private UIEvent _uiEvent;
+    
 
     private void Awake()
     {
@@ -32,39 +39,40 @@ public class MapManager : MonoBehaviour
 
     private void Start()
     {
-        _currentMap = GetMap(MapType.Lobby);
+        StartCoroutine(LoadMap("Lobby"));
     }
 
     #region Initialize
 
     private void InitializeMapManager()
     {
-        _mapDictionary = new Dictionary<MapType, GameObject>();
 
-        if(_mapArray == null)
+        _mapNameDictionary = new Dictionary<MapType, string>();
+
+        if(_mapNameArray == null)
         {
-            Debug.LogWarning("MapArray가 존재하지 않습니다.");
+            Debug.LogWarning("_mapNameArray가 존재하지 않습니다.");
             return;
         }
 
-        var map = new (MapType, GameObject)[]
+        var map = new (MapType, string)[]
         {
-            (MapType.Lobby, _mapArray[0]),
-            (MapType.Beginning, _mapArray[1]),
-            (MapType.Middle, _mapArray[2]),
-            (MapType.Final, _mapArray[3]),
-            (MapType.Boss, _mapArray[4])
+            (MapType.Lobby, _mapNameArray[0]),
+            (MapType.Beginning, _mapNameArray[1]),
+            (MapType.Middle, _mapNameArray[2]),
+            (MapType.Final, _mapNameArray[3]),
+            (MapType.Boss, _mapNameArray[4])
         };
 
-        AddMap(map, _mapDictionary);
+        AddMap(map, _mapNameDictionary);
     }
 
-    private void AddMap((MapType, GameObject)[] map,
-        Dictionary<MapType, GameObject> mapDictionary = null)
+    private void AddMap((MapType, string)[] map,
+        Dictionary<MapType, string> mapNameDictionary = null)
     {
         foreach (var (mapType, mapObject) in map)
         {
-            mapDictionary?.Add(mapType, mapObject);
+            mapNameDictionary?.Add(mapType, mapObject);
         }
     }
 
@@ -78,71 +86,82 @@ public class MapManager : MonoBehaviour
 
         if(ProgressValue <= 0.33f)
         {
-            _currentMap = GetMap(MapType.Beginning);
+            _mapName = GetMap(MapType.Beginning);
 
-            _currentMap.SetActive(true);
-
-            Stage beginning = _currentMap.GetComponent<Stage>();
-
-            beginning.StartStage(_currentStageType);
+            StartCoroutine(LoadMap(_mapName));
         }
         else if(ProgressValue <= 0.66f)
         {
-            _currentMap = GetMap(MapType.Middle);
+            _mapName = GetMap(MapType.Middle);
 
-            _currentMap.SetActive(true);
-
-            Stage middle = _currentMap.GetComponent<Stage>();
-
-            middle.StartStage(_currentStageType);
+            StartCoroutine(LoadMap(_mapName));
         }
         else if(ProgressValue <= 0.99f)
         {
-            _currentMap = GetMap(MapType.Final);
+            _mapName = GetMap(MapType.Final);
 
-            _currentMap.SetActive(true);
-
-            Stage final = _currentMap.GetComponent<Stage>();
-
-            final.StartStage(_currentStageType);
+            StartCoroutine(LoadMap(_mapName));
         }
         else
         {
-            _currentMap = GetMap(MapType.Boss);
+            _mapName = GetMap(MapType.Boss);
 
-            _currentMap.SetActive(true);
-
-            Stage boss = _currentMap.GetComponent<Stage>();
-
-            boss.StartStage(_currentStageType);
+            StartCoroutine(LoadMap(_mapName));
         }
     }
 
     public void LobbyMap()
     {
-        GameObject lobby = GetMap(MapType.Lobby);
+        _mapName = GetMap(MapType.Lobby);
 
-        _currentMap.SetActive(false);
-
-        _currentMap = lobby;
-
-        _currentMap.SetActive(true);
+        StartCoroutine(LoadMap(_mapName));
     }
 
 
-    private GameObject GetMap(MapType mapType)
+    private string GetMap(MapType mapType)
     {
-        if (_mapDictionary.TryGetValue(mapType, out GameObject map))
+        if (_mapNameDictionary.TryGetValue(mapType, out string mapName))
         {
-            GameObject mapPrefab = map;
+            string name = mapName;
 
-            return mapPrefab;
+            return name;
         }
         else
             return null;
     }
 
+    private IEnumerator LoadMap(string mapName)
+    {
+        string mapPath = "Map/" + mapName;
 
+        ResourceRequest request = Resources.LoadAsync<GameObject>(mapPath);
 
+        LoadingUI loadUI = _uiEvent._loadUI;
+
+        loadUI.gameObject.SetActive(true);
+
+        StartCoroutine(loadUI.ImageBlink(request));
+
+        while (!request.isDone)
+        {
+            yield return null;
+        }
+        
+        if(_currentMap != null)
+        {
+            Destroy(_currentMap);
+        }
+
+        _currentMap = _di.InstantiatePrefab(request.asset as GameObject);
+
+        _currentMap.SetActive(true);
+
+        Stage currentStage = _currentMap.GetComponent<Stage>();
+
+        if(currentStage != null)
+        {
+            currentStage.StartStage(_currentStageType);
+        }
+    }
  
 }

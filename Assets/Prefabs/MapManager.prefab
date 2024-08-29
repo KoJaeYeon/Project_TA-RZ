@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd137348d7ce2f5438f23610603d10eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mapArray:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  _mapNameArray:
+  - Lobby
+  - Beginning
+  - Middle
+  - Final
+  - Boss
