@@ -108,7 +108,13 @@ public class MapManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("보스");
+            _currentMap = GetMap(MapType.Final);
+
+            _currentMap.SetActive(true);
+
+            Stage boss = _currentMap.GetComponentInChildren<Stage>();
+
+            boss.StartStage(_currentStageType);
         }
     }
 
