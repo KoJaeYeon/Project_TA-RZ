@@ -6,6 +6,6 @@ public class BTA_Boss_ChangePhaseTwo : BossAction
 {
     public override void OnStart()
     {
-        _owner.InActiveOnPhaseTwo();
+        _owner.ChangePhaseTwo();
     }
 }

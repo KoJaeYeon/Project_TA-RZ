@@ -25,6 +25,12 @@ public class GimmickController : MonoBehaviour
     private void OnEnable()
     {
         transform.localScale = _scale;
+        _isHurt = false;
+    }
+
+    private void OnDisable()
+    {
+        StopCoroutine(_hurtCoroutine);
     }
 
     private void Update()

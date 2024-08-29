@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 820070331675361019}
   - component: {fileID: 1424715121879192306}
   - component: {fileID: 6454122104082229108}
-  - component: {fileID: 719775765237534961}
+  - component: {fileID: 8640516897085153903}
   m_Layer: 0
   m_Name: DamageBox_Swing
   m_TagString: Untagged
@@ -3165,7 +3165,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &719775765237534961
+--- !u!114 &8640516897085153903
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3174,7 +3174,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 1561323794784987288}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a22b7c00013e3b447a0332d457b4fece, type: 3}
+  m_Script: {fileID: 11500000, guid: 830099fe3e9c17846aeded94f3bdc48d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pattern: 4
+  _angle: 120
+  _boss: {fileID: 0}
