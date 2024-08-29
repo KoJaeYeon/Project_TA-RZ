@@ -322,6 +322,9 @@ public class Stage : MonoBehaviour
 
         foreach(var partition in _selectItemArea)
         {
+            if (_currentStage is StageType.Boss && partition == _selectItemArea[4])
+                continue;
+
             for(int i = 0; i < partition._resourceCountArray.Length; i++)
             {
                 for(int k = 0; k < partition._resourceCountArray[i]; k++)
