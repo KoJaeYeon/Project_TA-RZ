@@ -461,7 +461,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2703014014223948530, guid: 020a6fb2abeb9a742a9868c70f449962, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 020a6fb2abeb9a742a9868c70f449962, type: 3}
@@ -595,11 +596,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Loding Panel
-      objectReference: {fileID: 0}
-    - target: {fileID: 2219166514726600763, guid: 6db22bf316a3b0a46bdc8873aeffdccd,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
