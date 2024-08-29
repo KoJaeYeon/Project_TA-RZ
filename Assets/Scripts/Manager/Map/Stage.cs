@@ -40,6 +40,8 @@ public class Stage : MonoBehaviour
     private MapManager _mapManager;
     [Inject]
     private DataManager _dataManager;
+    [Inject]
+    private Player _player;
     #endregion
 
     [Header("GameLevel")]
@@ -78,6 +80,10 @@ public class Stage : MonoBehaviour
     public void StartStage(StageType newStage)
     {
         _currentStage = newStage;
+
+        _portal.SetActive(false);
+
+        _player.transform.position = new Vector3(-6, 0, 32);
 
         StartCoroutine(SpawnObject());
     }

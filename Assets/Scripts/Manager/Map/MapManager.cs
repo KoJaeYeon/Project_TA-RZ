@@ -9,7 +9,8 @@ public enum MapType
     Lobby,
     Beginning,
     Middle,
-    Final
+    Final,
+    Boss
 }
 
 public class MapManager : MonoBehaviour

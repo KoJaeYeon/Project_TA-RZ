@@ -52,6 +52,12 @@ public class GameUI : MonoBehaviour
         InitializeProgressUIOnEnable();
         InitializeChoiceUIOnEnable();
         ActiveChoiceUI();
+        _uiEvent.SetActivePlayerControl(false);
+    }
+
+    private void OnDisable()
+    {
+        _uiEvent.SetActivePlayerControl(true);
     }
 
     #region Initialize
