@@ -29,7 +29,7 @@ public class Monster_D : Monster
     public override void Hit(float damage, float paralysisTime, Transform transform)
     {
         base.Hit(damage, paralysisTime, transform);
-        StopDash(); // 피격 시 돌진 중단
+        StopDash(); 
     }
 
     public void OnAtk(Transform playerTransform)
@@ -38,10 +38,8 @@ public class Monster_D : Monster
         collider.isTrigger = true;
         isDashing = false;
 
-        // 플레이어 위치 저장
         targetPosition = playerTransform.position;
-
-        // 돌진 시작
+        StartCoroutine(ReadyToDash());
         StartCoroutine(DashToTarget());
     }
 
@@ -56,12 +54,10 @@ public class Monster_D : Monster
 
         while (distanceCovered < dashAttackDistance && IsAttack)
         {
-            // 돌진 이동
             float step = dashSpeed * Time.deltaTime;
             transform.position += dashDirection * step;
             distanceCovered += step;
 
-            // 충돌 검사
             RaycastHit hit;
             if (Physics.Raycast(transform.position, dashDirection, out hit, step))
             {
@@ -84,7 +80,11 @@ public class Monster_D : Monster
 
         StopDash();
     }
-
+    public IEnumerator ReadyToDash()
+    {
+        //대쉬 UI 작성
+        yield return new WaitForSeconds(5f);
+    }
     private void StopDash()
     {
         animator.SetBool("Atk", false);

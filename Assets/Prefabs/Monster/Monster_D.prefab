@@ -2750,6 +2750,8 @@ MonoBehaviour:
   Attack_Stiff_Time: 1
   Knockback_Horizontal_Distance: 4
   Knockback_Vertical_Distance: 2
+  dashAttackDistance: 10
+  dashSpeed: 10
 --- !u!1 &9036642841148048968
 GameObject:
   m_ObjectHideFlags: 0
