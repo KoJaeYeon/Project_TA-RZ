@@ -8,7 +8,7 @@ public class Boss_ExplosionDamageBox : MonoBehaviour
 {
     [SerializeField] private float _attackDistance;
 
-    [Inject] BossController _boss { get; }
+    [SerializeField] BossController _boss;
 
     [Inject] Player _player { get; }
 
