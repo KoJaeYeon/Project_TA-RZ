@@ -11,7 +11,8 @@ public class Monster_A : Monster, IHit
     [SerializeField] private float growDuration;  // 커지는 데 걸리는 시간
     [Header("바닥 범위 설정")]
     [SerializeField] private Vector3 targetScale;
-
+    [Header("폭발 크기 설정")]
+    [SerializeField] private Vector3 explosionSize;
     public float LastAttackTime { get; set; }
     
     protected override void Awake()
@@ -23,6 +24,8 @@ public class Monster_A : Monster, IHit
         {
             monsterAEx.Initialize(this);
         }
+        atkPrefab.transform.localScale = targetScale;
+        explosionPrefab.transform.localScale = explosionSize;
     }
 
     public void StartAtk()

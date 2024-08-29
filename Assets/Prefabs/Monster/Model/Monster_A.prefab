@@ -2024,7 +2024,8 @@ MonoBehaviour:
   atkPrefab: {fileID: 5859596967597927552}
   explosionPrefab: {fileID: 739683436975676488}
   growDuration: 2
-  targetScale: {x: 0, y: 0, z: 0}
+  targetScale: {x: 3, y: 0.1, z: 3}
+  explosionSize: {x: 1, y: 1, z: 1}
 --- !u!136 &3677069109103963087
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -8,15 +8,6 @@ public class Monster_A_atkEx : MonoBehaviour
     private float growDuration = 2.0f;
     [SerializeField] GameObject target;
 
-    [Header("타겟 범위 설정")]
-    [SerializeField] private Vector3 targetScale;
-
-    private void Start()
-    {
-        target.transform.localScale = targetScale;
-       // targetScale = target.transform.localScale;
-    }
-
     private void OnEnable()
     {
 
@@ -38,16 +29,16 @@ public class Monster_A_atkEx : MonoBehaviour
 
         while (timeElapsed < growDuration)
         {
-            transform.localScale = Vector3.Lerp(initialScale, targetScale, timeElapsed / growDuration);
+            transform.localScale = Vector3.Lerp(initialScale, target.transform.localScale, timeElapsed / growDuration);
             timeElapsed += Time.deltaTime;
 
             yield return null;
         }
 
-        transform.localScale = targetScale;
+        transform.localScale = target.transform.localScale;
         transform.SetParent(target.transform);
 
-        if (transform.localScale == targetScale)
+        if (transform.localScale == target.transform.localScale)
         {
             gameObject.SetActive(false);
             yield return null;
