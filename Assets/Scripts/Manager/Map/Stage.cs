@@ -81,7 +81,9 @@ public class Stage : MonoBehaviour
 
     public void StartStage(StageType newStage)
     {
-        _currentStage = newStage;        
+        _currentStage = newStage;
+
+        ClearStageObject();
 
         _player.transform.position = new Vector3(-6, 0, 32);
 
