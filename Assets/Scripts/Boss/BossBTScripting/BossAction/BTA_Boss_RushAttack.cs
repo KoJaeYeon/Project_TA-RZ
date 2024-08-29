@@ -24,7 +24,7 @@ public class BTA_Boss_RushAttack : BossAction
         _startPos = transform.position;
         _isRush = true;
 
-        direction = _owner.SetRushDirection();
+        direction = transform.forward;
 
         _rb.isKinematic = false;
     }
