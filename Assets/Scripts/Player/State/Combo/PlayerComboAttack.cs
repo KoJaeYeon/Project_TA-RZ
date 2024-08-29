@@ -92,12 +92,12 @@ public class PlayerComboAttack : PlayerState
         _inputSystem.SetAttack(false);
     }
 
-    protected void PrintDamageText(float damage, Transform targetTrans)
+    protected void PrintDamageText(float damage, Transform targetTrans, DamageType damageType = DamageType.Normal)
     {
         var dmgTxtObj = _player.poolManager.DequeueObject("DamageText");
         var damageText = dmgTxtObj.GetComponentInChildren<DamageText>();
         damageText.gameObject.SetActive(true);
-        damageText.OnSetData(damage, DamageType.Normal, targetTrans);
+        damageText.OnSetData(damage, damageType, targetTrans);
     }
 
     protected void ComboAnimation(int hashValue, bool isPlay)

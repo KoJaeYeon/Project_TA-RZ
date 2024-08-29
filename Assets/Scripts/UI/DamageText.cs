@@ -39,6 +39,8 @@ public class DamageText : MonoBehaviour
                 transform.position = targetTrans.position;// + targetTrans.forward;
                 break;
             case DamageType.Poison:
+                alpha = new Color(0, 176 / 255f, 80 / 255f);
+                transform.position = targetTrans.position + targetTrans.up;
                 break;
         }
         text.color = alpha;
@@ -47,7 +49,7 @@ public class DamageText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(new Vector3(0, moveSpeed * Time.deltaTime, 0)); // 텍스트 위치
+        //transform.Translate(new Vector3(0, moveSpeed * Time.deltaTime, 0)); // 텍스트 위치
 
         alpha.a = Mathf.Lerp(alpha.a, 0, Time.deltaTime * alphaSpeed); // 텍스트 알파값
         text.color = alpha;
