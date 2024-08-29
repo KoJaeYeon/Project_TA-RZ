@@ -22,3 +22,24 @@ public class Monster_A_CheckCoolTime : Conditional
         }
     }
 }
+
+[TaskCategory("MonsterC")]
+
+public class Monster_C_CheckCoolTime : Conditional
+{
+    [SerializeField] SharedMonster_C Monster;
+
+    public override TaskStatus OnUpdate()
+    {
+        float currentTime = Time.time;
+        if(currentTime - Monster.Value.LastAttackTime >= Monster.Value.Mon_Common_CoolTime)
+        {
+            Monster.Value.LastAttackTime = Time.time + 10f;
+            return TaskStatus.Success;
+        }
+        else
+        {
+            return TaskStatus.Failure;
+        }
+    }
+}

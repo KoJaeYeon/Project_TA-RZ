@@ -2023,7 +2023,7 @@ MonoBehaviour:
   Knockback_Vertical_Distance: 2
   atkPrefab: {fileID: 5859596967597927552}
   explosionPrefab: {fileID: 739683436975676488}
-  growDuration: 1.9
+  growDuration: 2
 --- !u!136 &3677069109103963087
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2350,11 +2350,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8860565670138465269}
     m_Modifications:
-    - target: {fileID: 5699379824372410059, guid: c20f0d03ff8a8f1408d87528924e520d,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6540185830517008484, guid: c20f0d03ff8a8f1408d87528924e520d,
         type: 3}
       propertyPath: m_Name
