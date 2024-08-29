@@ -16,7 +16,7 @@ public class BTC_Root_CheckState : Conditional
 
     public override TaskStatus OnUpdate()
     {
-        if (_owner.rootState == RootState.Hide) return TaskStatus.Success; 
+        if (_owner.rootState == RootState.Hide || _owner.rootState == RootState.Die) return TaskStatus.Success;
 
         return TaskStatus.Failure;
     }
