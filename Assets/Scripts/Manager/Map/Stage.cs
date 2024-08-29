@@ -40,6 +40,10 @@ public class Stage : MonoBehaviour
     private MapManager _mapManager;
     [Inject]
     private DataManager _dataManager;
+    [Inject]
+    private PoolManager _poolManager;
+    [Inject]
+    private Player _player;
     #endregion
 
     [Header("GameLevel")]
@@ -77,9 +81,20 @@ public class Stage : MonoBehaviour
 
     public void StartStage(StageType newStage)
     {
-        _currentStage = newStage;
+        _currentStage = newStage;        
+
+        _player.transform.position = new Vector3(-6, 0, 32);
 
         StartCoroutine(SpawnObject());
+    }
+
+    public void ClearStageObject()
+    {
+        _portal.SetActive(false);
+
+        _poolManager.AllDestroyObject("Item_1");
+        _poolManager.AllDestroyObject("Item_2");
+        _poolManager.AllDestroyObject("Item_3");
     }
 
     private IEnumerator SpawnObject()

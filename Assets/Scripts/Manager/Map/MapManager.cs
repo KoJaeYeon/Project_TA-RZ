@@ -9,7 +9,8 @@ public enum MapType
     Lobby,
     Beginning,
     Middle,
-    Final
+    Final,
+    Boss
 }
 
 public class MapManager : MonoBehaviour
@@ -52,6 +53,7 @@ public class MapManager : MonoBehaviour
             (MapType.Beginning, _mapArray[1]),
             (MapType.Middle, _mapArray[2]),
             (MapType.Final, _mapArray[3]),
+            (MapType.Boss, _mapArray[4])
         };
 
         AddMap(map, _mapDictionary);
