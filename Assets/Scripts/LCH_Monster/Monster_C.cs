@@ -1,28 +1,31 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
-using Zenject;
 
-public class Monster_A : Monster, IHit
+public class Monster_C : Monster
 {
     [SerializeField] private GameObject atkPrefab;
     [SerializeField] private GameObject explosionPrefab;
+
     [Header("공격 발동까지 걸리는 시간")]
     [SerializeField] private float growDuration;  // 커지는 데 걸리는 시간
     [Header("바닥 범위 설정")]
     [SerializeField] private Vector3 targetScale;
     [Header("폭발 크기 설정")]
     [SerializeField] private Vector3 explosionSize;
+
     public float LastAttackTime { get; set; }
-    
+
+    public bool IsAttack { get; set; }
+    // Start is called before the first frame update
     protected override void Awake()
     {
         base.Awake();
-        idStr = "E102";
-        var monsterAEx = explosionPrefab.GetComponent<MonsterA_Ex>();
-        if (monsterAEx != null)
+        idStr = "E103";
+        var monsterC = explosionPrefab.GetComponent<Monster_C_Atk>();
+        if (monsterC != null)
         {
-            monsterAEx.Initialize(this);
+            monsterC.Initialize(this);
         }
         atkPrefab.transform.localScale = targetScale;
         explosionPrefab.transform.localScale = explosionSize;
@@ -32,36 +35,47 @@ public class Monster_A : Monster, IHit
     {
         if (atkPrefab != null)
         {
-            Vector3 playerPosition = Player.transform.position;
-
-            atkPrefab.transform.position = playerPosition;
+            IsAttack = true;
             atkPrefab.SetActive(true);
-            atkPrefab.transform.parent = null;
-
             StartCoroutine(GrowOverTime(atkPrefab));
-        }
-    }
-
-    public override void Hit(float damage, float paralysisTime, Transform transform)
-    {
-        base.Hit(damage, paralysisTime, transform);
-        if (Mon_Common_Hp_Remain <= 0)
-        {
-            atkPrefab.transform.parent = this.transform;
-            explosionPrefab.transform.parent = this.transform;
-            atkPrefab.SetActive(true);
-            explosionPrefab.SetActive(false);
-
         }
     }
     
 
-    public void PlayExplosion(Transform targetTrans)
+    public override void Hit(float damage, float paralysisTime, Transform transform)
+    {
+        
+
+        if (IsAttack == true)
+        {
+            base.Hit(damage, 0, transform);
+        }
+        else
+        {
+            base.Hit(damage, paralysisTime, transform);
+        }
+
+        //if (Mon_Common_Hp_Remain <= 0)
+        //{
+        //    atkPrefab.SetActive(false);
+        //    explosionPrefab.SetActive(false);
+        //}
+    }
+
+    public override void ApplyKnockback(float knockbackDuration, Transform attackerTrans)
+    {
+        if (IsAttack == true)
+        {
+            return;
+        }
+
+        base.ApplyKnockback(knockbackDuration, attackerTrans);
+
+    }
+    public void PlayExplosion()
     {
         if (explosionPrefab != null)
         {
-            explosionPrefab.transform.parent = null;
-            explosionPrefab.transform.position = targetTrans.position;
             explosionPrefab.SetActive(true);
             LastAttackTime = Time.time;
 
@@ -71,7 +85,6 @@ public class Monster_A : Monster, IHit
             {
                 particle.Play();
                 StartCoroutine(WaitForParticleToFinish(particle, explosionPrefab));
-
             }
         }
     }
@@ -89,17 +102,16 @@ public class Monster_A : Monster, IHit
         if (timeElapsed >= growDuration)
         {
             atkObject.SetActive(false);
-            PlayExplosion(atkObject.transform);
-
+            PlayExplosion();
         }
     }
 
     private IEnumerator WaitForParticleToFinish(ParticleSystem particle, GameObject explosion)
     {
+        IsAttack = false;
         yield return new WaitForSeconds(growDuration);
         //yield return new WaitUntil(() => !particle.isPlaying);
 
         explosion.SetActive(false);
     }
-    
 }
