@@ -315,19 +315,10 @@ public class BossController : MonoBehaviour, IHit
     #region Phase2
 
     //Phase1 잔재 삭제
-    public void InActiveOnPhaseTwo()
-    { 
-        _gimmick.gameObject.SetActive(false);
-        _markRoot.SetActive(false);
-        foreach (var root in _roots)
-        {
-            root.gameObject.SetActive(false);
-        }
-        foreach (var explosion in _firstExplosion)
-        {
-            explosion.SetActive(false);
-        }
-        _secondExplosion.SetActive(false);
+    public void ChangePhaseTwo()
+    {
+        phase = BossPhase.Phase2;
+        this.gameObject.tag = "Monster";
     }
 
     //보스 대쉬 공격
