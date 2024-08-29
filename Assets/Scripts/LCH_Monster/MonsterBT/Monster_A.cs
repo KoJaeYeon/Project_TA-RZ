@@ -9,7 +9,8 @@ public class Monster_A : Monster, IHit
     [SerializeField] private GameObject explosionPrefab;
     [Header("공격 발동까지 걸리는 시간")]
     [SerializeField] private float growDuration;  // 커지는 데 걸리는 시간
-    private Vector3 targetScale = new Vector3(2f, 0.1f, 2f);  // 목표 크기
+    [Header("바닥 범위 설정")]
+    [SerializeField] private Vector3 targetScale;
 
     public float LastAttackTime { get; set; }
     
