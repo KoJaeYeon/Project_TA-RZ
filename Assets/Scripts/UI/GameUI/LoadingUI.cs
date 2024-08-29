@@ -1,45 +1,63 @@
 using BehaviorDesigner.Runtime;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Zenject;
 
 public class LoadingUI : MonoBehaviour
 {
+    [Inject]
+    private UIEvent _uiEvent;
+    [Inject]
+    private Player _player;
+
     [SerializeField]
     private Image _loadImage;
 
-    //private IEnumerator ImageBlink()
-    //{
-    //    float duration = 0.3f;
-    //    Color color = _loadImage.color;
+    private void OnEnable()
+    {
+        _uiEvent.SetActivePlayerControl(false);
+    }
 
-    //    //float totalBlinkTime = 5f;
-    //    float elapsedBlinkTime = 0f;
+    private void OnDisable()
+    {
+        _player.StartCoroutine(PlayerInputEnable());
+    }
 
-    //    while (_isLoad == false)
-    //    {
-    //        yield return StartCoroutine(FadeImage(color, 1f, duration));
+    IEnumerator PlayerInputEnable()
+    {
+        yield return new WaitForSeconds(1f);
+        _uiEvent.SetActivePlayerControl(true);
+    }
 
-    //        yield return StartCoroutine(FadeImage(color, 0f, duration));
+    public IEnumerator ImageBlink(ResourceRequest request)
+    {
+        float duration = 0.3f;
+        Color color = _loadImage.color;
 
-    //        elapsedBlinkTime += duration * 2;
-    //    }
+        while (!request.isDone)
+        {
+            yield return StartCoroutine(FadeImage(color, 1f, duration));
 
-    //    yield return StartCoroutine(FadeImage(color, 1f, duration));
+            yield return StartCoroutine(FadeImage(color, 0f, duration));
+        }
 
-    //    yield return StartCoroutine(FadeImage(color, 0f, duration));
+        yield return StartCoroutine(FadeImage(color, 1f, duration));
 
-    //    SceneManager.UnloadSceneAsync("LoadingScene");
-    //}
+        yield return StartCoroutine(FadeImage(color, 0f, duration));
+
+        this.gameObject.SetActive(false);
+    }
 
     private IEnumerator FadeImage(Color color, float targetAlpa, float duration)
     {
         float startAlpa = color.a;
         float elapsed = 0f;
 
-        while(elapsed < duration)
+        while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
             color.a = Mathf.Lerp(startAlpa, targetAlpa, elapsed / duration);
