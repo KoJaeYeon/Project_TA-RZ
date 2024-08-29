@@ -3,27 +3,27 @@ using System.Collections;
 using UnityEngine;
 using Zenject;
 
-public class Monster_A_atkEx : MonoBehaviour
+public class Monster_C_AtkRange : MonoBehaviour
 {
     private float growDuration = 2.0f;
     [SerializeField] GameObject target;
 
     private void OnEnable()
     {
-
         transform.SetParent(null);
-
         transform.localScale = Vector3.zero;
         StartCoroutine(GrowOverTime());
     }
-
     private void OnDisable()
     {
         transform.localScale = Vector3.zero;
+        transform.SetParent(target.transform);
+
     }
 
     private IEnumerator GrowOverTime()
     {
+        transform.position = target.transform.position;
         Vector3 initialScale = transform.localScale;
         float timeElapsed = 0f;
 
