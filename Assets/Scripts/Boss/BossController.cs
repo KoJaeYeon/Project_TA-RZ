@@ -14,8 +14,8 @@ public enum BossPhase
 
 public class BossController : MonoBehaviour, IHit
 {
-    [Inject] Boss_MarkManager markManager { get; }
-    [Inject] Boss_DamageBoxManager damageBoxManager { get; }
+    [SerializeField] Boss_MarkManager markManager;
+    [SerializeField] Boss_DamageBoxManager damageBoxManager;
     [Inject] DataManager dataManager { get; }
     [Inject] public Player player { get; }
 
@@ -67,6 +67,7 @@ public class BossController : MonoBehaviour, IHit
     [SerializeField] private float _rushSpeed;
     [SerializeField] private float _rushRange;
     [SerializeField] private float _rushWailtTime;
+    [SerializeField] private float _defaultRushTime;
     public float rushDamage;
     [SerializeField] private float _rushCoolDown;
     public bool isCoolRush;
@@ -165,7 +166,7 @@ public class BossController : MonoBehaviour, IHit
         _bt.SetVariableValue("RushSpeed", _rushSpeed);
         _bt.SetVariableValue("RushRange", _rushRange);
         _bt.SetVariableValue("RushWaitTime", _rushWailtTime);
-        _bt.SetVariableValue("DefaultRushWaitTime", _rushWailtTime);
+        _bt.SetVariableValue("DefaultRushWaitTime", _defaultRushTime);
 
         #region 테스트
 
@@ -183,6 +184,17 @@ public class BossController : MonoBehaviour, IHit
         _hp = _maxHp;
         _hpPercent = _hp / _maxHp * 100;
     }
+
+    #region 테스트
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            _hp = 1000;
+            _hpPercent = _hp / _maxHp * 100;
+        }
+    }
+    #endregion 테스트
 
     #region BTA
 
@@ -357,7 +369,7 @@ public class BossController : MonoBehaviour, IHit
     //내려치기
     public void DrawSmash(bool isActive)
     {
-        _smashMark.transform.position = transform.position;
+        _smashMark.transform.position = transform.position + Vector3.up * 0.01f;
         _smashMark.transform.rotation = transform.rotation;
         _smashMark.SetActive(isActive);
     }
