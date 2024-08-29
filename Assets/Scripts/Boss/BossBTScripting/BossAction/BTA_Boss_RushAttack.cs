@@ -7,15 +7,13 @@ using Zenject;
 
 public class BTA_Boss_RushAttack : BossAction
 {
-    [Inject] Player _player;
-
     [SerializeField] private SharedFloat _dashSpeed;
     [SerializeField] private SharedFloat _dashRange;
 
     private Vector3 _startPos;
     Vector3 direction;
 
-    private bool _isDash = false;
+    private bool _isRush = false;
 
     private readonly int _hashRush = Animator.StringToHash("Rush");
 
@@ -24,7 +22,7 @@ public class BTA_Boss_RushAttack : BossAction
         _anim.SetBool(_hashRush, true);
 
         _startPos = transform.position;
-        _isDash = true;
+        _isRush = true;
 
         direction = _owner.SetRushDirection();
 
@@ -36,17 +34,17 @@ public class BTA_Boss_RushAttack : BossAction
         //_owner.RushAttack(_dashSpeed.Value, direction);
         _rb.velocity = direction * _dashSpeed.Value;
 
-        if (_isDash)
+        if (_isRush)
         { 
             float distance = Vector3.Distance(transform.position, _startPos);
 
             if (distance >= _dashRange.Value)
             {
-                _isDash = false;
+                _isRush = false;
             }
         }
 
-        if (!_isDash)
+        if (!_isRush)
         {
             _rb.velocity = Vector3.zero;
             _anim.SetBool(_hashRush, false);
@@ -59,14 +57,14 @@ public class BTA_Boss_RushAttack : BossAction
 
     public override void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Wall"))
+        if (collision.gameObject.CompareTag("Player") /*|| collision.gameObject.CompareTag("Wall")*/)
         {
-            _isDash = false;
-
             if (collision.gameObject.CompareTag("Player"))
             {
-                _player.Hit(_owner.rushDamage, 1f, _owner.transform);
+                _owner.player.Hit(_owner.rushDamage, 0f, _owner.transform);
             }
+
+            _isRush = false;
         }     
     }
 }
