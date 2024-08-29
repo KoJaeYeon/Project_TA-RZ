@@ -85,7 +85,9 @@ public class Stage : MonoBehaviour
 
         ClearStageObject();
 
-        _player.transform.position = new Vector3(-6, 0, 32);
+        Transform startTransform = _partitions[0]._centerPosition;
+
+        _player.transform.position = startTransform.position;
 
         StartCoroutine(SpawnObject());
     }
@@ -112,6 +114,7 @@ public class Stage : MonoBehaviour
 
     private IEnumerator SetItemData(string idStr)
     {
+        Debug.Log(idStr);
         while (true)
         {
             var itemData = _dataManager.GetData(idStr) as Map_Resource;
@@ -119,11 +122,9 @@ public class Stage : MonoBehaviour
             if(itemData == null)
             {
                 yield return new WaitForSeconds(1f);
-                Debug.Log("현재 스테이지의 아이템 데이터를 읽어오지 못했습니다.");
             }
             else
             {
-                Debug.Log("현재 스테이지의 아이템 데이터를 읽어왔습니다.");
                 _itemData = itemData;
                 _itemDataReady = true;
                 yield break;
@@ -142,7 +143,6 @@ public class Stage : MonoBehaviour
             if(monsterData == null)
             {
                 yield return new WaitForSeconds(1f);
-                Debug.Log("몬스터 데이터를 읽어오지 못했습니다.");
             }
             else
             {
@@ -163,8 +163,6 @@ public class Stage : MonoBehaviour
                         AddMonsterData(StageType.Elite, monsterData);
                     }
                 }
-
-                Debug.Log("몬스터 데이터를 성공적으로 읽어왔습니다.");
                 _monsterDataReady = true;
                 yield break;
             }

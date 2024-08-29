@@ -82,7 +82,7 @@ public class MapManager : MonoBehaviour
 
             _currentMap.SetActive(true);
 
-            Stage beginning = _currentMap.GetComponentInChildren<Stage>();
+            Stage beginning = _currentMap.GetComponent<Stage>();
 
             beginning.StartStage(_currentStageType);
         }
@@ -92,7 +92,7 @@ public class MapManager : MonoBehaviour
 
             _currentMap.SetActive(true);
 
-            Stage middle = _currentMap.GetComponentInChildren<Stage>();
+            Stage middle = _currentMap.GetComponent<Stage>();
 
             middle.StartStage(_currentStageType);
         }
@@ -102,17 +102,17 @@ public class MapManager : MonoBehaviour
 
             _currentMap.SetActive(true);
 
-            Stage final = _currentMap.GetComponentInChildren<Stage>();
+            Stage final = _currentMap.GetComponent<Stage>();
 
             final.StartStage(_currentStageType);
         }
         else
         {
-            _currentMap = GetMap(MapType.Final);
+            _currentMap = GetMap(MapType.Boss);
 
             _currentMap.SetActive(true);
 
-            Stage boss = _currentMap.GetComponentInChildren<Stage>();
+            Stage boss = _currentMap.GetComponent<Stage>();
 
             boss.StartStage(_currentStageType);
         }

@@ -122,8 +122,6 @@ public class GameUI : MonoBehaviour
 
     private void ActiveChoiceUI()
     {
-        //_uiEvent.SetActivePlayerControl(false);
-
         _isChoice = false;
 
         StartCoroutine(ChoiceStage());

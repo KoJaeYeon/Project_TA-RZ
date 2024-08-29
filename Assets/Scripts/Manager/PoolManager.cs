@@ -93,30 +93,22 @@ public class PoolManager : MonoBehaviour
     {
         string itemType = prefab.name;
 
-        if (!_objectPools.ContainsKey(itemType))
-        {
-            CreatePool(prefab);
-        }
-
-        for(int i= 0; i < _objectPools[itemType]._transform.childCount; i++)
-        {
-            GameObject item = _objectPools[itemType]._transform.GetChild(i).gameObject;
-
-            if (item.activeSelf)
-            {
-                EnqueueObject(item);
-            }
-        }
+        DestroyObject(itemType);
     }
 
     //현재 풀에 있는 모든 오브젝트 비활성화
     public void AllDestroyObject(string prefabName)
     {
         string itemType = prefabName;
+        
+        DestroyObject(itemType);
+    }
 
+    private void DestroyObject(string itemType)
+    {
         if (!_objectPools.ContainsKey(itemType))
         {
-            Debug.LogWarning($"삭제하려는 프리팹의 풀이 존재하지 않습니다. : {prefabName}");
+            Debug.LogWarning($"삭제하려는 프리팹의 풀이 존재하지 않습니다. : {itemType}");
             return;
         }
 
@@ -140,6 +132,20 @@ public class PoolManager : MonoBehaviour
         {
             CreatePool(prefab);
         }
+
+        return Dequeue(itemType);
+    }
+
+    //사용하고자 하는 오브젝트 반환
+    public GameObject DequeueObject(string prefabName)
+    {
+        string itemType = prefabName;
+
+        return Dequeue(itemType);
+    }
+
+    private GameObject Dequeue(string itemType)
+    {
         //컴포넌트 형식으로 저장했기 때문에 Dequeue역시 컴포넌트 형식으로 가져옴.
         Component? dequeueObject = _objectPools[itemType]._queue.DequeuePool();
 
@@ -152,40 +158,11 @@ public class PoolManager : MonoBehaviour
             //원본 프리팹 참조
             var orginal = _objectPools[itemType]._original;
             //새로운 프리팹 생성 후 반환
-            var newPrefab = _di.InstantiatePrefab(orginal);
-            newPrefab.name = prefab.name;
+            var newPrefab = _di.InstantiatePrefab(orginal, _objectPools[itemType]._transform);
+            newPrefab.name = itemType;
             return newPrefab; //복제된 오브젝트 반환            
         }
     }
-
-    //사용하고자 하는 오브젝트 반환
-    public GameObject DequeueObject(string prefabName)
-    {
-        string itemType = prefabName;
-
-
-        //컴포넌트 형식으로 저장했기 때문에 Dequeue역시 컴포넌트 형식으로 가져옴.
-        Component? dequeueObject = _objectPools[itemType]._queue.DequeuePool();
-
-        if (dequeueObject != null)
-        {
-            //꺼낸 오브젝트가 활성화 되어있는지 확인
-            if (dequeueObject.gameObject.activeSelf == true)
-            {
-                //활성화 되어 있으면 풀에 다시 넣기
-                EnqueueObject(dequeueObject.gameObject);
-
-                //원본 프리팹 참조
-                var orginal = _objectPools[itemType]._original;
-                //새로운 프리팹 생성 후 반환
-                var newPrefab = _di.InstantiatePrefab(orginal);
-                newPrefab.name = prefabName;
-                return newPrefab; //복제된 오브젝트 반환
-            }
-            dequeueObject.gameObject.SetActive(true);
-            return dequeueObject.gameObject; //오브젝트 반환
-        }
-        return null;
-    }
-
 }
+
+
