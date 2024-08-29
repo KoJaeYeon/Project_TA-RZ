@@ -85,6 +85,7 @@ public class PoolManager : MonoBehaviour
 
         item.transform.SetParent(_objectPools[itemType]._transform);
         _objectPools[itemType]._queue.EnqueuePool(item.GetComponent<Component>());
+        item.gameObject.SetActive(false);
     }
 
     //현재 풀에 있는 모든 오브젝트 비활성화
@@ -98,6 +99,28 @@ public class PoolManager : MonoBehaviour
         }
 
         for(int i= 0; i < _objectPools[itemType]._transform.childCount; i++)
+        {
+            GameObject item = _objectPools[itemType]._transform.GetChild(i).gameObject;
+
+            if (item.activeSelf)
+            {
+                EnqueueObject(item);
+            }
+        }
+    }
+
+    //현재 풀에 있는 모든 오브젝트 비활성화
+    public void AllDestroyObject(string prefabName)
+    {
+        string itemType = prefabName;
+
+        if (!_objectPools.ContainsKey(itemType))
+        {
+            Debug.LogWarning($"삭제하려는 프리팹의 풀이 존재하지 않습니다. : {prefabName}");
+            return;
+        }
+
+        for (int i = 0; i < _objectPools[itemType]._transform.childCount; i++)
         {
             GameObject item = _objectPools[itemType]._transform.GetChild(i).gameObject;
 
