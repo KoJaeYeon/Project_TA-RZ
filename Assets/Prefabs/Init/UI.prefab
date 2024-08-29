@@ -190,6 +190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BlueChipUI: {fileID: 2118208178959308318}
+  GameUI: {fileID: 7539655367776354943}
 --- !u!1001 &2336572076221290511
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -352,6 +353,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameUI
       objectReference: {fileID: 0}
+    - target: {fileID: 2727372239653376491, guid: 020a6fb2abeb9a742a9868c70f449962,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6670767090977525493, guid: 020a6fb2abeb9a742a9868c70f449962,
         type: 3}
       propertyPath: m_Pivot.x
@@ -463,6 +469,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 4587585235788032398}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7539655367776354943 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6271364647494200305, guid: 020a6fb2abeb9a742a9868c70f449962,
+    type: 3}
+  m_PrefabInstance: {fileID: 4587585235788032398}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0079a198c156644c87fb9ff498195b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6762157724965150832
 PrefabInstance:
   m_ObjectHideFlags: 0

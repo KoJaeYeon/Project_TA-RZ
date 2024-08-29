@@ -6,54 +6,20 @@ using Zenject;
 public class UIEvent
 {
     [Inject] Player player { get; }
-
-    private IChoiceEvent _choiceStageEvent;
+    
     private Action<float> _progressCallBack;
+    private GameUI _gameUI;
     public BlueChipUI BlueChipUI { get; private set; }
     
-
-    public void NullTest()
-    {
-        Debug.Log("널아님");
-    }
-
     #region ChoiceEvent
-    public void RegisterChoiceStageEvent(IChoiceEvent choiceStageEvent)
+    public void RegisterGameUI(GameUI gameUI)
     {
-        if (_choiceStageEvent != null)
-        {
-            Debug.Log("현재 IChoiceEvent가 등록되어 있습니다.");
-            return;
-        }
-
-        _choiceStageEvent = choiceStageEvent;
+        _gameUI = gameUI;
     }
 
-    public void UnRegisterChoiceStageEvent()
+    public void OnGameUI()
     {
-        if(_choiceStageEvent == null)
-        {
-            return;
-        }
-
-        _choiceStageEvent = null;
-    }
-
-    public void AddEventChoiceStageEvent(bool isAddEvent, Action<Player> callBack)
-    {
-        if(_choiceStageEvent == null)
-        {
-            Debug.Log("IChoiceEvent가 등록되지 않았습니다.");
-            return;
-        }
-
-        if(callBack == null)
-        {
-            Debug.Log("callBack 함수가 null입니다.");
-        }
-
-        Debug.Log("IChoiceEvent가 등록되었습니다.");
-        _choiceStageEvent.GetChoiceStageEvent(isAddEvent, callBack);
+        _gameUI.gameObject.SetActive(true);
     }
     #endregion
 

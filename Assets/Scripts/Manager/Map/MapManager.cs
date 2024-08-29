@@ -3,87 +3,146 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 using Zenject;
-using UnityEngine.SceneManagement;
 
+public enum MapType
+{
+    Lobby,
+    Beginning,
+    Middle,
+    Final,
+    Boss
+}
 
 public class MapManager : MonoBehaviour
 {
-    #region InJect
-    [Inject]
-    private UIEvent _uiEvent;
-    #endregion
+    [Header("Map")]
+    [SerializeField] private GameObject[] _mapArray;
 
-    #region Component
-    private Stage _currentStage;
-    private Player _player;
-    #endregion
+    private Dictionary<MapType, GameObject> _mapDictionary;
 
-    #region Value
-    private float _progressValue;
-    public float ProgressValue { get { return _progressValue; } set { _progressValue = value; } }
+    public float ProgressValue { get; set; }
+
     private StageType _currentStageType;
-    #endregion
+    private GameObject _currentMap;
 
     private void Awake()
     {
-        _progressValue = 0f;
+        InitializeMapManager();
     }
 
-    public void SetStage(Stage currentStage)
+    private void Start()
     {
-        _currentStage = currentStage;
+        _currentMap = GetMap(MapType.Lobby);
     }
 
-    public void ChoiceMap(StageType newStage, Player player)
+    #region Initialize
+
+    private void InitializeMapManager()
+    {
+        _mapDictionary = new Dictionary<MapType, GameObject>();
+
+        if(_mapArray == null)
+        {
+            Debug.LogWarning("MapArray가 존재하지 않습니다.");
+            return;
+        }
+
+        var map = new (MapType, GameObject)[]
+        {
+            (MapType.Lobby, _mapArray[0]),
+            (MapType.Beginning, _mapArray[1]),
+            (MapType.Middle, _mapArray[2]),
+            (MapType.Final, _mapArray[3]),
+            (MapType.Boss, _mapArray[4])
+        };
+
+        AddMap(map, _mapDictionary);
+    }
+
+    private void AddMap((MapType, GameObject)[] map,
+        Dictionary<MapType, GameObject> mapDictionary = null)
+    {
+        foreach (var (mapType, mapObject) in map)
+        {
+            mapDictionary?.Add(mapType, mapObject);
+        }
+    }
+
+    #endregion
+
+    public void ChangeMap(StageType newStage)
     {
         _currentStageType = newStage;
 
-        _player = player;
+        _currentMap.SetActive(false);
 
-        if(_progressValue <= 0.33f)
+        if(ProgressValue <= 0.33f)
         {
-            Debug.Log("초반부");
-            LoadSceneBeginning();
+            _currentMap = GetMap(MapType.Beginning);
+
+            _currentMap.SetActive(true);
+
+            Stage beginning = _currentMap.GetComponent<Stage>();
+
+            beginning.StartStage(_currentStageType);
         }
-        else if(_progressValue <= 0.66f)
+        else if(ProgressValue <= 0.66f)
         {
-            Debug.Log("중반부");
-            LoadSceneMiddle();
+            _currentMap = GetMap(MapType.Middle);
+
+            _currentMap.SetActive(true);
+
+            Stage middle = _currentMap.GetComponent<Stage>();
+
+            middle.StartStage(_currentStageType);
         }
-        else if(_progressValue <= 0.99f)
+        else if(ProgressValue <= 0.99f)
         {
-            Debug.Log("후반부");
-            LoadSceneFinal();
+            _currentMap = GetMap(MapType.Final);
+
+            _currentMap.SetActive(true);
+
+            Stage final = _currentMap.GetComponent<Stage>();
+
+            final.StartStage(_currentStageType);
         }
         else
         {
-            Debug.Log("보스");
-            LoadSceneBoss();
+            _currentMap = GetMap(MapType.Boss);
+
+            _currentMap.SetActive(true);
+
+            Stage boss = _currentMap.GetComponent<Stage>();
+
+            boss.StartStage(_currentStageType);
         }
     }
 
-    private void LoadSceneBeginning()
+    public void LobbyMap()
     {
-        LoadingScene.LoadScene("Beginning");
+        GameObject lobby = GetMap(MapType.Lobby);
+
+        _currentMap.SetActive(false);
+
+        _currentMap = lobby;
+
+        _currentMap.SetActive(true);
     }
 
-    private void LoadSceneMiddle()
+
+    private GameObject GetMap(MapType mapType)
     {
-        LoadingScene.LoadScene("Middle");
+        if (_mapDictionary.TryGetValue(mapType, out GameObject map))
+        {
+            GameObject mapPrefab = map;
+
+            return mapPrefab;
+        }
+        else
+            return null;
     }
 
-    private void LoadSceneFinal()
-    {
-        LoadingScene.LoadScene("Final");
-    }
 
-    private void LoadSceneBoss()
-    {
-        LoadingScene.LoadScene("Boss");
-    }
 
-    public StageType GetStageType()
-    {
-        return _currentStageType;
-    }
+ 
 }

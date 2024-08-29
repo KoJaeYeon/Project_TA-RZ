@@ -2,35 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
-public class Portal : MonoBehaviour, IChoiceEvent
+public class Portal : MonoBehaviour
 {
     #region InJect
     [Inject] private UIEvent _uiEvent;
+    [Inject] private MapManager _mapManager;
     #endregion;
-    private Action<Player> _choiceUI;
 
-    private void OnEnable()
-    {
-        if(_uiEvent != null)
-        {
-            _uiEvent.RegisterChoiceStageEvent(this);
-        }
-    }
-
-    public void GetChoiceStageEvent(bool isAddEvent, Action<Player> callBack)
-    {
-        if (isAddEvent)
-        {
-            _choiceUI += callBack;
-        }
-        else
-        {
-            _choiceUI -= callBack;  
-        }
-    }
-
+   
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -39,7 +21,7 @@ public class Portal : MonoBehaviour, IChoiceEvent
 
             if(player != null)
             {
-                _choiceUI.Invoke(player);
+                _uiEvent.OnGameUI();
             }
             
             this.gameObject.SetActive(false);

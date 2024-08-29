@@ -3,19 +3,17 @@ using UnityEngine;
 
 public class MapContainer : MonoInstaller
 {
-    [SerializeField] private GameObject _mapManagerPrefab;
-
     public override void InstallBindings()
     {
-        if(FindObjectOfType<MapManager>() == null)
+        //안정성 추가
+        if (FindObjectOfType<MapManager>() != null)
         {
-            var mapManager = Container.InstantiatePrefabForComponent<MapManager>(_mapManagerPrefab);
-            DontDestroyOnLoad(mapManager.gameObject);
-            Container.BindInstance(mapManager).AsSingle().NonLazy();
+            Container.Bind<MapManager>().FromComponentInHierarchy().AsSingle();
         }
         else
         {
-            Container.Bind<MapManager>().FromInstance(FindAnyObjectByType<MapManager>()).AsSingle().NonLazy();
+            Debug.LogWarning("MapManager가 로드되지 않았습니다. 하이어라키에 존재하지 않습니다.");
+            Container.Bind<MapManager>().FromNewComponentOnNewGameObject().AsSingle();
         }
     }
 }

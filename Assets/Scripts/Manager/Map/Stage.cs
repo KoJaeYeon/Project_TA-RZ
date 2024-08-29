@@ -40,6 +40,10 @@ public class Stage : MonoBehaviour
     private MapManager _mapManager;
     [Inject]
     private DataManager _dataManager;
+    [Inject]
+    private PoolManager _poolManager;
+    [Inject]
+    private Player _player;
     #endregion
 
     [Header("GameLevel")]
@@ -50,9 +54,6 @@ public class Stage : MonoBehaviour
 
     [Header("PortalObject")]
     [SerializeField] private GameObject _portal;
-
-    [Header("GameUI")]
-    [SerializeField] private GameObject _gameUI;
 
     private StageType _currentStage;
 
@@ -65,44 +66,55 @@ public class Stage : MonoBehaviour
     #region StageData
     private Dictionary<StageType, List<Map_Monster_Mix>> _monsterDataDictionary;
     private Map_Resource _itemData;
-    //private int _totalResource;
     private bool _itemDataReady = false;
     private bool _monsterDataReady = false;
 
     #endregion
-    private void Awake()
+    private void Start()
     {
-        _mapManager.SetStage(this);
-
         _object = gameObject.GetComponent<StageObject>();
 
         StartCoroutine(SetItemData($"R{1+(int)_level}01"));
+
         StartCoroutine(SetMonsterData());
     }
 
-    private void Start()
+    public void StartStage(StageType newStage)
     {
-        _currentStage = _mapManager.GetStageType();
+        _currentStage = newStage;
+
+        ClearStageObject();
+
+        Transform startTransform = _partitions[0]._centerPosition;
+
+        _player.transform.position = startTransform.position;
 
         StartCoroutine(SpawnObject());
+    }
+
+    public void ClearStageObject()
+    {
+        _portal.SetActive(false);
+
+        _poolManager.AllDestroyObject("Item_1");
+        _poolManager.AllDestroyObject("Item_2");
+        _poolManager.AllDestroyObject("Item_3");
     }
 
     private IEnumerator SpawnObject()
     {
         yield return new WaitUntil(() => (_itemDataReady && _monsterDataReady));
 
-        SetArea();
-
-        if(_currentStage != StageType.Boss)
-        {
-            SpawnMonster();
-        }
+        SetPartitionsItemArea();
+        SetPartitionsMonsterArea(_level);
         
+        SpawnMonster();
         SpawnItem();
     }
 
     private IEnumerator SetItemData(string idStr)
     {
+        Debug.Log(idStr);
         while (true)
         {
             var itemData = _dataManager.GetData(idStr) as Map_Resource;
@@ -110,11 +122,9 @@ public class Stage : MonoBehaviour
             if(itemData == null)
             {
                 yield return new WaitForSeconds(1f);
-                Debug.Log("현재 스테이지의 아이템 데이터를 읽어오지 못했습니다.");
             }
             else
             {
-                Debug.Log("현재 스테이지의 아이템 데이터를 읽어왔습니다.");
                 _itemData = itemData;
                 _itemDataReady = true;
                 yield break;
@@ -133,7 +143,6 @@ public class Stage : MonoBehaviour
             if(monsterData == null)
             {
                 yield return new WaitForSeconds(1f);
-                Debug.Log("몬스터 데이터를 읽어오지 못했습니다.");
             }
             else
             {
@@ -154,8 +163,6 @@ public class Stage : MonoBehaviour
                         AddMonsterData(StageType.Elite, monsterData);
                     }
                 }
-
-                Debug.Log("몬스터 데이터를 성공적으로 읽어왔습니다.");
                 _monsterDataReady = true;
                 yield break;
             }
@@ -276,14 +283,14 @@ public class Stage : MonoBehaviour
         }
     }
 
-    private void SetArea()
-    {
-        SetPartitionsItemArea();
-        SetPartitionsMonsterArea(_level);
-    }
-
+  
     private void SpawnMonster()
     {
+        if(_currentStage is StageType.Boss)
+        {
+            return;
+        }
+
         _spawnMonsters = new HashSet<GameObject>();
 
         foreach(var partition in _selectMonsterArea)
@@ -372,12 +379,11 @@ public class Stage : MonoBehaviour
 
     private void StageClear()
     {
-        bool setactive = _portal != null && _gameUI != null;
+        bool setactive = _portal != null;
 
         if (setactive)
         {
             _portal.SetActive(true);
-            _gameUI.SetActive(true);
         }
     }
 
