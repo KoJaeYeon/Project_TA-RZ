@@ -12,12 +12,13 @@ GameObject:
   - component: {fileID: 3381904}
   - component: {fileID: 2348860}
   - component: {fileID: 7193001101617240896}
+  - component: {fileID: -2152436689542371566}
   m_Layer: 8
   m_Name: ThornyVine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &461046
 Transform:
@@ -106,3 +107,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 5fca323c385eb734987e2fd78bb261eb, type: 3}
+--- !u!208 &-2152436689542371566
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165576}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.6470001, y: 0.72800004, z: 0.63100004}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -1.302, y: 0.614, z: -0.34800002}
+  m_TimeToStationary: 0.5

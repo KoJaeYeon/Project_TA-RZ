@@ -12,12 +12,13 @@ GameObject:
   - component: {fileID: 3343218}
   - component: {fileID: 2318030}
   - component: {fileID: 4306434330756859427}
+  - component: {fileID: -7983715592582815038}
   m_Layer: 8
   m_Name: RockB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &467636
 Transform:
@@ -106,3 +107,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: aeb0e0152eaeecd4f89ca617ceb8a620, type: 3}
+--- !u!208 &-7983715592582815038
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 101230}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.758, y: 0.40600002, z: 0.49800003}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.039, y: 0.124000005, z: 0.006}
+  m_TimeToStationary: 0.5

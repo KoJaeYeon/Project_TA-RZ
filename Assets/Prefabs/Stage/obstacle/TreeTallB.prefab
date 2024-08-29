@@ -12,12 +12,13 @@ GameObject:
   - component: {fileID: 3362068}
   - component: {fileID: 2382864}
   - component: {fileID: -1853366638556210480}
+  - component: {fileID: 7575347075018886234}
   m_Layer: 8
   m_Name: TreeTallB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &424222
 Transform:
@@ -106,3 +107,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: a47c8b2abfb3c9e4c9a607a6b4ae8681, type: 3}
+--- !u!208 &7575347075018886234
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109902}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.914, y: 4.6400003, z: 2.3960001}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.22900002, y: 4.602, z: -0.625}
+  m_TimeToStationary: 0.5
