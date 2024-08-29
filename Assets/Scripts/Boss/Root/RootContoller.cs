@@ -10,7 +10,7 @@ public enum RootState
     Die
 }
 
-public class RootContoller : MonoBehaviour
+public class RootContoller : MonoBehaviour, IHit
 {
     [SerializeField] private float _hp;
     [SerializeField] private float _maxHp;
@@ -27,6 +27,7 @@ public class RootContoller : MonoBehaviour
     [HideInInspector] public RootState rootState;
     [SerializeField] private BossController _boss;
     [SerializeField] private GameObject _attackMark;
+    [SerializeField] private GameObject _attackDamageBox;
 
     private readonly int _hashActive = Animator.StringToHash("isActive");
     private readonly int _hashAttackReady = Animator.StringToHash("AttackReady");
@@ -41,6 +42,7 @@ public class RootContoller : MonoBehaviour
 
         //_boss = GetComponentInParent<BossController>();
         _attackMark.gameObject.SetActive(false);
+        _attackDamageBox.gameObject.SetActive(false);
     }
 
     private void OnEnable()
@@ -53,14 +55,6 @@ public class RootContoller : MonoBehaviour
         _maxHp = _boss._maxHp / 4f;
         _hp = _maxHp;
         StartCoroutine(CheckDistance());
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            Hurt(100);
-        }
     }
 
     public void RootAttack(Vector3 spawnPos)
@@ -156,5 +150,25 @@ public class RootContoller : MonoBehaviour
         isDie = true;
         _anim.SetTrigger(_hashDie);
         rootState = RootState.Die;
+        _attackMark.SetActive(false);
+        StopCoroutine(CoSetActiveDamageBox());
+    }
+
+    public void Hit(float damage, float paralysisTime, Transform attackTrans)
+    {
+        Hurt(damage);
+    }
+
+    public void ApplyKnockback(float knockBackTime, Transform otherPosition)
+    {
+
+    }
+
+    //데미지 박스 활성화 (애니메이션 이벤트로 실행)
+    private IEnumerator CoSetActiveDamageBox()
+    {
+        _attackDamageBox.SetActive(true);
+        yield return new WaitForSeconds(0.2f);
+        _attackDamageBox.SetActive(false);
     }
 }
