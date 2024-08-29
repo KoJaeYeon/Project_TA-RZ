@@ -19,7 +19,7 @@ public class Boss_DamageBox : MonoBehaviour
 
     private float asdf = 1f;
 
-    [Inject] BossController _boss;
+    [SerializeField] BossController _boss;
 
     [Inject] Player _player;
 
