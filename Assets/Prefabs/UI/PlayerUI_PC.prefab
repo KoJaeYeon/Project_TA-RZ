@@ -463,11 +463,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameOverPanel
       objectReference: {fileID: 0}
-    - target: {fileID: 307452083025059089, guid: e0c4ee7b2b3726c43bdd86f0c26db037,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8939384354441940229, guid: e0c4ee7b2b3726c43bdd86f0c26db037,
         type: 3}
       propertyPath: m_Pivot.x

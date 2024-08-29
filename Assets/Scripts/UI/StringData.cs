@@ -8,7 +8,21 @@ public class StringData : MonoBehaviour
 {
     [Inject]
     DataManager _dataManager;
-    [SerializeField] string IDStr;
+    [SerializeField] string idStr;
+    public string IDStr
+    {
+        get { return idStr; }
+        set
+        {
+            idStr = value;
+            StartCoroutine(LoadString());
+        }
+    }
+
+    private void Awake()
+    {
+        
+    }
     private void Start()
     {
         StartCoroutine(LoadString());
@@ -27,7 +41,6 @@ public class StringData : MonoBehaviour
         {
            var tmpT = GetComponent<Text>();
             tmpT.text = _dataManager.GetString(IDStr);
-            Destroy(this);
         }
 
     }
