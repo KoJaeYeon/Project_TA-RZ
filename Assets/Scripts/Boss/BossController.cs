@@ -20,17 +20,17 @@ public class BossController : MonoBehaviour, IHit
     [Inject] public Player player { get; }
 
     [Header("기본 정보")]
-    public BossPhase phase;
-    public float _maxHp;
-    [SerializeField] private float _hp;
+    [Tooltip("현재 페이즈")] public BossPhase phase;
+    [Tooltip("최대 체력")] public float _maxHp;
+    [SerializeField, Tooltip("현재 체력")] private float _hp;                  
     [HideInInspector] public float _hpPercent;
-    [SerializeField] private float _speed;
-    [SerializeField] private float _damage;
-    [SerializeField] private float _attackSpeed;
-    [SerializeField] private float _attackRange;
-    [SerializeField] private float _rushDistance;
-    [SerializeField] private float _traceDistance;
-    [SerializeField] private float _rotSpeed;
+    //[SerializeField] private float _speed;
+    //[SerializeField] private float _damage;
+    //[SerializeField] private float _attackSpeed;
+    [SerializeField, Tooltip("공격 가능 사거리")] private float _attackRange;
+    [SerializeField, Tooltip("대쉬 체크용 사거리")] private float _rushDistance;
+    [SerializeField, Tooltip("추적 사거리")] private float _traceDistance;
+    [SerializeField, Tooltip("회전 속도")] private float _rotSpeed;
 
     [Header("페이즈 체력 퍼센트")]
     [SerializeField] private float _phaseOnePer;
@@ -299,9 +299,9 @@ public class BossController : MonoBehaviour, IHit
     #endregion Phase1
 
     //보스 회전 관련
-    public void LookAtPlayer()
+    public void LookAtPlayer(Quaternion rot)
     {
-        transform.rotation = Quaternion.Slerp(transform.rotation, RotateToPlayer(), _rotSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rot, _rotSpeed * Time.deltaTime);
     }
     public Quaternion PlayerRot()
     {
@@ -470,6 +470,12 @@ public class BossController : MonoBehaviour, IHit
     public void Hurt(float damage)
     {
         if (phase == BossPhase.Phase1 && _gimmick.gameObject.activeSelf) _gimmick.OnActivateCombat();
+
+        if (_hp - damage <= 0)
+        {
+            _hp = 0;
+            return;
+        }
 
         _hp -= damage;
         _hpPercent = _hp / _maxHp * 100;
