@@ -71,7 +71,7 @@ public class Monster : MonoBehaviour, IHit
         Nav = GetComponent<NavMeshAgent>();
 
         int rand = Random.Range(0, 4);
-        transform.GetChild(rand).gameObject.SetActive(true);
+        transform.GetChild(1).gameObject.SetActive(true);
     }
 
     void Start()
@@ -186,7 +186,7 @@ public class Monster : MonoBehaviour, IHit
         }
     }
 
-    public void ApplyKnockback(float knockbackDuration, Transform attackerTrans)
+    public virtual void ApplyKnockback(float knockbackDuration, Transform attackerTrans)
     {
         IsKnockBack = true;
 
