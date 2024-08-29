@@ -12,12 +12,13 @@ GameObject:
   - component: {fileID: 3351106}
   - component: {fileID: 2342006}
   - component: {fileID: 5348622447849723843}
+  - component: {fileID: -7439350258392007389}
   m_Layer: 8
   m_Name: TreeArch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &408184
 Transform:
@@ -106,3 +107,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: b1df2aa7f4abd7e42b0a30e186cda2a9, type: 3}
+--- !u!208 &-7439350258392007389
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142304}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 3.65, y: 1.8500001, z: 1.25}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 1.794, z: 0}
+  m_TimeToStationary: 0.5

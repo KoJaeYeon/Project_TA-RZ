@@ -12,12 +12,13 @@ GameObject:
   - component: {fileID: 3339454}
   - component: {fileID: 2387036}
   - component: {fileID: -1019237027139401047}
+  - component: {fileID: -1677227670542711677}
   m_Layer: 8
   m_Name: TreeTeeth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &458776
 Transform:
@@ -106,3 +107,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: f7f82ccc4dd2c854281400b5f637e254, type: 3}
+--- !u!208 &-1677227670542711677
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 169828}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2.6620002, y: 4.347, z: 2.5900002}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.095000006, y: 4.335, z: 0.34600002}
+  m_TimeToStationary: 0.5
