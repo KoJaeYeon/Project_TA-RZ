@@ -9,6 +9,7 @@ public class BTA_Boss_FirstExplosion : BossAction
     public override TaskStatus OnUpdate()
     {
         _owner.FirstExplosion();
+        _owner.CallDamageBox(BossController.Pattern.explosion);
 
         return TaskStatus.Success;
     }

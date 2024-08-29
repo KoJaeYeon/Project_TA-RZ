@@ -19,7 +19,7 @@ public class Boss_ExplosionDamageBox : MonoBehaviour
             float distance = Vector3.Distance(transform.position, other.transform.position);
             if (distance >= _attackDistance)
             {
-                Debug.Log(this.gameObject.name + other.gameObject.name);
+                Debug.Log($"데미박스디버그 {this.gameObject.name + other.gameObject.name}");
                 _player.Hit(_boss.explosionDamage, 1f, _boss.transform);
             }
         }

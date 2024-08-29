@@ -21,6 +21,11 @@ public class BTC_Boss_StandartPhaseHp : BossConditional
 
         _boss.Value.phase = _phase;
 
+        if (_boss.Value.phase == BossPhase.Phase2)
+        {
+            _owner.tag = "Monster";
+        }
+
         return TaskStatus.Failure;
     }
 }
