@@ -7,6 +7,7 @@ public class Monster_A : Monster, IHit
 {
     [SerializeField] private GameObject atkPrefab;
     [SerializeField] private GameObject explosionPrefab;
+    [SerializeField] private GameObject targetPrefab;
     [Header("공격 발동까지 걸리는 시간")]
     [SerializeField] private float growDuration;  // 커지는 데 걸리는 시간
     [Header("바닥 범위 설정")]
@@ -51,7 +52,7 @@ public class Monster_A : Monster, IHit
             explosionPrefab.transform.parent = this.transform;
             atkPrefab.SetActive(true);
             explosionPrefab.SetActive(false);
-
+            targetPrefab.SetActive(false);
         }
     }
     

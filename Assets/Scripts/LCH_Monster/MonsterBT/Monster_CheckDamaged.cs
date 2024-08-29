@@ -22,5 +22,6 @@ public class Monster_CheckDamaged : Conditional
             return TaskStatus.Failure;
         }
 
+
     }
 }
