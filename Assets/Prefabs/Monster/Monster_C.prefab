@@ -894,6 +894,8 @@ MonoBehaviour:
   atkPrefab: {fileID: 8447007108154356792}
   explosionPrefab: {fileID: 5427255526891974003}
   growDuration: 2
+  targetScale: {x: 3, y: 0.1, z: 3}
+  explosionSize: {x: 2, y: 2, z: 2}
 --- !u!195 &7432593404819575077
 NavMeshAgent:
   m_ObjectHideFlags: 0
