@@ -4,15 +4,20 @@ using UnityEngine;
 using UnityEngine.AI;
 using BehaviorDesigner.Runtime;
 using Zenject;
+using UnityEngine.SocialPlatforms;
+using BehaviorDesigner.Runtime.Tasks.Unity.UnityParticleSystem;
 
 public enum BossPhase
 { 
     Phase1, Phase2
 }
 
-public class BossController : MonoBehaviour
+public class BossController : MonoBehaviour, IHit
 {
     [Inject] Boss_MarkManager markManager { get; }
+    [Inject] Boss_DamageBoxManager damageBoxManager { get; }
+    [Inject] DataManager dataManager { get; }
+    [Inject] public Player player { get; }
 
     [Header("기본 정보")]
     public BossPhase phase;
@@ -33,11 +38,13 @@ public class BossController : MonoBehaviour
 
     [Header("1페이즈 기믹")]
     [SerializeField] private GimmickController _gimmick;
+    [SerializeField] private GameObject _gimmickDamageBox;
     public float gimmickDamage;
     [SerializeField] private float _gimmickCoolDown;
     public bool isCoolGimmick;
     [Header("1페이즈 뿌리 공격")]
     [SerializeField] private GameObject _markRoot;
+    [SerializeField] private GameObject _rootDamageBox;
     [SerializeField] private RootContoller[] _roots;
     public float rootDamage;
     [SerializeField] private float _rootCoolDown;
@@ -48,7 +55,9 @@ public class BossController : MonoBehaviour
     public bool isCoolSmash;
     [Header("1페이즈 폭발")]
     [SerializeField] private GameObject[] _firstExplosion;
+    [SerializeField] private GameObject[] _firstExplosionDamageBox;
     [SerializeField] private GameObject _secondExplosion;
+    [SerializeField] private GameObject _secondExplosionDamageBox;
     [SerializeField] private float _explosionTime;
     public float explosionDamage;
     [SerializeField] private float _explosionCoolDown;
@@ -63,11 +72,15 @@ public class BossController : MonoBehaviour
     public bool isCoolRush;
     [Header("2페이즈 휘두르기")]
     [SerializeField] private GameObject _swingMark;
+    [SerializeField] private GameObject _swingDamageBox;
     public float swingDamage;
     [SerializeField] private float _swingCoolDown;
     public bool isCoolSwing;
     [Header("2페이즈 내려치기")]
     [SerializeField] private GameObject _smashMark;
+    [SerializeField] private GameObject _smashDamageBox;
+
+    private Dictionary<string,Boss_Skill> _boss_Skill = new Dictionary<string, Boss_Skill>();
 
 
     private Rigidbody _rb;
@@ -85,14 +98,15 @@ public class BossController : MonoBehaviour
     private readonly int _hashAttackPattern = Animator.StringToHash("");
     private readonly int _hashSkill = Animator.StringToHash("");
 
-    private enum CoolDown
+    public enum Pattern
     {
         gimmick,
         rootAttack,
         smash,
         explosion,
         rush,
-        swing
+        swing,
+        explosion2
     }
 
     private void Awake()
@@ -104,12 +118,19 @@ public class BossController : MonoBehaviour
         _swingMark = markManager.mark_Swing;
         _smashMark = markManager.mark_smash;
 
+        _gimmickDamageBox = damageBoxManager.damageBox_Gimmick;
+        _rootDamageBox = damageBoxManager.damageBox_RootAttack;
+        _firstExplosionDamageBox = damageBoxManager.damageBox_FirstExplosion;
+        _secondExplosionDamageBox = damageBoxManager.damageBox_SecondExplosion;
+        _swingDamageBox = damageBoxManager.damageBox_Swing;
+        _smashDamageBox = damageBoxManager.damageBox_smash;
+
         _rb = GetComponent<Rigidbody>();
         _anim = GetComponent<Animator>();
         _nav = GetComponent<NavMeshAgent>();
         _bt = GetComponent<BehaviorTree>();
 
-        _playerTr = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        _playerTr = player.transform;
         _trail = GetComponentInChildren<TrailRenderer>();
         _trail.Clear();
         _trail.gameObject.SetActive(false);
@@ -122,7 +143,18 @@ public class BossController : MonoBehaviour
         _secondExplosion.SetActive(false);
         _swingMark.SetActive(false);
         _smashMark.SetActive(false);
-    
+
+        _gimmickDamageBox.SetActive(false);
+        _rootDamageBox.SetActive(false);
+        foreach (var item in _firstExplosionDamageBox)
+        { 
+            item.SetActive(false);
+        }
+        _secondExplosionDamageBox.SetActive(false);
+        _swingDamageBox.SetActive(false);
+        _smashDamageBox.SetActive(false);
+
+
         _bt.SetVariableValue("Phase1_Per", _phaseOnePer);
         _bt.SetVariableValue("Phase2_Per", _phaseTwoPer);
         _bt.SetVariableValue("Attack_Distance", _attackRange);
@@ -140,6 +172,8 @@ public class BossController : MonoBehaviour
         _maxHp = 3000;
 
         #endregion 테스트
+
+        StartCoroutine(LoadStat());
     }
 
     private void OnEnable()
@@ -149,19 +183,6 @@ public class BossController : MonoBehaviour
         _hp = _maxHp;
         _hpPercent = _hp / _maxHp * 100;
     }
-
-    #region 테스트
-
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.Space))
-    //    {
-    //        _hp = 1000;
-    //    }
-    //    _hpPercent = _hp / _maxHp * 100;
-    //}  
-
-    #endregion 테스트
 
     #region BTA
 
@@ -179,8 +200,9 @@ public class BossController : MonoBehaviour
     public void ActiveGimmick()
     { 
         _gimmick.gameObject.SetActive(false);
+        CallDamageBox(Pattern.gimmick);
         isGimmick = false;
-        StartCoroutine(CoCheckCoolTime(_gimmickCoolDown, CoolDown.gimmick));
+        StartCoroutine(CoCheckCoolTime(_gimmickCoolDown, Pattern.gimmick));
     }
     //뿌리공격 범위 표시
     public void MarkActiveRoot()
@@ -192,6 +214,7 @@ public class BossController : MonoBehaviour
     public void ActiveRoot()
     {
         _markRoot.gameObject.SetActive(false);
+        CallDamageBox(Pattern.rootAttack);
         foreach (var root in _roots)
         {
             if (root.rootState == RootState.Emerge)
@@ -204,7 +227,7 @@ public class BossController : MonoBehaviour
             root.RootAttack(_markRoot.gameObject.transform.position + Vector3.one * 0.1f);
             break;
         }
-        StartCoroutine(CoCheckCoolTime(_rootCoolDown, CoolDown.rootAttack));
+        StartCoroutine(CoCheckCoolTime(_rootCoolDown, Pattern.rootAttack));
     }
     //내려치기 범위표시
     public void MarkRootSmash()
@@ -233,7 +256,7 @@ public class BossController : MonoBehaviour
 
             root.RootSmash();
         }
-        StartCoroutine(CoCheckCoolTime(_smashCoolDown, CoolDown.smash));
+        StartCoroutine(CoCheckCoolTime(_smashCoolDown, Pattern.smash));
     }
     //폭발 공격1 범위표시
     public void MarkFirstExplosion()
@@ -258,7 +281,7 @@ public class BossController : MonoBehaviour
     public void SecondExplosion()
     {
         _secondExplosion.SetActive(false);
-        StartCoroutine(CoCheckCoolTime(_explosionCoolDown, CoolDown.explosion));
+        StartCoroutine(CoCheckCoolTime(_explosionCoolDown, Pattern.explosion));
     }
 
     #endregion Phase1
@@ -316,7 +339,7 @@ public class BossController : MonoBehaviour
     }
     public void RushCool()
     {
-        StartCoroutine(CoCheckCoolTime(_rushCoolDown, CoolDown.rush));
+        StartCoroutine(CoCheckCoolTime(_rushCoolDown, Pattern.rush));
     }
 
     //휘두르기
@@ -328,7 +351,7 @@ public class BossController : MonoBehaviour
     }
     public void SwingCool()
     {
-        StartCoroutine(CoCheckCoolTime(_swingCoolDown, CoolDown.swing));
+        StartCoroutine(CoCheckCoolTime(_swingCoolDown, Pattern.swing));
     }
 
     //내려치기
@@ -340,7 +363,7 @@ public class BossController : MonoBehaviour
     }
     public void SmashCool()
     {
-        StartCoroutine(CoCheckCoolTime(_smashCoolDown, CoolDown.smash));
+        StartCoroutine(CoCheckCoolTime(_smashCoolDown, Pattern.smash));
     }
 
     #endregion Phase2
@@ -387,7 +410,7 @@ public class BossController : MonoBehaviour
 
         foreach (var root in _roots)
         {
-            if (root.rootState == RootState.Emerge)
+            if (root.rootState == RootState.Emerge || root.rootState == RootState.Die)
             {
                 count++;
             }
@@ -430,6 +453,7 @@ public class BossController : MonoBehaviour
 
     #endregion BTC
 
+    //플레이어 방향
     private Quaternion RotateToPlayer()
     {
         Vector3 direction = (_playerTr.position - transform.position);
@@ -439,6 +463,7 @@ public class BossController : MonoBehaviour
         return rotation;
     }
 
+    //데미지 입는 메서드
     public void Hurt(float damage)
     {
         if (phase == BossPhase.Phase1 && _gimmick.gameObject.activeSelf) _gimmick.OnActivateCombat();
@@ -447,49 +472,212 @@ public class BossController : MonoBehaviour
         _hpPercent = _hp / _maxHp * 100;
     }
 
-    private void SetBoolCooldown(CoolDown coolDown, bool isCool)
+    //스킬 쿨타임 셋팅해주는 메서드
+    private void SetBoolCooldown(Pattern pattern, bool isCool)
     {
-        switch (coolDown)
+        switch (pattern)
         {
-            case CoolDown.gimmick:
+            case Pattern.gimmick:
                 isCoolGimmick = isCool;
                 break;
-            case CoolDown.rootAttack:
+
+            case Pattern.rootAttack:
                 isCoolRootAttack = isCool;
                 break;
-            case CoolDown.smash:
+
+            case Pattern.smash:
                 isCoolSmash = isCool;
                 break;
-            case CoolDown.explosion:
+
+            case Pattern.explosion:
                 isCoolExplosion = isCool;
                 break;
-            case CoolDown.rush:
+
+            case Pattern.rush:
                 isCoolRush = isCool;
                 break;
-            case CoolDown.swing:
+
+            case Pattern.swing:
                 isCoolSwing = isCool;
                 break;
+
             default:
                 Debug.Log("해당사항없음");
                 break;
         }
     }
-    private IEnumerator CoCheckCoolTime(float time, CoolDown coolDown)
+    //각 쿨타임 시간이후 쿨타임 체크 해제
+    private IEnumerator CoCheckCoolTime(float time, Pattern pattern)
     {
-        SetBoolCooldown(coolDown, true);
+        SetBoolCooldown(pattern, true);
         yield return new WaitForSeconds(time);
-        SetBoolCooldown(coolDown, false);
+        SetBoolCooldown(pattern, false);
     }
 
-    private void OnDrawGizmos()
+    //데미지 박스 위치값 초기화
+    private void SetTransformDamageBox(Pattern pattern)
     {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, 22.4f);
+        switch (pattern)
+        {
+            case Pattern.gimmick:
+                _gimmickDamageBox.transform.position = transform.position;
+                _gimmickDamageBox.transform.rotation = transform.rotation;
+                _gimmickDamageBox.transform.localScale = _gimmick.transform.localScale;
+                break;
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, 16.75f);
+            case Pattern.rootAttack:
+                _rootDamageBox.transform.position = _markRoot.transform.position;
+                _rootDamageBox.transform.rotation = _markRoot.transform.rotation;
+                break;
 
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, 11.15f);
+            case Pattern.smash:
+                _smashDamageBox.transform.position = transform.position;
+                _smashDamageBox.transform.rotation = transform.rotation;
+                break;
+
+            case Pattern.explosion:
+                foreach (var item in _firstExplosionDamageBox)
+                {
+                    item.transform.position = transform.position;
+                    item.transform.rotation = transform.rotation;
+                }
+                break;
+
+            case Pattern.explosion2:
+                _secondExplosionDamageBox.transform.position = transform.position;
+                _secondExplosionDamageBox.transform.rotation = transform.rotation;
+                break;
+
+            case Pattern.swing:
+                _swingDamageBox.transform.position = transform.position;
+                _swingDamageBox.transform.rotation = transform.rotation;
+                break;
+
+            default:
+                Debug.Log("해당사항없음");
+                break;
+        }
+    }
+    //데미지 박스 활성화, 비활성화
+    private void SetActiveDamageBox(Pattern pattern, bool isActive)
+    {
+        switch (pattern)
+        {
+            case Pattern.gimmick:
+                _gimmickDamageBox.SetActive(isActive);
+                break;
+
+            case Pattern.rootAttack:
+                _rootDamageBox.SetActive(isActive);
+                break;
+
+            case Pattern.smash:
+                _smashDamageBox.SetActive(isActive);
+                break;
+
+            case Pattern.explosion:
+                foreach (var item in _firstExplosionDamageBox)
+                {
+                    item.SetActive(isActive);
+                }
+                break;
+
+            case Pattern.explosion2:
+                _secondExplosionDamageBox.SetActive(isActive);
+                break;
+
+            case Pattern.swing:
+                _swingDamageBox.SetActive(isActive);
+                break;
+
+            default:
+                Debug.Log("해당사항없음");
+                break;
+        }
+    }
+    //데미지 박스 활성화 후 일정 시간 뒤에 비활성화 시켜주는 코루틴
+    private IEnumerator CoSetActiveDamageBox(Pattern pattern, float time)
+    {
+        SetTransformDamageBox(pattern);
+        SetActiveDamageBox(pattern, true);
+        yield return new WaitForSeconds(time);
+        SetActiveDamageBox(pattern, false);
+    }
+    //패턴별 코루틴 호출 메서드
+    private float time = 0.2f;
+    public void CallDamageBox(Pattern pattern)
+    {
+        switch (pattern)
+        {
+            case Pattern.gimmick:
+                StartCoroutine(CoSetActiveDamageBox(Pattern.gimmick, time));
+                break;
+
+            case Pattern.rootAttack:
+                StartCoroutine(CoSetActiveDamageBox(Pattern.rootAttack, time));
+                break;
+
+            case Pattern.explosion:
+                StartCoroutine(CoSetActiveDamageBox(Pattern.explosion, time));
+                break;
+
+            case Pattern.explosion2:
+                StartCoroutine(CoSetActiveDamageBox(Pattern.explosion2, time));
+                break;
+
+            case Pattern.swing:
+                StartCoroutine(CoSetActiveDamageBox(Pattern.swing, time));    //애니메이션 이벤트로 실행
+                break;
+
+            case Pattern.smash:
+                StartCoroutine(CoSetActiveDamageBox(Pattern.smash, time));    //애니메이션 이벤트로 실행
+                break;
+        }
+    }
+
+    //IHit 인터페이스 메서드
+    public void Hit(float damage, float paralysisTime, Transform attackTrans)
+    {
+        if (phase == BossPhase.Phase1)
+        {
+            if (_gimmick.gameObject.activeSelf)
+            {
+                _gimmick.OnActivateCombat();
+            }
+            Debug.Log("Phase1 Hit");
+            return;
+        }
+
+        Hurt(damage);
+    }
+    public void ApplyKnockback(float knockBackTime, Transform otherPosition)
+    { 
+
+    }
+
+    //데이터 드리븐
+    IEnumerator LoadStat()
+    {
+        yield return new WaitWhile(() =>
+        {
+            Debug.Log("Player의 데이터를 받아오는 중입니다.");
+            return dataManager.GetData("B101") == null;
+        });
+
+        for (int i = 0; i < 6; i++)
+        {
+            string IDStr = $"B10{1 + i}";
+            var data = dataManager.GetData(IDStr) as Boss_Skill;
+            _boss_Skill.Add(IDStr,data);
+        }
+
+        {
+            string IDStr = $"B201";
+            var data = dataManager.GetData(IDStr) as Boss_Skill;
+            _boss_Skill.Add(IDStr, data);
+        }
+
+        Debug.Log("Boss의 스킬 데이터를 성공적으로 받아왔습니다.");
+        yield break;
     }
 }
