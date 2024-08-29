@@ -524,11 +524,11 @@ MonoBehaviour:
   _monsterCount: 30
   _meleeAttackmonster: {fileID: 9120751004214810020, guid: 355fa6a2bad9b6c4da76b9e2bb909391,
     type: 3}
-  _meleeExplosionmonster: {fileID: 9120751004214810020, guid: 355fa6a2bad9b6c4da76b9e2bb909391,
+  _meleeExplosionmonster: {fileID: 4423949634325049579, guid: 066181cd1424c3841bf64f0897e44636,
     type: 3}
   _chargeMonster: {fileID: 9120751004214810020, guid: 355fa6a2bad9b6c4da76b9e2bb909391,
     type: 3}
-  _longRangeMonster: {fileID: 9120751004214810020, guid: 355fa6a2bad9b6c4da76b9e2bb909391,
+  _longRangeMonster: {fileID: 8860565670137976791, guid: e23a316ec0c2a0647ba4804afcdbb378,
     type: 3}
   _itemCount: 50
   _items:

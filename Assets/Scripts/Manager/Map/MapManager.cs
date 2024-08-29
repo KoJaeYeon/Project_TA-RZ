@@ -76,7 +76,7 @@ public class MapManager : MonoBehaviour
 
         _currentMap.SetActive(false);
 
-        if(ProgressValue <= 0.33f)
+        if(ProgressValue < 0.33f)
         {
             _currentMap = GetMap(MapType.Beginning);
 
@@ -86,7 +86,7 @@ public class MapManager : MonoBehaviour
 
             beginning.StartStage(_currentStageType);
         }
-        else if(ProgressValue <= 0.66f)
+        else if(ProgressValue < 0.66f)
         {
             _currentMap = GetMap(MapType.Middle);
 
