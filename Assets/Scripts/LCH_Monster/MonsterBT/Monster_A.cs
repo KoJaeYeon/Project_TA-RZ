@@ -74,12 +74,10 @@ public class Monster_A : Monster, IHit
 
     private IEnumerator GrowOverTime(GameObject atkObject)
     {
-        Vector3 initialScale = atkObject.transform.localScale;
         float timeElapsed = 0f;
 
         while (timeElapsed < growDuration)
         {
-            atkObject.transform.localScale = Vector3.Lerp(initialScale, targetScale, timeElapsed / growDuration);
             timeElapsed += Time.deltaTime;
             yield return null;
         }
