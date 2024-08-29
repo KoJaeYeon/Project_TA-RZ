@@ -474,6 +474,7 @@ public class BossController : MonoBehaviour, IHit
         if (_hp - damage <= 0)
         {
             _hp = 0;
+            _hpPercent = _hp / _maxHp * 100;
             return;
         }
 
