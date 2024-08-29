@@ -40,6 +40,12 @@ public class MapManager : MonoBehaviour
     {
         _mapDictionary = new Dictionary<MapType, GameObject>();
 
+        if(_mapArray == null)
+        {
+            Debug.LogWarning("MapArray가 존재하지 않습니다.");
+            return;
+        }
+
         var map = new (MapType, GameObject)[]
         {
             (MapType.Lobby, _mapArray[0]),
