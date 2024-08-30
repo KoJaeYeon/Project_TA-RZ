@@ -11,7 +11,7 @@ public class Monster_D_WaitDash : Action
 
     public override void OnStart()
     {
-        Monster.Value.CheckBeforeDash();
+        Monster.Value.CheckBeforeDash(Monster.Value.Player.transform);
     }
 
 

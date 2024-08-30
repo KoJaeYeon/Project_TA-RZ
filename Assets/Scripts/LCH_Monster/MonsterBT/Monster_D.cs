@@ -47,16 +47,16 @@ public class Monster_D : Monster
         }
     }
 
-    public void CheckBeforeDash()
+    public void CheckBeforeDash(Transform playerTransform)
     {
+        targetPosition = playerTransform.position;
         StartCoroutine(ReadyToDash());
     }
 
-    public void OnAtk(Transform playerTransform)
+    public void OnAtk()
     {
         IsAttack = true;
-        collider.isTrigger = true;
-        targetPosition = playerTransform.position;
+        collider.isTrigger = true;        
         StartCoroutine(DashToTarget());
     }
 

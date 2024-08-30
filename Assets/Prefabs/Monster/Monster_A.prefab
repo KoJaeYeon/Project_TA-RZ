@@ -1962,7 +1962,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8860565670138465269
 Transform:
   m_ObjectHideFlags: 0
@@ -2024,9 +2024,8 @@ MonoBehaviour:
   atkPrefab: {fileID: 5859596967597927552}
   explosionPrefab: {fileID: 739683436975676488}
   targetPrefab: {fileID: 491918217497906315}
-  growDuration: 2
+  growDuration: 10
   targetScale: {x: 3, y: 0.1, z: 3}
-  explosionSize: {x: 1, y: 1, z: 1}
 --- !u!136 &3677069109103963087
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2328,6 +2327,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2268303826831188308, guid: a1a36200a3c61b34b9abfaed1373f4cc,
+        type: 3}
+      propertyPath: _parentTrans
+      value: 
+      objectReference: {fileID: 8860565670138465269}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2353,6 +2357,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8860565670138465269}
     m_Modifications:
+    - target: {fileID: 5699379824372410059, guid: c20f0d03ff8a8f1408d87528924e520d,
+        type: 3}
+      propertyPath: monsterA
+      value: 
+      objectReference: {fileID: 3403244524686710681}
     - target: {fileID: 5699379824372410059, guid: c20f0d03ff8a8f1408d87528924e520d,
         type: 3}
       propertyPath: targetScale.x
