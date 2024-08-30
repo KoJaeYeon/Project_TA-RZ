@@ -38,6 +38,7 @@ public class StageObject : MonoBehaviour
 
     private Dictionary<MonsterList, GameObject> _monsterDictionary = new Dictionary<MonsterList, GameObject>();
     private Dictionary<ItemList, GameObject> _itemDictionary = new Dictionary<ItemList, GameObject>();
+    private Dictionary<ItemList, string> _itemNameDictionary = new Dictionary<ItemList, string>();
 
     private void Awake()
     {
@@ -87,6 +88,7 @@ public class StageObject : MonoBehaviour
         {
             _poolManager.CreatePool(itemObject, count);
             itemDictionary?.Add(itemType, itemObject);
+            _itemNameDictionary.Add(itemType, itemObject.name);
         }
     }
 
@@ -118,4 +120,18 @@ public class StageObject : MonoBehaviour
         }
     }
 
+    public string GetItemName(ItemList itemType)
+    {
+        if(_itemNameDictionary.TryGetValue(itemType, out string itemName))
+        {
+            string name = itemName;
+
+            return name;
+        }
+        else
+        {
+            Debug.Log("아이템 이름이 존재하지 않습니다.");
+            return null;
+        }
+    }
 }
