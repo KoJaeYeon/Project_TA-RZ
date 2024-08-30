@@ -160,8 +160,11 @@ public class DataManager : MonoBehaviour
             float drainMaxRange = ParseFloat(item[nameof(PC_Common_Stat.Drain_MaxRange)]);
             float rangeSpeed = ParseFloat(item[nameof(PC_Common_Stat.Range_Speed)]);
             float pullSpeed = ParseFloat(item[nameof(PC_Common_Stat.Pull_Speed)]);
+            float passiveAtk_Power = ParseFloat(item[nameof(PC_Common_Stat.PassiveAtk_Power)]);
+            float damaged_Stiff_T = ParseFloat(item[nameof(PC_Common_Stat.Damaged_Stiff_T)]);
+            float damaged_KnockBack_T = ParseFloat(item[nameof(PC_Common_Stat.Damaged_KnockBack_T)]);
 
-            PC_Common_Stat stat = new PC_Common_Stat(id, type, atkPower, hp, moveSpeed, resouceOwnNum, staminaGain, drainStamina, dashStamina, drainMaxRange, rangeSpeed, pullSpeed);
+            PC_Common_Stat stat = new PC_Common_Stat(id, type, atkPower, hp, moveSpeed, resouceOwnNum, staminaGain, drainStamina, dashStamina, drainMaxRange, rangeSpeed, pullSpeed, passiveAtk_Power, damaged_Stiff_T, damaged_KnockBack_T);
             AddDataToDataDictionary(idStr, stat);
         }
     }
