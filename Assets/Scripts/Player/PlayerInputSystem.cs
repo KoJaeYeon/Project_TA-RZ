@@ -28,7 +28,7 @@ public class PlayerInputSystem : MonoBehaviour
     public bool IsSkill { get { return isSkill; } }
 
     float clampDelta = 15f;
-
+    
     Player _player;
 
     private void Awake()

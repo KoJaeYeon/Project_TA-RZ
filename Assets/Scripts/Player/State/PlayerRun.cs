@@ -71,7 +71,7 @@ public class PlayerRun : PlayerState
         if (!_isAction)
         {
             float skill1_Speed_Multiplier = _player.IsSkillAcitve[0] ? skill1_Speed : 1;
-            _targetSpeed = _player._playerStat.Move_Speed * skill1_Speed_Multiplier;
+            _targetSpeed = _player.CurrentSpeed * skill1_Speed_Multiplier;
 
             if (_inputSystem.Input == Vector2.zero)
             {

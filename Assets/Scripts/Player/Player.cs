@@ -51,7 +51,9 @@ public class Player : MonoBehaviour, IHit
     float _currentHP;
     float _currentSkill;
     float _currentStamina;
-    public float CurrentAtk { get; set; }
+    float _currentAtk;
+    float _currentSpeed;
+    
     public bool IsActiveStaminaRecovery { get; set; } = true;
     bool _isPlayerAlive = true;
     public bool[] IsSkillAcitve { get; set; } = new bool[4] { false, false, false, false };
@@ -61,6 +63,31 @@ public class Player : MonoBehaviour, IHit
 
     //블루칩 기능
     public bool IsPlayerFourthAttackDrainAvailable { get; set; } = false;
+    public float CurrentAtk
+    {
+        get { return _currentAtk; }
+        set
+        {
+            if (_currentAtk == value)
+                return;
+
+            _currentAtk = value;
+            OnPropertyChanged(nameof(CurrentAtk));
+        }
+    }
+
+    public float CurrentSpeed
+    {
+        get { return _currentSpeed; }
+        set
+        {
+            if(_currentSpeed == value)
+                return;
+
+            _currentSpeed = value;
+            OnPropertyChanged(nameof(CurrentSpeed));
+        }
+    }
 
     public float CurrentHP
     {
@@ -335,6 +362,7 @@ public class Player : MonoBehaviour, IHit
         CurrentAtk = _playerStat.Atk_Power;
         CurrentHP = _playerStat.HP;
         HP = _playerStat.HP;
+        CurrentSpeed = _playerStat.Move_Speed;
         CurrentStamina = 100;
         CurrentSkill = 0;
         CurrentAmmo = 0;
