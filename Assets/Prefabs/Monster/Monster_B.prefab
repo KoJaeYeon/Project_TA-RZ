@@ -1514,7 +1514,7 @@ GameObject:
   - component: {fileID: 1327125583418918885}
   - component: {fileID: 5730702997159829918}
   - component: {fileID: 3420685072983603030}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: AtkCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

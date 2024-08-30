@@ -4,7 +4,6 @@ using UnityEngine;
 using Zenject;
 using UnityEngine.UI;
 using System.ComponentModel;
-using UnityEngine.InputSystem;
 
 public class GameUI : MonoBehaviour
 {
