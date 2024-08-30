@@ -70,8 +70,8 @@ public class Monster : MonoBehaviour, IHit
         _bt = GetComponent<BehaviorTree>();
         Nav = GetComponent<NavMeshAgent>();
 
-        int rand = Random.Range(0, 4);
-        transform.GetChild(1).gameObject.SetActive(true);
+        //int rand = Random.Range(0, 4);
+        //transform.GetChild(rand).gameObject.SetActive(true);
     }
 
     void Start()

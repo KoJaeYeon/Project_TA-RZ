@@ -1,3 +1,4 @@
+using BehaviorDesigner.Runtime.Tasks.Unity.UnityTransform;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ public class Monster_C : Monster
 {
     [SerializeField] private GameObject atkPrefab;
     [SerializeField] private GameObject explosionPrefab;
+    [SerializeField] private GameObject bombPrefab;
 
     [Header("공격 발동까지 걸리는 시간")]
     [SerializeField] private float growDuration;  // 커지는 데 걸리는 시간
@@ -55,11 +57,13 @@ public class Monster_C : Monster
             base.Hit(damage, paralysisTime, transform);
         }
 
-        //if (Mon_Common_Hp_Remain <= 0)
-        //{
-        //    atkPrefab.SetActive(false);
-        //    explosionPrefab.SetActive(false);
-        //}
+        if (Mon_Common_Hp_Remain <= 0)
+        {
+            bombPrefab.transform.SetParent(transform);
+            bombPrefab.SetActive(false);
+            atkPrefab.SetActive(false);
+            explosionPrefab.SetActive(false);
+        }
     }
 
     public override void ApplyKnockback(float knockbackDuration, Transform attackerTrans)

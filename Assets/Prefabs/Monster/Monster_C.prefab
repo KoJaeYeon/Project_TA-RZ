@@ -893,9 +893,10 @@ MonoBehaviour:
   Knockback_Vertical_Distance: 2
   atkPrefab: {fileID: 8447007108154356792}
   explosionPrefab: {fileID: 5427255526891974003}
+  bombPrefab: {fileID: 2502613067198469171}
   growDuration: 2
   targetScale: {x: 3, y: 0.1, z: 3}
-  explosionSize: {x: 2, y: 2, z: 2}
+  explosionSize: {x: 4, y: 4, z: 4}
 --- !u!195 &7432593404819575077
 NavMeshAgent:
   m_ObjectHideFlags: 0

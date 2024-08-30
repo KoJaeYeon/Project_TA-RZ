@@ -2023,6 +2023,7 @@ MonoBehaviour:
   Knockback_Vertical_Distance: 2
   atkPrefab: {fileID: 5859596967597927552}
   explosionPrefab: {fileID: 739683436975676488}
+  targetPrefab: {fileID: 491918217497906315}
   growDuration: 2
   targetScale: {x: 3, y: 0.1, z: 3}
   explosionSize: {x: 1, y: 1, z: 1}
@@ -2432,6 +2433,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c20f0d03ff8a8f1408d87528924e520d, type: 3}
+--- !u!1 &491918217497906315 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 955243857650550895, guid: c20f0d03ff8a8f1408d87528924e520d,
+    type: 3}
+  m_PrefabInstance: {fileID: 833746718244930788}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5859596967597927552 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6540185830517008484, guid: c20f0d03ff8a8f1408d87528924e520d,
