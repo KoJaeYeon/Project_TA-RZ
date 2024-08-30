@@ -64,6 +64,5 @@ public class Monster_D_CheckCoolTime : Conditional
         }
 
 
-        return TaskStatus.Success;
     }
 }
