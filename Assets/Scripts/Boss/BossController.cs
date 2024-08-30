@@ -6,6 +6,7 @@ using BehaviorDesigner.Runtime;
 using Zenject;
 using UnityEngine.SocialPlatforms;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityParticleSystem;
+using Zenject.SpaceFighter;
 
 public enum BossPhase
 { 
@@ -204,6 +205,7 @@ public class BossController : MonoBehaviour, IHit
     public void MarkGimmick()
     { 
         _gimmick.transform.position = transform.position;
+        SetYPosition(_gimmick.transform);
         _gimmick.transform.rotation = transform.rotation;
         _gimmick.gameObject.SetActive(true);
         isGimmick = true;
@@ -276,6 +278,7 @@ public class BossController : MonoBehaviour, IHit
         foreach (var explosion in _firstExplosion)
         {
             explosion.transform.position = transform.position;
+            SetYPosition(explosion.transform);
             explosion.SetActive(true);
         }
     }
@@ -288,6 +291,7 @@ public class BossController : MonoBehaviour, IHit
         }
 
         _secondExplosion.transform.position = transform.position;
+        SetYPosition(_secondExplosion.transform);
         _secondExplosion.SetActive(true);
     }
     //폭발 공격2 실행부
@@ -327,7 +331,9 @@ public class BossController : MonoBehaviour, IHit
     {
         rushWailtTime -= _defaultRushTime * 0.2f;
         _bt.SetVariableValue("RushWaitTime", rushWailtTime);
-        _rushMark.transform.position = transform.position + Vector3.up * 0.01f;
+        _rushMark.transform.position = transform.position;
+        SetYPosition(_rushMark.transform);
+        _rushMark.transform.position = _rushMark.transform.position + Vector3.up * 0.01f;
         _rushMark.transform.rotation = transform.rotation;
         _rushMark.SetActive(true);
     }
@@ -359,6 +365,7 @@ public class BossController : MonoBehaviour, IHit
     public void DrawSwing(bool isActive)
     {
         _swingMark.transform.position = transform.position;
+        SetYPosition(_swingMark.transform);
         _swingMark.transform.rotation = transform.rotation;
         _swingMark.SetActive(isActive);
     }
@@ -370,7 +377,9 @@ public class BossController : MonoBehaviour, IHit
     //내려치기
     public void DrawSmash(bool isActive)
     {
-        _smashMark.transform.position = transform.position + Vector3.up * 0.01f;
+        _smashMark.transform.position = transform.position;
+        SetYPosition(_smashMark.transform);
+        _smashMark.transform.position = _smashMark.transform.position + Vector3.up * 0.01f;
         _smashMark.transform.rotation = transform.rotation;
         _smashMark.SetActive(isActive);
     }
@@ -541,17 +550,20 @@ public class BossController : MonoBehaviour, IHit
         {
             case Pattern.gimmick:
                 _gimmickDamageBox.transform.position = transform.position;
+                SetYPosition(_gimmickDamageBox.transform);
                 _gimmickDamageBox.transform.rotation = transform.rotation;
                 _gimmickDamageBox.transform.localScale = _gimmick.transform.localScale;
                 break;
 
             case Pattern.rootAttack:
                 _rootDamageBox.transform.position = _markRoot.transform.position;
+                SetYPosition(_rootDamageBox.transform);
                 _rootDamageBox.transform.rotation = _markRoot.transform.rotation;
                 break;
 
             case Pattern.smash:
                 _smashDamageBox.transform.position = transform.position;
+                SetYPosition(_smashDamageBox.transform);
                 _smashDamageBox.transform.rotation = transform.rotation;
                 break;
 
@@ -559,17 +571,20 @@ public class BossController : MonoBehaviour, IHit
                 foreach (var item in _firstExplosionDamageBox)
                 {
                     item.transform.position = transform.position;
+                    SetYPosition(item.transform);
                     item.transform.rotation = transform.rotation;
                 }
                 break;
 
             case Pattern.explosion2:
                 _secondExplosionDamageBox.transform.position = transform.position;
+                SetYPosition(_secondExplosionDamageBox.transform);
                 _secondExplosionDamageBox.transform.rotation = transform.rotation;
                 break;
 
             case Pattern.swing:
                 _swingDamageBox.transform.position = transform.position;
+                SetYPosition(_swingDamageBox.transform);
                 _swingDamageBox.transform.rotation = transform.rotation;
                 break;
 
@@ -699,5 +714,12 @@ public class BossController : MonoBehaviour, IHit
 
         Debug.Log("Boss의 스킬 데이터를 성공적으로 받아왔습니다.");
         yield break;
+    }
+
+    private void SetYPosition(Transform tr)
+    {
+        Vector3 localPos = tr.localPosition;
+        localPos.y = 0;
+        tr.localPosition = localPos;
     }
 }
