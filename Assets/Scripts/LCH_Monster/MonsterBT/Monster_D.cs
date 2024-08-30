@@ -19,7 +19,7 @@ public class Monster_D : Monster
     Animator animator;
     LayerMask _playerLayer;
 
-    private Monster_D_DashUI dashUi;
+    public Monster_D_DashUI dashUi { get; private set; }
     protected override void Awake()
     {
         base.Awake();
@@ -34,6 +34,10 @@ public class Monster_D : Monster
         if (isDashing == true)
         {
             return;
+        }
+        else if(IsDrawDash == true)
+        { 
+
         }
         base.ApplyKnockback(knockbackDuration, attackerTrans);
     }
@@ -50,7 +54,6 @@ public class Monster_D : Monster
     public void CheckBeforeDash(Transform playerTransform)
     {
         targetPosition = playerTransform.position;
-        StartCoroutine(ReadyToDash());
     }
 
     public void OnAtk()
@@ -101,27 +104,6 @@ public class Monster_D : Monster
 
         StopDash();
     }
-
-    public IEnumerator ReadyToDash()
-    {
-        animator.SetTrigger("beforeAtk");
-        IsDrawDash = true;
-        float duration = 1f;  
-        float elapsedTime = 0f;
-
-        while (elapsedTime < duration)
-        {
-            elapsedTime += Time.deltaTime;
-            dashUi.DashGauge.fillAmount = Mathf.Lerp(0, 1, elapsedTime / duration);
-
-            yield return null;
-
-        }
-        IsDrawDash = false;
-        dashUi.DashGauge.fillAmount = 1f;  
-    }
-
-
 
     private void StopDash()
     {
