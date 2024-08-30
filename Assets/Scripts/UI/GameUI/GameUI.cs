@@ -51,7 +51,6 @@ public class GameUI : MonoBehaviour
     private void OnEnable()
     {
         _blockingImage.SetActive(true);
-        Cursor.lockState = CursorLockMode.None;
 
         InitializeProgressUIOnEnable();
         InitializeChoiceUIOnEnable();
@@ -62,7 +61,6 @@ public class GameUI : MonoBehaviour
     private void OnDisable()
     {
         _blockingImage.SetActive(false);
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     #region Initialize
