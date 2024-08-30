@@ -171,7 +171,11 @@ public class Monster : MonoBehaviour, IHit
             {
                 StopCoroutine(_hitCoroutine);
             }
-            Debug.Log(paralysisTime);
+            if(paralysisTime == 0)
+            {
+                IsDamaged = false;
+                return;
+            }
             _hitCoroutine = StartCoroutine(WaitForStun(paralysisTime));
         }
         else
