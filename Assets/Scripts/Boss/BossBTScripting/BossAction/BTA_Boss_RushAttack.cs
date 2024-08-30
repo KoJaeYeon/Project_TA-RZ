@@ -31,8 +31,8 @@ public class BTA_Boss_RushAttack : BossAction
 
     public override TaskStatus OnUpdate()
     {
-        //_owner.RushAttack(_dashSpeed.Value, direction);
-        _rb.velocity = direction * _dashSpeed.Value;
+        _owner.RushAttack(_dashSpeed.Value, direction);
+        //_rb.velocity = direction * _dashSpeed.Value;
 
         if (_isRush)
         { 

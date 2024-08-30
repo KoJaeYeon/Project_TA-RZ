@@ -64,9 +64,10 @@ public class BossController : MonoBehaviour, IHit
     public bool isCoolExplosion;
 
     [Header("2페이즈 돌진공격")]
+    [SerializeField] private GameObject _rushMark;
     [SerializeField] private float _rushSpeed;
-    [SerializeField] private float _rushRange;
-    [SerializeField] private float _rushWailtTime;
+    public float rushRange;
+    public float rushWailtTime;
     [SerializeField] private float _defaultRushTime;
     public float rushDamage;
     [SerializeField] private float _rushCoolDown;
@@ -90,7 +91,6 @@ public class BossController : MonoBehaviour, IHit
     private BehaviorTree _bt;
 
     private Transform _playerTr;
-    private TrailRenderer _trail;
 
     public bool isGimmick;
 
@@ -116,6 +116,7 @@ public class BossController : MonoBehaviour, IHit
         _markRoot = markManager.mark_RootAttack;
         _firstExplosion = markManager.mark_FirstExplosion;
         _secondExplosion = markManager.mark_SecondExplosion;
+        _rushMark = markManager.mark_Rush;
         _swingMark = markManager.mark_Swing;
         _smashMark = markManager.mark_smash;
 
@@ -132,9 +133,7 @@ public class BossController : MonoBehaviour, IHit
         _bt = GetComponent<BehaviorTree>();
 
         _playerTr = player.transform;
-        _trail = GetComponentInChildren<TrailRenderer>();
-        _trail.Clear();
-        _trail.gameObject.SetActive(false);
+
         _gimmick.gameObject.SetActive(false);
         _markRoot.SetActive(false);
         foreach (var explosion in _firstExplosion) 
@@ -142,6 +141,7 @@ public class BossController : MonoBehaviour, IHit
             explosion.SetActive(false);
         }
         _secondExplosion.SetActive(false);
+        _rushMark.SetActive(false);
         _swingMark.SetActive(false);
         _smashMark.SetActive(false);
 
@@ -164,8 +164,8 @@ public class BossController : MonoBehaviour, IHit
         _bt.SetVariableValue("Root_Distance", _roots[0]._attackRange);
 
         _bt.SetVariableValue("RushSpeed", _rushSpeed);
-        _bt.SetVariableValue("RushRange", _rushRange);
-        _bt.SetVariableValue("RushWaitTime", _rushWailtTime);
+        _bt.SetVariableValue("RushRange", rushRange);
+        _bt.SetVariableValue("RushWaitTime", rushWailtTime);
         _bt.SetVariableValue("DefaultRushWaitTime", _defaultRushTime);
 
         #region 테스트
@@ -287,6 +287,7 @@ public class BossController : MonoBehaviour, IHit
             explosion.SetActive(false);
         }
 
+        _secondExplosion.transform.position = transform.position;
         _secondExplosion.SetActive(true);
     }
     //폭발 공격2 실행부
@@ -322,9 +323,13 @@ public class BossController : MonoBehaviour, IHit
     }
 
     //보스 대쉬 공격
-    public void DrawRushTrail()
+    public void DrawRushMark()
     {
-        _trail.gameObject.SetActive(true);
+        rushWailtTime -= _defaultRushTime * 0.2f;
+        _bt.SetVariableValue("RushWaitTime", rushWailtTime);
+        _rushMark.transform.position = transform.position + Vector3.up * 0.01f;
+        _rushMark.transform.rotation = transform.rotation;
+        _rushMark.SetActive(true);
     }
     //방향 설정
     public Vector3 SetRushDirection()
@@ -338,11 +343,16 @@ public class BossController : MonoBehaviour, IHit
     //돌진
     public void RushAttack(float speed, Vector3 direction)
     {
+        _rushMark.SetActive(false);
         _rb.velocity = direction * speed;
     }
     public void RushCool()
     {
         StartCoroutine(CoCheckCoolTime(_rushCoolDown, Pattern.rush));
+    }
+    public void ResetRushWaitTime()
+    {
+        rushWailtTime = _defaultRushTime;
     }
 
     //휘두르기

@@ -7,12 +7,9 @@ using UnityEngine;
 [TaskCategory("Boss/Rush")]
 public class BTA_Boss_ResetRushTime : BossAction
 {
-    [SerializeField] private SharedFloat _defaultRushTime;
-    [SerializeField] private SharedFloat _rushTime;
-
     public override TaskStatus OnUpdate()
     {
-        _rushTime.Value = _defaultRushTime.Value;
+        _owner.ResetRushWaitTime();
         _owner.RushCool();
 
         return TaskStatus.Success;

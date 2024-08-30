@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BTA_Boss_RushTrail : BossAction
+public class BTA_Boss_RushMark
+    : BossAction
 {
     public override TaskStatus OnUpdate()
     {
-        _owner.DrawRushTrail();
+        _owner.DrawRushMark();
 
         return TaskStatus.Success;
     }

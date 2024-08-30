@@ -28,11 +28,6 @@ public class GimmickController : MonoBehaviour
         _isHurt = false;
     }
 
-    private void OnDisable()
-    {
-        StopCoroutine(_hurtCoroutine);
-    }
-
     private void Update()
     {
         if (!_isHurt) OnActivateNonCombat();
