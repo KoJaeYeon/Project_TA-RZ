@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 5958233828717978387}
   - component: {fileID: 4987537163468179444}
   m_Layer: 0
-  m_Name: Text (TMP) (5)
+  m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 8166773171293984754}
   - component: {fileID: 1788789411867511990}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: Power
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -552,7 +552,7 @@ GameObject:
   - component: {fileID: 4900039102342620931}
   - component: {fileID: 1452652396073410085}
   m_Layer: 0
-  m_Name: Panel 3
+  m_Name: EnhancedStatUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -571,11 +571,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7534412762577179967}
-  - {fileID: 3748748040503714353}
-  - {fileID: 5103497651130534358}
-  - {fileID: 8375033271088525877}
-  - {fileID: 6043345532397691166}
   - {fileID: 5786709736755597269}
+  - {fileID: 6043345532397691166}
+  - {fileID: 8375033271088525877}
+  - {fileID: 5103497651130534358}
+  - {fileID: 3748748040503714353}
   - {fileID: 3182515522522650711}
   - {fileID: 5965500379063363408}
   m_Father: {fileID: 0}
@@ -905,7 +905,7 @@ GameObject:
   - component: {fileID: 8788533602712618212}
   - component: {fileID: 8869061791457964556}
   m_Layer: 0
-  m_Name: Text (TMP) (1)
+  m_Name: text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

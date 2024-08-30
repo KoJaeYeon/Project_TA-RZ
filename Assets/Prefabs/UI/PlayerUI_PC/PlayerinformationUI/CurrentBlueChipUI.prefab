@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 2644399435673880412}
   - component: {fileID: 4023554911322032088}
   m_Layer: 0
-  m_Name: Panel
+  m_Name: CurrentBlueChipUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -246,10 +246,10 @@ RectTransform:
   - {fileID: 7054486072090988994}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 293, y: 334}
-  m_SizeDelta: {x: -915, y: -766}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1005, y: 314}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2644399435673880412
 CanvasRenderer:
@@ -458,7 +458,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -366.00003, y: 1.3114929}
+  m_AnchoredPosition: {x: -366.00006, y: 1.3115234}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1562034735025033426

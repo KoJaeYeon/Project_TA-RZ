@@ -46,6 +46,7 @@ public class MapManager : MonoBehaviour
 
     private void InitializeMapManager()
     {
+        _uiEvent.RegisterChangeStage(this);
 
         _mapNameDictionary = new Dictionary<MapType, string>();
 

@@ -4,7 +4,7 @@ using UnityEngine;
 using Zenject;
 using UnityEngine.UI;
 using System.ComponentModel;
-using UnityEngine.InputSystem;
+
 
 public class GameUI : MonoBehaviour
 {
@@ -22,7 +22,7 @@ public class GameUI : MonoBehaviour
     [SerializeField] private Image _progressImage;
 
     [Inject] private UIEvent _uiEvent;
-    [Inject] private MapManager _mapManager;
+    //[Inject] private MapManager _mapManager;
     [Inject]
     public void Construct(DiContainer container)
     {
@@ -132,9 +132,9 @@ public class GameUI : MonoBehaviour
 
     private IEnumerator ChoiceStage()
     {
-        float currentProgressValue = _mapManager.ProgressValue;
+        //float currentProgressValue = _mapManager.ProgressValue;
 
-        if (currentProgressValue <= 0.99f)
+        if (_currentProgressvalue <= 0.99f)
         {
             _currentUI = RandomUI();
         }
@@ -145,13 +145,15 @@ public class GameUI : MonoBehaviour
 
         ActiveUI(true);
 
-        _uiEvent.RequestChangeProgressBar(currentProgressValue);
+        //_uiEvent.RequestChangeProgressBar(_currentProgressvalue);
 
         yield return new WaitWhile(() => !_isChoice);
 
         ActiveUI(false);
 
-        _mapManager.ChangeMap(_currentStage);
+        //_mapManager.ChangeMap(_currentStage);
+
+        _uiEvent.RequestChangeStage(_currentStage);
 
         this.gameObject.SetActive(false);
     }
@@ -204,5 +206,4 @@ public class GameUI : MonoBehaviour
         _currentStage = StageType.Boss;
         _isChoice = true;
     }
-
 }

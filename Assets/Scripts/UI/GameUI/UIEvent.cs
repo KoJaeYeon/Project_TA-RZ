@@ -6,8 +6,9 @@ using Zenject;
 public class UIEvent
 {
     [Inject] Player player { get; }
-    
+
     private Action<float> _progressCallBack;
+    private Action<StageType> _stageCallBack;
     private GameUI _gameUI;
     public LoadingUI _loadUI { get; private set; }
     public BlueChipUI BlueChipUI { get; private set; }
@@ -22,6 +23,22 @@ public class UIEvent
     {
         _gameUI.gameObject.SetActive(true);
     }
+
+    public void RequestChangeStage(StageType type)
+    {
+        _stageCallBack?.Invoke(type);
+    }
+
+    public void RegisterChangeStage(MapManager mapManager)
+    {
+        _stageCallBack += mapManager.ChangeMap;
+    }
+
+    public void UnRegisterChangeStage()
+    {
+        _stageCallBack = null;
+    }
+
     #endregion
 
     #region ProgressUIEvent

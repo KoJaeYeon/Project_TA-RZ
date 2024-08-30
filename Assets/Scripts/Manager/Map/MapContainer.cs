@@ -5,7 +5,7 @@ public class MapContainer : MonoInstaller
 {
     public override void InstallBindings()
     {
-        //안정성 추가
+
         if (FindObjectOfType<MapManager>() != null)
         {
             Container.Bind<MapManager>().FromComponentInHierarchy().AsSingle();
