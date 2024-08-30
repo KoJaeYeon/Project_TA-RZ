@@ -14,7 +14,8 @@ public class GameUI : MonoBehaviour
     [Header("Boss")]
     [SerializeField] private GameObject _bossStageUI;
 
-    [Header("LoadingUI")] private GameObject _loadingUI;
+    [Header("BlockingImage")]
+    [SerializeField] private GameObject _blockingImage;
 
     [Header("ProgressUI")]
     [SerializeField] private GameObject _progressUI;
@@ -49,10 +50,19 @@ public class GameUI : MonoBehaviour
 
     private void OnEnable()
     {
+        _blockingImage.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+
         InitializeProgressUIOnEnable();
         InitializeChoiceUIOnEnable();
         ActiveChoiceUI();
         _uiEvent.SetActivePlayerControl(false);
+    }
+
+    private void OnDisable()
+    {
+        _blockingImage.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     #region Initialize
@@ -139,13 +149,9 @@ public class GameUI : MonoBehaviour
 
         _uiEvent.RequestChangeProgressBar(currentProgressValue);
 
-        Cursor.lockState = CursorLockMode.None;
-
         yield return new WaitWhile(() => !_isChoice);
 
         ActiveUI(false);
-
-        Cursor.lockState = CursorLockMode.Locked;
 
         _mapManager.ChangeMap(_currentStage);
 
