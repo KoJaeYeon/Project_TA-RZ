@@ -10,7 +10,7 @@ public class MonsterD_OnAtk : Action
 
     public override void OnStart()
     {
-        Monster.Value.OnAtk(Monster.Value.Player.transform);
+        Monster.Value.OnAtk();
     }
     public override TaskStatus OnUpdate()
     {
