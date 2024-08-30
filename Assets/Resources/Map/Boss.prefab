@@ -350,7 +350,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8380507984534495451
 Transform:
   m_ObjectHideFlags: 0
@@ -385,72 +385,72 @@ MonoBehaviour:
   _level: 3
   _partitions:
   - _centerPosition: {fileID: 5662587050349134942}
-    _mapSizeX: 19
-    _mapSizeZ: 19
+    _mapSizeX: 20
+    _mapSizeZ: 20
     _maxResourceCount: 0
     _resourceA_Ratio: 0
     _resourceB_Ratio: 0
     _resourceC_Ratio: 0
     _resourceCountArray: 
   - _centerPosition: {fileID: 8541777329569983682}
-    _mapSizeX: 19
-    _mapSizeZ: 19
+    _mapSizeX: 20
+    _mapSizeZ: 20
     _maxResourceCount: 0
     _resourceA_Ratio: 0
     _resourceB_Ratio: 0
     _resourceC_Ratio: 0
     _resourceCountArray: 
   - _centerPosition: {fileID: 4945238731303360198}
-    _mapSizeX: 19
-    _mapSizeZ: 19
+    _mapSizeX: 20
+    _mapSizeZ: 20
     _maxResourceCount: 0
     _resourceA_Ratio: 0
     _resourceB_Ratio: 0
     _resourceC_Ratio: 0
     _resourceCountArray: 
   - _centerPosition: {fileID: 6904597414559040222}
-    _mapSizeX: 19
-    _mapSizeZ: 19
+    _mapSizeX: 20
+    _mapSizeZ: 20
     _maxResourceCount: 0
     _resourceA_Ratio: 0
     _resourceB_Ratio: 0
     _resourceC_Ratio: 0
     _resourceCountArray: 
   - _centerPosition: {fileID: 5973967551181859558}
-    _mapSizeX: 19
-    _mapSizeZ: 19
+    _mapSizeX: 20
+    _mapSizeZ: 20
     _maxResourceCount: 0
     _resourceA_Ratio: 0
     _resourceB_Ratio: 0
     _resourceC_Ratio: 0
     _resourceCountArray: 
   - _centerPosition: {fileID: 7864964791825317910}
-    _mapSizeX: 19
-    _mapSizeZ: 19
+    _mapSizeX: 20
+    _mapSizeZ: 20
     _maxResourceCount: 0
     _resourceA_Ratio: 0
     _resourceB_Ratio: 0
     _resourceC_Ratio: 0
     _resourceCountArray: 
   - _centerPosition: {fileID: 5450706033372694096}
-    _mapSizeX: 19
-    _mapSizeZ: 19
+    _mapSizeX: 20
+    _mapSizeZ: 20
     _maxResourceCount: 0
     _resourceA_Ratio: 0
     _resourceB_Ratio: 0
     _resourceC_Ratio: 0
     _resourceCountArray: 
   - _centerPosition: {fileID: 2870726411581664346}
-    _mapSizeX: 19
-    _mapSizeZ: 19
+    _mapSizeX: 20
+    _mapSizeZ: 20
     _maxResourceCount: 0
     _resourceA_Ratio: 0
     _resourceB_Ratio: 0
     _resourceC_Ratio: 0
     _resourceCountArray: 
   - _centerPosition: {fileID: 4896453865686273025}
-    _mapSizeX: 19
-    _mapSizeZ: 19
+    _mapSizeX: 20
+    _mapSizeZ: 20
     _maxResourceCount: 0
     _resourceA_Ratio: 0
     _resourceB_Ratio: 0

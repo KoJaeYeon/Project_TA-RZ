@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using System;
 using Zenject;
+using Unity.VisualScripting;
 
 [System.Serializable]
 public enum GameLevel
@@ -72,8 +73,6 @@ public class Stage : MonoBehaviour
     #endregion
     private void Start()
     {
-        _object = gameObject.GetComponent<StageObject>();
-
         StartCoroutine(SetItemData($"R{1+(int)_level}01"));
 
         StartCoroutine(SetMonsterData());
@@ -96,9 +95,14 @@ public class Stage : MonoBehaviour
     {
         _portal.SetActive(false);
 
-        _poolManager.AllDestroyObject("Item_1");
-        _poolManager.AllDestroyObject("Item_2");
-        _poolManager.AllDestroyObject("Item_3");
+        if(_object == null)
+        {
+            _object = gameObject.GetComponent<StageObject>();
+        }
+
+        _poolManager.AllDestroyObject(_object.GetItemName(ItemList._resourceA));
+        _poolManager.AllDestroyObject(_object.GetItemName(ItemList._resourceB));
+        _poolManager.AllDestroyObject(_object.GetItemName(ItemList._resourceC));
     }
 
     private IEnumerator SpawnObject()
@@ -318,14 +322,16 @@ public class Stage : MonoBehaviour
 
     private void SpawnItem()
     {
-        _spawnItems = new List<GameObject>();   
+        _spawnItems = new List<GameObject>();
 
         foreach(var partition in _selectItemArea)
         {
-            if (_currentStage is StageType.Boss && partition == _selectItemArea[4])
+            if (_currentStage is StageType.Boss && partition.Equals(_selectItemArea[4]))
+            {
                 continue;
-
-            for(int i = 0; i < partition._resourceCountArray.Length; i++)
+            }
+                
+            for (int i = 0; i < partition._resourceCountArray.Length; i++)
             {
                 for(int k = 0; k < partition._resourceCountArray[i]; k++)
                 {
