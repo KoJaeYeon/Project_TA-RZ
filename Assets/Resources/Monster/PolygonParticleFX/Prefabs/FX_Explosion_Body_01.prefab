@@ -13939,7 +13939,7 @@ GameObject:
   - component: {fileID: 199032388029592334}
   - component: {fileID: 2268303826831188308}
   - component: {fileID: 4025845060326983205}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: FX_Explosion_Body_01
   m_TagString: Monster
   m_Icon: {fileID: 0}
@@ -18602,6 +18602,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e763b4951a514b14c81f386ae059f88a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _parentTrans: {fileID: 0}
 --- !u!135 &4025845060326983205
 SphereCollider:
   m_ObjectHideFlags: 0
