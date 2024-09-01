@@ -55,7 +55,7 @@ public class Monster_D_CheckCoolTime : Conditional
         float currentTime = Time.time;
         if (currentTime - Monster.Value.LastAttackTime >= Monster.Value.Mon_Common_CoolTime)
         {
-            Monster.Value.LastAttackTime = Time.time + 2f;
+            Monster.Value.LastAttackTime = Time.time + 1000f;
             return TaskStatus.Success;
         }
         else
