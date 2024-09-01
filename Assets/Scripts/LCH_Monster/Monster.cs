@@ -70,7 +70,8 @@ public class Monster : MonoBehaviour, IHit
         _bt = GetComponent<BehaviorTree>();
         Nav = GetComponent<NavMeshAgent>();
 
-        
+        // 09.01 지금 1번만(두번째 프리팹) 강제로 켜주는데 랜덤값으로 켜줘야 함
+        // 09.01 랜덤값 저장하고 추후 데이터 받아올 때 해당 데이터 이용
         transform.GetChild(1).gameObject.SetActive(true);
     }
 
@@ -119,7 +120,9 @@ public class Monster : MonoBehaviour, IHit
         {
             var stat = _dataManager.GetStat(idStr) as Monster_Stat;
             ///나중에 따로 스탯이 생기면 몬스터의 배율을 적용해 줄 부분
-            var data = _dataManager.GetData($"S10{(int)monsterAbility}") as PC_Level;
+            /// 09.01 Monster_Abitilty 받아왔음
+            /// Awake에서 설정한 랜덤값으로 monsterAbility 정해줘야함, monsterAbility 안받아오고 스탯배율만 받아올 예정( 스테이지 배율, 물량형 정예형 등 배율)
+            var data = _dataManager.GetData($"E21{(int)monsterAbility + 1}") as Monster_Ability;
             if (stat == null)
             {
                 Debug.Log($"Monster[{idStr}]의 스탯을 받아오지 못했습니다.");
@@ -138,18 +141,16 @@ public class Monster : MonoBehaviour, IHit
             {
                 monster_Stat = stat;
                 Debug.Log("Monster[{idStr}]의 스탯을 성공적으로 받아왔습니다.");
-                //Mon_Common_Stat_Hp = monster_Stat.HP * data.Level_Atk_Power_Multiplier;
-                //이런식으로 스탯 * 배율 받아와서 적용시켜주면 됨
-
-                Mon_Common_Stat_Hp = monster_Stat.HP;
-                Mon_Common_Hp_Remain = monster_Stat.HP;
-                Mon_Common_Damage = monster_Stat.Damage;
+                // 09.01 데이터 받아오기
+                Mon_Common_Stat_Hp = monster_Stat.HP * data.Stat_HPMag;
+                Mon_Common_Hp_Remain = Mon_Common_Stat_Hp;
+                Mon_Common_Damage = monster_Stat.Damage * data.Stat_DmgMag;
                 Mon_Common_AttackArea = monster_Stat.AttackArea;
                 Mon_Common_Range = monster_Stat.Range;
                 Mon_Common_DetectArea = monster_Stat.DetectArea;
                 Mon_Common_DetectTime = monster_Stat.DetectTime;
-                Mon_Common_MovementSpeed = monster_Stat.MovementSpeed;
-                Mon_Common_CoolTime = monster_Stat.Cooldown;
+                Mon_Common_MovementSpeed = monster_Stat.MovementSpeed * data.Stat_MSMag;
+                Mon_Common_CoolTime = monster_Stat.Cooldown * data.Stat_CDMag;
                 //TempHPText.text = Mon_Common_Hp_Remain.ToString();
                 yield break;
             }
