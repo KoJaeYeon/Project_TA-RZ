@@ -57,7 +57,7 @@ public class BTA_Boss_RushAttack : BossAction
 
     public override void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player") /*|| collision.gameObject.CompareTag("Wall")*/)
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.layer == LayerMask.NameToLayer("Environment"))
         {
             if (collision.gameObject.CompareTag("Player"))
             {
