@@ -7,6 +7,7 @@ using Zenject;
 using UnityEngine.SocialPlatforms;
 using BehaviorDesigner.Runtime.Tasks.Unity.UnityParticleSystem;
 using Zenject.SpaceFighter;
+using UnityEngine.UI;
 
 public enum BossPhase
 { 
@@ -94,6 +95,8 @@ public class BossController : MonoBehaviour, IHit
     private Transform _playerTr;
 
     public bool isGimmick;
+
+    [SerializeField] private Slider _hpBar;
 
     private readonly int _hashPhase = Animator.StringToHash("");
     private readonly int _hashAttack = Animator.StringToHash("");
@@ -184,6 +187,7 @@ public class BossController : MonoBehaviour, IHit
 
         _hp = _maxHp;
         _hpPercent = _hp / _maxHp * 100;
+        _hpBar.value = _hpPercent;
     }
 
     #region 테스트
@@ -494,11 +498,13 @@ public class BossController : MonoBehaviour, IHit
         {
             _hp = 0;
             _hpPercent = _hp / _maxHp * 100;
+            _hpBar.value = Mathf.Lerp(_hpBar.value, _hpPercent, Time.deltaTime * damage);
             return;
         }
 
         _hp -= damage;
         _hpPercent = _hp / _maxHp * 100;
+        _hpBar.value = Mathf.Lerp(_hpBar.value, _hpPercent, Time.deltaTime * damage);
     }
 
     //스킬 쿨타임 셋팅해주는 메서드

@@ -7,12 +7,13 @@ public class Monster_A : Monster, IHit
 {
     [SerializeField] private GameObject atkPrefab;
     [SerializeField] private GameObject explosionPrefab;
+    [SerializeField] private GameObject targetPrefab;
     [Header("공격 발동까지 걸리는 시간")]
-    [SerializeField] private float growDuration;  // 커지는 데 걸리는 시간
+    [SerializeField] public float growDuration;  // 커지는 데 걸리는 시간
+    public float GrowDuration { get { return growDuration; } }
     [Header("바닥 범위 설정")]
     [SerializeField] private Vector3 targetScale;
-    [Header("폭발 크기 설정")]
-    [SerializeField] private Vector3 explosionSize;
+    public Vector3 TargetScale { get { return targetScale; } }
     public float LastAttackTime { get; set; }
     
     protected override void Awake()
@@ -25,7 +26,6 @@ public class Monster_A : Monster, IHit
             monsterAEx.Initialize(this);
         }
         atkPrefab.transform.localScale = targetScale;
-        explosionPrefab.transform.localScale = explosionSize;
     }
 
     public void StartAtk()
@@ -51,7 +51,7 @@ public class Monster_A : Monster, IHit
             explosionPrefab.transform.parent = this.transform;
             atkPrefab.SetActive(true);
             explosionPrefab.SetActive(false);
-
+            targetPrefab.SetActive(false);
         }
     }
     
@@ -67,12 +67,10 @@ public class Monster_A : Monster, IHit
 
             var particle = explosionPrefab.GetComponent<ParticleSystem>();
 
-            if (particle != null)
-            {
                 particle.Play();
                 StartCoroutine(WaitForParticleToFinish(particle, explosionPrefab));
 
-            }
+            
         }
     }
 

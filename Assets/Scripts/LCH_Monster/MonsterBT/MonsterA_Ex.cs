@@ -1,18 +1,22 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using Zenject;
 
 public class MonsterA_Ex : MonoBehaviour
 {
     private Monster_A monsterA;
     private bool isDamaged;
     private SphereCollider collider;
+    [SerializeField] private Transform _parentTrans;
+
+    private void Awake()
+    {
+        collider = GetComponent<SphereCollider>();
+    }
 
     private void OnEnable()
     {
         StartCoroutine(OffCollider());
+        collider.radius = monsterA.TargetScale.x / 2;
     }
     private void OnDisable()
     {
@@ -20,8 +24,7 @@ public class MonsterA_Ex : MonoBehaviour
     }
     public void Initialize(Monster_A monsterA)
     {
-        this.monsterA = monsterA;
-        collider = GetComponent<SphereCollider>();
+        this.monsterA = monsterA;        
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -45,5 +48,8 @@ public class MonsterA_Ex : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         collider.enabled = false;
+        yield return new WaitForSeconds(2.9f);
+        transform.SetParent(_parentTrans);
+        gameObject.SetActive(false);
     }
 }

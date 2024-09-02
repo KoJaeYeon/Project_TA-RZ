@@ -7,12 +7,15 @@ public class Monster_A_atkEx : MonoBehaviour
 {
     private float growDuration = 2.0f;
     [SerializeField] GameObject target;
+    [SerializeField] Monster_A monsterA;
+
+    private void Awake()
+    {
+        growDuration = monsterA.GrowDuration;
+    }
 
     private void OnEnable()
     {
-
-        transform.SetParent(null);
-
         transform.localScale = Vector3.zero;
         StartCoroutine(GrowOverTime());
     }
@@ -29,19 +32,14 @@ public class Monster_A_atkEx : MonoBehaviour
 
         while (timeElapsed < growDuration)
         {
-            transform.localScale = Vector3.Lerp(initialScale, target.transform.localScale, timeElapsed / growDuration);
+            transform.localScale = Vector3.Lerp(initialScale, Vector3.one, timeElapsed / growDuration);
             timeElapsed += Time.deltaTime;
 
             yield return null;
         }
 
-        transform.localScale = target.transform.localScale;
-        transform.SetParent(target.transform);
+        transform.parent.SetParent(monsterA.transform);
+        yield break;
 
-        if (transform.localScale == target.transform.localScale)
-        {
-            gameObject.SetActive(false);
-            yield return null;
-        }
     }
 }

@@ -532,7 +532,7 @@ public class Player : MonoBehaviour, IHit
         {
             CurrentHP -= damage;            
 
-            PlayerHit.Pc_Stiff_Time = paralysisTime;
+            PlayerHit.Pc_Stiff_Time = _playerStat.Damaged_Stiff_T;
 
             _state.OnDamagedStateChange();
         }
@@ -546,7 +546,7 @@ public class Player : MonoBehaviour, IHit
         }
 
         PlayerKnockBack._knockBackPosition = otherTrans.position;
-        PlayerKnockBack.Pc_Knock_Back_Time = knockBackTime;
+        PlayerKnockBack.Pc_Knock_Back_Time = _playerStat.Damaged_KnockBack_T;
 
         _state.OnKnockBackStateChange();
 

@@ -5,7 +5,6 @@ using Zenject;
 using UnityEngine.UI;
 using System.ComponentModel;
 
-
 public class GameUI : MonoBehaviour
 {
     [Header("Normal")]

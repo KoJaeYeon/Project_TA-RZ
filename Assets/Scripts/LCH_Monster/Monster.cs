@@ -70,8 +70,8 @@ public class Monster : MonoBehaviour, IHit
         _bt = GetComponent<BehaviorTree>();
         Nav = GetComponent<NavMeshAgent>();
 
-        int rand = Random.Range(0, 4);
-        transform.GetChild(1).gameObject.SetActive(true);
+        //int rand = Random.Range(0, 4);
+        //transform.GetChild(rand).gameObject.SetActive(true);
     }
 
     void Start()
@@ -171,7 +171,11 @@ public class Monster : MonoBehaviour, IHit
             {
                 StopCoroutine(_hitCoroutine);
             }
-            Debug.Log(paralysisTime);
+            if(paralysisTime == 0)
+            {
+                IsDamaged = false;
+                return;
+            }
             _hitCoroutine = StartCoroutine(WaitForStun(paralysisTime));
         }
         else
