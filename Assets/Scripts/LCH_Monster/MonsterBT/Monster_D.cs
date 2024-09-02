@@ -16,7 +16,6 @@ public class Monster_D : Monster
     [SerializeField] private float dashSpeed;          // 돌진 속도
     private Vector3 targetPosition;                    // 저장된 플레이어 위치
     private Collider collider;
-    Animator animator;
     LayerMask _playerLayer;
 
     public Monster_D_DashUI dashUi { get; private set; }
@@ -25,7 +24,11 @@ public class Monster_D : Monster
         base.Awake();
         idStr = "E104";
         collider = GetComponent<Collider>();
-        animator = GetComponentInChildren<Animator>();
+    }
+
+    public override void OnSetMonsterStat(float stat_Multiplier)
+    {
+        base.OnSetMonsterStat(stat_Multiplier);
         dashUi = GetComponentInChildren<Monster_D_DashUI>();
     }
 
@@ -67,7 +70,7 @@ public class Monster_D : Monster
     {
         IsDrawDash = true;
         isDashing = true;
-        animator.SetBool("Atk",true);
+        Anim.SetBool("Atk",true);
         dashUi.OnDash();
         Vector3 startPosition = transform.position;
         Vector3 dashDirection = (targetPosition - startPosition).normalized;
@@ -109,7 +112,7 @@ public class Monster_D : Monster
     {
         dashUi.OnDashEnd();
         LastAttackTime = Time.time;
-        animator.SetBool("Atk", false);
+        Anim.SetBool("Atk", false);
         isDashing = false;
         IsAttack = false;
         collider.isTrigger = false;

@@ -69,6 +69,7 @@ public class Stage : MonoBehaviour
     private Map_Resource _itemData;
     private bool _itemDataReady = false;
     private bool _monsterDataReady = false;
+    private float _monsterMultiplier;
 
     #endregion
     private void Start()
@@ -296,6 +297,7 @@ public class Stage : MonoBehaviour
         }
 
         _spawnMonsters = new HashSet<GameObject>();
+        Load_MonsterStat_Multiplier();
 
         foreach(var partition in _selectMonsterArea)
         {
@@ -367,6 +369,7 @@ public class Stage : MonoBehaviour
         Monster monsterComponent = monster.GetComponent<Monster>();
 
         monsterComponent.IsSpawn(this);
+        monsterComponent.OnSetMonsterStat(_monsterMultiplier);
 
         _spawnMonsters.Add(monster);
     }
@@ -407,5 +410,19 @@ public class Stage : MonoBehaviour
         return randomPosition;
     }
 
+    void Load_MonsterStat_Multiplier()
+    {
+        if (_level == GameLevel.Boss) return;
+        if(_dataManager.GetData("E201") == null)
+        {
+            Debug.Log("E201 IS NULL!!!");
+            return;
+        }
+
+        var data_stage = _dataManager.GetData($"E20{1 + (int)_level}") as Map_Stat;
+        var data_stageType = _dataManager.GetData($"E22{1 + (int)_currentStage}") as Map_Stat;
+        _monsterMultiplier = data_stage.Stat_Multiply_Value * data_stageType.Stat_Multiply_Value;
+        return;
+    }
 }
 

@@ -21,7 +21,7 @@ public class Monster : MonoBehaviour, IHit
 {
     [Header("몬스터 타입")]
     [SerializeField] MonsterType Type;
-    [SerializeField] MonsterAbility Ability;
+    [SerializeField] MonsterAbility _Ability;
     [Inject] public Player Player { get;}
     [Inject] DataManager _dataManager;
     BehaviorTree _bt;
@@ -68,17 +68,15 @@ public class Monster : MonoBehaviour, IHit
         _rigidbody = GetComponent<Rigidbody>();
         _bt = GetComponent<BehaviorTree>();
         Nav = GetComponent<NavMeshAgent>();
+    }
 
-        int rand = Random.Range(0, 3);
-        transform.GetChild(rand).gameObject.SetActive(true);
-
-        Ability = (MonsterAbility)rand;
+    private void OnEnable()
+    {
+        
     }
 
     void Start()
     {
-        Anim = GetComponentInChildren<Animator>();
-
         if (Type == MonsterType.Supply)
         {
             gameObject.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
@@ -88,7 +86,6 @@ public class Monster : MonoBehaviour, IHit
             gameObject.transform.localScale = new Vector3(1.6f, 1.6f, 1.6f);
         }
         Mon_Common_Hp_Remain = Mon_Common_Stat_Hp;
-        OnSetMonsterStat(Ability, Type);
     }
 
     void Update()
@@ -105,33 +102,27 @@ public class Monster : MonoBehaviour, IHit
     /// </summary>
     /// <param name="monsterAbility"></param>
     /// <param name="monsterType"></param>
-    public void OnSetMonsterStat(MonsterAbility monsterAbility, MonsterType monsterType)
+    public virtual void OnSetMonsterStat(float stat_Multiplier)
     {
-        StartCoroutine(LoadStat(monsterAbility, monsterType));
+        int rand = Random.Range(0, 3);
+        transform.GetChild(rand).gameObject.SetActive(true);
+        _Ability = (MonsterAbility)rand;
+        Anim = GetComponentInChildren<Animator>();
+
+        StartCoroutine(LoadStat(stat_Multiplier));
     }
 
-    IEnumerator LoadStat(MonsterAbility monsterAbility, MonsterType monsterType)
+    IEnumerator LoadStat(float stat_Multiplier)
     {
         while (true)
         {
             var stat = _dataManager.GetStat(idStr) as Monster_Stat;
             ///나중에 따로 스탯이 생기면 몬스터의 배율을 적용해 줄 부분
-            /// 09.01 Monster_Abitilty 받아왔음
-            /// Awake에서 설정한 랜덤값으로 monsterAbility 정해줘야함, monsterAbility 안받아오고 스탯배율만 받아올 예정( 스테이지 배율, 물량형 정예형 등 배율)
-            var data = _dataManager.GetData($"E21{(int)monsterAbility + 1}") as Monster_Ability;
+            var data = _dataManager.GetData($"E21{(int)_Ability + 1}") as Monster_Ability;
             if (stat == null)
             {
                 Debug.Log($"Monster[{idStr}]의 스탯을 받아오지 못했습니다.");
                 yield return new WaitForSeconds(1f);
-            }
-            //else if (stat == null && Type == MonsterType.Supply)
-            //{
-            //    monster_Stat = stat;
-            //    Mon_Common_Stat_Hp = monster_Stat.HP;
-            //}
-            else if (stat==null&&monsterAbility==MonsterAbility.Power)
-            {
-                
             }
             else
             {
@@ -139,14 +130,14 @@ public class Monster : MonoBehaviour, IHit
                 Debug.Log("Monster[{idStr}]의 스탯을 성공적으로 받아왔습니다.");
                 
 
-                Mon_Common_Stat_Hp = monster_Stat.HP * data.Stat_HPMag;
+                Mon_Common_Stat_Hp = monster_Stat.HP * data.Stat_HPMag * stat_Multiplier;
                 Mon_Common_Hp_Remain = Mon_Common_Stat_Hp;
-                Mon_Common_Damage = monster_Stat.Damage * data.Stat_DmgMag;
+                Mon_Common_Damage = monster_Stat.Damage * data.Stat_DmgMag * stat_Multiplier;
                 Mon_Common_AttackArea = monster_Stat.AttackArea;
                 Mon_Common_Range = monster_Stat.Range;
                 Mon_Common_DetectArea = monster_Stat.DetectArea;
                 Mon_Common_DetectTime = monster_Stat.DetectTime;
-                Mon_Common_MovementSpeed = monster_Stat.MovementSpeed * data.Stat_MSMag;
+                Mon_Common_MovementSpeed = monster_Stat.MovementSpeed * data.Stat_MSMag * stat_Multiplier;
                 Mon_Common_CoolTime = monster_Stat.Cooldown * data.Stat_CDMag;
                 //TempHPText.text = Mon_Common_Hp_Remain.ToString();
                 yield break;
