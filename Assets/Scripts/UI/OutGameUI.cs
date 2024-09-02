@@ -21,12 +21,12 @@ public class OutGameUI : MonoBehaviour
 
     public void OnSublit_LoadGame(int index)
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     public void OnSubmit_NewGame(int index)
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     public void OnSubmit_ContinueBox()
