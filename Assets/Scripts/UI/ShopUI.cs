@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class BlueChipUI : MonoBehaviour
+public class ShopUI : MonoBehaviour
 {
     [Inject] UIEvent UIEvent;
     private void OnEnable()

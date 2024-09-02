@@ -8,12 +8,14 @@ public class UICanvas : MonoBehaviour
     [Inject] UIEvent UIEvent;
     [SerializeField] BlueChipUI BlueChipUI;
     [SerializeField] GameUI GameUI;
-    [SerializeField] LoadingUI _loadUI;
+    [SerializeField] LoadingUI LoadUI;
+    [SerializeField] ShopUI ShopUI;
 
     public void Awake()
     {
         UIEvent.RegisterBlueChipUI(BlueChipUI);
         UIEvent.RegisterGameUI(GameUI);
-        UIEvent.RegisterLoadUI(_loadUI);
+        UIEvent.RegisterLoadUI(LoadUI);
+        UIEvent.RegisterShopUI(ShopUI);
     }
 }

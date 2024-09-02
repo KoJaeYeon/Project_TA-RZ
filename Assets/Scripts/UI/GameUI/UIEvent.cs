@@ -13,6 +13,7 @@ public class UIEvent
     private MapManager _mapManager;
     public LoadingUI _loadUI { get; private set; }
     public BlueChipUI BlueChipUI { get; private set; }
+    public ShopUI ShopUI { get; private set; }
     
     #region ChoiceEvent
     public void RegisterGameUI(GameUI gameUI)
@@ -73,6 +74,18 @@ public class UIEvent
     }
 
     public void ActiveBlueChipUI()
+    {
+        BlueChipUI.gameObject.SetActive(true);
+    }
+    #endregion
+
+    #region BlueChipEvent
+    public void RegisterShopUI(ShopUI shopUI)
+    {
+        ShopUI = shopUI;
+    }
+
+    public void ActiveShopUI()
     {
         BlueChipUI.gameObject.SetActive(true);
     }
