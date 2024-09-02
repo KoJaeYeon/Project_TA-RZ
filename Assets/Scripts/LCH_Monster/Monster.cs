@@ -70,11 +70,6 @@ public class Monster : MonoBehaviour, IHit
         Nav = GetComponent<NavMeshAgent>();
     }
 
-    private void OnEnable()
-    {
-        
-    }
-
     void Start()
     {
         if (Type == MonsterType.Supply)
