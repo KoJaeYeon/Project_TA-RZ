@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using Zenject;
 
@@ -7,12 +8,14 @@ public class ShopUI : MonoBehaviour
 {
     [Inject] UIEvent UIEvent;
     [SerializeField] InputActionReference cancelAction;
+    [SerializeField] GameObject initial_Select_GameObject;
     private void OnEnable()
     {
         cancelAction.action.Enable();
         cancelAction.action.performed += OnCancel;
         UIEvent.SetActivePlayerControl(false);
 
+        EventSystem.current.SetSelectedGameObject(initial_Select_GameObject);
         ShopUIRenew();
     }
 
