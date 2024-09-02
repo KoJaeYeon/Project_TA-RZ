@@ -543,11 +543,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
-    - target: {fileID: 7231709505634375599, guid: 14825251dc685714ba8eb2b674b41f54,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8168185010568686427, guid: 14825251dc685714ba8eb2b674b41f54,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -629,11 +624,6 @@ PrefabInstance:
     - target: {fileID: 6148404288403476671, guid: e44852ff32c7ef14687c01b75dca3779,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6576206917759432424, guid: e44852ff32c7ef14687c01b75dca3779,
-        type: 3}
-      propertyPath: m_IsKinematic
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

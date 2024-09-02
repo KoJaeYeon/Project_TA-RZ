@@ -13,14 +13,14 @@ public class GameUI : MonoBehaviour
     [Header("Boss")]
     [SerializeField] private GameObject _bossStageUI;
 
-    [Header("LoadingUI")] private GameObject _loadingUI;
+    [Header("BlockingImage")]
+    [SerializeField] private GameObject _blockingImage;
 
     [Header("ProgressUI")]
     [SerializeField] private GameObject _progressUI;
     [SerializeField] private Image _progressImage;
 
-    [Inject] private UIEvent _uiEvent;
-    [Inject] private MapManager _mapManager;
+    [Inject] private UIEvent _uiEvent;    
     [Inject]
     public void Construct(DiContainer container)
     {
@@ -48,10 +48,21 @@ public class GameUI : MonoBehaviour
 
     private void OnEnable()
     {
+        _blockingImage.SetActive(true);
+
         InitializeProgressUIOnEnable();
         InitializeChoiceUIOnEnable();
+
+        _currentProgressvalue = _uiEvent.GetProgressValue();
+        _uiEvent.RequestChangeProgressBar(_currentProgressvalue);
+
         ActiveChoiceUI();
         _uiEvent.SetActivePlayerControl(false);
+    }
+
+    private void OnDisable()
+    {
+        _blockingImage.SetActive(false);
     }
 
     #region Initialize
@@ -109,7 +120,7 @@ public class GameUI : MonoBehaviour
         if (args.PropertyName == nameof(_progressView.CurrentProgress))
         {
             _currentProgressvalue = _progressView.CurrentProgress;
-
+            
             _progressBar.fillAmount = _progressView.CurrentProgress;
         }
     }
@@ -123,9 +134,8 @@ public class GameUI : MonoBehaviour
 
     private IEnumerator ChoiceStage()
     {
-        float currentProgressValue = _mapManager.ProgressValue;
-
-        if (currentProgressValue <= 0.99f)
+     
+        if (_currentProgressvalue <= 0.99f)
         {
             _currentUI = RandomUI();
         }
@@ -136,17 +146,11 @@ public class GameUI : MonoBehaviour
 
         ActiveUI(true);
 
-        _uiEvent.RequestChangeProgressBar(currentProgressValue);
-
-        Cursor.lockState = CursorLockMode.None;
-
         yield return new WaitWhile(() => !_isChoice);
 
         ActiveUI(false);
 
-        Cursor.lockState = CursorLockMode.Locked;
-
-        _mapManager.ChangeMap(_currentStage);
+        _uiEvent.RequestChangeStage(_currentStage);
 
         this.gameObject.SetActive(false);
     }
@@ -199,5 +203,4 @@ public class GameUI : MonoBehaviour
         _currentStage = StageType.Boss;
         _isChoice = true;
     }
-
 }

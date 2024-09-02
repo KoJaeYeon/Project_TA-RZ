@@ -8,8 +8,7 @@ public class ProgressUIViewModel
 {
     [Inject] private UIEvent _uiEvent;
 
-    private float _currentProgress;
-    private float _maxProgress = 1f;
+    private float _currentProgress;    
 
     public float CurrentProgress
     {
