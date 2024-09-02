@@ -69,7 +69,7 @@ public class Monster : MonoBehaviour, IHit
         _bt = GetComponent<BehaviorTree>();
         Nav = GetComponent<NavMeshAgent>();
 
-        int rand = Random.Range(0, 2);
+        int rand = Random.Range(0, 3);
         transform.GetChild(rand).gameObject.SetActive(true);
 
         Ability = (MonsterAbility)rand;
@@ -88,18 +88,6 @@ public class Monster : MonoBehaviour, IHit
             gameObject.transform.localScale = new Vector3(1.6f, 1.6f, 1.6f);
         }
         Mon_Common_Hp_Remain = Mon_Common_Stat_Hp;
-        if(Ability == MonsterAbility.Original)
-        {
-            transform.GetChild(0).gameObject.SetActive(true);
-        }
-        if(Ability == MonsterAbility.Speed)
-        {
-            transform.GetChild(1).gameObject.SetActive(true);
-        }
-        if(Ability == MonsterAbility.Power)
-        {
-            transform.GetChild(2).gameObject.SetActive(true);
-        }
         OnSetMonsterStat(Ability, Type);
     }
 
