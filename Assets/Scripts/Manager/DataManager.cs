@@ -46,7 +46,7 @@ public class DataManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"{idStr}을 딕셔너리에서 받아오는데 실패했습니다.");
+            Debug.LogWarning($"{idStr}을 딕셔너리에서 받아오는데 실패했습니다.");
             return null;
         }
     }
@@ -62,7 +62,7 @@ public class DataManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"{idStr}을 딕셔너리에서 받아오는데 실패했습니다.");
+            Debug.LogWarning($"{idStr}을 딕셔너리에서 받아오는데 실패했습니다.");
             return null;
         }
     }
@@ -79,7 +79,7 @@ public class DataManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"{idStr}을 딕셔너리에서 받아오는데 실패했습니다.");
+            Debug.LogWarning($"{idStr}을 딕셔너리에서 받아오는데 실패했습니다.");
             return string.Empty;
         }
     }

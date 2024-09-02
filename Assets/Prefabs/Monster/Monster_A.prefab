@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 3448629249713632305}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.91, y: 2.29, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 0
-  Ability: 0
+  _Ability: 0
   Attack_Stiff_Time: 0
   Knockback_Horizontal_Distance: 4
   Knockback_Vertical_Distance: 2
@@ -192,6 +192,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Monster_A _Speed
       objectReference: {fileID: 0}
+    - target: {fileID: 8860565670137976791, guid: 45835bdd123f0c54ca49606c91c9e993,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8860565670138465269, guid: 45835bdd123f0c54ca49606c91c9e993,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -271,6 +276,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Monster_A_Power
       objectReference: {fileID: 0}
+    - target: {fileID: 8860565670137976791, guid: f288bdd6ae9fb9448aa04eee8e2db182,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8860565670138465269, guid: f288bdd6ae9fb9448aa04eee8e2db182,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -340,30 +350,20 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 707298249371211066}
     m_Modifications:
-    - target: {fileID: 491918217497906315, guid: e23a316ec0c2a0647ba4804afcdbb378,
-        type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 739683436975676488, guid: e23a316ec0c2a0647ba4804afcdbb378,
-        type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 4938852274070741551, guid: e23a316ec0c2a0647ba4804afcdbb378,
         type: 3}
       propertyPath: monsterA
       value: 
       objectReference: {fileID: 2562533748181669728}
-    - target: {fileID: 5859596967597927552, guid: e23a316ec0c2a0647ba4804afcdbb378,
-        type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 8860565670137976791, guid: e23a316ec0c2a0647ba4804afcdbb378,
         type: 3}
       propertyPath: m_Name
       value: Monster_A
+      objectReference: {fileID: 0}
+    - target: {fileID: 8860565670137976791, guid: e23a316ec0c2a0647ba4804afcdbb378,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8860565670138465269, guid: e23a316ec0c2a0647ba4804afcdbb378,
         type: 3}
@@ -415,12 +415,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 793427467150451545, guid: e23a316ec0c2a0647ba4804afcdbb378, type: 3}
-    - {fileID: 3403244524686710681, guid: e23a316ec0c2a0647ba4804afcdbb378, type: 3}
-    - {fileID: 3677069109103963087, guid: e23a316ec0c2a0647ba4804afcdbb378, type: 3}
-    - {fileID: 6587976483241513279, guid: e23a316ec0c2a0647ba4804afcdbb378, type: 3}
-    - {fileID: 8584482722515747573, guid: e23a316ec0c2a0647ba4804afcdbb378, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -461,6 +456,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Monster_A_Shield
+      objectReference: {fileID: 0}
+    - target: {fileID: 8860565670137976791, guid: e8a9e5fdd63a00b4c8e91bfe554c1f24,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8860565670138465269, guid: e8a9e5fdd63a00b4c8e91bfe554c1f24,
         type: 3}

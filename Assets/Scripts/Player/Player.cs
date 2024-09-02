@@ -97,7 +97,8 @@ public class Player : MonoBehaviour, IHit
             if (_currentHP == value)
                 return;
 
-            _currentHP = value;
+            _currentHP = value > HP ? HP : value;
+
             OnPropertyChanged(nameof(CurrentHP));
         }
     }
@@ -242,6 +243,14 @@ public class Player : MonoBehaviour, IHit
         else if (Input.GetKeyDown(KeyCode.F8))
         {
             CurrentSkill = 100;
+        }
+        else if (Input.GetKeyDown(KeyCode.U))
+        {
+            CurrentHP += 10;
+        }
+        else if (Input.GetKeyDown(KeyCode.I))
+        {
+            CurrentHP += 100;
         }
         else if (Input.GetKeyDown(KeyCode.O))
         {

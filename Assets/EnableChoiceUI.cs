@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class EnableChoiceUI : MonoBehaviour
 {
     [SerializeField] private GameObject _ui;
+    static GameObject SelectedChoiceButton;
 
     private void OnEnable()
     {
@@ -16,7 +17,11 @@ public class EnableChoiceUI : MonoBehaviour
     {
         if (EventSystem.current.currentSelectedGameObject == null)
         {
-            EventSystem.current.SetSelectedGameObject(_ui);
+            EventSystem.current.SetSelectedGameObject(SelectedChoiceButton);
+        }
+        else
+        {
+            SelectedChoiceButton = EventSystem.current.currentSelectedGameObject;
         }
     }
 }
