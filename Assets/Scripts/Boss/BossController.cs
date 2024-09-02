@@ -4,9 +4,6 @@ using UnityEngine;
 using UnityEngine.AI;
 using BehaviorDesigner.Runtime;
 using Zenject;
-using UnityEngine.SocialPlatforms;
-using BehaviorDesigner.Runtime.Tasks.Unity.UnityParticleSystem;
-using Zenject.SpaceFighter;
 using UnityEngine.UI;
 
 public enum BossPhase
@@ -21,6 +18,7 @@ public class BossController : MonoBehaviour, IHit
     [SerializeField] Boss_DamageBoxManager damageBoxManager;
     [Inject] DataManager dataManager { get; }
     [Inject] public Player player { get; }
+    [Inject] private Boss_ParticleManager _boss_Particle;
 
     [Header("기본 정보")]
     [Tooltip("현재 페이즈")] public BossPhase phase;
@@ -148,7 +146,7 @@ public class BossController : MonoBehaviour, IHit
         }
         _secondExplosion.SetActive(false);
         _rushMark.SetActive(false);
-        _rushPar.Stop();
+        _rushPar.gameObject.SetActive(false);
         _swingMark.SetActive(false);
         _smashMark.SetActive(false);
 
@@ -346,8 +344,10 @@ public class BossController : MonoBehaviour, IHit
         _rushMark.SetActive(true);
 
         _rushPar.transform.position = transform.position;
+        SetYPosition(_rushPar.transform);
+        _rushPar.transform.position = _rushPar.transform.position + Vector3.up * 0.01f;
         _rushPar.transform.rotation = transform.rotation;
-        _rushPar.Play();
+        _rushPar.gameObject.SetActive(true);
     }
     //방향 설정
     public Vector3 SetRushDirection()
@@ -362,7 +362,7 @@ public class BossController : MonoBehaviour, IHit
     public void RushAttack(float speed, Vector3 direction)
     {
         _rushMark.SetActive(false);
-        _rushPar.Stop();
+        _rushPar.gameObject.SetActive(false);
         _rb.velocity = direction * speed;
     }
     public void RushCool()
