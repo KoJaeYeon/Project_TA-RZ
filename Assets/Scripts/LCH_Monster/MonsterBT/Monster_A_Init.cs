@@ -20,7 +20,7 @@ public class Monster_A_Init : Action
         nav.Value = GetComponent<NavMeshAgent>();
         _transform.Value = monster_A.Value.Player.transform;
         waitTime.Value = monster_A.Value.Mon_Knockback_Time;
-        animator.Value = GetComponent<Animator>();
+        
     }
     public override void OnStart()
     {

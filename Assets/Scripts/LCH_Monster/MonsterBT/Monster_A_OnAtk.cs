@@ -12,10 +12,7 @@ public class Monster_A_OnAtk : Action
     [SerializeField] SharedMonster_A monster;
     [SerializeField] SharedAnimator anim;
     AnimatorStateInfo animinfo;
-    public override void OnAwake()
-    {
-        anim = GetComponent<Animator>();
-    }
+    
     public override void OnStart()
     {
         anim.Value.Play("Atk");
