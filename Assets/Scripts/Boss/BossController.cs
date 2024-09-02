@@ -16,6 +16,7 @@ public enum BossPhase
 
 public class BossController : MonoBehaviour, IHit
 {
+    private GameObject _bossPrefab;
     [SerializeField] Boss_MarkManager markManager;
     [SerializeField] Boss_DamageBoxManager damageBoxManager;
     [Inject] DataManager dataManager { get; }
@@ -26,9 +27,6 @@ public class BossController : MonoBehaviour, IHit
     [Tooltip("최대 체력")] public float _maxHp;
     [SerializeField, Tooltip("현재 체력")] private float _hp;                  
     [HideInInspector] public float _hpPercent;
-    //[SerializeField] private float _speed;
-    //[SerializeField] private float _damage;
-    //[SerializeField] private float _attackSpeed;
     [SerializeField, Tooltip("공격 가능 사거리")] private float _attackRange;
     [SerializeField, Tooltip("대쉬 체크용 사거리")] private float _rushDistance;
     [SerializeField, Tooltip("추적 사거리")] private float _traceDistance;
@@ -67,6 +65,7 @@ public class BossController : MonoBehaviour, IHit
 
     [Header("2페이즈 돌진공격")]
     [SerializeField] private GameObject _rushMark;
+    [SerializeField] private ParticleSystem _rushPar;
     [SerializeField] private float _rushSpeed;
     public float rushRange;
     public float rushWailtTime;
@@ -116,11 +115,14 @@ public class BossController : MonoBehaviour, IHit
 
     private void Awake()
     {
+        _bossPrefab = transform.parent.gameObject;
+
         _gimmick = markManager.mark_Gimmick.GetComponent<GimmickController>();
         _markRoot = markManager.mark_RootAttack;
         _firstExplosion = markManager.mark_FirstExplosion;
         _secondExplosion = markManager.mark_SecondExplosion;
         _rushMark = markManager.mark_Rush;
+        _rushPar = markManager.mark_RushPar;
         _swingMark = markManager.mark_Swing;
         _smashMark = markManager.mark_smash;
 
@@ -146,6 +148,7 @@ public class BossController : MonoBehaviour, IHit
         }
         _secondExplosion.SetActive(false);
         _rushMark.SetActive(false);
+        _rushPar.Stop();
         _swingMark.SetActive(false);
         _smashMark.SetActive(false);
 
@@ -159,6 +162,7 @@ public class BossController : MonoBehaviour, IHit
         _swingDamageBox.SetActive(false);
         _smashDamageBox.SetActive(false);
 
+        _bt.SetVariableValue("BossPrefab", _bossPrefab);
 
         _bt.SetVariableValue("Phase1_Per", _phaseOnePer);
         _bt.SetVariableValue("Phase2_Per", _phaseTwoPer);
@@ -340,6 +344,10 @@ public class BossController : MonoBehaviour, IHit
         _rushMark.transform.position = _rushMark.transform.position + Vector3.up * 0.01f;
         _rushMark.transform.rotation = transform.rotation;
         _rushMark.SetActive(true);
+
+        _rushPar.transform.position = transform.position;
+        _rushPar.transform.rotation = transform.rotation;
+        _rushPar.Play();
     }
     //방향 설정
     public Vector3 SetRushDirection()
@@ -354,6 +362,7 @@ public class BossController : MonoBehaviour, IHit
     public void RushAttack(float speed, Vector3 direction)
     {
         _rushMark.SetActive(false);
+        _rushPar.Stop();
         _rb.velocity = direction * speed;
     }
     public void RushCool()
