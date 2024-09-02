@@ -1,16 +1,25 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 public class OutGameUI : MonoBehaviour
 {
+    [Inject] SaveManager _saveManager;
+
     [SerializeField] InputActionReference cancelAction;
     [SerializeField] GameObject[] ChoiceBox;
+
+    [SerializeField] TextMeshProUGUI[] continueText;
+    [SerializeField] TextMeshProUGUI[] newText;
 
     void OnEnable()
     {
         cancelAction.action.Enable();
         cancelAction.action.performed += OnCancel;
+
+        SaveDataRenew();
     }
 
     void OnDisable()
@@ -18,6 +27,19 @@ public class OutGameUI : MonoBehaviour
         cancelAction.action.performed -= OnCancel;
         cancelAction.action.Disable();
     }
+
+    private void SaveDataRenew()
+    {
+        for(int i = 0; i < 3; i++)
+        {
+            var load_Data = _saveManager.Load(i);
+            string date = string.IsNullOrWhiteSpace(load_Data.saveTime)? "Empty" : load_Data.saveTime;
+            continueText[i].text = date;
+            newText[i].text = date;
+        }
+        
+    }
+
 
     public void OnSublit_LoadGame(int index)
     {
