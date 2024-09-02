@@ -376,7 +376,7 @@ GameObject:
   - component: {fileID: 256167000613852921}
   - component: {fileID: 4670767100882050887}
   m_Layer: 5
-  m_Name: GameObject (2)
+  m_Name: LoadGame_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -447,7 +447,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2882059766206909114}
+        m_TargetAssemblyTypeName: OutGameUI, Assembly-CSharp
+        m_MethodName: OnSublit_LoadGame
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!95 &4670767100882050887
 Animator:
   serializedVersion: 5
@@ -780,7 +792,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2882059766206909114}
         m_TargetAssemblyTypeName: OutGameUI, Assembly-CSharp
-        m_MethodName: OnSubmit_Continue
+        m_MethodName: OnSubmit_ContinueBox
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1891,7 +1903,7 @@ GameObject:
   - component: {fileID: 407493623545912180}
   - component: {fileID: 6967840859048143043}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: LoadGame_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1962,7 +1974,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2882059766206909114}
+        m_TargetAssemblyTypeName: OutGameUI, Assembly-CSharp
+        m_MethodName: OnSublit_LoadGame
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!95 &6967840859048143043
 Animator:
   serializedVersion: 5
@@ -2281,7 +2305,7 @@ GameObject:
   - component: {fileID: 1043928314463067691}
   - component: {fileID: 4648166523557954932}
   m_Layer: 5
-  m_Name: GameObject (1)
+  m_Name: NewGame_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2352,7 +2376,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2882059766206909114}
+        m_TargetAssemblyTypeName: OutGameUI, Assembly-CSharp
+        m_MethodName: OnSubmit_NewGame
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!95 &4648166523557954932
 Animator:
   serializedVersion: 5
@@ -2465,7 +2501,7 @@ GameObject:
   - component: {fileID: 2955559343186770255}
   - component: {fileID: 2893406059607940468}
   m_Layer: 5
-  m_Name: GameObject (1)
+  m_Name: LoadGame_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2536,7 +2572,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2882059766206909114}
+        m_TargetAssemblyTypeName: OutGameUI, Assembly-CSharp
+        m_MethodName: OnSublit_LoadGame
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!95 &2893406059607940468
 Animator:
   serializedVersion: 5
@@ -2915,7 +2963,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2882059766206909114}
         m_TargetAssemblyTypeName: OutGameUI, Assembly-CSharp
-        m_MethodName: OnSubmit_NewGame
+        m_MethodName: OnSubmit_NewGameBox
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3864,7 +3912,7 @@ GameObject:
   - component: {fileID: 1627584987916270613}
   - component: {fileID: 5882877630353738363}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: NewGame_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3935,7 +3983,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2882059766206909114}
+        m_TargetAssemblyTypeName: OutGameUI, Assembly-CSharp
+        m_MethodName: OnSubmit_NewGame
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!95 &5882877630353738363
 Animator:
   serializedVersion: 5
@@ -4179,7 +4239,7 @@ GameObject:
   - component: {fileID: 5065579656966922363}
   - component: {fileID: 6021769938009206110}
   m_Layer: 5
-  m_Name: GameObject (2)
+  m_Name: NewGame_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4250,7 +4310,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2882059766206909114}
+        m_TargetAssemblyTypeName: OutGameUI, Assembly-CSharp
+        m_MethodName: OnSubmit_NewGame
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!95 &6021769938009206110
 Animator:
   serializedVersion: 5

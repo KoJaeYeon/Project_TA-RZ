@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class OutGameUI : MonoBehaviour
 {
@@ -18,12 +19,22 @@ public class OutGameUI : MonoBehaviour
         cancelAction.action.Disable();
     }
 
-    public void OnSubmit_Continue()
+    public void OnSublit_LoadGame(int index)
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void OnSubmit_NewGame(int index)
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void OnSubmit_ContinueBox()
     {
         ChoiceBox[0].SetActive(false);
         ChoiceBox[1].SetActive(true);
     }
-    public void OnSubmit_NewGame()
+    public void OnSubmit_NewGameBox()
     {
         ChoiceBox[0].SetActive(false);
         ChoiceBox[2].SetActive(true);
