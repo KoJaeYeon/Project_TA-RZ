@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-public class PlayerInfoUI : MonoBehaviour
+public class PlayerStatUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _nameText;
     [SerializeField] private TextMeshProUGUI _powerText;
@@ -48,7 +48,7 @@ public class PlayerInfoUI : MonoBehaviour
         _moveSpeedText.text = _player.CurrentSpeed.ToString();
         _resourceText.text = _player.CurrentAmmo.ToString();
         _staminaText.text = _player._playerStat.Stamina_Gain.ToString();
-        _elementText.text = "아직없음";
+        _elementText.text = _player.PassiveAtk_Power.ToString();
     }
 
     private void OnPropertyChangedUI(object sender, PropertyChangedEventArgs arg)

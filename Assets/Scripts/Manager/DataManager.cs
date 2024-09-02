@@ -132,6 +132,9 @@ public class DataManager : MonoBehaviour
             case "_String_Data_URL":
                 Process_String_Data(data);
                 break;
+            case "_PC_BluechipData_URL":
+                Process_BlueChip_Data(data);
+                break;
             default:
                 Debug.LogError($"Unknown URL name: {urlName}");
                 break;
@@ -370,6 +373,25 @@ public class DataManager : MonoBehaviour
             string str = item["Korean"].ToString();
 
             AddStringToStringDictionary(idStr, str);
+        }
+    }
+
+    private void Process_BlueChip_Data(string data)
+    {
+        JArray jsonArray = JArray.Parse(data);
+
+        foreach (var item in jsonArray)
+        {
+            string idStr = item[nameof(PC_BlueChip.ID)].ToString();
+            float att_damage = ParseFloat(item[nameof(PC_BlueChip.Att_damage)]);
+            float att_damage_Lvup = ParseFloat(item[nameof(PC_BlueChip.Att_Damage_Lvup)]);
+            float chip_attackArea = ParseFloat(item[nameof(PC_BlueChip.Chip_AttackArea)]);
+            float interval_Time = ParseFloat(item[nameof(PC_BlueChip.Interval_time)]);
+            float chip_Lifetime = ParseFloat(item[nameof(PC_BlueChip.Chip_Lifetime)]);
+            List<float> valueList = parseList<float>(item[nameof(PC_BlueChip.ValueList)]);
+            
+            PC_BlueChip bluechip = new PC_BlueChip(idStr, att_damage, att_damage_Lvup, chip_attackArea, interval_Time, chip_Lifetime, valueList);
+            AddDataToDataDictionary(idStr, bluechip);
         }
     }
     #endregion

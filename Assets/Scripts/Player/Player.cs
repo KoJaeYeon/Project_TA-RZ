@@ -53,7 +53,9 @@ public class Player : MonoBehaviour, IHit
     float _currentStamina;
     float _currentAtk;
     float _currentSpeed;
-    
+    float _passiveAtk_Power;
+
+
     public bool IsActiveStaminaRecovery { get; set; } = true;
     bool _isPlayerAlive = true;
     public bool[] IsSkillAcitve { get; set; } = new bool[4] { false, false, false, false };
@@ -197,6 +199,22 @@ public class Player : MonoBehaviour, IHit
             OnPropertyChanged(nameof(HP));
         }
     }
+
+    public float PassiveAtk_Power
+    {
+        get { return _passiveAtk_Power; }
+        set
+        {
+            if(_passiveAtk_Power == value)
+            {
+                return;
+            }
+
+            _passiveAtk_Power = value;
+            OnPropertyChanged(nameof(PassiveAtk_Power));
+        }
+    }
+
     public bool IsPlayerAlive
     {
         get { return _isPlayerAlive; }
@@ -366,6 +384,7 @@ public class Player : MonoBehaviour, IHit
         CurrentStamina = 100;
         CurrentSkill = 0;
         CurrentAmmo = 0;
+        PassiveAtk_Power = _playerStat.PassiveAtk_Power;
         OnPropertyChanged(nameof(stat.Resource_Own_Num));
         yield break;
     }
