@@ -21,8 +21,7 @@ public class GameUI : MonoBehaviour
     [SerializeField] private GameObject _progressUI;
     [SerializeField] private Image _progressImage;
 
-    [Inject] private UIEvent _uiEvent;
-    //[Inject] private MapManager _mapManager;
+    [Inject] private UIEvent _uiEvent;    
     [Inject]
     public void Construct(DiContainer container)
     {
@@ -54,6 +53,10 @@ public class GameUI : MonoBehaviour
 
         InitializeProgressUIOnEnable();
         InitializeChoiceUIOnEnable();
+
+        _currentProgressvalue = _uiEvent.GetProgressValue();
+        _uiEvent.RequestChangeProgressBar(_currentProgressvalue);
+
         ActiveChoiceUI();
         _uiEvent.SetActivePlayerControl(false);
     }
@@ -118,7 +121,7 @@ public class GameUI : MonoBehaviour
         if (args.PropertyName == nameof(_progressView.CurrentProgress))
         {
             _currentProgressvalue = _progressView.CurrentProgress;
-
+            
             _progressBar.fillAmount = _progressView.CurrentProgress;
         }
     }
@@ -132,8 +135,7 @@ public class GameUI : MonoBehaviour
 
     private IEnumerator ChoiceStage()
     {
-        //float currentProgressValue = _mapManager.ProgressValue;
-
+     
         if (_currentProgressvalue <= 0.99f)
         {
             _currentUI = RandomUI();
@@ -145,13 +147,9 @@ public class GameUI : MonoBehaviour
 
         ActiveUI(true);
 
-        //_uiEvent.RequestChangeProgressBar(_currentProgressvalue);
-
         yield return new WaitWhile(() => !_isChoice);
 
         ActiveUI(false);
-
-        //_mapManager.ChangeMap(_currentStage);
 
         _uiEvent.RequestChangeStage(_currentStage);
 

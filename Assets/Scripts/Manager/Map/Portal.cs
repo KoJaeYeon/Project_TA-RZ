@@ -9,6 +9,7 @@ public class Portal : MonoBehaviour
 {
     #region InJect
     [Inject] private UIEvent _uiEvent;
+    [Inject] private MapManager _mapManager;
     #endregion;
    
     private void OnTriggerEnter(Collider other)
