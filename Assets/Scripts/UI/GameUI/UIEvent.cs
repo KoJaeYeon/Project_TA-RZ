@@ -79,7 +79,7 @@ public class UIEvent
     }
     #endregion
 
-    #region BlueChipEvent
+    #region ShopEvent
     public void RegisterShopUI(ShopUI shopUI)
     {
         ShopUI = shopUI;
@@ -87,7 +87,7 @@ public class UIEvent
 
     public void ActiveShopUI()
     {
-        BlueChipUI.gameObject.SetActive(true);
+        ShopUI.gameObject.SetActive(true);
     }
     #endregion
 
