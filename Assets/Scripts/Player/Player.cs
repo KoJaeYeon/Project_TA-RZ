@@ -235,6 +235,14 @@ public class Player : MonoBehaviour, IHit
         {
             CurrentSkill++;
         }
+        else if (Input.GetKeyDown(KeyCode.F4))
+        {
+            Debug.Log(SavePlayerData);
+        }
+        else if (Input.GetKeyDown(KeyCode.F5))
+        {
+            CurrentSkill = 25;
+        }
         else if(Input.GetKeyDown(KeyCode.F5))
         {
             CurrentSkill = 25;
@@ -334,19 +342,6 @@ public class Player : MonoBehaviour, IHit
             CurrentStamina += (_playerStat.Stamina_Gain + PlayerPassiveData.AddStaRecovery) * Time.deltaTime;
         }
     }
-
-
-    //public void DrainCheck()
-    //{
-
-    //    var _animatorStateInfo = animato.GetCurrentAnimatorStateInfo(0);
-
-    //    if (_animatorStateInfo.IsName("Attack_Legend_Anim") && _animatorStateInfo.normalizedTime >= 0.3f)
-    //    {
-    //        _animator.speed = 0.03f;
-    //    }
-    //}
-
 
     public bool SkillCheck()
     {

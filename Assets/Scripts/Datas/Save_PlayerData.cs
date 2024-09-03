@@ -1,6 +1,6 @@
 public class Save_PlayerData
 {
-    public string saveTime {get; set;}
+    public string saveTime { get; set; }
     public int money { get; set; } = 10000;
     public bool BossKilled { get; set; } = false;
     public bool Charged { get; set; } = false;
@@ -14,4 +14,19 @@ public class Save_PlayerData
     public int Kill { get; set; } = 0;
     public int resource { get; set; } = 0;
 
+    public override string ToString()
+    {
+        return $"saveTime: {saveTime}, " +
+               $"money: {money}, " +
+               $"BossKilled: {BossKilled}, " +
+               $"Charged: {Charged}, " +
+               $"NoHitBossKilled: {NoHitBossKilled}, " +
+               $"AllUnlocked: {AllUnlocked}, " +
+               $"RedChip: {RedChip}, " +
+               $"EnemyKilled: {EnemyKilled}, " +
+               $"ResourceGet: {ResourceGet}, " +
+               $"passiveIndex: [{string.Join(", ", passiveIndex)}], " +
+               $"Kill: {Kill}, " +
+               $"resource: {resource}";
+    }
 }
