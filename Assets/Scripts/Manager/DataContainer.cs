@@ -7,6 +7,7 @@ public class DataContainer : MonoInstaller
 {
     [SerializeField] GameObject dataManagerPrefab; // 프리팹을 참조하는 public 변수
     [SerializeField] GameObject googleSheetManagerPrefab; // 프리팹을 참조하는 public 변수
+    [SerializeField] GameObject saveManagerPrefab; // 프리팹을 참조하는 public 변수
 
     public override void InstallBindings()
     {
@@ -35,6 +36,18 @@ public class DataContainer : MonoInstaller
         {
             // 이미 존재하는 인스턴스를 바인딩
             Container.Bind<GoogleSheetManager>().FromInstance(FindObjectOfType<GoogleSheetManager>()).AsSingle().NonLazy();
+        }
+
+        if (FindObjectOfType<SaveManager>() == null)
+        {
+            var managerInstance = Container.InstantiatePrefabForComponent<SaveManager>(saveManagerPrefab);
+            DontDestroyOnLoad(managerInstance.gameObject);
+            Container.BindInstance(managerInstance).AsSingle().NonLazy();
+        }
+        else
+        {
+            // 이미 존재하는 인스턴스를 바인딩
+            Container.Bind<SaveManager>().FromInstance(FindObjectOfType<SaveManager>()).AsSingle().NonLazy();
         }
     }
 }
