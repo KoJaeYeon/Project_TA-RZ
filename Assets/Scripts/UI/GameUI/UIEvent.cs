@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SocialPlatforms.Impl;
 using Zenject;
 
 public class UIEvent
@@ -15,6 +16,8 @@ public class UIEvent
     public BlueChipUI BlueChipUI { get; private set; }
     public ShopUI ShopUI { get; private set; }
     public InteractUI InteractUI { get; private set; }
+
+    public AchievementUI AchievementUI { get; private set; }
     
     #region ChoiceEvent
     public void RegisterGameUI(GameUI gameUI)
@@ -49,7 +52,6 @@ public class UIEvent
     }
 
     #endregion
-
     #region ProgressUIEvent
     //이 메서드 호출
     public void RequestChangeProgressBar(float currentValue)
@@ -67,7 +69,6 @@ public class UIEvent
         _progressCallBack -= viewModel.OnResponseChangeCurrentStage;
     }
     #endregion
-
     #region BlueChipEvent
     public void RegisterBlueChipUI(BlueChipUI blueChipUI)
     {
@@ -86,7 +87,6 @@ public class UIEvent
         InteractUI.gameObject.SetActive(true);
     }
     #endregion
-
     #region ShopEvent
     public void RegisterShopUI(ShopUI shopUI)
     {
@@ -105,7 +105,7 @@ public class UIEvent
         InteractUI.gameObject.SetActive(true);
     }
     #endregion
-    #region
+    #region InteractEvent
     public void RegisterInteractUI(InteractUI interactUI)
     {
         InteractUI = interactUI;
@@ -122,8 +122,20 @@ public class UIEvent
         InteractUI.gameObject.SetActive(false);
     }
     #endregion
+    #region AchievementEvent
+    public void RegisterAchievementUI(AchievementUI achievementUI)
+    {
+        AchievementUI = achievementUI;
+    }
 
-    #region PlayerControl
+    public void ActiveAchievementUI(string achieveStr)
+    {
+        AchievementUI.gameObject.SetActive(true);
+        AchievementUI.OnSetText(achieveStr);
+    }
+    #endregion
+
+        #region PlayerControl
     public void SetActivePlayerControl(bool isActive)
     {
         var input = player.GetComponent<PlayerInput>();

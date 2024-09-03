@@ -14,6 +14,7 @@ public class Player : MonoBehaviour, IHit
     [Inject] public DrainSystem drainSystem { get; }
     [Inject] public PoolManager poolManager { get; }
     [Inject] public SaveManager saveManager { get; }
+    [Inject] public UIEvent uiEvent { get; }
     #endregion
 
     #region PlayerComponent
@@ -353,8 +354,22 @@ public class Player : MonoBehaviour, IHit
         this._PC_Level = _PC_Level;
     }
 
+    #region Achievement
+    public void OnCalled_MonsterKilled()
+    {
+        SavePlayerData.Kill += 1;
+        if (SavePlayerData.EnemyKilled == true) return;
 
+        int needKill = int.Parse(dataManager.GetStringValue("Achievement_Content_5"));
+        if(SavePlayerData.Kill >= needKill)
+        {
+            SavePlayerData.EnemyKilled = true;
+            string achieveText = string.Format(dataManager.GetString("UI_Achievement_Text_Content_5"), needKill.ToString());
+            uiEvent.ActiveAchievementUI(achieveText);
+        }
 
+    }
+    #endregion
     public void AllgnToCamera()
     {
         transform.rotation = cameraRoot.transform.rotation;
