@@ -1,10 +1,10 @@
 public class PC_PassiveData
 {
     public Player _player {get; set;}
-    private float _bAttack;
-    private float _eAttack;
-    private float _addHp;
-    private float _addMove;
+    private float _bAttack = 1;
+    private float _eAttack = 1;
+    private float _addHp = 1;
+    private float _addMove = 1;
     private float _addStaRecovery;
     private int _addOwnNum;
     public float BAttack

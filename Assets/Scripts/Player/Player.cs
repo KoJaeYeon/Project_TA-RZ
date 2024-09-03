@@ -79,7 +79,7 @@ public class Player : MonoBehaviour, IHit
 
     public float CurrentSpeed
     {
-        get { return _currentSpeed; }
+        get { return _currentSpeed * PlayerPassiveData.AddMove; }
         set
         {
             if(_currentSpeed == value)
@@ -167,16 +167,16 @@ public class Player : MonoBehaviour, IHit
             {
                 value = 0;
             }
-            else if (value > _playerStat.Resource_Own_Num)
+            else if (value > CurrentResourceOwn)
             {
-                value = _playerStat.Resource_Own_Num;
+                value = CurrentResourceOwn;
             }
             if (_currentAmmo == value)
                 return;
 
             _currentAmmo = value;
 
-            if (_currentAmmo == _playerStat.Resource_Own_Num)
+            if (_currentAmmo == CurrentResourceOwn)
             {
                 drainSystem.OnSetActiveDrainSystem(false);
             }
@@ -193,7 +193,7 @@ public class Player : MonoBehaviour, IHit
     }
     public float HP
     {
-        get { return _playerStat.HP + PlayerPassiveData.AddHP; }
+        get { return _playerStat.HP * PlayerPassiveData.AddHP; }
         set
         {
             if (_playerStat.HP == value)
@@ -329,7 +329,7 @@ public class Player : MonoBehaviour, IHit
     {
         if (IsActiveStaminaRecovery == true)
         {
-            CurrentStamina += (_playerStat.Stamina_Gain) * Time.deltaTime;
+            CurrentStamina += (_playerStat.Stamina_Gain + PlayerPassiveData.AddStaRecovery) * Time.deltaTime;
         }
     }
 
