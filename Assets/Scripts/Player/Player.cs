@@ -189,11 +189,11 @@ public class Player : MonoBehaviour, IHit
     }
     public int CurrentResourceOwn
     {
-        get { return _playerStat.Resource_Own_Num + PlayerPassiveData.addOwnNum; }
+        get { return _playerStat.Resource_Own_Num + PlayerPassiveData.AddOwnNum; }
     }
     public float HP
     {
-        get { return _playerStat.HP; }
+        get { return _playerStat.HP + PlayerPassiveData.AddHP; }
         set
         {
             if (_playerStat.HP == value)
@@ -329,7 +329,7 @@ public class Player : MonoBehaviour, IHit
     {
         if (IsActiveStaminaRecovery == true)
         {
-            CurrentStamina += _playerStat.Stamina_Gain * Time.deltaTime;
+            CurrentStamina += (_playerStat.Stamina_Gain) * Time.deltaTime;
         }
     }
 

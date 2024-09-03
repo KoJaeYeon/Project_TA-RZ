@@ -157,17 +157,22 @@ public class ShopUI : MonoBehaviour
         switch(valueID)
         {
             case "G101":
+                _player.PlayerPassiveData.BAttack += (int)passive_Value.Status_UP[lastidx];
                 break;
             case "G102":
+                _player.PlayerPassiveData.AddHP += (int)passive_Value.Status_UP[lastidx];
                 break;
             case "G103":
+                _player.PlayerPassiveData.AddMove += (int)passive_Value.Status_UP[lastidx];
                 break;
             case "G104":
-                _player.PlayerPassiveData.addOwnNum += (int)passive_Value.Status_UP[lastidx];
+                _player.PlayerPassiveData.AddOwnNum += (int)passive_Value.Status_UP[lastidx];
                 break;
             case "G105":
+                _player.PlayerPassiveData.AddStaRecovery += (int)passive_Value.Status_UP[lastidx];
                 break;
             case "G106":
+                _player.PlayerPassiveData.EAttack += (int)passive_Value.Status_UP[lastidx];
                 break;
         }
 
@@ -189,17 +194,22 @@ public class ShopUI : MonoBehaviour
         switch (valueID)
         {
             case "G101":
+                _player.PlayerPassiveData.BAttack -= (int)passive_Value.Status_UP[lastidx];
                 break;
             case "G102":
+                _player.PlayerPassiveData.AddHP -= (int)passive_Value.Status_UP[lastidx];
                 break;
             case "G103":
+                _player.PlayerPassiveData.AddMove -= (int)passive_Value.Status_UP[lastidx];
                 break;
             case "G104":
-                _player.PlayerPassiveData.addOwnNum -= (int)passive_Value.Status_UP[lastidx];
+                _player.PlayerPassiveData.AddOwnNum -= (int)passive_Value.Status_UP[lastidx];
                 break;
             case "G105":
+                _player.PlayerPassiveData.AddStaRecovery -= (int)passive_Value.Status_UP[lastidx];
                 break;
             case "G106":
+                _player.PlayerPassiveData.EAttack -= (int)passive_Value.Status_UP[lastidx];
                 break;
         }
 
