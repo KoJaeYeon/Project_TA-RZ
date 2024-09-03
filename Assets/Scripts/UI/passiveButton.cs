@@ -12,7 +12,8 @@ public class PassiveButton : MonoBehaviour
     Save_PlayerData Save_PlayerData;
 
     int index;
-    private void Awake()
+
+    public void InitializeComponent()
     {
         btn = GetComponent<Button>();
         img = GetComponent<Image>();

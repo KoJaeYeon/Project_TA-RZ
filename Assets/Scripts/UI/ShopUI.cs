@@ -37,6 +37,13 @@ public class ShopUI : MonoBehaviour
     GameObject currentGameObject;
 
     List<GameObject> ActiveObjects = new List<GameObject>();
+    private void Awake()
+    {
+        foreach (var item in passiveButtons)
+        {
+            item.InitializeComponent();
+        }
+    }
     private void OnEnable()
     {
         cancelAction.action.Enable();
