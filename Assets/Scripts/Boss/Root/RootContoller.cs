@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 public enum RootState
 { 
@@ -26,6 +27,9 @@ public class RootContoller : MonoBehaviour, IHit
     [SerializeField] private BossController _boss;
     [SerializeField] private GameObject _attackMark;
     [SerializeField] private GameObject _attackDamageBox;
+
+    [Inject] private Boss_ParticleManager _boss_particle;
+    [SerializeField] private Transform[] _particlePoint;
 
     private readonly int _hashActive = Animator.StringToHash("isActive");
     private readonly int _hashAttackReady = Animator.StringToHash("AttackReady");
@@ -84,6 +88,10 @@ public class RootContoller : MonoBehaviour, IHit
 
         _anim.SetTrigger(_hashAttack);
         _attackMark.gameObject.SetActive(false);
+    }
+    private void OnPlaySmashParticle()
+    {
+        _boss_particle.OnSmash(_particlePoint);
     }
 
     private IEnumerator CheckDistance()
@@ -166,6 +174,7 @@ public class RootContoller : MonoBehaviour, IHit
     private IEnumerator CoSetActiveDamageBox()
     {
         _attackDamageBox.SetActive(true);
+        OnPlaySmashParticle();
         yield return new WaitForSeconds(0.2f);
         _attackDamageBox.SetActive(false);
     }

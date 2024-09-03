@@ -54,8 +54,10 @@ public class BossController : MonoBehaviour, IHit
     [Header("1페이즈 폭발")]
     [SerializeField] private GameObject[] _firstExplosion;
     [SerializeField] private GameObject[] _firstExplosionDamageBox;
+    [SerializeField] private Transform[] _firstExplosionTr;
     [SerializeField] private GameObject _secondExplosion;
     [SerializeField] private GameObject _secondExplosionDamageBox;
+    [SerializeField] private Transform[] _secondExplosionTr;
     [SerializeField] private float _explosionTime;
     public float explosionDamage;
     [SerializeField] private float _explosionCoolDown;
@@ -214,6 +216,7 @@ public class BossController : MonoBehaviour, IHit
         SetYPosition(_gimmick.transform);
         _gimmick.transform.rotation = transform.rotation;
         _gimmick.gameObject.SetActive(true);
+        _boss_Particle.OnGimmickCharging(transform);
         isGimmick = true;
     }
     //기믹 실행부
@@ -221,6 +224,7 @@ public class BossController : MonoBehaviour, IHit
     { 
         _gimmick.gameObject.SetActive(false);
         CallDamageBox(Pattern.gimmick);
+        _boss_Particle.OnGimmickExplosion(transform);
         isGimmick = false;
         StartCoroutine(CoCheckCoolTime(_gimmickCoolDown, Pattern.gimmick));
     }
@@ -235,6 +239,7 @@ public class BossController : MonoBehaviour, IHit
     {
         _markRoot.gameObject.SetActive(false);
         CallDamageBox(Pattern.rootAttack);
+        _boss_Particle.OnRootAttack(_markRoot.transform);
         foreach (var root in _roots)
         {
             if (root.rootState == RootState.Emerge)
@@ -296,6 +301,8 @@ public class BossController : MonoBehaviour, IHit
             explosion.SetActive(false);
         }
 
+        _boss_Particle.OnFirstExplosion(_firstExplosionTr);
+
         _secondExplosion.transform.position = transform.position;
         SetYPosition(_secondExplosion.transform);
         _secondExplosion.SetActive(true);
@@ -304,6 +311,9 @@ public class BossController : MonoBehaviour, IHit
     public void SecondExplosion()
     {
         _secondExplosion.SetActive(false);
+
+        _boss_Particle.OnSecondExplosion(_secondExplosionTr);
+
         StartCoroutine(CoCheckCoolTime(_explosionCoolDown, Pattern.explosion));
     }
 
