@@ -119,23 +119,27 @@ public class DataManager : MonoBehaviour
             case "_PC_Stat_URL":
                 Process_PC_Stat_Data(data);
                 break;
-            case "_PC_Level_URL":
-                Process_PC_Level_Data(data);
-                break;
-            case "_PC_Skill_URL":
-                Process_PC_Skill_Data(data);
+            case "_PC_Melee_URL":
+                Process_PC_Melee_Data(data);
                 break;
             case "_PC_Attack_URL":
                 Process_PC_Atatck_Data(data);
                 break;
-            case "_PC_Melee_URL":
-                Process_PC_Melee_Data(data);
+            case "_PC_Skill_URL":
+                Process_PC_Skill_Data(data);
                 break;
+            case "_PC_Level_URL":
+                Process_PC_Level_Data(data);
+                break;
+
             case "_Monster_Stat_URL":
                 Process_Monster_Stat_Data(data);
                 break;
             case "_Monster_Ability_URL":
                 Process_Monster_Ability_Data(data);
+                break;
+            case "_Map_Monster_Mix_URL":
+                Process_Monster_Mix_Data(data);
                 break;
             case "_Boss_Skill_URL":
                 Process_Boss_Skill_Data(data);
@@ -146,17 +150,22 @@ public class DataManager : MonoBehaviour
             case "_Map_Stage_Level_URL":
                 Process_Map_Stage_Level_Data(data);
                 break;
-            case "_Map_Monster_Mix_URL":
-                Process_Monster_Mix_Data(data);
-                break;
+
             case "_Map_Resource_URL":
                 Process_Map_Resource_Data(data);
+                break;
+            case "_Monster_Elite_URL":
+                Process_Monster_Elite_Data(data);
                 break;
             case "_String_Data_URL":
                 Process_String_Data(data);
                 break;
             case "_Passive_Value_URL":
                 Process_Passive_Value_Data(data);
+                break;
+
+            case "_String_Value_URL":
+                Process_String_Value_Data(data);
                 break;
             default:
                 Debug.LogError($"Unknown URL name: {urlName}");
@@ -386,13 +395,27 @@ public class DataManager : MonoBehaviour
         }
     }
 
+    private void Process_Monster_Elite_Data(string data)
+    {
+        JArray jsonArray = JArray.Parse(data);
+
+        foreach (var item in jsonArray)
+        {
+            string idStr = item[nameof(Monster_Elite.ID)].ToString();
+            float value = ParseFloat(item[nameof(Monster_Elite.Value)]);
+
+            Monster_Elite mapStat = new Monster_Elite(idStr, value);
+            AddDataToDataDictionary(idStr, mapStat);
+        }
+    }
+
     private void Process_String_Data(string data)
     {
         JArray jsonArray = JArray.Parse(data);
 
         foreach (var item in jsonArray)
         {
-            string idStr = item[nameof(Map_Stat.ID)].ToString();
+            string idStr = item["ID"].ToString();
             string str = item["Korean"].ToString();
             string strValue = item["ValueID"].ToString();
 
@@ -419,6 +442,23 @@ public class DataManager : MonoBehaviour
 
             Passive_Value passiveValue = new Passive_Value(idStr, new List<float> { status_UP_1, status_UP_2, status_UP_3 }, status_1to2_NeedResource, status_2to3_NeedResource);
             AddDataToDataDictionary(idStr, passiveValue);
+        }
+    }
+
+    private void Process_String_Value_Data(string data)
+    {
+        JArray jsonArray = JArray.Parse(data);
+
+        foreach (var item in jsonArray)
+        {
+            string idStr = item["ID"].ToString();
+            string strValue = item["Sdt_Variable"].ToString();
+
+            AddStringToStringDictionary(idStr, strValue);
+            if (string.IsNullOrWhiteSpace(strValue) == false)
+            {
+                AddStringTovalueIDDictionary(idStr, strValue);
+            }
         }
     }
     #endregion

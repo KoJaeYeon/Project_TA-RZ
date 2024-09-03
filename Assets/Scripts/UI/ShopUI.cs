@@ -53,6 +53,7 @@ public class ShopUI : MonoBehaviour
         cancelAction.action.Enable();
         cancelAction.action.performed += OnCancel;
         UIEvent.SetActivePlayerControl(false);
+        UIEvent.SetActivePlayerUI(false);
 
         EventSystem.current.SetSelectedGameObject(initial_Select_GameObject);        
         RenewAll();
@@ -63,6 +64,7 @@ public class ShopUI : MonoBehaviour
         cancelAction.action.performed -= OnCancel;
         cancelAction.action.Disable();
         UIEvent.SetActivePlayerControl(true);
+        UIEvent.SetActivePlayerUI(true);
     }
 
     private void Update()
@@ -193,6 +195,8 @@ public class ShopUI : MonoBehaviour
         _player.SavePlayerData.money -= needMoney;
         int passiveIndex = (valueID[valueID.Length - 1] - '1');
         _player.SavePlayerData.passiveIndex[passiveIndex] = lastidx;
+
+        _player.OnCalled_Achieve_AllUnlockPassive();
 
         return true;
     }
