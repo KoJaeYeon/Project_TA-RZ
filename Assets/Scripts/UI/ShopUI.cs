@@ -28,6 +28,9 @@ public class ShopUI : MonoBehaviour
     [SerializeField]
     Image[] ActivePassives_Img;
 
+    [SerializeField]
+    PassiveButton[] passiveButtons;
+
     [SerializeField] Sprite Frame_Sprite;
 
     GameObject previousGameObject;
@@ -42,6 +45,7 @@ public class ShopUI : MonoBehaviour
 
         EventSystem.current.SetSelectedGameObject(initial_Select_GameObject);
         ShopUIRenew();
+        RenewAll();
     }
 
     private void OnDisable()
@@ -120,6 +124,14 @@ public class ShopUI : MonoBehaviour
         }
     }
 
+    public void RenewAll()
+    {
+        foreach(var item in passiveButtons)
+        {
+            item.RenewPsvBtn();
+        }
+    }
+
     void ShopUIRenew()
     {
         for (int i = 0; i < 3; i++)
@@ -149,6 +161,13 @@ public class ShopUI : MonoBehaviour
     {
         UIEvent.DeActiveShopUI();
     }
+
+    public bool UnlockNextButton(GameObject unlockObject)
+    {
+        Debug.Log(unlockObject.name);
+        return true;
+    }
+
 
     public bool AddActiveObject(GameObject addGameObject)
     {
@@ -189,7 +208,7 @@ public class ShopUI : MonoBehaviour
         if (index > ActiveObjects.Count - 1) return;
         var activeObject = ActiveObjects[index];
         ActiveObjects.Remove(activeObject);
-        var psvBtn = activeObject.GetComponent<passiveButton>();
+        var psvBtn = activeObject.GetComponent<PassiveButton>();
         psvBtn.DeActiveFrame();
 
         string valueID = _dataManager.GetStringValue($"{activeObject.name}_Text_Explain");

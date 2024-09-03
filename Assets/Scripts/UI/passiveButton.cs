@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class passiveButton : MonoBehaviour
+public class PassiveButton : MonoBehaviour
 {
     [SerializeField] ShopUI shopUI;
     [SerializeField] GameObject Frame;
@@ -17,7 +17,10 @@ public class passiveButton : MonoBehaviour
         btn = GetComponent<Button>();
         img = GetComponent<Image>();
         Save_PlayerData = shopUI._player.SavePlayerData;
+    }
 
+    public void RenewPsvBtn()
+    {
         char lastChar = gameObject.name[gameObject.name.Length - 1];
         index = lastChar - '1';
 
@@ -56,10 +59,16 @@ public class passiveButton : MonoBehaviour
             btn.onClick.RemoveAllListeners();
             btn.onClick.AddListener(new UnityEngine.Events.UnityAction(OnSubmit_RequestAddPassive));            
         }
+        else if (index == Save_PlayerData.passiveIndex[targetindex] + 1)
+        {
+            img.color = Color.white;
+            btn.onClick.RemoveAllListeners();
+            btn.onClick.AddListener(new UnityEngine.Events.UnityAction(OnSubmit_RequestUnlockPassive));
+        }
         else
         {
             img.color = Color.white;
-            btn.onClick.AddListener(new UnityEngine.Events.UnityAction(OnSubmit_RequestUnlockPassive));
+            btn.onClick.RemoveAllListeners();
         }
     }
 
@@ -67,15 +76,17 @@ public class passiveButton : MonoBehaviour
     {
         Frame.SetActive(false);
     }
-
-    public void OnSubmit_RequestUnlockPassive()
-    {
-
-    }
-
     public void OnSubmit_RequestAddPassive()
     {
         bool succeed = shopUI.AddActiveObject(gameObject);
         if(succeed) Frame.SetActive(true);
+    }
+    public void OnSubmit_RequestUnlockPassive()
+    {
+        bool succeed = shopUI.UnlockNextButton(gameObject);
+        if (succeed)
+        {
+            shopUI.RenewAll();
+        }
     }
 }
