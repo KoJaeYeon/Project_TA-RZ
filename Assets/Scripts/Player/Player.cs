@@ -187,6 +187,10 @@ public class Player : MonoBehaviour, IHit
             OnPropertyChanged(nameof(CurrentAmmo));
         }
     }
+    public int CurrentResourceOwn
+    {
+        get { return _playerStat.Resource_Own_Num + PlayerPassiveData.addOwnNum; }
+    }
     public float HP
     {
         get { return _playerStat.HP; }
@@ -277,6 +281,7 @@ public class Player : MonoBehaviour, IHit
 
     private void InitializePlayer()
     {
+        PlayerPassiveData._player = this;
         StartCoroutine(LoadStat());
         StartCoroutine(LoadSkillCounsumption());
     }

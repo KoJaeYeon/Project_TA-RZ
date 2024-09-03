@@ -11,6 +11,7 @@ public class ShopUI : MonoBehaviour
 {
     [Inject] UIEvent UIEvent;
     [Inject] DataManager _dataManager;
+    [Inject] Player _player;
     [SerializeField] InputActionReference cancelAction;
     [SerializeField] GameObject initial_Select_GameObject;
     [SerializeField] GameObject Frame;
@@ -97,18 +98,18 @@ public class ShopUI : MonoBehaviour
         switch (lastChar)
         {
             case '1':
-                Reinforce_Description.text = string.Format(valueText, passive_Value.Status_UP_1);
+                Reinforce_Description.text = string.Format(valueText, passive_Value.Status_UP[0]);
                 Reinforce_Need_Image.SetActive(false);
                 Reinforce_Need.gameObject.SetActive(false);
                 break;
             case '2':
-                Reinforce_Description.text = string.Format(valueText, passive_Value.Status_UP_2);
+                Reinforce_Description.text = string.Format(valueText, passive_Value.Status_UP[1]);
                 Reinforce_Need.text = passive_Value.Status_1to2_NeedResource.ToString();
                 Reinforce_Need_Image.SetActive(true);
                 Reinforce_Need.gameObject.SetActive(true);
                 break;
             case '3':
-                Reinforce_Description.text = string.Format(valueText, passive_Value.Status_UP_3);
+                Reinforce_Description.text = string.Format(valueText, passive_Value.Status_UP[2]);
                 Reinforce_Need.text = passive_Value.Status_2to3_NeedResource.ToString();
                 Reinforce_Need_Image.SetActive(true);
                 Reinforce_Need.gameObject.SetActive(true);
@@ -148,6 +149,28 @@ public class ShopUI : MonoBehaviour
     {
         if(ActiveObjects.Count >= 3) { return; }
         ActiveObjects.Add(gameObject);
+
+        string valueID = _dataManager.GetStringValue($"{gameObject.name}_Text_Explain");
+        var passive_Value = _dataManager.GetData(valueID) as Passive_Value;
+        char lastChar = currentGameObject.name[currentGameObject.name.Length - 1];
+        int lastidx = lastChar - '1';
+        switch(valueID)
+        {
+            case "G101":
+                break;
+            case "G102":
+                break;
+            case "G103":
+                break;
+            case "G104":
+                _player.PlayerPassiveData.addOwnNum += (int)passive_Value.Status_UP[lastidx];
+                break;
+            case "G105":
+                break;
+            case "G106":
+                break;
+        }
+
         ShopUIRenew();
     }
     public void OnSubmit_RemoveActiveObject(int index)
