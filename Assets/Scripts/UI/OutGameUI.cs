@@ -19,6 +19,7 @@ public class OutGameUI : MonoBehaviour
         cancelAction.action.Enable();
         cancelAction.action.performed += OnCancel;
 
+        
         SaveDataRenew();
     }
 
@@ -44,11 +45,13 @@ public class OutGameUI : MonoBehaviour
     public void OnSublit_LoadGame(int index)
     {
         SceneManager.LoadScene(1);
+        _saveManager.saveIndex = index;
     }
 
     public void OnSubmit_NewGame(int index)
     {
         SceneManager.LoadScene(1);
+        _saveManager.saveIndex = index;
     }
 
     public void OnSubmit_ContinueBox()

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using TMPro;
-using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -11,10 +12,13 @@ public class ShopUI : MonoBehaviour
 {
     [Inject] UIEvent UIEvent;
     [Inject] DataManager _dataManager;
-    [Inject] Player _player;
+    [Inject] public Player _player { get; }
     [SerializeField] InputActionReference cancelAction;
     [SerializeField] GameObject initial_Select_GameObject;
     [SerializeField] GameObject Frame;
+
+    [Header("UpBar")]
+    [SerializeField] TextMeshProUGUI Money_Text;
 
     [Header("Passive Panel")]
     [SerializeField] TextMeshProUGUI Reinforce_Name;
@@ -22,8 +26,14 @@ public class ShopUI : MonoBehaviour
     [SerializeField] GameObject Reinforce_Need_Image;
     [SerializeField] TextMeshProUGUI Reinforce_Need;
 
+    [Header("Active Panel")]
     [SerializeField]
     Image[] ActivePassives_Img;
+    [SerializeField]
+    TextMeshProUGUI[] ActivePassives_Text;
+
+    [SerializeField]
+    PassiveButton[] passiveButtons;
 
     [SerializeField] Sprite Frame_Sprite;
 
@@ -31,14 +41,21 @@ public class ShopUI : MonoBehaviour
     GameObject currentGameObject;
 
     List<GameObject> ActiveObjects = new List<GameObject>();
+    private void Awake()
+    {
+        foreach (var item in passiveButtons)
+        {
+            item.InitializeComponent();
+        }
+    }
     private void OnEnable()
     {
         cancelAction.action.Enable();
         cancelAction.action.performed += OnCancel;
         UIEvent.SetActivePlayerControl(false);
 
-        EventSystem.current.SetSelectedGameObject(initial_Select_GameObject);
-        ShopUIRenew();
+        EventSystem.current.SetSelectedGameObject(initial_Select_GameObject);        
+        RenewAll();
     }
 
     private void OnDisable()
@@ -117,6 +134,16 @@ public class ShopUI : MonoBehaviour
         }
     }
 
+    public void RenewAll()
+    {
+        ShopUIRenew();
+
+        foreach (var item in passiveButtons)
+        {
+            item.RenewPsvBtn();
+        }
+    }
+
     void ShopUIRenew()
     {
         for (int i = 0; i < 3; i++)
@@ -126,13 +153,18 @@ public class ShopUI : MonoBehaviour
                 var img = ActiveObjects[i].GetComponent<Image>();
                 ActivePassives_Img[i].sprite = img.sprite;
                 ActivePassives_Img[i].color = Color.red;
+                ActivePassives_Text[i].gameObject.SetActive(true);
+                ActivePassives_Text[i].text = ActiveObjects[i].name[ActiveObjects[i].name.Length - 1].ToString();
             }
             else
             {
                 ActivePassives_Img[i].sprite = Frame_Sprite;
                 ActivePassives_Img[i].color = Color.gray;
+                ActivePassives_Text[i].gameObject.SetActive(false);
             }
         }
+
+        Money_Text.text = _player.SavePlayerData.money.ToString();
     }
 
     private void OnCancel(InputAction.CallbackContext context)
@@ -145,9 +177,30 @@ public class ShopUI : MonoBehaviour
         UIEvent.DeActiveShopUI();
     }
 
-    public void AddActiveObject(GameObject addGameObject)
+    public bool UnlockNextButton(GameObject unlockObject)
     {
-        if(ActiveObjects.Count >= 3) { return; }
+        string valueID = _dataManager.GetStringValue($"{unlockObject.name}_Text_Explain");
+        var passive_Value = _dataManager.GetData(valueID) as Passive_Value;
+        char lastChar = unlockObject.name[unlockObject.name.Length - 1];
+        int lastidx = lastChar - '1';
+
+        int needMoney = lastidx == 1 ? passive_Value.Status_1to2_NeedResource : passive_Value.Status_2to3_NeedResource;
+        if(_player.SavePlayerData.money < needMoney)
+        {
+            return false;
+        }
+
+        _player.SavePlayerData.money -= needMoney;
+        int passiveIndex = (valueID[valueID.Length - 1] - '1');
+        _player.SavePlayerData.passiveIndex[passiveIndex] = lastidx;
+
+        return true;
+    }
+
+
+    public bool AddActiveObject(GameObject addGameObject)
+    {
+        if(ActiveObjects.Count >= 3) { return false; }
         ActiveObjects.Add(addGameObject);
 
         string valueID = _dataManager.GetStringValue($"{addGameObject.name}_Text_Explain");
@@ -177,15 +230,15 @@ public class ShopUI : MonoBehaviour
         }
 
         ShopUIRenew();
+        return true;
     }
     public void OnSubmit_RemoveActiveObject(int index)
     {
         if (index > ActiveObjects.Count - 1) return;
-
         var activeObject = ActiveObjects[index];
         ActiveObjects.Remove(activeObject);
-        var img = activeObject.GetComponent<Image>();
-        img.color = Color.white;
+        var psvBtn = activeObject.GetComponent<PassiveButton>();
+        psvBtn.DeActiveFrame();
 
         string valueID = _dataManager.GetStringValue($"{activeObject.name}_Text_Explain");
         var passive_Value = _dataManager.GetData(valueID) as Passive_Value;

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class SaveManager : MonoBehaviour
 {
+    public int saveIndex { get; set; } = -1;
     public void Save(int num)
     {
         var saveData = new Save_PlayerData();

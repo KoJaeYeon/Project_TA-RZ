@@ -13,6 +13,7 @@ public class Player : MonoBehaviour, IHit
     [Inject] public CameraRoot cameraRoot { get; }
     [Inject] public DrainSystem drainSystem { get; }
     [Inject] public PoolManager poolManager { get; }
+    [Inject] public SaveManager saveManager { get; }
     #endregion
 
     #region PlayerComponent
@@ -25,6 +26,7 @@ public class Player : MonoBehaviour, IHit
     public IInteractable Interactable { get; set; }
     public PC_Common_Stat _playerStat { get; private set; } = new PC_Common_Stat();
     public PC_PassiveData PlayerPassiveData { get; private set; } = new PC_PassiveData();
+    public Save_PlayerData SavePlayerData { get; private set; } = new Save_PlayerData();
     public PC_Level _PC_Level { get; private set; } = new PC_Level();
     public Camera MainCamera { get { return _camera; } }
     #endregion
