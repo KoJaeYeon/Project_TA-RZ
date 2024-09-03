@@ -10,6 +10,7 @@ public class UICanvas : MonoBehaviour
     [SerializeField] GameUI GameUI;
     [SerializeField] LoadingUI LoadUI;
     [SerializeField] ShopUI ShopUI;
+    [SerializeField] InteractUI InteractUI;
 
     public void Awake()
     {
@@ -17,5 +18,6 @@ public class UICanvas : MonoBehaviour
         UIEvent.RegisterGameUI(GameUI);
         UIEvent.RegisterLoadUI(LoadUI);
         UIEvent.RegisterShopUI(ShopUI);
+        UIEvent.RegisterInteractUI(InteractUI);
     }
 }

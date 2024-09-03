@@ -18,6 +18,6 @@ public class BlueChipUI : MonoBehaviour
 
     public void DeActiveBlueChipUI()
     {
-        gameObject.SetActive(false);
+        UIEvent.DeActiveBlueChipUI();
     }
 }

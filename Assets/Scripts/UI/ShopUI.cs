@@ -33,11 +33,11 @@ public class ShopUI : MonoBehaviour
 
     private void OnCancel(InputAction.CallbackContext context)
     {
-        gameObject.SetActive(false);
+        UIEvent.DeActiveShopUI();
     }
 
     public void DeActiveShopUI()
     {
-        gameObject.SetActive(false);
+        UIEvent.DeActiveShopUI();
     }
 }
