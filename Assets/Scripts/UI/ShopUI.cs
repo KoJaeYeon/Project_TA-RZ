@@ -26,8 +26,11 @@ public class ShopUI : MonoBehaviour
     [SerializeField] GameObject Reinforce_Need_Image;
     [SerializeField] TextMeshProUGUI Reinforce_Need;
 
+    [Header("Active Panel")]
     [SerializeField]
     Image[] ActivePassives_Img;
+    [SerializeField]
+    TextMeshProUGUI[] ActivePassives_Text;
 
     [SerializeField]
     PassiveButton[] passiveButtons;
@@ -150,11 +153,14 @@ public class ShopUI : MonoBehaviour
                 var img = ActiveObjects[i].GetComponent<Image>();
                 ActivePassives_Img[i].sprite = img.sprite;
                 ActivePassives_Img[i].color = Color.red;
+                ActivePassives_Text[i].gameObject.SetActive(true);
+                ActivePassives_Text[i].text = ActiveObjects[i].name[ActiveObjects[i].name.Length - 1].ToString();
             }
             else
             {
                 ActivePassives_Img[i].sprite = Frame_Sprite;
                 ActivePassives_Img[i].color = Color.gray;
+                ActivePassives_Text[i].gameObject.SetActive(false);
             }
         }
 
