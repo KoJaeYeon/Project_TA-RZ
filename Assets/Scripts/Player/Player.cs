@@ -24,6 +24,7 @@ public class Player : MonoBehaviour, IHit
 
     public IInteractable Interactable { get; set; }
     public PC_Common_Stat _playerStat { get; private set; } = new PC_Common_Stat();
+    public PC_PassiveData PlayerPassiveData { get; private set; } = new PC_PassiveData();
     public PC_Level _PC_Level { get; private set; } = new PC_Level();
     public Camera MainCamera { get { return _camera; } }
     #endregion
@@ -78,7 +79,7 @@ public class Player : MonoBehaviour, IHit
 
     public float CurrentSpeed
     {
-        get { return _currentSpeed; }
+        get { return _currentSpeed * PlayerPassiveData.AddMove; }
         set
         {
             if(_currentSpeed == value)
@@ -166,16 +167,16 @@ public class Player : MonoBehaviour, IHit
             {
                 value = 0;
             }
-            else if (value > _playerStat.Resource_Own_Num)
+            else if (value > CurrentResourceOwn)
             {
-                value = _playerStat.Resource_Own_Num;
+                value = CurrentResourceOwn;
             }
             if (_currentAmmo == value)
                 return;
 
             _currentAmmo = value;
 
-            if (_currentAmmo == _playerStat.Resource_Own_Num)
+            if (_currentAmmo == CurrentResourceOwn)
             {
                 drainSystem.OnSetActiveDrainSystem(false);
             }
@@ -186,9 +187,13 @@ public class Player : MonoBehaviour, IHit
             OnPropertyChanged(nameof(CurrentAmmo));
         }
     }
+    public int CurrentResourceOwn
+    {
+        get { return _playerStat.Resource_Own_Num + PlayerPassiveData.AddOwnNum; }
+    }
     public float HP
     {
-        get { return _playerStat.HP; }
+        get { return _playerStat.HP * PlayerPassiveData.AddHP; }
         set
         {
             if (_playerStat.HP == value)
@@ -276,6 +281,7 @@ public class Player : MonoBehaviour, IHit
 
     private void InitializePlayer()
     {
+        PlayerPassiveData._player = this;
         StartCoroutine(LoadStat());
         StartCoroutine(LoadSkillCounsumption());
     }
@@ -323,7 +329,7 @@ public class Player : MonoBehaviour, IHit
     {
         if (IsActiveStaminaRecovery == true)
         {
-            CurrentStamina += _playerStat.Stamina_Gain * Time.deltaTime;
+            CurrentStamina += (_playerStat.Stamina_Gain + PlayerPassiveData.AddStaRecovery) * Time.deltaTime;
         }
     }
 
@@ -379,7 +385,7 @@ public class Player : MonoBehaviour, IHit
         CurrentStamina = 100;
         CurrentSkill = 0;
         CurrentAmmo = 0;
-        OnPropertyChanged(nameof(stat.Resource_Own_Num));
+        OnPropertyChanged(nameof(CurrentResourceOwn));
         yield break;
     }
 

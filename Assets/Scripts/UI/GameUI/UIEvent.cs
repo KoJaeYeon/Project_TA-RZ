@@ -13,6 +13,8 @@ public class UIEvent
     private MapManager _mapManager;
     public LoadingUI _loadUI { get; private set; }
     public BlueChipUI BlueChipUI { get; private set; }
+    public ShopUI ShopUI { get; private set; }
+    public InteractUI InteractUI { get; private set; }
     
     #region ChoiceEvent
     public void RegisterGameUI(GameUI gameUI)
@@ -75,6 +77,49 @@ public class UIEvent
     public void ActiveBlueChipUI()
     {
         BlueChipUI.gameObject.SetActive(true);
+        InteractUI.gameObject.SetActive(false);
+    }
+
+    public void DeActiveBlueChipUI()
+    {
+        BlueChipUI.gameObject.SetActive(false);
+        InteractUI.gameObject.SetActive(true);
+    }
+    #endregion
+
+    #region ShopEvent
+    public void RegisterShopUI(ShopUI shopUI)
+    {
+        ShopUI = shopUI;
+    }
+
+    public void ActiveShopUI()
+    {
+        ShopUI.gameObject.SetActive(true);
+        InteractUI.gameObject.SetActive(false);
+    }
+
+    public void DeActiveShopUI()
+    {
+        ShopUI.gameObject.SetActive(false);
+        InteractUI.gameObject.SetActive(true);
+    }
+    #endregion
+    #region
+    public void RegisterInteractUI(InteractUI interactUI)
+    {
+        InteractUI = interactUI;
+    }
+
+    public void ActiveInteractUI(string interactStr)
+    {
+        InteractUI.gameObject.SetActive(true);
+        InteractUI.OnSetText(interactStr);
+    }
+
+    public void DeActiveInteractUI()
+    {
+        InteractUI.gameObject.SetActive(false);
     }
     #endregion
 

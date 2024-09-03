@@ -8,4 +8,9 @@ public class Chest : MonoBehaviour, IInteractable
     {
         UIEvent.ActiveBlueChipUI();
     }
+
+    public string GetText()
+    {
+        return "블루칩 획득";
+    }
 }
