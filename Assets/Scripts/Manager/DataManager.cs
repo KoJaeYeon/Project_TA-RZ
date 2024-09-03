@@ -1,4 +1,5 @@
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ public class DataManager : MonoBehaviour
 {
     Dictionary<string, Data> _dataDictionary = new Dictionary<string, Data>();
     Dictionary<string, string> _stringDictionary = new Dictionary<string, string>();
+    Dictionary<string, string> _valueIDDictionary = new Dictionary<string, string>();
 
     public void AddDataToDataDictionary(string idStr, Data stat)
     {
@@ -18,6 +20,14 @@ public class DataManager : MonoBehaviour
     public void AddStringToStringDictionary(string idStr, string str)
     {
         if (!_stringDictionary.TryAdd(idStr, str))
+        {
+            Debug.LogError($"ID : {idStr}가 스트링 딕셔너리에 추가 실패했습니다.");
+        }
+    }
+
+    public void AddStringTovalueIDDictionary(string idStr, string str)
+    {
+        if (!_valueIDDictionary.TryAdd(idStr, str))
         {
             Debug.LogError($"ID : {idStr}가 스트링 딕셔너리에 추가 실패했습니다.");
         }
@@ -84,6 +94,19 @@ public class DataManager : MonoBehaviour
         }
     }
 
+    public string GetStringValue(string idStr)
+    {
+        if (_valueIDDictionary.TryGetValue(idStr, out string str))
+        {
+            return str;
+        }
+        else
+        {
+            Debug.LogWarning($"{idStr}을 딕셔너리에서 받아오는데 실패했습니다.");
+            return string.Empty;
+        }
+    }
+
     /// <summary>
     /// Json 데이터를 딕셔너리에 저장하기 위한 함수
     /// </summary>
@@ -131,6 +154,9 @@ public class DataManager : MonoBehaviour
                 break;
             case "_String_Data_URL":
                 Process_String_Data(data);
+                break;
+            case "_Passive_Value_URL":
+                Process_Passive_Value_Data(data);
                 break;
             default:
                 Debug.LogError($"Unknown URL name: {urlName}");
@@ -368,8 +394,31 @@ public class DataManager : MonoBehaviour
         {
             string idStr = item[nameof(Map_Stat.ID)].ToString();
             string str = item["Korean"].ToString();
+            string strValue = item["ValueID"].ToString();
 
             AddStringToStringDictionary(idStr, str);
+            if(string.IsNullOrWhiteSpace(strValue) == false)
+            {
+                AddStringTovalueIDDictionary(idStr, strValue);
+            }
+        }
+    }
+
+    private void Process_Passive_Value_Data(string data)
+    {
+        JArray jsonArray = JArray.Parse(data);
+
+        foreach (var item in jsonArray)
+        {
+            string idStr = item[nameof(Passive_Value.ID)].ToString();
+            float status_UP_1 = ParseFloat(item[nameof(Passive_Value.Status_UP_1)]);
+            float status_UP_2 = ParseFloat(item[nameof(Passive_Value.Status_UP_2)]);
+            float status_UP_3 = ParseFloat(item[nameof(Passive_Value.Status_UP_3)]);
+            float status_1to2_NeedResource = ParseFloat(item[nameof(Passive_Value.Status_1to2_NeedResource)]);
+            float status_2to3_NeedResource = ParseFloat(item[nameof(Passive_Value.Status_2to3_NeedResource)]);
+
+            Passive_Value passiveValue = new Passive_Value(idStr, status_UP_1, status_UP_2, status_UP_3, status_1to2_NeedResource, status_2to3_NeedResource);
+            AddDataToDataDictionary(idStr, passiveValue);
         }
     }
     #endregion

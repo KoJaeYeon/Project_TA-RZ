@@ -170,7 +170,7 @@ GameObject:
   - component: {fileID: 7820620802751871250}
   - component: {fileID: 3883584209510423065}
   m_Layer: 0
-  m_Name: Run Speed3
+  m_Name: UI_EternityReinforce_RunSpeed3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -290,7 +290,7 @@ GameObject:
   - component: {fileID: 8618007159381005186}
   - component: {fileID: 4899588010603326743}
   m_Layer: 0
-  m_Name: Base Attack Power1
+  m_Name: UI_EternityReinforce_BAttackP1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -410,7 +410,7 @@ GameObject:
   - component: {fileID: 5124876328557896500}
   - component: {fileID: 1148701525750262671}
   m_Layer: 0
-  m_Name: Base Attack Power3
+  m_Name: UI_EternityReinforce_BAttackP3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -644,7 +644,7 @@ GameObject:
   - component: {fileID: 2795374962088289774}
   - component: {fileID: 2354560939434724046}
   m_Layer: 0
-  m_Name: Resource Bag1
+  m_Name: UI_EternityReinforce_ResourceBag1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -764,7 +764,7 @@ GameObject:
   - component: {fileID: 4543289907714701868}
   - component: {fileID: 1084818266027943266}
   m_Layer: 0
-  m_Name: Resource Bag3
+  m_Name: UI_EternityReinforce_ResourceBag3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -884,7 +884,7 @@ GameObject:
   - component: {fileID: 3989746596905693153}
   - component: {fileID: 2956176590440113421}
   m_Layer: 0
-  m_Name: HP1
+  m_Name: UI_EternityReinforce_Hp1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1079,7 +1079,7 @@ GameObject:
   - component: {fileID: 6428982627583873784}
   - component: {fileID: 7344429299840758985}
   m_Layer: 0
-  m_Name: Elemental Attack Power3
+  m_Name: UI_EternityReinforce_ElementalAttackP3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1274,7 +1274,7 @@ GameObject:
   - component: {fileID: 6028963625912806584}
   - component: {fileID: 6427689248288185185}
   m_Layer: 0
-  m_Name: Stamina Gain Speed2
+  m_Name: UI_EternityReinforce_StaminaGainSpeed2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1394,7 +1394,7 @@ GameObject:
   - component: {fileID: 6165622419285494555}
   - component: {fileID: 4494413721293140275}
   m_Layer: 0
-  m_Name: Stamina Gain Speed3
+  m_Name: UI_EternityReinforce_StaminaGainSpeed3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1589,7 +1589,7 @@ GameObject:
   - component: {fileID: 3725740606890319706}
   - component: {fileID: 7457131989929655846}
   m_Layer: 0
-  m_Name: Run Speed2
+  m_Name: UI_EternityReinforce_RunSpeed2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1843,7 +1843,7 @@ GameObject:
   - component: {fileID: 2763562424017151424}
   - component: {fileID: 5679623774979074644}
   m_Layer: 0
-  m_Name: HP2
+  m_Name: UI_EternityReinforce_Hp2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1963,7 +1963,7 @@ GameObject:
   - component: {fileID: 7720924618143384078}
   - component: {fileID: 173606942765234050}
   m_Layer: 0
-  m_Name: Base Attack Power2
+  m_Name: UI_EternityReinforce_BAttackP2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2083,7 +2083,7 @@ GameObject:
   - component: {fileID: 4219640008883012952}
   - component: {fileID: 2879734114662169941}
   m_Layer: 0
-  m_Name: HP3
+  m_Name: UI_EternityReinforce_Hp3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2398,7 +2398,7 @@ GameObject:
   - component: {fileID: 635955640681893485}
   - component: {fileID: 2743455397194864569}
   m_Layer: 0
-  m_Name: Run Speed1
+  m_Name: UI_EternityReinforce_RunSpeed1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2638,7 +2638,7 @@ GameObject:
   - component: {fileID: 7166499092081682405}
   - component: {fileID: 7151040924010201454}
   m_Layer: 0
-  m_Name: Elemental Attack Power2
+  m_Name: UI_EternityReinforce_ElementalAttackP2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2757,7 +2757,7 @@ GameObject:
   - component: {fileID: 8446009135496502668}
   - component: {fileID: 2925676233823268012}
   m_Layer: 0
-  m_Name: Reinforce_description
+  m_Name: Reinforce_Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2892,7 +2892,7 @@ GameObject:
   - component: {fileID: 9091204766804474294}
   - component: {fileID: 5156646365602986424}
   m_Layer: 0
-  m_Name: Reinforce_name
+  m_Name: Reinforce_Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3354,7 +3354,7 @@ GameObject:
   - component: {fileID: 2203753551014563499}
   - component: {fileID: 6904970925062808103}
   m_Layer: 0
-  m_Name: Elemental Attack Power1
+  m_Name: UI_EternityReinforce_ElementalAttackP1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3609,7 +3609,7 @@ GameObject:
   - component: {fileID: 7109587298110499671}
   - component: {fileID: 1325447483791151281}
   m_Layer: 0
-  m_Name: Resource Bag2
+  m_Name: UI_EternityReinforce_ResourceBag2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4134,7 +4134,7 @@ GameObject:
   - component: {fileID: 726961766300176531}
   - component: {fileID: 1574326125618880599}
   m_Layer: 0
-  m_Name: Stamina Gain Speed1
+  m_Name: UI_EternityReinforce_StaminaGainSpeed1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4415,6 +4415,10 @@ MonoBehaviour:
     type: 3}
   initial_Select_GameObject: {fileID: 602864303182162763}
   Frame: {fileID: 1679175779814824814}
+  Reinforce_Name: {fileID: 5156646365602986424}
+  Reinforce_Description: {fileID: 2925676233823268012}
+  Reinforce_Need_Image: {fileID: 7179778500112205316}
+  Reinforce_Need: {fileID: 2254403432666091038}
 --- !u!1 &8311485366250296427
 GameObject:
   m_ObjectHideFlags: 0
@@ -4502,7 +4506,7 @@ GameObject:
   - component: {fileID: 293590375179917005}
   - component: {fileID: 2254403432666091038}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: Reinforce_Need
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
