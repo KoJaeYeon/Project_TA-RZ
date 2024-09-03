@@ -169,6 +169,7 @@ GameObject:
   - component: {fileID: 584011232730191120}
   - component: {fileID: 7820620802751871250}
   - component: {fileID: 3883584209510423065}
+  - component: {fileID: 3127534216526096568}
   m_Layer: 0
   m_Name: UI_EternityReinforce_RunSpeed3
   m_TagString: Untagged
@@ -277,6 +278,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3127534216526096568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 576358035556625110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55b73fca9b6fa847a30af14e8fff6fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopUI: {fileID: 4748044761072575901}
 --- !u!1 &602864303182162763
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,6 +303,7 @@ GameObject:
   - component: {fileID: 7009606611575601795}
   - component: {fileID: 8618007159381005186}
   - component: {fileID: 4899588010603326743}
+  - component: {fileID: 6025391202961146661}
   m_Layer: 0
   m_Name: UI_EternityReinforce_BAttackP1
   m_TagString: Untagged
@@ -397,6 +412,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6025391202961146661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602864303182162763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55b73fca9b6fa847a30af14e8fff6fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopUI: {fileID: 4748044761072575901}
 --- !u!1 &1123969798418308927
 GameObject:
   m_ObjectHideFlags: 0
@@ -409,6 +437,7 @@ GameObject:
   - component: {fileID: 8679311461405128604}
   - component: {fileID: 5124876328557896500}
   - component: {fileID: 1148701525750262671}
+  - component: {fileID: 7804460325599850391}
   m_Layer: 0
   m_Name: UI_EternityReinforce_BAttackP3
   m_TagString: Untagged
@@ -517,6 +546,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7804460325599850391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123969798418308927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55b73fca9b6fa847a30af14e8fff6fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopUI: {fileID: 4748044761072575901}
 --- !u!1 &1679175779814824814
 GameObject:
   m_ObjectHideFlags: 0
@@ -643,6 +685,7 @@ GameObject:
   - component: {fileID: 9121524850714099058}
   - component: {fileID: 2795374962088289774}
   - component: {fileID: 2354560939434724046}
+  - component: {fileID: 3258308691490566992}
   m_Layer: 0
   m_Name: UI_EternityReinforce_ResourceBag1
   m_TagString: Untagged
@@ -751,6 +794,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3258308691490566992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1824688781294407400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55b73fca9b6fa847a30af14e8fff6fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopUI: {fileID: 4748044761072575901}
 --- !u!1 &1927798528596124227
 GameObject:
   m_ObjectHideFlags: 0
@@ -763,6 +819,7 @@ GameObject:
   - component: {fileID: 2493185885298479472}
   - component: {fileID: 4543289907714701868}
   - component: {fileID: 1084818266027943266}
+  - component: {fileID: 2609317725914990848}
   m_Layer: 0
   m_Name: UI_EternityReinforce_ResourceBag3
   m_TagString: Untagged
@@ -871,6 +928,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2609317725914990848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927798528596124227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55b73fca9b6fa847a30af14e8fff6fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopUI: {fileID: 4748044761072575901}
 --- !u!1 &2272572104958449529
 GameObject:
   m_ObjectHideFlags: 0
@@ -883,6 +953,7 @@ GameObject:
   - component: {fileID: 6523600639071031616}
   - component: {fileID: 3989746596905693153}
   - component: {fileID: 2956176590440113421}
+  - component: {fileID: 6307332476479447856}
   m_Layer: 0
   m_Name: UI_EternityReinforce_Hp1
   m_TagString: Untagged
@@ -991,6 +1062,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6307332476479447856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2272572104958449529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55b73fca9b6fa847a30af14e8fff6fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopUI: {fileID: 4748044761072575901}
 --- !u!1 &2282116787679392901
 GameObject:
   m_ObjectHideFlags: 0
@@ -1078,6 +1162,7 @@ GameObject:
   - component: {fileID: 4396459659332241023}
   - component: {fileID: 6428982627583873784}
   - component: {fileID: 7344429299840758985}
+  - component: {fileID: 5581624106903811748}
   m_Layer: 0
   m_Name: UI_EternityReinforce_ElementalAttackP3
   m_TagString: Untagged
@@ -1186,6 +1271,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5581624106903811748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2285983507612295594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55b73fca9b6fa847a30af14e8fff6fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopUI: {fileID: 4748044761072575901}
 --- !u!1 &2324019577930007008
 GameObject:
   m_ObjectHideFlags: 0
@@ -1273,6 +1371,7 @@ GameObject:
   - component: {fileID: 6150969908427032844}
   - component: {fileID: 6028963625912806584}
   - component: {fileID: 6427689248288185185}
+  - component: {fileID: 5171438639279814394}
   m_Layer: 0
   m_Name: UI_EternityReinforce_StaminaGainSpeed2
   m_TagString: Untagged
@@ -1381,6 +1480,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5171438639279814394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2607851579684554419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55b73fca9b6fa847a30af14e8fff6fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopUI: {fileID: 4748044761072575901}
 --- !u!1 &2787732609021954234
 GameObject:
   m_ObjectHideFlags: 0
@@ -1393,6 +1505,7 @@ GameObject:
   - component: {fileID: 5664516760298628490}
   - component: {fileID: 6165622419285494555}
   - component: {fileID: 4494413721293140275}
+  - component: {fileID: 3430944159170886812}
   m_Layer: 0
   m_Name: UI_EternityReinforce_StaminaGainSpeed3
   m_TagString: Untagged
@@ -1501,6 +1614,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3430944159170886812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2787732609021954234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55b73fca9b6fa847a30af14e8fff6fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopUI: {fileID: 4748044761072575901}
 --- !u!1 &2814282192148665243
 GameObject:
   m_ObjectHideFlags: 0
@@ -1588,6 +1714,7 @@ GameObject:
   - component: {fileID: 4090723266248740642}
   - component: {fileID: 3725740606890319706}
   - component: {fileID: 7457131989929655846}
+  - component: {fileID: 3149455870762398385}
   m_Layer: 0
   m_Name: UI_EternityReinforce_RunSpeed2
   m_TagString: Untagged
@@ -1696,6 +1823,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3149455870762398385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3042915641741510638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55b73fca9b6fa847a30af14e8fff6fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopUI: {fileID: 4748044761072575901}
 --- !u!1 &3520945868396185697
 GameObject:
   m_ObjectHideFlags: 0
@@ -1842,6 +1982,7 @@ GameObject:
   - component: {fileID: 7571772494702890909}
   - component: {fileID: 2763562424017151424}
   - component: {fileID: 5679623774979074644}
+  - component: {fileID: 6776823041765369557}
   m_Layer: 0
   m_Name: UI_EternityReinforce_Hp2
   m_TagString: Untagged
@@ -1950,6 +2091,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6776823041765369557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3824549622077607277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55b73fca9b6fa847a30af14e8fff6fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopUI: {fileID: 4748044761072575901}
 --- !u!1 &3905309156705235163
 GameObject:
   m_ObjectHideFlags: 0
@@ -1962,6 +2116,7 @@ GameObject:
   - component: {fileID: 400553530938613010}
   - component: {fileID: 7720924618143384078}
   - component: {fileID: 173606942765234050}
+  - component: {fileID: 5068303084079940318}
   m_Layer: 0
   m_Name: UI_EternityReinforce_BAttackP2
   m_TagString: Untagged
@@ -2070,6 +2225,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5068303084079940318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3905309156705235163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55b73fca9b6fa847a30af14e8fff6fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopUI: {fileID: 4748044761072575901}
 --- !u!1 &4449756665387297822
 GameObject:
   m_ObjectHideFlags: 0
@@ -2082,6 +2250,7 @@ GameObject:
   - component: {fileID: 9200769519393003030}
   - component: {fileID: 4219640008883012952}
   - component: {fileID: 2879734114662169941}
+  - component: {fileID: 2895312683427553181}
   m_Layer: 0
   m_Name: UI_EternityReinforce_Hp3
   m_TagString: Untagged
@@ -2190,6 +2359,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2895312683427553181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4449756665387297822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55b73fca9b6fa847a30af14e8fff6fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopUI: {fileID: 4748044761072575901}
 --- !u!1 &4801870828084633526
 GameObject:
   m_ObjectHideFlags: 0
@@ -2309,7 +2491,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6587041993718371379}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4748044761072575901}
+        m_TargetAssemblyTypeName: ShopUI, Assembly-CSharp
+        m_MethodName: OnSubmit_RemoveActiveObject
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4825011995391402708
 GameObject:
   m_ObjectHideFlags: 0
@@ -2397,6 +2591,7 @@ GameObject:
   - component: {fileID: 2577684429490125071}
   - component: {fileID: 635955640681893485}
   - component: {fileID: 2743455397194864569}
+  - component: {fileID: 1672541059613126342}
   m_Layer: 0
   m_Name: UI_EternityReinforce_RunSpeed1
   m_TagString: Untagged
@@ -2505,6 +2700,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1672541059613126342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4848970442881890164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55b73fca9b6fa847a30af14e8fff6fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopUI: {fileID: 4748044761072575901}
 --- !u!1 &4988961760175477649
 GameObject:
   m_ObjectHideFlags: 0
@@ -2624,7 +2832,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3027337148477301626}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4748044761072575901}
+        m_TargetAssemblyTypeName: ShopUI, Assembly-CSharp
+        m_MethodName: OnSubmit_RemoveActiveObject
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5212986825829509057
 GameObject:
   m_ObjectHideFlags: 0
@@ -2637,6 +2857,7 @@ GameObject:
   - component: {fileID: 5837397121413417423}
   - component: {fileID: 7166499092081682405}
   - component: {fileID: 7151040924010201454}
+  - component: {fileID: 298461423899549841}
   m_Layer: 0
   m_Name: UI_EternityReinforce_ElementalAttackP2
   m_TagString: Untagged
@@ -2745,6 +2966,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &298461423899549841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5212986825829509057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55b73fca9b6fa847a30af14e8fff6fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopUI: {fileID: 4748044761072575901}
 --- !u!1 &5404443870768683918
 GameObject:
   m_ObjectHideFlags: 0
@@ -3353,6 +3587,7 @@ GameObject:
   - component: {fileID: 6563398780454571698}
   - component: {fileID: 2203753551014563499}
   - component: {fileID: 6904970925062808103}
+  - component: {fileID: 933901434337201626}
   m_Layer: 0
   m_Name: UI_EternityReinforce_ElementalAttackP1
   m_TagString: Untagged
@@ -3461,6 +3696,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &933901434337201626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6470971751273969079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55b73fca9b6fa847a30af14e8fff6fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopUI: {fileID: 4748044761072575901}
 --- !u!1 &6480529273918215029
 GameObject:
   m_ObjectHideFlags: 0
@@ -3608,6 +3856,7 @@ GameObject:
   - component: {fileID: 1519576599779698887}
   - component: {fileID: 7109587298110499671}
   - component: {fileID: 1325447483791151281}
+  - component: {fileID: 5653999248365163522}
   m_Layer: 0
   m_Name: UI_EternityReinforce_ResourceBag2
   m_TagString: Untagged
@@ -3716,6 +3965,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5653999248365163522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7117632289662698588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55b73fca9b6fa847a30af14e8fff6fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopUI: {fileID: 4748044761072575901}
 --- !u!1 &7177785683335689898
 GameObject:
   m_ObjectHideFlags: 0
@@ -3835,7 +4097,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4803497606316388680}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4748044761072575901}
+        m_TargetAssemblyTypeName: ShopUI, Assembly-CSharp
+        m_MethodName: OnSubmit_RemoveActiveObject
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7179778500112205316
 GameObject:
   m_ObjectHideFlags: 0
@@ -4133,6 +4407,7 @@ GameObject:
   - component: {fileID: 845349418405834145}
   - component: {fileID: 726961766300176531}
   - component: {fileID: 1574326125618880599}
+  - component: {fileID: 7573037380955983354}
   m_Layer: 0
   m_Name: UI_EternityReinforce_StaminaGainSpeed1
   m_TagString: Untagged
@@ -4241,6 +4516,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7573037380955983354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7682836035987576537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55b73fca9b6fa847a30af14e8fff6fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopUI: {fileID: 4748044761072575901}
 --- !u!1 &7859611739995165952
 GameObject:
   m_ObjectHideFlags: 0
@@ -4419,6 +4707,11 @@ MonoBehaviour:
   Reinforce_Description: {fileID: 2925676233823268012}
   Reinforce_Need_Image: {fileID: 7179778500112205316}
   Reinforce_Need: {fileID: 2254403432666091038}
+  ActivePassives_Img:
+  - {fileID: 3027337148477301626}
+  - {fileID: 6587041993718371379}
+  - {fileID: 4803497606316388680}
+  Frame_Sprite: {fileID: 21300000, guid: 28e95db0ba39a364b9bbbcd01a4c7aba, type: 3}
 --- !u!1 &8311485366250296427
 GameObject:
   m_ObjectHideFlags: 0

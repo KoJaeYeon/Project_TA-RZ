@@ -24,6 +24,7 @@ public class Player : MonoBehaviour, IHit
 
     public IInteractable Interactable { get; set; }
     public PC_Common_Stat _playerStat { get; private set; } = new PC_Common_Stat();
+    public PC_PassiveData PlayerPassiveData { get; private set; } = new PC_PassiveData();
     public PC_Level _PC_Level { get; private set; } = new PC_Level();
     public Camera MainCamera { get { return _camera; } }
     #endregion

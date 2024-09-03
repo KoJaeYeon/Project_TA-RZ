@@ -1,8 +1,10 @@
+using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using Zenject;
 
 public class ShopUI : MonoBehaviour
@@ -19,8 +21,15 @@ public class ShopUI : MonoBehaviour
     [SerializeField] GameObject Reinforce_Need_Image;
     [SerializeField] TextMeshProUGUI Reinforce_Need;
 
+    [SerializeField]
+    Image[] ActivePassives_Img;
+
+    [SerializeField] Sprite Frame_Sprite;
+
     GameObject previousGameObject;
     GameObject currentGameObject;
+
+    List<GameObject> ActiveObjects = new List<GameObject>();
     private void OnEnable()
     {
         cancelAction.action.Enable();
@@ -43,6 +52,7 @@ public class ShopUI : MonoBehaviour
         currentGameObject = EventSystem.current.currentSelectedGameObject;
         if (previousGameObject != currentGameObject)
         {
+            previousGameObject = currentGameObject;
             FormatText();
         }        
     }
@@ -50,12 +60,40 @@ public class ShopUI : MonoBehaviour
     void FormatText()
     {
         Frame.transform.position = currentGameObject.transform.position;
-        Reinforce_Name.text = _dataManager.GetString($"{currentGameObject.name}_Text");
-        string valueID = _dataManager.GetStringValue($"{currentGameObject.name}_Text_Explain");
-        string valueText = _dataManager.GetString($"{currentGameObject.name}_Text_Explain");
+
+        if (currentGameObject.gameObject.name.StartsWith("Reinforce"))
+        {
+            char lastChar = currentGameObject.name[currentGameObject.name.Length - 1];
+            int lastidx = lastChar - '0';
+            if(lastidx - 1 < ActiveObjects.Count)
+            {
+                RenewPanel(ActiveObjects[lastidx-1]);
+            }
+            else
+            {
+                Reinforce_Name.text = "-";
+                Reinforce_Description.text = "";
+                Reinforce_Need.text = "";
+                Reinforce_Need_Image.SetActive(false);
+                Reinforce_Need.gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            RenewPanel(currentGameObject);
+        }
+
+    }
+
+    void RenewPanel(GameObject selectGameObject)
+    {
+        Reinforce_Name.text = _dataManager.GetString($"{selectGameObject.name}_Text");
+        string valueID = _dataManager.GetStringValue($"{selectGameObject.name}_Text_Explain");
+        string valueText = _dataManager.GetString($"{selectGameObject.name}_Text_Explain");
 
         var passive_Value = _dataManager.GetData(valueID) as Passive_Value;
-        char lastChar = currentGameObject.name[currentGameObject.name.Length - 1];
+        char lastChar = selectGameObject.name[selectGameObject.name.Length - 1];
+
         switch (lastChar)
         {
             case '1':
@@ -80,7 +118,20 @@ public class ShopUI : MonoBehaviour
 
     void ShopUIRenew()
     {
-
+        for (int i = 0; i < 3; i++)
+        {
+            if (i < ActiveObjects.Count)
+            {
+                var img = ActiveObjects[i].GetComponent<Image>();
+                ActivePassives_Img[i].sprite = img.sprite;
+                ActivePassives_Img[i].color = Color.red;
+            }
+            else
+            {
+                ActivePassives_Img[i].sprite = Frame_Sprite;
+                ActivePassives_Img[i].color = Color.gray;
+            }
+        }
     }
 
     private void OnCancel(InputAction.CallbackContext context)
@@ -91,5 +142,22 @@ public class ShopUI : MonoBehaviour
     public void DeActiveShopUI()
     {
         UIEvent.DeActiveShopUI();
+    }
+
+    public void AddActiveObject(GameObject gameObject)
+    {
+        if(ActiveObjects.Count >= 3) { return; }
+        ActiveObjects.Add(gameObject);
+        ShopUIRenew();
+    }
+    public void OnSubmit_RemoveActiveObject(int index)
+    {
+        if (index > ActiveObjects.Count - 1) return;
+
+        var activeObject = ActiveObjects[index];
+        ActiveObjects.Remove(activeObject);
+        var img = activeObject.GetComponent<Image>();
+        img.color = Color.white;
+        ShopUIRenew();
     }
 }
