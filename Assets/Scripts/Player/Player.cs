@@ -354,8 +354,65 @@ public class Player : MonoBehaviour, IHit
         this._PC_Level = _PC_Level;
     }
 
+    public void AllgnToCamera()
+    {
+        transform.rotation = cameraRoot.transform.rotation;
+
+        cameraRoot.transform.rotation = transform.rotation;
+    }
+
     #region Achievement
-    public void OnCalled_MonsterKilled()
+    public void OnCalled_Achieve_BossKilled()
+    {
+        if (SavePlayerData.BossKilled == true) return;
+
+        SavePlayerData.BossKilled = true;
+        string achieveText = dataManager.GetString("UI_Achievement_Text_Content_0");
+        uiEvent.ActiveAchievementUI(achieveText);
+    }
+
+    public void OnCalled_Achieve_Charged()
+    {
+        if (SavePlayerData.Charged == true) return;
+
+        SavePlayerData.Charged = true;
+        string achieveText = dataManager.GetString("UI_Achievement_Text_Content_1");
+        uiEvent.ActiveAchievementUI(achieveText);
+    }
+
+    public void OnCalled_Achieve_NoHitBossKilled()
+    {
+        if (SavePlayerData.NoHitBossKilled == true) return;
+
+        SavePlayerData.NoHitBossKilled = true;
+        string achieveText = dataManager.GetString("UI_Achievement_Text_Content_2");
+        uiEvent.ActiveAchievementUI(achieveText);
+    }
+
+    public void OnCalled_Achieve_AllUnlockPassive()
+    {
+        if (SavePlayerData.AllUnlockPassive == true) return;
+
+        foreach(int i in SavePlayerData.passiveIndex)
+        {
+            if (i != 2) return;
+        }
+
+        SavePlayerData.AllUnlockPassive = true;
+        string achieveText = dataManager.GetString("UI_Achievement_Text_Content_3");
+        uiEvent.ActiveAchievementUI(achieveText);
+    }
+
+    public void OnCalled_Achieve_RedChip()
+    {
+        if (SavePlayerData.RedChip == true) return;
+
+        SavePlayerData.RedChip = true;
+        string achieveText = dataManager.GetString("UI_Achievement_Text_Content_4");
+        uiEvent.ActiveAchievementUI(achieveText);
+    }
+
+    public void OnCalled_Achieve_MonsterKilled()
     {
         SavePlayerData.Kill += 1;
         if (SavePlayerData.EnemyKilled == true) return;
@@ -369,7 +426,7 @@ public class Player : MonoBehaviour, IHit
         }
     }
 
-    public void OnCalled_ResourceGet()
+    public void OnCalled_Achieve_ResourceGet()
     {
         SavePlayerData.Resource += 1;
         if (SavePlayerData.ResourceGet == true) return;
@@ -383,13 +440,6 @@ public class Player : MonoBehaviour, IHit
         }
     }
     #endregion
-    public void AllgnToCamera()
-    {
-        transform.rotation = cameraRoot.transform.rotation;
-
-        cameraRoot.transform.rotation = transform.rotation;
-    }
-
 
     #region PlayerLoad
 

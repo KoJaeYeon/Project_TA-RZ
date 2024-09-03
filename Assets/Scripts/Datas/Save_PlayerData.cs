@@ -5,7 +5,7 @@ public class Save_PlayerData
     public bool BossKilled { get; set; } = false;
     public bool Charged { get; set; } = false;
     public bool NoHitBossKilled { get; set; } = false;
-    public bool AllUnlocked { get; set; } = false;
+    public bool AllUnlockPassive { get; set; } = false;
     public bool RedChip { get; set; } = false;
     public bool EnemyKilled { get; set; } = false;
     public bool ResourceGet { get; set; } = false;
@@ -21,7 +21,7 @@ public class Save_PlayerData
                $"BossKilled: {BossKilled}, " +
                $"Charged: {Charged}, " +
                $"NoHitBossKilled: {NoHitBossKilled}, " +
-               $"AllUnlocked: {AllUnlocked}, " +
+               $"AllUnlocked: {AllUnlockPassive}, " +
                $"RedChip: {RedChip}, " +
                $"EnemyKilled: {EnemyKilled}, " +
                $"ResourceGet: {ResourceGet}, " +

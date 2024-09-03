@@ -171,7 +171,7 @@ public class Monster : MonoBehaviour, IHit
                 _stage.UnRegisterMonster(this.gameObject);
             }
 
-            Player.OnCalled_MonsterKilled();
+            Player.OnCalled_Achieve_MonsterKilled();
             gameObject.SetActive(false);
         }
     }

@@ -12,13 +12,25 @@ public class UIEvent
     private Action<StageType> _stageCallBack;
     private GameUI _gameUI;
     private MapManager _mapManager;
+    public PlayerUIView PlayerUIView { get; private set; }
     public LoadingUI _loadUI { get; private set; }
     public BlueChipUI BlueChipUI { get; private set; }
     public ShopUI ShopUI { get; private set; }
     public InteractUI InteractUI { get; private set; }
 
     public AchievementUI AchievementUI { get; private set; }
-    
+
+    #region PlayerUIEvent
+    public void RegisterPlayerUI(PlayerUIView playerUI)
+    {
+        PlayerUIView = playerUI;
+    }
+
+    public void SetActivePlayerUI(bool isActive)
+    {
+        PlayerUIView.gameObject.SetActive(isActive);
+    }
+    #endregion
     #region ChoiceEvent
     public void RegisterGameUI(GameUI gameUI)
     {

@@ -4,6 +4,9 @@ using UnityEngine.UI;
 
 public class AchievementUI : MonoBehaviour
 {
+    [Header("기획자 인스펙터")]
+    [SerializeField] float UI_Achievement_Duration;
+    [Header("개발자 인스펙터")]
     [SerializeField] Text Achieve_Content_Text;
 
     private void OnEnable()
@@ -18,7 +21,7 @@ public class AchievementUI : MonoBehaviour
 
     IEnumerator DeActive()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(UI_Achievement_Duration);
         gameObject.SetActive(false);
     }
 }

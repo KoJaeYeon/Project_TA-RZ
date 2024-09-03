@@ -414,4 +414,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79e206e5644600f47a12a4a2bbccbb4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UI_Achievement_Duration: 2
   Achieve_Content_Text: {fileID: 515434358059364752}
