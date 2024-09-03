@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using TMPro;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -50,8 +51,7 @@ public class ShopUI : MonoBehaviour
         cancelAction.action.performed += OnCancel;
         UIEvent.SetActivePlayerControl(false);
 
-        EventSystem.current.SetSelectedGameObject(initial_Select_GameObject);
-        ShopUIRenew();
+        EventSystem.current.SetSelectedGameObject(initial_Select_GameObject);        
         RenewAll();
     }
 
@@ -133,7 +133,9 @@ public class ShopUI : MonoBehaviour
 
     public void RenewAll()
     {
-        foreach(var item in passiveButtons)
+        ShopUIRenew();
+
+        foreach (var item in passiveButtons)
         {
             item.RenewPsvBtn();
         }
@@ -171,7 +173,21 @@ public class ShopUI : MonoBehaviour
 
     public bool UnlockNextButton(GameObject unlockObject)
     {
-        Debug.Log(unlockObject.name);
+        string valueID = _dataManager.GetStringValue($"{unlockObject.name}_Text_Explain");
+        var passive_Value = _dataManager.GetData(valueID) as Passive_Value;
+        char lastChar = unlockObject.name[unlockObject.name.Length - 1];
+        int lastidx = lastChar - '1';
+
+        int needMoney = lastidx == 1 ? passive_Value.Status_1to2_NeedResource : passive_Value.Status_2to3_NeedResource;
+        if(_player.SavePlayerData.money < needMoney)
+        {
+            return false;
+        }
+
+        _player.SavePlayerData.money -= needMoney;
+        int passiveIndex = (valueID[valueID.Length - 1] - '1');
+        _player.SavePlayerData.passiveIndex[passiveIndex] = lastidx;
+
         return true;
     }
 

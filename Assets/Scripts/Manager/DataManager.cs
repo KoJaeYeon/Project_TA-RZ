@@ -414,8 +414,8 @@ public class DataManager : MonoBehaviour
             float status_UP_1 = ParseFloat(item["Status_UP_1"]);
             float status_UP_2 = ParseFloat(item["Status_UP_2"]);
             float status_UP_3 = ParseFloat(item["Status_UP_3"]);
-            float status_1to2_NeedResource = ParseFloat(item[nameof(Passive_Value.Status_1to2_NeedResource)]);
-            float status_2to3_NeedResource = ParseFloat(item[nameof(Passive_Value.Status_2to3_NeedResource)]);
+            int status_1to2_NeedResource = ParseInt(item[nameof(Passive_Value.Status_1to2_NeedResource)]);
+            int status_2to3_NeedResource = ParseInt(item[nameof(Passive_Value.Status_2to3_NeedResource)]);
 
             Passive_Value passiveValue = new Passive_Value(idStr, new List<float> { status_UP_1, status_UP_2, status_UP_3 }, status_1to2_NeedResource, status_2to3_NeedResource);
             AddDataToDataDictionary(idStr, passiveValue);

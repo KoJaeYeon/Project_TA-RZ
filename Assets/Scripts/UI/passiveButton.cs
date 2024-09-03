@@ -25,26 +25,26 @@ public class PassiveButton : MonoBehaviour
         char lastChar = gameObject.name[gameObject.name.Length - 1];
         index = lastChar - '1';
 
-        string passiveName = gameObject.name.Substring(0, gameObject.name.Length-1);
+        string passiveName = gameObject.name.Substring(0, gameObject.name.Length - 1);
         int targetindex = -1;
-        switch(passiveName)
+        switch (passiveName)
         {
             case "UI_EternityReinforce_BAttackP":
                 targetindex = 0;
                 break;
-            case "UI_EternityReinforce_ElementalAttackP":
+            case "UI_EternityReinforce_Hp":
                 targetindex = 1;
                 break;
-            case "UI_EternityReinforce_Hp":
+            case "UI_EternityReinforce_RunSpeed":
                 targetindex = 2;
                 break;
-            case "UI_EternityReinforce_RunSpeed":
+            case "UI_EternityReinforce_ResourceBag":
                 targetindex = 3;
                 break;
-            case "UI_EternityReinforce_ResourceBag":
+            case "UI_EternityReinforce_StaminaGainSpeed":
                 targetindex = 4;
                 break;
-            case "UI_EternityReinforce_StaminaGainSpeed":
+            case "UI_EternityReinforce_ElementalAttackP":
                 targetindex = 5;
                 break;
         }
