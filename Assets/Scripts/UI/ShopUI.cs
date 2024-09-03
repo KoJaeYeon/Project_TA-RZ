@@ -145,14 +145,14 @@ public class ShopUI : MonoBehaviour
         UIEvent.DeActiveShopUI();
     }
 
-    public void AddActiveObject(GameObject gameObject)
+    public void AddActiveObject(GameObject addGameObject)
     {
         if(ActiveObjects.Count >= 3) { return; }
-        ActiveObjects.Add(gameObject);
+        ActiveObjects.Add(addGameObject);
 
-        string valueID = _dataManager.GetStringValue($"{gameObject.name}_Text_Explain");
+        string valueID = _dataManager.GetStringValue($"{addGameObject.name}_Text_Explain");
         var passive_Value = _dataManager.GetData(valueID) as Passive_Value;
-        char lastChar = currentGameObject.name[currentGameObject.name.Length - 1];
+        char lastChar = addGameObject.name[addGameObject.name.Length - 1];
         int lastidx = lastChar - '1';
         switch(valueID)
         {
@@ -181,6 +181,28 @@ public class ShopUI : MonoBehaviour
         ActiveObjects.Remove(activeObject);
         var img = activeObject.GetComponent<Image>();
         img.color = Color.white;
+
+        string valueID = _dataManager.GetStringValue($"{activeObject.name}_Text_Explain");
+        var passive_Value = _dataManager.GetData(valueID) as Passive_Value;
+        char lastChar = activeObject.name[activeObject.name.Length - 1];
+        int lastidx = lastChar - '1';
+        switch (valueID)
+        {
+            case "G101":
+                break;
+            case "G102":
+                break;
+            case "G103":
+                break;
+            case "G104":
+                _player.PlayerPassiveData.addOwnNum -= (int)passive_Value.Status_UP[lastidx];
+                break;
+            case "G105":
+                break;
+            case "G106":
+                break;
+        }
+
         ShopUIRenew();
     }
 }

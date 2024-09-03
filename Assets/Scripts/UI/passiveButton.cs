@@ -17,7 +17,6 @@ public class passiveButton : MonoBehaviour
 
     public void OnSubmit_RequestAddPassive()
     {
-        Debug.Log(gameObject);
         shopUI.AddActiveObject(gameObject);        
         img.color = Color.red;
     }
