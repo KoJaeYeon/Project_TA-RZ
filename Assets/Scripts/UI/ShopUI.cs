@@ -9,6 +9,7 @@ public class ShopUI : MonoBehaviour
     [Inject] UIEvent UIEvent;
     [SerializeField] InputActionReference cancelAction;
     [SerializeField] GameObject initial_Select_GameObject;
+    [SerializeField] GameObject Frame;
     private void OnEnable()
     {
         cancelAction.action.Enable();
@@ -24,6 +25,11 @@ public class ShopUI : MonoBehaviour
         cancelAction.action.performed -= OnCancel;
         cancelAction.action.Disable();
         UIEvent.SetActivePlayerControl(true);
+    }
+
+    private void Update()
+    {
+        Frame.transform.position = EventSystem.current.currentSelectedGameObject.transform.position;
     }
 
     void ShopUIRenew()
