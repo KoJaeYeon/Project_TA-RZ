@@ -367,7 +367,20 @@ public class Player : MonoBehaviour, IHit
             string achieveText = string.Format(dataManager.GetString("UI_Achievement_Text_Content_5"), needKill.ToString());
             uiEvent.ActiveAchievementUI(achieveText);
         }
+    }
 
+    public void OnCalled_ResourceGet()
+    {
+        SavePlayerData.Resource += 1;
+        if (SavePlayerData.ResourceGet == true) return;
+
+        int needResource = int.Parse(dataManager.GetStringValue("Achievement_Content_6"));
+        if (SavePlayerData.Resource >= needResource)
+        {
+            SavePlayerData.ResourceGet = true;
+            string achieveText = string.Format(dataManager.GetString("UI_Achievement_Text_Content_6"), needResource.ToString());
+            uiEvent.ActiveAchievementUI(achieveText);
+        }
     }
     #endregion
     public void AllgnToCamera()

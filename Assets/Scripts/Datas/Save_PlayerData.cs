@@ -12,7 +12,7 @@ public class Save_PlayerData
 
     public int[] passiveIndex { get; set; } = new int[6];
     public int Kill { get; set; } = 0;
-    public int resource { get; set; } = 0;
+    public int Resource { get; set; } = 0;
 
     public override string ToString()
     {
@@ -27,6 +27,6 @@ public class Save_PlayerData
                $"ResourceGet: {ResourceGet}, " +
                $"passiveIndex: [{string.Join(", ", passiveIndex)}], " +
                $"Kill: {Kill}, " +
-               $"resource: {resource}";
+               $"resource: {Resource}";
     }
 }
