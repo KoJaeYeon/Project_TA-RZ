@@ -55,6 +55,9 @@ public class Stage : MonoBehaviour
     [Header("PartitionList")]
     [SerializeField] private List<Partition> _partitions; //각 구역 리스트.
 
+    [Header("ChestObject")]
+    [SerializeField] private GameObject _chest;
+
     [Header("PortalObject")]
     [SerializeField] private GameObject _portal;
 
@@ -395,11 +398,11 @@ public class Stage : MonoBehaviour
 
     private void StageClear()
     {
-        bool setactive = _portal != null;
+        bool setactive = _chest != null;
 
         if (setactive)
         {
-            _portal.SetActive(true);
+            _chest.SetActive(true);
 
             bool questClear = _player.ClearQuest();
         }
