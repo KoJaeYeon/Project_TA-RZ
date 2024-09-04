@@ -6,7 +6,8 @@ public class Chest : MonoBehaviour, IInteractable
     [Inject] UIEvent UIEvent;
     public void Interact()
     {
-        UIEvent.ActiveBlueChipUI();
+        UIEvent.ActiveBlueChipUI(this);
+        UIEvent.DeactiveQuestUI();
     }
 
     public string GetText()

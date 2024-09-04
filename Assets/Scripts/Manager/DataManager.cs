@@ -160,13 +160,15 @@ public class DataManager : MonoBehaviour
             case "_String_Data_URL":
                 Process_String_Data(data);
                 break;
+            case "_PC_BluechipData_URL":
+                Process_BlueChip_Data(data);
+                break;
             case "_Passive_Value_URL":
                 Process_Passive_Value_Data(data);
                 break;
             case "_Quest_URL":
                 Process_Quest_Value_Data(data);
                 break;
-
             case "_String_Value_URL":
                 Process_String_Value_Data(data);
                 break;
@@ -479,6 +481,27 @@ public class DataManager : MonoBehaviour
             {
                 AddStringTovalueIDDictionary(idStr, strValue);
             }
+        }
+    }
+
+    private void Process_BlueChip_Data(string data)
+    {
+        JArray jsonArray = JArray.Parse(data);
+
+        foreach (var item in jsonArray)
+        {
+            string idStr = item[nameof(PC_BlueChip.ID)].ToString();
+            string path = item[nameof(PC_BlueChip.Path)].ToString();
+            string stringPath = item[nameof(PC_BlueChip.StringPath)].ToString();
+            float att_damage = ParseFloat(item[nameof(PC_BlueChip.Att_damage)]);
+            float att_damage_Lvup = ParseFloat(item[nameof(PC_BlueChip.Att_Damage_Lvup)]);
+            float chip_attackArea = ParseFloat(item[nameof(PC_BlueChip.Chip_AttackArea)]);
+            float interval_Time = ParseFloat(item[nameof(PC_BlueChip.Interval_time)]);
+            float chip_Lifetime = ParseFloat(item[nameof(PC_BlueChip.Chip_Lifetime)]);
+            List<float> valueList = parseList<float>(item[nameof(PC_BlueChip.ValueList)]);
+
+            PC_BlueChip bluechip = new PC_BlueChip(idStr, path, stringPath, att_damage, att_damage_Lvup, chip_attackArea, interval_Time, chip_Lifetime, valueList);
+            AddDataToDataDictionary(idStr, bluechip);
         }
     }
     #endregion
