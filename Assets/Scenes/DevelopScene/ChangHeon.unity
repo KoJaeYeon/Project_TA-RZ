@@ -307,6 +307,7 @@ MonoBehaviour:
   Attack_Stiff_Time: 0
   Knockback_Horizontal_Distance: 4
   Knockback_Vertical_Distance: 2
+  IsFirstAtk: 0
 --- !u!195 &62376406
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -638,6 +639,7 @@ MonoBehaviour:
   Attack_Stiff_Time: 0
   Knockback_Horizontal_Distance: 4
   Knockback_Vertical_Distance: 2
+  IsFirstAtk: 0
 --- !u!114 &507205009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1915,11 +1917,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4522486096449827451, guid: b824e4e9be9567c4f9fab5b2c5d03761,
-        type: 3}
-      propertyPath: growDuration
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 5852697830198830055, guid: b824e4e9be9567c4f9fab5b2c5d03761,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2038,20 +2035,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7795989177293778189, guid: 355fa6a2bad9b6c4da76b9e2bb909391,
-        type: 3}
-      propertyPath: test
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 9120751004214810020, guid: 355fa6a2bad9b6c4da76b9e2bb909391,
         type: 3}
       propertyPath: m_Name
       value: Monster_B
-      objectReference: {fileID: 0}
-    - target: {fileID: 9120751004214810020, guid: 355fa6a2bad9b6c4da76b9e2bb909391,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

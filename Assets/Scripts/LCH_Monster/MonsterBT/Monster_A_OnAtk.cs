@@ -17,7 +17,7 @@ public class Monster_A_OnAtk : Action
     {
         anim.Value.Play("Atk");
         monster.Value.StartAtk();
-
+        monster.Value.IsFirstAtk = true;
     }
     public override TaskStatus OnUpdate()
     {
@@ -73,47 +73,18 @@ public class Monster_C_OnAtk : Action
     {
         animator.Value.Play("Atk");
         Monster.Value.StartAtk();
+        Monster.Value.IsFirstAtk = true;
+
     }
     public override TaskStatus OnUpdate()
     {
         if (Monster.Value != null)
         {
-            var stateInfo = animator.Value.GetCurrentAnimatorStateInfo(0);
-            if (stateInfo.IsName("Atk") == true)
-            {
-                animinfo = animator.Value.GetCurrentAnimatorStateInfo(0);
-
-                if (animinfo.normalizedTime < 0.32f)
-                {
-
-                }
-                else if (animinfo.normalizedTime < 0.55f)
-                {
-
-                }
-                else if (animinfo.normalizedTime < 0.80f)
-                {
-                }
-                else
-                {
-                    return TaskStatus.Success;
-                }
-                return TaskStatus.Running;
-
-            }
-            if(Monster.Value.IsAttack == true)
+            if (Monster.Value.IsAttack == true)
             {
                 return TaskStatus.Running;
             }
             
-            else if (stateInfo.IsName("Idle") == true)
-            {
-                return TaskStatus.Failure;
-            }
-            else
-            {
-                return TaskStatus.Running;
-            }
         }
 
         return TaskStatus.Failure;

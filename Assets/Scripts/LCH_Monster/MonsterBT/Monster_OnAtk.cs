@@ -17,7 +17,9 @@ public class Monster_OnAtk : Action
 
     public override void OnStart()
     {
+        monster.Value.LastAttackTime = Time.time;
         anim.Value.Play("Atk");
+        monster.Value.IsFirstAtk = true;
     }
     public override TaskStatus OnUpdate()
     {

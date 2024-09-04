@@ -57,6 +57,8 @@ public class Monster : MonoBehaviour, IHit
     public float ApplyingKnockbackTime { get; set; }
     public float ApplyingStiffTime { get; set; }
 
+    public bool IsFirstAtk = false;
+    public float LastAttackTime { get; set; }
     protected Monster_Stat monster_Stat = new Monster_Stat();
     protected string idStr = "E101";
 

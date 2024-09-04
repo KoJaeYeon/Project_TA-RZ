@@ -60,10 +60,11 @@ MonoBehaviour:
   Attack_Stiff_Time: 1
   Knockback_Horizontal_Distance: 4
   Knockback_Vertical_Distance: 2
+  IsFirstAtk: 0
   atkPrefab: {fileID: 3738270216358607088}
   explosionPrefab: {fileID: 4970941263060252270}
   bombPrefab: {fileID: 7233869045896501499}
-  growDuration: 2
+  growDuration: 10
   targetScale: {x: 3, y: 0.1, z: 3}
   explosionSize: {x: 3, y: 3, z: 3}
 --- !u!114 &8317118921151855658

@@ -20,7 +20,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4032033828353185073
 Transform:
   m_ObjectHideFlags: 0
@@ -58,6 +58,7 @@ MonoBehaviour:
   Attack_Stiff_Time: 1
   Knockback_Horizontal_Distance: 4
   Knockback_Vertical_Distance: 2
+  IsFirstAtk: 0
   dashAttackDistance: 10
   dashSpeed: 10
 --- !u!195 &683141643478443577
