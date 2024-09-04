@@ -308,6 +308,7 @@ MonoBehaviour:
   Knockback_Horizontal_Distance: 4
   Knockback_Vertical_Distance: 2
   IsFirstAtk: 0
+  LastAttackTime: 0
 --- !u!195 &62376406
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -640,6 +641,7 @@ MonoBehaviour:
   Knockback_Horizontal_Distance: 4
   Knockback_Vertical_Distance: 2
   IsFirstAtk: 0
+  LastAttackTime: 0
 --- !u!114 &507205009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1097,6 +1099,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Monster_D
+      objectReference: {fileID: 0}
+    - target: {fileID: 4578271199966134984, guid: b4f394eb12d91e6468557af298d5dbcb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1972,6 +1979,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Monster_C_
       objectReference: {fileID: 0}
+    - target: {fileID: 8756060252475729759, guid: b824e4e9be9567c4f9fab5b2c5d03761,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2034,6 +2046,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7795989177293778189, guid: 355fa6a2bad9b6c4da76b9e2bb909391,
+        type: 3}
+      propertyPath: test
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9120751004214810020, guid: 355fa6a2bad9b6c4da76b9e2bb909391,
         type: 3}
@@ -2107,6 +2124,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Monster_A
+      objectReference: {fileID: 0}
+    - target: {fileID: 3448629249713632305, guid: 8ba67c2ba273a5d409c064dd02d96052,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

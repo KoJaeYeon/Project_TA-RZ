@@ -58,7 +58,7 @@ public class Monster : MonoBehaviour, IHit
     public float ApplyingStiffTime { get; set; }
 
     public bool IsFirstAtk = false;
-    public float LastAttackTime { get; set; }
+    public float LastAttackTime;
     protected Monster_Stat monster_Stat = new Monster_Stat();
     protected string idStr = "E101";
 
@@ -97,7 +97,7 @@ public class Monster : MonoBehaviour, IHit
         {
             ApplyKnockback(2, Player.transform);
         }
-        Debug.Log($"몬스터의 쿨타임? : { Mon_Common_CoolTime}");
+        
     }
 
     /// <summary>
