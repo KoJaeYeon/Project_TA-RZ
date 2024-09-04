@@ -181,7 +181,7 @@ public class Player : MonoBehaviour, IHit
 
             _currentAmmo = value;
 
-            if (_currentAmmo == _playerStat.Resource_Own_Num)
+            if (_currentAmmo >= _playerStat.Resource_Own_Num)
             {
                 drainSystem.OnSetActiveDrainSystem(false);
             }

@@ -17,12 +17,6 @@ public class DrainSystem : MonoBehaviour
     {
         _sphereCollider = GetComponent<SphereCollider>();
     }
-
-    private void OnEnable()
-    {
-        DrainItemList.Clear();
-    }
-
     private void Update()
     {
         foreach (var item in DrainItemList)
@@ -60,6 +54,10 @@ public class DrainSystem : MonoBehaviour
     public void OnSetActiveDrainSystem(bool isActive)
     {
         _sphereCollider.enabled = isActive;
+        if(isActive == false)
+        {
+            DrainItemList.Clear();
+        }
     }
 
     public void OnSetActiveDraintEffect(bool isAcitve)
