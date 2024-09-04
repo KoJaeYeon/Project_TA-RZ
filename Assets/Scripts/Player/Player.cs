@@ -22,12 +22,12 @@ public class Player : MonoBehaviour, IHit
     private PlayerStateMachine _state;
     private SFX_MotionCloner _cloner;
     private Camera _camera;
-    
+
 
     public IInteractable Interactable { get; set; }
     public PC_Common_Stat _playerStat { get; private set; } = new PC_Common_Stat();
     public PC_PassiveData PlayerPassiveData { get; private set; } = new PC_PassiveData();
-    public Save_PlayerData SavePlayerData { get; private set; } = new Save_PlayerData();
+    public Save_PlayerData SavePlayerData { get; set; } = new Save_PlayerData();
     public PC_Level _PC_Level { get; private set; } = new PC_Level();
     public Camera MainCamera { get { return _camera; } }
     #endregion
@@ -292,7 +292,7 @@ public class Player : MonoBehaviour, IHit
 
     private void InitializePlayer()
     {
-        PlayerPassiveData._player = this;
+        Load_SaveData();        
         StartCoroutine(LoadStat());
         StartCoroutine(LoadSkillCounsumption());
     }
@@ -442,7 +442,12 @@ public class Player : MonoBehaviour, IHit
     #endregion
 
     #region PlayerLoad
-
+    void Load_SaveData()
+    {
+        if (saveManager.saveIndex == -1) return;
+        PlayerPassiveData._player = this;
+        SavePlayerData = saveManager.Load(saveManager.saveIndex);
+    }
     IEnumerator LoadStat()
     {
         yield return new WaitWhile(() => {
@@ -488,6 +493,10 @@ public class Player : MonoBehaviour, IHit
             }
 
         }
+    }
+    public void OnSave_PlayerData()
+    {
+        saveManager.Save(SavePlayerData);
     }
     #endregion
 

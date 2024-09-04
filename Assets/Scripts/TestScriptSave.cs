@@ -14,7 +14,6 @@ public class TestScriptSave : MonoBehaviour
     {
         if(Input.GetKeyUp(KeyCode.F1))
         {
-            SaveManager.Save(0);
         }    
     }
 }

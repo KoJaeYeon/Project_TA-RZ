@@ -196,15 +196,33 @@ public class ShopUI : MonoBehaviour
         int passiveIndex = (valueID[valueID.Length - 1] - '1');
         _player.SavePlayerData.passiveIndex[passiveIndex] = lastidx;
 
-        _player.OnCalled_Achieve_AllUnlockPassive();
+        //활성화 되어있던 패시브 제거
+        string previous_Passive_Name = $"{unlockObject.name.Substring(0, unlockObject.name.Length - 1)}{lastidx}";
+        int index = 0;
+        foreach(var activeObejct in ActiveObjects)
+        {
+            if(previous_Passive_Name.Equals(activeObejct.name))
+            {
+                OnSubmit_RemoveActiveObject(index);
+                break;
+            }
+            index++;
+        }
 
+        //업적 호출
+        _player.OnCalled_Achieve_AllUnlockPassive();
         return true;
     }
 
 
     public bool AddActiveObject(GameObject addGameObject)
     {
+        //최대치
         if(ActiveObjects.Count >= 3) { return false; }
+
+        // 중복 차단
+        if(ActiveObjects.Contains(addGameObject)) { return false; }
+
         ActiveObjects.Add(addGameObject);
 
         string valueID = _dataManager.GetStringValue($"{addGameObject.name}_Text_Explain");
