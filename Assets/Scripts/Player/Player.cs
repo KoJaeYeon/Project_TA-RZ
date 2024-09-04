@@ -672,6 +672,8 @@ public class Player : MonoBehaviour, IHit
         {
             CurrentHP -= damage;
 
+            HitQuest?.Invoke(false);
+
             PlayerHit.Pc_Stiff_Time = _playerStat.Damaged_Stiff_T;
 
             _state.OnDamagedStateChange();

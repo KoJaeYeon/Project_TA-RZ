@@ -43,6 +43,7 @@ public class QuestUI : MonoBehaviour
         else
         {
             Failure.SetActive(true);
+            _player.RemoveAllQuest();
         }
     }
 }
