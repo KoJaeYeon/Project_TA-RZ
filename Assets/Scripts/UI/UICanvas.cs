@@ -14,6 +14,7 @@ public class UICanvas : MonoBehaviour
     [SerializeField] InteractUI InteractUI;
     [SerializeField] AchievementUI AchievementUI;
     [SerializeField] QuestUI QuestUI;
+    [SerializeField] MenuUI MenuUI;
 
     public void Awake()
     {
@@ -25,5 +26,6 @@ public class UICanvas : MonoBehaviour
         UIEvent.RegisterInteractUI(InteractUI);
         UIEvent.RegisterAchievementUI(AchievementUI);
         UIEvent.RegisterQuestUI(QuestUI);
+        UIEvent.RegisterMenuUI(MenuUI);
     }
 }

@@ -19,7 +19,8 @@ public class UIEvent
     public InteractUI InteractUI { get; private set; }
 
     public AchievementUI AchievementUI { get; private set; }
-    public QuestUI QuestUI { get; set; }
+    public QuestUI QuestUI { get; private set; }
+    public MenuUI MenuUI { get; private set; }
 
     #region PlayerUIEvent
     public void RegisterPlayerUI(PlayerUIView playerUI)
@@ -169,6 +170,23 @@ public class UIEvent
         QuestUI.gameObject.SetActive(false);
     }
     #endregion
+    #region MenuEvent
+    public void RegisterMenuUI(MenuUI menuUI)
+    {
+        MenuUI = menuUI;
+    }
+
+    public void SetActiveMenuUI()
+    {
+        MenuUI.OnEnableMenuUI();
+    }
+
+    public void OutLobbyMenuUI()
+    {
+        MenuUI.OutLobby();
+    }
+    #endregion
+
 
     #region PlayerControl
     public void SetActivePlayerControl(bool isActive)

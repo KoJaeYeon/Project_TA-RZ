@@ -161,6 +161,7 @@ public class MapManager : MonoBehaviour
         if(currentStage != null)
         {
             currentStage.StartStage(_currentStageType);
+            _uiEvent.OutLobbyMenuUI();
         }
     }
  
