@@ -147,7 +147,7 @@ public class UIEvent
     }
     #endregion
 
-        #region PlayerControl
+    #region PlayerControl
     public void SetActivePlayerControl(bool isActive)
     {
         var input = player.GetComponent<PlayerInput>();

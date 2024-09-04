@@ -25,6 +25,7 @@ public class GoogleSheetManager : MonoBehaviour
     const string _String_Data_URL = "https://script.google.com/macros/s/AKfycbwc6eo7YQ2DYoRLU3pPmsCELjTKwbStfeQH5AcsEhQlC_2xEDIZEHRmgBVwEJmUMNs/exec";
     const string _Passive_Value_URL = "https://script.google.com/macros/s/AKfycby-VlngJ_PgQ5F-JHIlPpr_9M3EraTjTDFt_uaebqfJdxXoU-0yVoMCCkalMp3K7gY/exec";
     const string _Monster_Elite_URL = "https://script.google.com/macros/s/AKfycbxlWx2WYMwpRyqdqcaQead-MqqouxJ_7gegFTW194GIUpK_jh1vZYDKTpgZmmpWnpi3/exec";
+    const string _Quest_URL = "https://script.google.com/macros/s/AKfycby1AGz5U1Vhs3QT36FmX6sMp7oHh04ae8TtME50M_rQG9aC6sKwNQLb78s0nIqkzsQ/exec";
 
     //16~
     const string _String_Value_URL = "https://script.google.com/macros/s/AKfycbwihMzjsvYTo5WpO0R5L4k4ARsiSInOSz4BlJaP2g_svd67OuupakkXQ1GeOGxIvzk/exec";
@@ -59,6 +60,7 @@ public class GoogleSheetManager : MonoBehaviour
             StartCoroutine(SaveJsonData(nameof(_String_Data_URL), _String_Data_URL));
             StartCoroutine(SaveJsonData(nameof(_Passive_Value_URL), _Passive_Value_URL));
             StartCoroutine(SaveJsonData(nameof(_Monster_Elite_URL), _Monster_Elite_URL));
+            StartCoroutine(SaveJsonData(nameof(_Quest_URL), _Quest_URL));
 
             StartCoroutine(SaveJsonData(nameof(_String_Value_URL), _String_Value_URL));
             return;
@@ -83,6 +85,7 @@ public class GoogleSheetManager : MonoBehaviour
             RequestJsonRead(nameof(_String_Data_URL));
             RequestJsonRead(nameof(_Passive_Value_URL));
             RequestJsonRead(nameof(_Monster_Elite_URL));
+            RequestJsonRead(nameof(_Quest_URL));
 
             RequestJsonRead(nameof(_String_Value_URL));
 
@@ -107,6 +110,7 @@ public class GoogleSheetManager : MonoBehaviour
             StartCoroutine(RequestSJsonAPI(nameof(_String_Data_URL), _String_Data_URL));
             StartCoroutine(RequestSJsonAPI(nameof(_Passive_Value_URL), _Passive_Value_URL));
             StartCoroutine(RequestSJsonAPI(nameof(_Monster_Elite_URL), _Monster_Elite_URL));
+            StartCoroutine(RequestSJsonAPI(nameof(_Quest_URL), _Quest_URL));
 
             StartCoroutine(RequestSJsonAPI(nameof(_String_Value_URL), _String_Value_URL));
         }

@@ -163,6 +163,9 @@ public class DataManager : MonoBehaviour
             case "_Passive_Value_URL":
                 Process_Passive_Value_Data(data);
                 break;
+            case "_Quest_URL":
+                Process_Quest_Value_Data(data);
+                break;
 
             case "_String_Value_URL":
                 Process_String_Value_Data(data);
@@ -442,6 +445,23 @@ public class DataManager : MonoBehaviour
 
             Passive_Value passiveValue = new Passive_Value(idStr, new List<float> { status_UP_1, status_UP_2, status_UP_3 }, status_1to2_NeedResource, status_2to3_NeedResource);
             AddDataToDataDictionary(idStr, passiveValue);
+        }
+    }
+
+    private void Process_Quest_Value_Data(string data)
+    {
+        JArray jsonArray = JArray.Parse(data);
+
+        foreach (var item in jsonArray)
+        {
+            string idStr = item["ID"].ToString();
+            string strValue = item["Probability"].ToString();
+
+            AddStringToStringDictionary(idStr, strValue);
+            if (string.IsNullOrWhiteSpace(strValue) == false)
+            {
+                AddStringTovalueIDDictionary(idStr, strValue);
+            }
         }
     }
 
