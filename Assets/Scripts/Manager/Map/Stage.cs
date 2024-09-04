@@ -95,7 +95,7 @@ public class Stage : MonoBehaviour
             chance = float.Parse(_dataManager.GetStringValue("L501"));
         }
 
-        if (chance >= Random.Range(0, 100))
+        if (chance >= Random.Range(0, 1f))
         {
             _uiEvent.ActiveQuestUI();
         }

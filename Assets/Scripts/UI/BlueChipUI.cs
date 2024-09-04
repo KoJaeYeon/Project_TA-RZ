@@ -101,6 +101,7 @@ public class BlueChipUI : MonoBehaviour
         if (_leftBlueChip == 0)
         {
             gameObject.SetActive(false);
+            chest.SetActivePoratal();
         }
         else
         {
