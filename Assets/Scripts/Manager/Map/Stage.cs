@@ -2,9 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using System;
 using Zenject;
-using Unity.VisualScripting;
 
 [System.Serializable]
 public enum GameLevel
@@ -87,8 +85,20 @@ public class Stage : MonoBehaviour
     public void StartStage(StageType newStage)
     {
         _currentStage = newStage;
+        float chance = 0;
+        if (_level == GameLevel.Middle)
+        {
+            chance = float.Parse(_dataManager.GetStringValue("L500"));
+        }
+        else if (_level == GameLevel.Final)
+        {
+            chance = float.Parse(_dataManager.GetStringValue("L501"));
+        }
 
-        _uiEvent.ActiveQuestUI();
+        if (chance >= Random.Range(0, 1f))
+        {
+            _uiEvent.ActiveQuestUI();
+        }
 
         ClearStageObject();
 
