@@ -10,6 +10,7 @@ public enum MonsterAbility
     Speed,
     Power,
     Shield,
+    Elite
 }
 public enum MonsterType
 {
@@ -21,7 +22,7 @@ public class Monster : MonoBehaviour, IHit
 {
     [Header("몬스터 타입")]
     [SerializeField] MonsterType Type;
-    [SerializeField] MonsterAbility _Ability;
+    [SerializeField] protected MonsterAbility _Ability;
     [Inject] public Player Player { get;}
     [Inject] DataManager _dataManager;
     BehaviorTree _bt;
@@ -99,7 +100,7 @@ public class Monster : MonoBehaviour, IHit
     /// <param name="monsterType"></param>
     public virtual void OnSetMonsterStat(float stat_Multiplier)
     {
-        int rand = Random.Range(0, 3);
+        int rand = Random.Range(0, 4);
         transform.GetChild(rand).gameObject.SetActive(true);
         _Ability = (MonsterAbility)rand;
         Anim = GetComponentInChildren<Animator>();
@@ -107,7 +108,7 @@ public class Monster : MonoBehaviour, IHit
         StartCoroutine(LoadStat(stat_Multiplier));
     }
 
-    IEnumerator LoadStat(float stat_Multiplier)
+    protected IEnumerator LoadStat(float stat_Multiplier)
     {
         while (true)
         {

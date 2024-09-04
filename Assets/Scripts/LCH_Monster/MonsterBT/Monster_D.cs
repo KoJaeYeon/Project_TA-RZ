@@ -18,7 +18,7 @@ public class Monster_D : Monster
     private Collider collider;
     LayerMask _playerLayer;
 
-    public Monster_D_DashUI dashUi { get; private set; }
+    public Monster_D_DashUI dashUi { get; protected set; }
     protected override void Awake()
     {
         base.Awake();
