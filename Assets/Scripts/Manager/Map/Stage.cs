@@ -45,6 +45,8 @@ public class Stage : MonoBehaviour
     private PoolManager _poolManager;
     [Inject]
     private Player _player;
+    [Inject]
+    private UIEvent _uiEvent;
     #endregion
 
     [Header("GameLevel")]
@@ -82,6 +84,8 @@ public class Stage : MonoBehaviour
     public void StartStage(StageType newStage)
     {
         _currentStage = newStage;
+
+        _uiEvent.ActiveQuestUI();
 
         ClearStageObject();
 
@@ -396,6 +400,8 @@ public class Stage : MonoBehaviour
         if (setactive)
         {
             _portal.SetActive(true);
+
+            bool questClear = _player.ClearQuest();
         }
     }
 

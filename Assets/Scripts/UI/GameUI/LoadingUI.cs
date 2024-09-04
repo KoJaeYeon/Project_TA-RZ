@@ -16,6 +16,7 @@ public class LoadingUI : MonoBehaviour
     private void OnEnable()
     {
         _uiEvent.SetActivePlayerControl(false);
+        
     }
 
     private void OnDisable()

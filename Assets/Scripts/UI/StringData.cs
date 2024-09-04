@@ -19,10 +19,6 @@ public class StringData : MonoBehaviour
         }
     }
 
-    private void Awake()
-    {
-        
-    }
     private void Start()
     {
         StartCoroutine(LoadString());

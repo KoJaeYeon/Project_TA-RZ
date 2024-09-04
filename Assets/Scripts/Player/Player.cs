@@ -320,6 +320,7 @@ public class Player : MonoBehaviour, IHit
         _state.AddState(State.KnockBack, new PlayerKnockBack(this));
         _state.AddState(State.Death, new PlayerDeath(this));
     }
+    #region LocoMotion
     public void Interact()
     {
         Interactable?.Interact();
@@ -360,7 +361,7 @@ public class Player : MonoBehaviour, IHit
 
         cameraRoot.transform.rotation = transform.rotation;
     }
-
+    #endregion
     #region Achievement
     public void OnCalled_Achieve_BossKilled()
     {
@@ -440,7 +441,45 @@ public class Player : MonoBehaviour, IHit
         }
     }
     #endregion
+    #region Quest
+    public Action<bool> DashQuest { get; private set; }
+    public Action<bool> HitQuest { get; private set; }
+    public Action<bool> SkillQuest { get; private set; }
 
+    public void RemoveAllQuest()
+    {
+        DashQuest = null;
+        HitQuest = null;
+        SkillQuest = null;
+    }
+    public bool ClearQuest()
+    {
+        if(DashQuest == null && HitQuest == null && SkillQuest == null ) return false;
+
+        DashQuest?.Invoke(true);
+        HitQuest?.Invoke(true);
+        SkillQuest?.Invoke(true);
+        RemoveAllQuest();
+        return true;
+    }
+
+    public void RegisterDashQuest(Action<bool> callback)
+    {
+        DashQuest += callback;
+    }
+
+    public void RegisterHitQuest(Action<bool> callback)
+    {
+        HitQuest += callback;
+    }
+
+    public void RegisterSkillQuest(Action<bool> callback)
+    {
+        SkillQuest += callback;
+    }
+
+
+    #endregion
     #region PlayerLoad
     void Load_SaveData()
     {
@@ -499,7 +538,6 @@ public class Player : MonoBehaviour, IHit
         saveManager.Save(SavePlayerData);
     }
     #endregion
-
     #region Gizmos
     //Ground, AttackGizmos
     private void OnDrawGizmos()
@@ -618,7 +656,6 @@ public class Player : MonoBehaviour, IHit
 
     }
     #endregion
-
     #region Hit
     public void Hit(float damage, float paralysisTime, Transform attackTrans)
     {
@@ -633,7 +670,9 @@ public class Player : MonoBehaviour, IHit
         }
         else
         {
-            CurrentHP -= damage;            
+            CurrentHP -= damage;
+
+            HitQuest?.Invoke(false);
 
             PlayerHit.Pc_Stiff_Time = _playerStat.Damaged_Stiff_T;
 
@@ -677,6 +716,5 @@ public class Player : MonoBehaviour, IHit
 
         return true;
     }
-
     #endregion
 }

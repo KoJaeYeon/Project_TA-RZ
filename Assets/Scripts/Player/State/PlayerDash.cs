@@ -24,6 +24,7 @@ public class PlayerDash : PlayerState
         {
             InitializeDash();
             _player.CurrentStamina -= _player._playerStat.Dash_Stamina;
+            _player.DashQuest?.Invoke(false);
         }
         else
             _state.ChangeState(State.Idle);

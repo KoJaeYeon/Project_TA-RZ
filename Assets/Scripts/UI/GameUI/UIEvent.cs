@@ -19,6 +19,7 @@ public class UIEvent
     public InteractUI InteractUI { get; private set; }
 
     public AchievementUI AchievementUI { get; private set; }
+    public QuestUI QuestUI { get; private set; }
 
     #region PlayerUIEvent
     public void RegisterPlayerUI(PlayerUIView playerUI)
@@ -146,8 +147,24 @@ public class UIEvent
         AchievementUI.OnSetText(achieveStr);
     }
     #endregion
+    #region QuestEvent
+    public void RegisterQuestUI(QuestUI questUI)
+    {
+        QuestUI = questUI;
+    }
 
-        #region PlayerControl
+    public void ActiveQuestUI()
+    {
+        QuestUI.gameObject.SetActive(true);
+    }
+
+    public void DeactiveQuestUI()
+    {
+        QuestUI.gameObject.SetActive(false);
+    }
+    #endregion
+
+    #region PlayerControl
     public void SetActivePlayerControl(bool isActive)
     {
         var input = player.GetComponent<PlayerInput>();
