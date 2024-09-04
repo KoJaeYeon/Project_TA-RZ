@@ -440,6 +440,42 @@ public class Player : MonoBehaviour, IHit
         }
     }
     #endregion
+    #region Quest
+    public Action<bool> DashQuest { get; private set; }
+    public Action<bool> HitQuest { get; private set; }
+    public Action<bool> SkillQuest { get; private set; }
+
+    public void RemoveAllQuest()
+    {
+        DashQuest = null;
+        HitQuest = null;
+        SkillQuest = null;
+    }
+    public void ClearQuest()
+    {
+        DashQuest?.Invoke(true);
+        HitQuest?.Invoke(true);
+        SkillQuest?.Invoke(true);
+        RemoveAllQuest();
+    }
+
+    public void RegisterDashQuest(Action<bool> callback)
+    {
+        DashQuest += callback;
+    }
+
+    public void RegisterHitQuest(Action<bool> callback)
+    {
+        HitQuest += callback;
+    }
+
+    public void RegisterSkillQuest(Action<bool> callback)
+    {
+        SkillQuest += callback;
+    }
+
+
+    #endregion
 
     #region PlayerLoad
     void Load_SaveData()
@@ -633,7 +669,7 @@ public class Player : MonoBehaviour, IHit
         }
         else
         {
-            CurrentHP -= damage;            
+            CurrentHP -= damage;
 
             PlayerHit.Pc_Stiff_Time = _playerStat.Damaged_Stiff_T;
 

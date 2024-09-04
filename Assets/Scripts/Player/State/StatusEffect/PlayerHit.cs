@@ -21,6 +21,8 @@ public class PlayerHit : PlayerStaus
         _coroutine = _player.StartCoroutine(Paralysis(Pc_Stiff_Time));
 
         _animator.SetFloat(_speed, 0f);
+
+        _player.HitQuest.Invoke(false);
     }
 
     public override void StateUpdate()
