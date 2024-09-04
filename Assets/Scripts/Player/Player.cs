@@ -539,18 +539,17 @@ public class Player : MonoBehaviour, IHit
             return;
         }
 
+        CurrentHP -= damage;
+
         if (_currentHP <= 0)
         {
             _state.ChangeState(State.Death);
+            return;
         }
-        else
-        {
-            CurrentHP -= damage;            
 
-            PlayerHit.Pc_Stiff_Time = _playerStat.Damaged_Stiff_T;
+        PlayerHit.Pc_Stiff_Time = _playerStat.Damaged_Stiff_T;
 
-            _state.OnDamagedStateChange();
-        }
+        _state.OnDamagedStateChange();
     }
 
     public void ApplyKnockback(float knockBackTime, Transform otherTrans)
