@@ -10,6 +10,11 @@ public class BTA_Boss_Die : BossAction
     public override void OnStart()
     {
         _anim.SetTrigger(_hashDie);
+        _owner.player.OnCalled_Achieve_BossKilled();
+        if(_owner.isPlayerHit == false )
+        {
+            _owner.player.OnCalled_Achieve_NoHitBossKilled();
+        }
     }
 
     public override TaskStatus OnUpdate()

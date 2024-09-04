@@ -15,6 +15,8 @@ public class Boss_MarkManager : MonoBehaviour
 
     public GameObject mark_Rush;
 
+    public ParticleSystem mark_RushPar;
+
     public GameObject mark_Swing;
 
     public GameObject mark_smash;

@@ -17,7 +17,9 @@ public class Monster_OnAtk : Action
 
     public override void OnStart()
     {
+        monster.Value.LastAttackTime = Time.time;
         anim.Value.Play("Atk");
+        monster.Value.IsFirstAtk = true;
     }
     public override TaskStatus OnUpdate()
     {
@@ -27,7 +29,6 @@ public class Monster_OnAtk : Action
             if (stateInfo.IsName("Atk") == true)
             {
                 animinfo = anim.Value.GetCurrentAnimatorStateInfo(0);
-
                 if(animinfo.normalizedTime < 0.32f)
                 {
 
@@ -53,10 +54,7 @@ public class Monster_OnAtk : Action
             {
                 return TaskStatus.Failure;
             }
-            else if (stateInfo.IsName("Idle") == true)
-            {
-                return TaskStatus.Failure;
-            }
+            
             else
             {
                 return TaskStatus.Running;
@@ -69,5 +67,6 @@ public class Monster_OnAtk : Action
     public override void OnEnd()
     {
         collider.Value.enabled = false;
+        
     }
 }

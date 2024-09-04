@@ -20,12 +20,10 @@ public class Monster_Stop : Action
             Nav.Value.isStopped = true;  // NavMeshAgent 멈추기
             Nav.Value.velocity = Vector3.zero;
             Monster.Value.IsCollsion = false;
-            Debug.Log("멈춤");
             return TaskStatus.Success;  
         }
         else if(distanceToTarget >= Monster.Value.Mon_Common_Range)
         {
-            Debug.Log("안멈춤");
             Nav.Value.SetDestination(Monster.Value.Player.transform.position);            
 
             return TaskStatus.Running;  

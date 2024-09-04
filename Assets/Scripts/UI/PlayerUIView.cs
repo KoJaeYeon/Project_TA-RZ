@@ -41,7 +41,7 @@ public class PlayerUIView : MonoBehaviour
         StaminaSlider.value = _player.CurrentStamina / 100f;
         SkillSlider.value = _player.CurrentSkill / 100f;
         CurrenAmmoText.text = _player.CurrentAmmo.ToString("000");
-        Resource_OwnNum_Text.text = _player._playerStat.Resource_Own_Num.ToString("000");
+        Resource_OwnNum_Text.text = _player.CurrentResourceOwn.ToString("000");
     }
 
     private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -62,8 +62,8 @@ public class PlayerUIView : MonoBehaviour
             case nameof(_player.CurrentAmmo):
                 CurrenAmmoText.text = _player.CurrentAmmo.ToString("000");
                 break;
-            case nameof(_player._playerStat.Resource_Own_Num):
-                Resource_OwnNum_Text.text = _player._playerStat.Resource_Own_Num.ToString("000");
+            case nameof(_player.CurrentResourceOwn):
+                Resource_OwnNum_Text.text = _player.CurrentResourceOwn.ToString("000");
                 break;
             case nameof(PlayerDeath):
                 GameOverPanel.gameObject.SetActive(true);

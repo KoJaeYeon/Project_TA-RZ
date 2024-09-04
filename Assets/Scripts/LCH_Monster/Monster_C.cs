@@ -17,6 +17,7 @@ public class Monster_C : Monster
     [SerializeField] private Vector3 explosionSize;
 
     public float LastAttackTime { get; set; }
+    public float GrowDuration { get { return growDuration; } }
 
     public bool IsAttack { get; set; }
     // Start is called before the first frame update
@@ -29,6 +30,10 @@ public class Monster_C : Monster
         {
             monsterC.Initialize(this);
         }
+        if (atkPrefab == null)
+        {
+            Debug.Log("어택프리팹이없슴");
+        }
         atkPrefab.transform.localScale = targetScale;
         explosionPrefab.transform.localScale = explosionSize;
     }
@@ -37,12 +42,17 @@ public class Monster_C : Monster
     {
         if (atkPrefab != null)
         {
+            Debug.Log("Monster_C StartAtk called at position: " + transform.position);
             IsAttack = true;
             atkPrefab.SetActive(true);
             StartCoroutine(GrowOverTime(atkPrefab));
         }
+        else
+        {
+            Debug.LogError("Monster_C atkPrefab is null");
+        }
     }
-    
+
 
     public override void Hit(float damage, float paralysisTime, Transform transform)
     {

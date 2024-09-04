@@ -16,7 +16,6 @@ public class BlueChipUI : MonoBehaviour
 
     private void OnEnable()
     {
-        Cursor.lockState = CursorLockMode.None;
         UIEvent.SetActivePlayerControl(false);
     }
 
@@ -33,13 +32,12 @@ public class BlueChipUI : MonoBehaviour
 
     private void OnDisable()
     {
-        Cursor.lockState = CursorLockMode.Locked;
         UIEvent.SetActivePlayerControl(true);
     }
 
     public void DeActiveBlueChipUI()
     {
-        gameObject.SetActive(false);
+        UIEvent.DeActiveBlueChipUI();
     }
 
     public void OnClickPoisonBlueChipUI()
