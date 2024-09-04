@@ -38,6 +38,7 @@ public class BossController : MonoBehaviour, IHit
     [SerializeField] private GimmickController _gimmick;
     [SerializeField] private GameObject _gimmickDamageBox;
     public float gimmickDamage;
+    [SerializeField] private float _gimmickChargingTime;
     [SerializeField] private float _gimmickCoolDown;
     public bool isCoolGimmick;
     [Header("1페이즈 뿌리 공격")]
@@ -45,10 +46,12 @@ public class BossController : MonoBehaviour, IHit
     [SerializeField] private GameObject _rootDamageBox;
     [SerializeField] private RootContoller[] _roots;
     public float rootDamage;
+    [SerializeField] private float _rootAttackWaitTime;
     [SerializeField] private float _rootCoolDown;
     public bool isCoolRootAttack;
     [Header("1, 2페이즈 내려치기")]
     public float smashDamage;
+    [SerializeField] private float _smashWaitTime;
     [SerializeField] private float _smashCoolDown;
     public bool isCoolSmash;
     [Header("1페이즈 폭발")]
@@ -60,6 +63,7 @@ public class BossController : MonoBehaviour, IHit
     [SerializeField] private Transform[] _secondExplosionTr;
     [SerializeField] private float _explosionTime;
     public float explosionDamage;
+    [SerializeField] private float _explosionWaitTime;
     [SerializeField] private float _explosionCoolDown;
     public bool isCoolExplosion;
 
@@ -77,6 +81,7 @@ public class BossController : MonoBehaviour, IHit
     [SerializeField] private GameObject _swingMark;
     [SerializeField] private GameObject _swingDamageBox;
     public float swingDamage;
+    [SerializeField] private float _swingWaitTime;
     [SerializeField] private float _swingCoolDown;
     public bool isCoolSwing;
     [Header("2페이즈 내려치기")]
@@ -175,6 +180,12 @@ public class BossController : MonoBehaviour, IHit
         _bt.SetVariableValue("RushRange", rushRange);
         _bt.SetVariableValue("RushWaitTime", rushWailtTime);
         _bt.SetVariableValue("DefaultRushWaitTime", _defaultRushTime);
+
+        _bt.SetVariableValue("GimmickChargingTime", _gimmickChargingTime);
+        _bt.SetVariableValue("RootAttackWaitTime", _rootAttackWaitTime);
+        _bt.SetVariableValue("SmashWaitTime", _smashWaitTime);
+        _bt.SetVariableValue("ExplosionWaitTime", _explosionWaitTime);
+        _bt.SetVariableValue("SwingWaitTime", _swingWaitTime);
 
         #region 테스트
 
