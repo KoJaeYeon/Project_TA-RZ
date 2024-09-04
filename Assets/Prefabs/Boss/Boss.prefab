@@ -3698,7 +3698,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8703404442526962380}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3754,8 +3754,8 @@ MonoBehaviour:
   _gimmick: {fileID: 0}
   _gimmickDamageBox: {fileID: 0}
   gimmickDamage: 10
-  _gimmickChargingTime: 10
-  _gimmickCoolDown: 60
+  _gimmickChargingTime: 5
+  _gimmickCoolDown: 30
   isCoolGimmick: 0
   _markRoot: {fileID: 0}
   _rootDamageBox: {fileID: 0}
@@ -3763,38 +3763,62 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   rootDamage: 10
-  _rootAttackWaitTime: 3
-  _rootCoolDown: 20
+  _rootAttackWaitTime: 1
+  _rootCoolDown: 6
   isCoolRootAttack: 0
   smashDamage: 10
-  _smashWaitTime: 3
-  _smashCoolDown: 20
+  _smashWaitTime: 0.5
+  _smashCoolDown: 5
   isCoolSmash: 0
   _firstExplosion: []
   _firstExplosionDamageBox: []
-  _firstExplosionTr: []
+  _firstExplosionTr:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _secondExplosion: {fileID: 0}
   _secondExplosionDamageBox: {fileID: 0}
-  _secondExplosionTr: []
+  _secondExplosionTr:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _explosionTime: 0
   explosionDamage: 10
-  _explosionWaitTime: 3
-  _explosionCoolDown: 10
+  _explosionWaitTime: 1
+  _explosionCoolDown: 5
   isCoolExplosion: 0
   _rushMark: {fileID: 0}
   _rushPar: {fileID: 0}
   _rushSpeed: 20
   rushRange: 15
-  rushWailtTime: 3
-  _defaultRushTime: 3
+  rushWailtTime: 1.5
+  _defaultRushTime: 1.5
   rushDamage: 10
-  _rushCoolDown: 5
+  _rushCoolDown: 1.5
   isCoolRush: 0
   _swingMark: {fileID: 0}
   _swingDamageBox: {fileID: 0}
   swingDamage: 10
-  _swingWaitTime: 3
-  _swingCoolDown: 5
+  _swingWaitTime: 1
+  _swingCoolDown: 7.5
   isCoolSwing: 0
   _smashMark: {fileID: 0}
   _smashDamageBox: {fileID: 0}

@@ -91,7 +91,7 @@ AnimatorTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 4
+  - m_ConditionMode: 6
     m_ConditionEvent: Skill_Index
     m_EventTreshold: 2
   m_DstStateMachine: {fileID: 0}
@@ -938,7 +938,7 @@ AnimatorTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 4
+  - m_ConditionMode: 6
     m_ConditionEvent: Skill_Index
     m_EventTreshold: 1
   m_DstStateMachine: {fileID: 0}
@@ -1505,7 +1505,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 76c8408b33fcace4c886d402414580ae, type: 2}
+  m_Motion: {fileID: 7400000, guid: 3946e9328e6fa984fb98f3c0d9b06ab1, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
