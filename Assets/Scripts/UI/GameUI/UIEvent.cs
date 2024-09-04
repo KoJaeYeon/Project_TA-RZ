@@ -19,7 +19,7 @@ public class UIEvent
     public InteractUI InteractUI { get; private set; }
 
     public AchievementUI AchievementUI { get; private set; }
-    public QuestUI QuestUI { get; private set; }
+    public QuestUI QuestUI { get; set; }
 
     #region PlayerUIEvent
     public void RegisterPlayerUI(PlayerUIView playerUI)
@@ -88,10 +88,16 @@ public class UIEvent
         BlueChipUI = blueChipUI;
     }
 
-    public void ActiveBlueChipUI()
+    public void ActiveBlueChipUI(Chest chest)
     {
         BlueChipUI.gameObject.SetActive(true);
         InteractUI.gameObject.SetActive(false);
+        BlueChipUI.chest = chest;
+        if (QuestUI.isSuccess == true)
+        {
+            BlueChipUI.QuestCleared();
+            QuestUI.isSuccess = false;
+        }
     }
 
     public void DeActiveBlueChipUI()

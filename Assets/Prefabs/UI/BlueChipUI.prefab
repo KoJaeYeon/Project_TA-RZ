@@ -451,7 +451,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 1, g: 0, b: 0, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -467,7 +467,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 3375481285295368760}
+  m_TargetGraphic: {fileID: 423497404169107363}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -577,6 +577,10 @@ MonoBehaviour:
   _poisonBluechipUI: {fileID: 0}
   _explosionBluechipUI: {fileID: 0}
   _magneticBluechipUI: {fileID: 0}
+  blue_Select_Buttons:
+  - {fileID: 8272548692467686916}
+  - {fileID: 6893510719375424466}
+  - {fileID: 3666765216811894477}
 --- !u!1001 &1191193426991706271
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -690,6 +694,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Blue_Select_Button
       objectReference: {fileID: 0}
+    - target: {fileID: 7082481236319825563, guid: 6b6aa83be02583542a5616ef366de79b,
+        type: 3}
+      propertyPath: BlueChipUI
+      value: 
+      objectReference: {fileID: 4664992000612005486}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -707,6 +716,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1191193426991706271}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8272548692467686916 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7082481236319825563, guid: 6b6aa83be02583542a5616ef366de79b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1191193426991706271}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137603576643569992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06f4adddec816374ca24223634d4c64d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4458753095937971529
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -820,6 +841,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Blue_Select_Button (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7082481236319825563, guid: 6b6aa83be02583542a5616ef366de79b,
+        type: 3}
+      propertyPath: BlueChipUI
+      value: 
+      objectReference: {fileID: 4664992000612005486}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -831,6 +857,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 4458753095937971529}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6893510719375424466 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7082481236319825563, guid: 6b6aa83be02583542a5616ef366de79b,
+    type: 3}
+  m_PrefabInstance: {fileID: 4458753095937971529}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06f4adddec816374ca24223634d4c64d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5812159895111379030
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -944,11 +982,28 @@ PrefabInstance:
       propertyPath: m_Name
       value: Blue_Select_Button (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7082481236319825563, guid: 6b6aa83be02583542a5616ef366de79b,
+        type: 3}
+      propertyPath: BlueChipUI
+      value: 
+      objectReference: {fileID: 4664992000612005486}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b6aa83be02583542a5616ef366de79b, type: 3}
+--- !u!114 &3666765216811894477 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7082481236319825563, guid: 6b6aa83be02583542a5616ef366de79b,
+    type: 3}
+  m_PrefabInstance: {fileID: 5812159895111379030}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06f4adddec816374ca24223634d4c64d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &6789179659634120577 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1049605136125411287, guid: 6b6aa83be02583542a5616ef366de79b,

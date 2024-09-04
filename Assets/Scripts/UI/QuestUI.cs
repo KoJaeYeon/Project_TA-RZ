@@ -11,10 +11,13 @@ public class QuestUI : MonoBehaviour
     [SerializeField] GameObject Success;
     [SerializeField] GameObject Failure;
 
+    public bool isSuccess { get; set; }
+
     private void OnEnable()
     {
         Success.SetActive(false);
         Failure.SetActive(false);
+        isSuccess = false;
 
         _player.RemoveAllQuest();
 
@@ -39,11 +42,13 @@ public class QuestUI : MonoBehaviour
         if (isClear)
         {
             Success.SetActive(true);
+            isSuccess = true;
         }
         else
         {
             Failure.SetActive(true);
             _player.RemoveAllQuest();
+            isSuccess = false;
         }
     }
 }

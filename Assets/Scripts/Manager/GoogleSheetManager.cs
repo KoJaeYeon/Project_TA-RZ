@@ -26,7 +26,7 @@ public class GoogleSheetManager : MonoBehaviour
     const string _Passive_Value_URL = "https://script.google.com/macros/s/AKfycby-VlngJ_PgQ5F-JHIlPpr_9M3EraTjTDFt_uaebqfJdxXoU-0yVoMCCkalMp3K7gY/exec";
     const string _Monster_Elite_URL = "https://script.google.com/macros/s/AKfycbxlWx2WYMwpRyqdqcaQead-MqqouxJ_7gegFTW194GIUpK_jh1vZYDKTpgZmmpWnpi3/exec";
     const string _Quest_URL = "https://script.google.com/macros/s/AKfycby1AGz5U1Vhs3QT36FmX6sMp7oHh04ae8TtME50M_rQG9aC6sKwNQLb78s0nIqkzsQ/exec";
-    const string _PC_BluechipData_URL = "https://script.google.com/macros/s/AKfycbydwh7SeOSwqH0Dl8FaGTHMlDivJ353h37XnKpv9m0WfCGLANFdMDSB6lgGu6l13VGy/exec";
+    const string _PC_BluechipData_URL = "https://script.google.com/macros/s/AKfycbysHW00jz3VD7CnMO7WmupX9BzJ7Mj-Y1W9cI_eDbiQD0rqPKlOvrQhl_HLeiKVkvWo/exec";
 
     //16~
     const string _String_Value_URL = "https://script.google.com/macros/s/AKfycbwihMzjsvYTo5WpO0R5L4k4ARsiSInOSz4BlJaP2g_svd67OuupakkXQ1GeOGxIvzk/exec";
