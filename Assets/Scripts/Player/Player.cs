@@ -320,6 +320,7 @@ public class Player : MonoBehaviour, IHit
         _state.AddState(State.KnockBack, new PlayerKnockBack(this));
         _state.AddState(State.Death, new PlayerDeath(this));
     }
+    #region LocoMotion
     public void Interact()
     {
         Interactable?.Interact();
@@ -360,7 +361,7 @@ public class Player : MonoBehaviour, IHit
 
         cameraRoot.transform.rotation = transform.rotation;
     }
-
+    #endregion
     #region Achievement
     public void OnCalled_Achieve_BossKilled()
     {
@@ -451,12 +452,15 @@ public class Player : MonoBehaviour, IHit
         HitQuest = null;
         SkillQuest = null;
     }
-    public void ClearQuest()
+    public bool ClearQuest()
     {
+        if(DashQuest == null && HitQuest == null && SkillQuest == null ) return false;
+
         DashQuest?.Invoke(true);
         HitQuest?.Invoke(true);
         SkillQuest?.Invoke(true);
         RemoveAllQuest();
+        return true;
     }
 
     public void RegisterDashQuest(Action<bool> callback)
@@ -476,7 +480,6 @@ public class Player : MonoBehaviour, IHit
 
 
     #endregion
-
     #region PlayerLoad
     void Load_SaveData()
     {
@@ -535,7 +538,6 @@ public class Player : MonoBehaviour, IHit
         saveManager.Save(SavePlayerData);
     }
     #endregion
-
     #region Gizmos
     //Ground, AttackGizmos
     private void OnDrawGizmos()
@@ -654,7 +656,6 @@ public class Player : MonoBehaviour, IHit
 
     }
     #endregion
-
     #region Hit
     public void Hit(float damage, float paralysisTime, Transform attackTrans)
     {
@@ -713,6 +714,5 @@ public class Player : MonoBehaviour, IHit
 
         return true;
     }
-
     #endregion
 }

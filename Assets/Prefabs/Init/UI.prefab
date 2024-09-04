@@ -287,12 +287,12 @@ RectTransform:
   - {fileID: 5593666007313908419}
   - {fileID: 9020945261663700900}
   - {fileID: 7149802114060658555}
-  - {fileID: 5140537398586869589}
   - {fileID: 8884256186832025724}
   - {fileID: 3231583781769850041}
   - {fileID: 2907189267528118537}
   - {fileID: 8139880367734032095}
   - {fileID: 8271604692712917616}
+  - {fileID: 5140537398586869589}
   - {fileID: 1411538422567772284}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -383,6 +383,7 @@ MonoBehaviour:
   ShopUI: {fileID: 6389159500900116125}
   InteractUI: {fileID: 7636027567037041315}
   AchievementUI: {fileID: 8368182222243579449}
+  QuestUI: {fileID: 8322520675501765864}
 --- !u!1 &7231709505634375599
 GameObject:
   m_ObjectHideFlags: 0
@@ -1288,6 +1289,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1395786815197627200}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8322520675501765864 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6926919695084238760, guid: e09e6fa6739d1d244a0422888d4bbf02,
+    type: 3}
+  m_PrefabInstance: {fileID: 1395786815197627200}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70b6c2477df32ba4095b98ad0aaf6d05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1682814719011259173
 PrefabInstance:
   m_ObjectHideFlags: 0
