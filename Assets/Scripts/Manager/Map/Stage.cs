@@ -396,6 +396,8 @@ public class Stage : MonoBehaviour
         if (setactive)
         {
             _portal.SetActive(true);
+
+            _player.ClearQuest();
         }
     }
 

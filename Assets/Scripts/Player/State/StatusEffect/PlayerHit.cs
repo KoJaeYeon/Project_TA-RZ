@@ -22,7 +22,7 @@ public class PlayerHit : PlayerStaus
 
         _animator.SetFloat(_speed, 0f);
 
-        _player.HitQuest.Invoke(false);
+        _player.HitQuest?.Invoke(false);
     }
 
     public override void StateUpdate()

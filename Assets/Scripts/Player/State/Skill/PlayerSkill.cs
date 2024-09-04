@@ -56,7 +56,7 @@ public class PlayerSkill : PlayerState
     {
         _PC_Skill = GetSkill() as PC_Skill;
         _player.IsSkillAnimationEnd = false;
-        _player.SkillQuest.Invoke(false);
+        _player.SkillQuest?.Invoke(false);
         _player.AllgnToCamera();
         SkillConsume();
         SelectSkillAndStart();
