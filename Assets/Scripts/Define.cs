@@ -1,7 +1,7 @@
 public enum StageType
 {
-    Quantity,
     Normal,
+    Quantity,    
     Elite,
     Boss
 }
