@@ -6744,11 +6744,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c5f187acb52704d8a2f05b00e941af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  test: 0
   Type: 0
   _Ability: 0
   Attack_Stiff_Time: 0
   Knockback_Horizontal_Distance: 4
   Knockback_Vertical_Distance: 2
+  IsFirstAtk: 0
 --- !u!195 &6643401399047252378
 NavMeshAgent:
   m_ObjectHideFlags: 0

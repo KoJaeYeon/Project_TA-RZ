@@ -193,6 +193,8 @@ public class BossController : MonoBehaviour, IHit
         _hp = _maxHp;
         _hpPercent = _hp / _maxHp * 100;
         _hpBar.value = _hpPercent;
+
+        StartCoroutine(CoCheckCoolTime(_gimmickCoolDown, Pattern.gimmick));
     }
 
     #region 테스트

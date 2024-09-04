@@ -19,6 +19,8 @@ public enum MonsterType
 }
 public class Monster : MonoBehaviour, IHit
 {
+    [Header("디버깅용")]
+    [SerializeField] bool test;
     [Header("몬스터 타입")]
     [SerializeField] MonsterType Type;
     [SerializeField] MonsterAbility _Ability;
@@ -55,6 +57,8 @@ public class Monster : MonoBehaviour, IHit
     public float ApplyingKnockbackTime { get; set; }
     public float ApplyingStiffTime { get; set; }
 
+    public bool IsFirstAtk = false;
+    public float LastAttackTime;
     protected Monster_Stat monster_Stat = new Monster_Stat();
     protected string idStr = "E101";
 
@@ -81,6 +85,10 @@ public class Monster : MonoBehaviour, IHit
             gameObject.transform.localScale = new Vector3(1.6f, 1.6f, 1.6f);
         }
         Mon_Common_Hp_Remain = Mon_Common_Stat_Hp;
+        if (test == true)
+        {
+            OnSetMonsterStat(1f);
+        }
     }
 
     void Update()
@@ -89,7 +97,7 @@ public class Monster : MonoBehaviour, IHit
         {
             ApplyKnockback(2, Player.transform);
         }
-        Debug.Log($"몬스터의 쿨타임? : { Mon_Common_CoolTime}");
+        
     }
 
     /// <summary>

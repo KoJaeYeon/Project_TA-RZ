@@ -10,6 +10,7 @@ public class MonsterD_OnAtk : Action
 
     public override void OnStart()
     {
+        Monster.Value.IsFirstAtk= true;
         Monster.Value.OnAtk();
     }
     public override TaskStatus OnUpdate()
