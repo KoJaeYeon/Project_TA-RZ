@@ -17,6 +17,7 @@ public class Monster_C : Monster
     [SerializeField] private Vector3 explosionSize;
 
     public float LastAttackTime { get; set; }
+    public float GrowDuration { get { return growDuration; } }
 
     public bool IsAttack { get; set; }
     // Start is called before the first frame update

@@ -7,7 +7,12 @@ public class Monster_C_AtkRange : MonoBehaviour
 {
     private float growDuration = 2.0f;
     [SerializeField] GameObject target;
+    [SerializeField] Monster_C monsterC;
 
+    private void Awake()
+    {
+        growDuration = monsterC.GrowDuration;
+    }
     private void OnEnable()
     {
         transform.SetParent(null);
@@ -18,7 +23,6 @@ public class Monster_C_AtkRange : MonoBehaviour
     {
         transform.localScale = Vector3.zero;
         transform.SetParent(target.transform);
-
     }
 
     private IEnumerator GrowOverTime()
