@@ -46,6 +46,12 @@ public class Player : MonoBehaviour, IHit
     public float Knockback_Horizontal_Distance { get { return knockback_Horizontal_Distance; } }
     public float Knockback_Vertical_Distance { get { return knockback_Vertical_Distance; } }
 
+    [Header("카메라 감도 조절")]
+    [Range(0,1f)][SerializeField] float rotate_Camera_Speed = 1f;
+    [Range(0,15F)][SerializeField] float rotate_Camera_Max = 15f;
+    public float Rotate_Camera_Speed { get { return rotate_Camera_Speed; } }
+    public float Rotate_Camera_Max { get { return rotate_Camera_Max; } }
+
     public SFX_MotionCloner Cloner { get { return _cloner; } }
     int _currentAmmo;
     float _currentHP;
