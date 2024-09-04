@@ -20,6 +20,7 @@ public class LoadingUI : MonoBehaviour
 
     private void OnDisable()
     {
+        _player.OnSave_PlayerData();
         _player.StartCoroutine(PlayerInputEnable());
     }
 

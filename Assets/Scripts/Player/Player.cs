@@ -13,6 +13,8 @@ public class Player : MonoBehaviour, IHit
     [Inject] public CameraRoot cameraRoot { get; }
     [Inject] public DrainSystem drainSystem { get; }
     [Inject] public PoolManager poolManager { get; }
+    [Inject] public SaveManager saveManager { get; }
+    [Inject] public UIEvent uiEvent { get; }
     #endregion
 
     #region PlayerComponent
@@ -20,10 +22,12 @@ public class Player : MonoBehaviour, IHit
     private PlayerStateMachine _state;
     private SFX_MotionCloner _cloner;
     private Camera _camera;
-    
+
 
     public IInteractable Interactable { get; set; }
     public PC_Common_Stat _playerStat { get; private set; } = new PC_Common_Stat();
+    public PC_PassiveData PlayerPassiveData { get; private set; } = new PC_PassiveData();
+    public Save_PlayerData SavePlayerData { get; set; } = new Save_PlayerData();
     public PC_Level _PC_Level { get; private set; } = new PC_Level();
     public Camera MainCamera { get { return _camera; } }
     #endregion
@@ -78,7 +82,7 @@ public class Player : MonoBehaviour, IHit
 
     public float CurrentSpeed
     {
-        get { return _currentSpeed; }
+        get { return _currentSpeed * PlayerPassiveData.AddMove; }
         set
         {
             if(_currentSpeed == value)
@@ -166,16 +170,16 @@ public class Player : MonoBehaviour, IHit
             {
                 value = 0;
             }
-            else if (value > _playerStat.Resource_Own_Num)
+            else if (value > CurrentResourceOwn)
             {
-                value = _playerStat.Resource_Own_Num;
+                value = CurrentResourceOwn;
             }
             if (_currentAmmo == value)
                 return;
 
             _currentAmmo = value;
 
-            if (_currentAmmo == _playerStat.Resource_Own_Num)
+            if (_currentAmmo == CurrentResourceOwn)
             {
                 drainSystem.OnSetActiveDrainSystem(false);
             }
@@ -186,9 +190,13 @@ public class Player : MonoBehaviour, IHit
             OnPropertyChanged(nameof(CurrentAmmo));
         }
     }
+    public int CurrentResourceOwn
+    {
+        get { return _playerStat.Resource_Own_Num + PlayerPassiveData.AddOwnNum; }
+    }
     public float HP
     {
-        get { return _playerStat.HP; }
+        get { return _playerStat.HP * PlayerPassiveData.AddHP; }
         set
         {
             if (_playerStat.HP == value)
@@ -228,6 +236,14 @@ public class Player : MonoBehaviour, IHit
         {
             CurrentSkill++;
         }
+        else if (Input.GetKeyDown(KeyCode.F4))
+        {
+            Debug.Log(SavePlayerData);
+        }
+        else if (Input.GetKeyDown(KeyCode.F5))
+        {
+            CurrentSkill = 25;
+        }
         else if(Input.GetKeyDown(KeyCode.F5))
         {
             CurrentSkill = 25;
@@ -260,18 +276,23 @@ public class Player : MonoBehaviour, IHit
         {
             CurrentAmmo += 10;
         }
+        else if (Input.GetKeyDown(KeyCode.F10))
+        {
+            SceneManager.LoadScene(0);
+        }
         else if (Input.GetKeyDown(KeyCode.F11))
         {
             IsPlayerFourthAttackDrainAvailable = !IsPlayerFourthAttackDrainAvailable;
         }
         else if (Input.GetKeyDown(KeyCode.F12))
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(1);
         }
     }
 
     private void InitializePlayer()
     {
+        Load_SaveData();        
         StartCoroutine(LoadStat());
         StartCoroutine(LoadSkillCounsumption());
     }
@@ -319,22 +340,9 @@ public class Player : MonoBehaviour, IHit
     {
         if (IsActiveStaminaRecovery == true)
         {
-            CurrentStamina += _playerStat.Stamina_Gain * Time.deltaTime;
+            CurrentStamina += (_playerStat.Stamina_Gain + PlayerPassiveData.AddStaRecovery) * Time.deltaTime;
         }
     }
-
-
-    //public void DrainCheck()
-    //{
-
-    //    var _animatorStateInfo = animato.GetCurrentAnimatorStateInfo(0);
-
-    //    if (_animatorStateInfo.IsName("Attack_Legend_Anim") && _animatorStateInfo.normalizedTime >= 0.3f)
-    //    {
-    //        _animator.speed = 0.03f;
-    //    }
-    //}
-
 
     public bool SkillCheck()
     {
@@ -346,8 +354,6 @@ public class Player : MonoBehaviour, IHit
         this._PC_Level = _PC_Level;
     }
 
-
-
     public void AllgnToCamera()
     {
         transform.rotation = cameraRoot.transform.rotation;
@@ -355,9 +361,93 @@ public class Player : MonoBehaviour, IHit
         cameraRoot.transform.rotation = transform.rotation;
     }
 
+    #region Achievement
+    public void OnCalled_Achieve_BossKilled()
+    {
+        if (SavePlayerData.BossKilled == true) return;
+
+        SavePlayerData.BossKilled = true;
+        string achieveText = dataManager.GetString("UI_Achievement_Text_Content_0");
+        uiEvent.ActiveAchievementUI(achieveText);
+    }
+
+    public void OnCalled_Achieve_Charged()
+    {
+        if (SavePlayerData.Charged == true) return;
+
+        SavePlayerData.Charged = true;
+        string achieveText = dataManager.GetString("UI_Achievement_Text_Content_1");
+        uiEvent.ActiveAchievementUI(achieveText);
+    }
+
+    public void OnCalled_Achieve_NoHitBossKilled()
+    {
+        if (SavePlayerData.NoHitBossKilled == true) return;
+
+        SavePlayerData.NoHitBossKilled = true;
+        string achieveText = dataManager.GetString("UI_Achievement_Text_Content_2");
+        uiEvent.ActiveAchievementUI(achieveText);
+    }
+
+    public void OnCalled_Achieve_AllUnlockPassive()
+    {
+        if (SavePlayerData.AllUnlockPassive == true) return;
+
+        foreach(int i in SavePlayerData.passiveIndex)
+        {
+            if (i != 2) return;
+        }
+
+        SavePlayerData.AllUnlockPassive = true;
+        string achieveText = dataManager.GetString("UI_Achievement_Text_Content_3");
+        uiEvent.ActiveAchievementUI(achieveText);
+    }
+
+    public void OnCalled_Achieve_RedChip()
+    {
+        if (SavePlayerData.RedChip == true) return;
+
+        SavePlayerData.RedChip = true;
+        string achieveText = dataManager.GetString("UI_Achievement_Text_Content_4");
+        uiEvent.ActiveAchievementUI(achieveText);
+    }
+
+    public void OnCalled_Achieve_MonsterKilled()
+    {
+        SavePlayerData.Kill += 1;
+        if (SavePlayerData.EnemyKilled == true) return;
+
+        int needKill = int.Parse(dataManager.GetStringValue("Achievement_Content_5"));
+        if(SavePlayerData.Kill >= needKill)
+        {
+            SavePlayerData.EnemyKilled = true;
+            string achieveText = string.Format(dataManager.GetString("UI_Achievement_Text_Content_5"), needKill.ToString());
+            uiEvent.ActiveAchievementUI(achieveText);
+        }
+    }
+
+    public void OnCalled_Achieve_ResourceGet()
+    {
+        SavePlayerData.Resource += 1;
+        if (SavePlayerData.ResourceGet == true) return;
+
+        int needResource = int.Parse(dataManager.GetStringValue("Achievement_Content_6"));
+        if (SavePlayerData.Resource >= needResource)
+        {
+            SavePlayerData.ResourceGet = true;
+            string achieveText = string.Format(dataManager.GetString("UI_Achievement_Text_Content_6"), needResource.ToString());
+            uiEvent.ActiveAchievementUI(achieveText);
+        }
+    }
+    #endregion
 
     #region PlayerLoad
-
+    void Load_SaveData()
+    {
+        if (saveManager.saveIndex == -1) return;
+        PlayerPassiveData._player = this;
+        SavePlayerData = saveManager.Load(saveManager.saveIndex);
+    }
     IEnumerator LoadStat()
     {
         yield return new WaitWhile(() => {
@@ -375,7 +465,7 @@ public class Player : MonoBehaviour, IHit
         CurrentStamina = 100;
         CurrentSkill = 0;
         CurrentAmmo = 0;
-        OnPropertyChanged(nameof(stat.Resource_Own_Num));
+        OnPropertyChanged(nameof(CurrentResourceOwn));
         yield break;
     }
 
@@ -403,6 +493,10 @@ public class Player : MonoBehaviour, IHit
             }
 
         }
+    }
+    public void OnSave_PlayerData()
+    {
+        saveManager.Save(SavePlayerData);
     }
     #endregion
 

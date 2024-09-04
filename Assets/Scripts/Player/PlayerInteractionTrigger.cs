@@ -5,6 +5,7 @@ public class PlayerInteractionTrigger : MonoBehaviour
 {
     [Inject]
     Player _player;
+    [Inject] UIEvent _UIEvent;
     private void OnTriggerEnter(Collider other)
     {
         var iInter = other.GetComponent<IInteractable>();
@@ -14,6 +15,8 @@ public class PlayerInteractionTrigger : MonoBehaviour
         }
 
         _player.Interactable = iInter;
+        string interactName = iInter.GetText();
+        _UIEvent.ActiveInteractUI(interactName);
     }
 
     void OnTriggerExit(Collider other)
@@ -26,6 +29,7 @@ public class PlayerInteractionTrigger : MonoBehaviour
         else if(iInter == _player.Interactable)
         {
             _player.Interactable = null;
-        }        
+            _UIEvent.DeActiveInteractUI();
+        }
     }
 }
