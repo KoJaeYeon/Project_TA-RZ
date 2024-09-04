@@ -119,22 +119,6 @@ public class GoogleSheetManager : MonoBehaviour
             StartCoroutine(RequestSJsonAPI(nameof(_String_Value_URL), _String_Value_URL));
         }
     }
-    private void Update()
-    {
-        if(Input.GetKeyUp(KeyCode.Escape))
-        {
-            var data = dataManager.Log();
-            foreach (var item in data)
-            {
-                Debug.Log(item.Value);
-            }
-            var stringData = dataManager.LogString();
-            foreach (var item in stringData)
-            {
-                Debug.Log(item.Value);
-            }
-        }        
-    }
 
     public IEnumerator RequestSJsonAPI(string urlName ,string url)
     {

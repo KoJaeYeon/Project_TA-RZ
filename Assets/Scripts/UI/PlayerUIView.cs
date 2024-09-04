@@ -1,11 +1,15 @@
+using System;
 using System.ComponentModel;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Zenject;
 
 public class PlayerUIView : MonoBehaviour
 {
+    [SerializeField] InputActionReference cancelAction;
     [SerializeField] Slider HPSlider;
     [SerializeField] Slider SkillSlider;
     [SerializeField] Slider StaminaSlider;
@@ -16,7 +20,8 @@ public class PlayerUIView : MonoBehaviour
     [Header("Panel")]
     [SerializeField] GameOverPanel GameOverPanel;
 
-    [Inject] private Player _player;
+    [Inject] Player _player;
+    [Inject] UIEvent UIEvent;
         
     private void OnEnable()
     {
@@ -24,6 +29,8 @@ public class PlayerUIView : MonoBehaviour
         {
             _player.PropertyChanged += OnPropertyChanged;
             RefreshView();
+            cancelAction.action.Enable();
+            cancelAction.action.performed += OnCancel;
         }
         else
         {
@@ -33,6 +40,13 @@ public class PlayerUIView : MonoBehaviour
     private void OnDisable()
     {
         _player.PropertyChanged -= OnPropertyChanged;
+        cancelAction.action.performed -= OnCancel;
+        cancelAction.action.Disable();
+    }
+
+    private void OnCancel(InputAction.CallbackContext context)
+    {
+        UIEvent.SetActiveMenuUI();
     }
 
     void RefreshView()
