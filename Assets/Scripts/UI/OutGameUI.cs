@@ -34,7 +34,8 @@ public class OutGameUI : MonoBehaviour
         for(int i = 0; i < 3; i++)
         {
             var load_Data = _saveManager.Load(i);
-            string date = string.IsNullOrWhiteSpace(load_Data.saveTime)? "Empty" : load_Data.saveTime;
+
+            string date = load_Data == null? "Empty" : load_Data.saveTime;
             continueText[i].text = date;
             newText[i].text = date;
         }
@@ -44,14 +45,16 @@ public class OutGameUI : MonoBehaviour
 
     public void OnSublit_LoadGame(int index)
     {
-        SceneManager.LoadScene(1);
+        if (continueText[index].text.Equals("Empty")) return;
         _saveManager.saveIndex = index;
+        SceneManager.LoadScene(1);
     }
 
     public void OnSubmit_NewGame(int index)
     {
-        SceneManager.LoadScene(1);
         _saveManager.saveIndex = index;
+        _saveManager.Save(new Save_PlayerData());
+        SceneManager.LoadScene(1);
     }
 
     public void OnSubmit_ContinueBox()
