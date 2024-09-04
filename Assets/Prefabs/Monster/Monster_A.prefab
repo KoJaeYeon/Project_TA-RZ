@@ -20,7 +20,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &707298249371211066
 Transform:
   m_ObjectHideFlags: 0
@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d15f872d89040cf4aa147135a31d4188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  test: 1
   Type: 0
   _Ability: 0
   Attack_Stiff_Time: 0
@@ -60,7 +61,7 @@ MonoBehaviour:
   atkPrefab: {fileID: 2910783068188579864}
   explosionPrefab: {fileID: 8320320633247869136}
   targetPrefab: {fileID: 9216599740974299155}
-  growDuration: 10
+  growDuration: 2
   targetScale: {x: 3, y: 0.1, z: 3}
 --- !u!136 &6655467494370940687
 CapsuleCollider:

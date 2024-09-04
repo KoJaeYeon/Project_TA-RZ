@@ -54,6 +54,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d794f006220ae34492233cb4a5e7265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  test: 1
   Type: 0
   _Ability: 0
   Attack_Stiff_Time: 1
@@ -565,6 +566,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5852697830198830055}
     m_Modifications:
+    - target: {fileID: 955243857650550895, guid: 04e3f92ac9f295441b662aa473015046,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5699379824372410059, guid: 04e3f92ac9f295441b662aa473015046,
         type: 3}
       propertyPath: m_Enabled
@@ -671,3 +677,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 3738270216358607088}
+  monsterC: {fileID: 4522486096449827451}

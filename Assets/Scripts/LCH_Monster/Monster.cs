@@ -19,6 +19,8 @@ public enum MonsterType
 }
 public class Monster : MonoBehaviour, IHit
 {
+    [Header("디버깅용")]
+    [SerializeField] bool test;
     [Header("몬스터 타입")]
     [SerializeField] MonsterType Type;
     [SerializeField] MonsterAbility _Ability;
@@ -81,6 +83,10 @@ public class Monster : MonoBehaviour, IHit
             gameObject.transform.localScale = new Vector3(1.6f, 1.6f, 1.6f);
         }
         Mon_Common_Hp_Remain = Mon_Common_Stat_Hp;
+        if (test == true)
+        {
+            OnSetMonsterStat(1f);
+        }
     }
 
     void Update()
