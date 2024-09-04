@@ -85,13 +85,17 @@ public class BlueChipUI : MonoBehaviour
         //블루칩 획득 기능
         switch (blueID)
         {
+
+
+
+
+
             case "G205":
+                //재화 획득
                 var pc_blue = _dataManager.GetData(blueID) as PC_BlueChip;
                 Player.SavePlayerData.money += int.Parse(_dataManager.GetStringValue(pc_blue.StringPath));
                 break;
         }
-
-
 
         _leftBlueChip--;
         if (_leftBlueChip == 0)
