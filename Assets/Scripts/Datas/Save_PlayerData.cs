@@ -9,8 +9,8 @@ public class Save_PlayerData
     public bool RedChip { get; set; } = false;
     public bool EnemyKilled { get; set; } = false;
     public bool ResourceGet { get; set; } = false;
-
     public int[] passiveIndex { get; set; } = new int[6];
+    public int PassiveDieMode { get; set; } = 0;
     public int Kill { get; set; } = 0;
     public int Resource { get; set; } = 0;
 

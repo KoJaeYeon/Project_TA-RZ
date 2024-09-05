@@ -30,6 +30,7 @@ public class GoogleSheetManager : MonoBehaviour
 
     //16~
     const string _String_Value_URL = "https://script.google.com/macros/s/AKfycbwihMzjsvYTo5WpO0R5L4k4ARsiSInOSz4BlJaP2g_svd67OuupakkXQ1GeOGxIvzk/exec";
+    const string _Passive2_Value_URL = "https://script.google.com/macros/s/AKfycbw6QXeRFRrhmqnlEiOX6eD3p7h1lJuxMtbLMH49xNbxdUtJvZYsh77tAgfg_zjvIIWy/exec";
 
 
 
@@ -65,6 +66,7 @@ public class GoogleSheetManager : MonoBehaviour
             StartCoroutine(SaveJsonData(nameof(_PC_BluechipData_URL), _PC_BluechipData_URL));
 
             StartCoroutine(SaveJsonData(nameof(_String_Value_URL), _String_Value_URL));
+            StartCoroutine(SaveJsonData(nameof(_Passive2_Value_URL), _Passive2_Value_URL));
             return;
         }
 
@@ -91,6 +93,7 @@ public class GoogleSheetManager : MonoBehaviour
             RequestJsonRead(nameof(_PC_BluechipData_URL));
 
             RequestJsonRead(nameof(_String_Value_URL));
+            RequestJsonRead(nameof(_Passive2_Value_URL));
 
             //StartCoroutine(CountJsonLoadData());
         }
@@ -117,6 +120,7 @@ public class GoogleSheetManager : MonoBehaviour
             StartCoroutine(RequestSJsonAPI(nameof(_PC_BluechipData_URL), _PC_BluechipData_URL));
 
             StartCoroutine(RequestSJsonAPI(nameof(_String_Value_URL), _String_Value_URL));
+            StartCoroutine(RequestSJsonAPI(nameof(_Passive2_Value_URL), _Passive2_Value_URL));
         }
     }
 
