@@ -711,8 +711,6 @@ public class Player : MonoBehaviour, IHit
             return;
         }
 
-        CurrentHP -= damage;
-
         if (_currentHP <= 0)
         {
             _state.ChangeState(State.Death);
