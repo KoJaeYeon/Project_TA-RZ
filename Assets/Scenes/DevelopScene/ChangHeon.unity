@@ -1045,6 +1045,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 524296688431029823, guid: b4f394eb12d91e6468557af298d5dbcb,
+        type: 3}
+      propertyPath: test
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4032033828353185073, guid: b4f394eb12d91e6468557af298d5dbcb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1103,7 +1108,7 @@ PrefabInstance:
     - target: {fileID: 4578271199966134984, guid: b4f394eb12d91e6468557af298d5dbcb,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2056,6 +2061,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Monster_B
+      objectReference: {fileID: 0}
+    - target: {fileID: 9120751004214810020, guid: 355fa6a2bad9b6c4da76b9e2bb909391,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
