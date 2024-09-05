@@ -30,6 +30,7 @@ public class DrainSystem : MonoBehaviour
                 {
                     item.gameObject.SetActive(false);
                     player.CurrentAmmo += 1;
+                    player.OnCalled_Achieve_ResourceGet();
                     DrainedItemList.Add(item);
                 }
                 else

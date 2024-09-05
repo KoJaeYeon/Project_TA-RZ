@@ -288,5 +288,8 @@ public class PlayerFourthComboAttack : PlayerComboAttack
         }
 
         _player.CurrentAmmo -= _player.IsSkillAcitve[1] || _isLevel4 ? 0 : _index + 1;
+
+        //최초 4타 업적
+        _player.OnCalled_Achieve_Charged();
     }
 }

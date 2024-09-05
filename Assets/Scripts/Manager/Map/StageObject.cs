@@ -8,7 +8,8 @@ public enum MonsterList //순서 변경X
     _meleeAttackmonster,
     _meleeExplosionmonster,
     _chargeMonster,
-    _longRangeMonster
+    _longRangeMonster,
+    _eliteMosnter
 }
 
 public enum ItemList //순서 변경X
@@ -30,6 +31,7 @@ public class StageObject : MonoBehaviour
     [SerializeField] private GameObject _meleeExplosionmonster;
     [SerializeField] private GameObject _chargeMonster;
     [SerializeField] private GameObject _longRangeMonster;
+    [SerializeField] private GameObject _eliteMonster;
    
 
     [Header("Item")]
@@ -53,7 +55,8 @@ public class StageObject : MonoBehaviour
             (MonsterList._meleeAttackmonster, _meleeAttackmonster),
             (MonsterList._meleeExplosionmonster, _meleeExplosionmonster),
             (MonsterList._chargeMonster, _chargeMonster),
-            (MonsterList._longRangeMonster, _longRangeMonster)
+            (MonsterList._longRangeMonster, _longRangeMonster),
+            (MonsterList._eliteMosnter, _eliteMonster)
         };
 
         AddMonster(monsters, _monsterCount, _monsterDictionary);

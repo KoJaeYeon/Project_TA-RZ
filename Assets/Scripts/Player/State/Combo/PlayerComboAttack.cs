@@ -1,11 +1,16 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class PlayerComboAttack : PlayerState
 {
-    public PlayerComboAttack(Player player) : base(player) { }
+    public PlayerComboAttack(Player player) : base(player)
+    {
+        _blueChipSystem = player.GetComponent<BlueChipSystem>();
+    }
 
     protected PC_Attack _comboData;
+    protected BlueChipSystem _blueChipSystem;
     protected float _currentAtkMultiplier;
     protected int _currentGetSkillGauge;
     protected float _currentStiffT;
@@ -125,4 +130,5 @@ public class PlayerComboAttack : PlayerState
             _state.ChangeState(State.Skill);
         }
     }
+
 }

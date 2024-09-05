@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8294114542987652557}
   - component: {fileID: 3775250552181374755}
   m_Layer: 0
-  m_Name: Text (TMP) (4)
+  m_Name: Text_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 5958233828717978387}
   - component: {fileID: 4987537163468179444}
   m_Layer: 0
-  m_Name: Health
+  m_Name: Text_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 8166773171293984754}
   - component: {fileID: 1788789411867511990}
   m_Layer: 0
-  m_Name: Power
+  m_Name: Text_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -417,7 +417,7 @@ GameObject:
   - component: {fileID: 1489885796535685503}
   - component: {fileID: 194487844538263051}
   m_Layer: 0
-  m_Name: Text (TMP) (1)
+  m_Name: Text_7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -551,6 +551,7 @@ GameObject:
   - component: {fileID: 227119227966835282}
   - component: {fileID: 4900039102342620931}
   - component: {fileID: 1452652396073410085}
+  - component: {fileID: 902195028361377855}
   m_Layer: 0
   m_Name: EnhancedStatUI
   m_TagString: Untagged
@@ -623,6 +624,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &902195028361377855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4354443920040104794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9664be479b6d2ee4fbd29f578e544d8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _textArray:
+  - {fileID: 1788789411867511990}
+  - {fileID: 4987537163468179444}
+  - {fileID: 3775250552181374755}
+  - {fileID: 4518465994807739288}
+  - {fileID: 6284470694185188421}
+  - {fileID: 8869061791457964556}
+  - {fileID: 194487844538263051}
+  - {fileID: 2617313648291028504}
 --- !u!1 &4775341957275792061
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,7 +657,7 @@ GameObject:
   - component: {fileID: 1612560048596830841}
   - component: {fileID: 6284470694185188421}
   m_Layer: 0
-  m_Name: Text (TMP) (2)
+  m_Name: Text_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -770,7 +792,7 @@ GameObject:
   - component: {fileID: 6382946721620114127}
   - component: {fileID: 4518465994807739288}
   m_Layer: 0
-  m_Name: Text (TMP) (3)
+  m_Name: Text_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -905,7 +927,7 @@ GameObject:
   - component: {fileID: 8788533602712618212}
   - component: {fileID: 8869061791457964556}
   m_Layer: 0
-  m_Name: text
+  m_Name: Text_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1040,7 +1062,7 @@ GameObject:
   - component: {fileID: 7246024549239861033}
   - component: {fileID: 2617313648291028504}
   m_Layer: 0
-  m_Name: Text (TMP) (6)
+  m_Name: Text_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

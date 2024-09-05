@@ -52,6 +52,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bbbbee8c7b3c2845b4c07e30451840c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cancelAction: {fileID: 7727032971491509709, guid: 364fca4c259fd5449893ce7bf8a12352,
+    type: 3}
   HPSlider: {fileID: 7515255678617599883}
   SkillSlider: {fileID: 8087937600239446592}
   StaminaSlider: {fileID: 28431827830448704}

@@ -20,7 +20,7 @@ public class PlayerHit : PlayerStaus
 
         _coroutine = _player.StartCoroutine(Paralysis(Pc_Stiff_Time));
 
-        _animator.SetFloat(_speed, 0f);
+        _animator.SetFloat(_speed, 0f);        
     }
 
     public override void StateUpdate()

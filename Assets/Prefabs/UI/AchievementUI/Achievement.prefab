@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 66db0631b548a6340a8adf2f89a1c17a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 03dd066b36316e041813c914db09c649, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f15329934961cc04ea7a9d8e71e8c2f8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 58743ba7886c83c4fb1c52afc059bf69, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 6361289627802267536}
   - component: {fileID: 515434358059364752}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Achieve_Content_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -216,7 +216,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 05785701cbec674449be26ada754e811, type: 3}
+    m_Font: {fileID: 12800000, guid: 74c6868a7cb14d749878969ce5394ac1, type: 3}
     m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
@@ -228,7 +228,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0.8
-  m_Text: Amazing Achievement Name
+  m_Text: "\uC790\uC6D0 1000\uAC1C \uBAA8\uC73C\uAE30"
 --- !u!1 &7006680850007459804
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,8 +240,9 @@ GameObject:
   - component: {fileID: 56077001868778114}
   - component: {fileID: 8364780771477444210}
   - component: {fileID: 3665231266487478713}
+  - component: {fileID: 5993827016903446371}
   m_Layer: 5
-  m_Name: Text
+  m_Name: UI_Achievement_Text_Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -295,7 +296,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 05785701cbec674449be26ada754e811, type: 3}
+    m_Font: {fileID: 12800000, guid: 74c6868a7cb14d749878969ce5394ac1, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
@@ -307,7 +308,20 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Achievement unlocked!
+  m_Text: "\uC5C5\uC801 \uB2EC\uC131!"
+--- !u!114 &5993827016903446371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7006680850007459804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7791cbc0d2a44c41992044d8727e8f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  idStr: 
 --- !u!1 &7541888162319417687
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,6 +333,7 @@ GameObject:
   - component: {fileID: 7078503620174495477}
   - component: {fileID: 4942809096279284754}
   - component: {fileID: 7341268987385463264}
+  - component: {fileID: 7416459906631794195}
   m_Layer: 5
   m_Name: Achievement
   m_TagString: Untagged
@@ -333,7 +348,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7541888162319417687}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -377,7 +392,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ea1393289b29df044a60b0e675fbe855, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2dc5d72dc39985646ade5bce060017d0, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -387,3 +402,17 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7416459906631794195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7541888162319417687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e206e5644600f47a12a4a2bbccbb4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UI_Achievement_Duration: 2
+  Achieve_Content_Text: {fileID: 515434358059364752}
