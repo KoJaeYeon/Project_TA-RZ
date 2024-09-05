@@ -501,8 +501,8 @@ public class Player : MonoBehaviour, IHit
     #region PlayerLoad
     void Load_SaveData()
     {
-        if (saveManager.saveIndex == -1) return;
         PlayerPassiveData._player = this;
+        if (saveManager.saveIndex == -1) return;
         SavePlayerData = saveManager.Load(saveManager.saveIndex);
     }
     IEnumerator LoadStat()

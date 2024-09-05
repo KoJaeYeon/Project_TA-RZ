@@ -41,7 +41,6 @@ public class PlayerUIView : MonoBehaviour
     {
         _player.PropertyChanged -= OnPropertyChanged;
         cancelAction.action.performed -= OnCancel;
-        cancelAction.action.Disable();
     }
 
     private void OnCancel(InputAction.CallbackContext context)

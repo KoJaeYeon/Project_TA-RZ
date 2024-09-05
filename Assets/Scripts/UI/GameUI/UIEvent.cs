@@ -16,6 +16,7 @@ public class UIEvent
     public LoadingUI _loadUI { get; private set; }
     public BlueChipUI BlueChipUI { get; private set; }
     public ShopUI ShopUI { get; private set; }
+    public PassiveShopUI PassiveShopUI { get; private set; }
     public InteractUI InteractUI { get; private set; }
 
     public AchievementUI AchievementUI { get; private set; }
@@ -115,14 +116,36 @@ public class UIEvent
 
     public void ActiveShopUI()
     {
-        ShopUI.gameObject.SetActive(true);
         InteractUI.gameObject.SetActive(false);
+        MenuUI.gameObject.SetActive(false);
+        ShopUI.gameObject.SetActive(true);
     }
 
     public void DeActiveShopUI()
     {
-        ShopUI.gameObject.SetActive(false);
         InteractUI.gameObject.SetActive(true);
+        MenuUI.gameObject.SetActive(true);
+        ShopUI.gameObject.SetActive(false);
+    }
+    #endregion
+    #region PassiveShopEvent
+    public void RegisterPassiveShopUI(PassiveShopUI passiveshopUI)
+    {
+        PassiveShopUI = passiveshopUI;
+    }
+
+    public void ActivePassiveShopUI()
+    {
+        InteractUI.gameObject.SetActive(false);
+        MenuUI.gameObject.SetActive(false);
+        PassiveShopUI.gameObject.SetActive(true);
+    }
+
+    public void DeActivePassiveShopUI()
+    {
+        InteractUI.gameObject.SetActive(true);
+        MenuUI.gameObject.SetActive(true);
+        PassiveShopUI.gameObject.SetActive(false);
     }
     #endregion
     #region InteractEvent

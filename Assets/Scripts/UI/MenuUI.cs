@@ -12,10 +12,14 @@ public class MenuUI : MonoBehaviour
     GameObject[] MenuUI_Child;
     [SerializeField] GameObject[] initial_Select_GameObject;
     int index = 0;
-    public void OnEnableMenuUI()
+
+    public void OnEnable()
     {
         cancelAction.action.Enable();
         cancelAction.action.performed += OnCancel;
+    }
+    public void OnEnableMenuUI()
+    {
         UIEvent.SetActivePlayerControl(false);
         UIEvent.SetActivePlayerUI(false);
 
@@ -28,8 +32,6 @@ public class MenuUI : MonoBehaviour
 
     private void OnDisableMenuUI()
     {
-        cancelAction.action.performed -= OnCancel;
-        cancelAction.action.Disable();
         UIEvent.SetActivePlayerControl(true);
         UIEvent.SetActivePlayerUI(true);
     }
@@ -50,7 +52,13 @@ public class MenuUI : MonoBehaviour
         Debug.Log("cancel");
         if(MenuUI_Child[index].activeSelf)
         {
+            Debug.Log("cancelif");
             Continue();
+        }
+        else
+        {
+            Debug.Log("cancelelse");
+            OnEnableMenuUI();
         }
     }
 
