@@ -88,7 +88,7 @@ public class BlueChipUI : MonoBehaviour
 
 
 
-            case "G240":
+            case "G204":
                 Player.IsPlayerFourthAttackDrainAvailable = true;
                 break;
 
