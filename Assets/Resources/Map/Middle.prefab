@@ -216,6 +216,8 @@ MonoBehaviour:
     type: 3}
   _longRangeMonster: {fileID: 3448629249713632305, guid: 8ba67c2ba273a5d409c064dd02d96052,
     type: 3}
+  _eliteMonster: {fileID: 8724858791255979016, guid: 7e92ad7976cdfe84885ff27cc6b8bab3,
+    type: 3}
   _itemCount: 50
   _items:
   - {fileID: 7564473540787843309, guid: 0a26a734116c3944b85324ba86763902, type: 3}
