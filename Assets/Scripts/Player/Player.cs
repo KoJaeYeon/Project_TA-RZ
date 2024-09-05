@@ -69,6 +69,7 @@ public class Player : MonoBehaviour, IHit
 
     public bool IsActiveStaminaRecovery { get; set; } = true;
     bool _isPlayerAlive = true;
+    public int[] BluechipSkillLevels { get; set; } = new int[4];
     public bool[] IsSkillAcitve { get; set; } = new bool[4] { false, false, false, false };
     public float[] _skillCounption { get; private set; } = new float[4] { 25, 50, 75, 100 };
     public bool IsSkillAnimationEnd { get; set; } = true;

@@ -36,7 +36,7 @@ public class BlueChipUI : MonoBehaviour
     {
         UIEvent.SetActivePlayerControl(true);
         _leftBlueChip = 0;
-        if(chest != null)
+        if (chest != null)
         {
             chest.gameObject.SetActive(false);
         }
@@ -45,7 +45,7 @@ public class BlueChipUI : MonoBehaviour
     public void DeActiveBlueChipUI()
     {
         UIEvent.DeActiveBlueChipUI();
-    }   
+    }
 
     public void OnClickPoisonBlueChipUI()
     {
@@ -108,18 +108,31 @@ public class BlueChipUI : MonoBehaviour
 
                 List<int> list = new List<int>();
 
-                for (int i = 1; i < 5; i++)
+                for (int i = 0; i < Player.BluechipSkillLevels.Length; i++)
                 {
-                    list.Add(i);
+                    if (Player.BluechipSkillLevels[i] < 2)
+                    {
+                        if (i == 2)
+                        {
+                            if (Player.BluechipSkillLevels[0] + Player.BluechipSkillLevels[1] < 4 || Player.BluechipSkillLevels[2] == 1)
+                            {
+                                continue;
+                            }
+                        }
+                        list.Add(i + 1);
+                    }
                 }
-
                 int count = list.Count;
                 count = count <= 3 ? count : 3;
+                foreach (var i in blue_Select_Buttons)
+                {
+                    i.gameObject.SetActive(false);
+                }
                 for (int i = 0; i < count; i++)
                 {
                     int rand;
 
-                    rand = Random.Range(0,list.Count);
+                    rand = Random.Range(0, list.Count);
                     int targetInt = list[rand];
                     list.Remove(list[rand]);
                     blue_Select_Buttons[i].RefershButton($"G20{targetInt}");
@@ -135,13 +148,19 @@ public class BlueChipUI : MonoBehaviour
         //블루칩 획득 기능
         switch (blueID)
         {
-
-
-
+            case "G201":
+                Player.BluechipSkillLevels[0]++;
+                break;
+            case "G202":
+                Player.BluechipSkillLevels[1]++;
+                break;
+            case "G203":
+                Player.BluechipSkillLevels[2]++;
+                break;
             case "G204":
+                Player.BluechipSkillLevels[3]++;
                 Player.IsPlayerFourthAttackDrainAvailable = true;
                 break;
-
             case "G205":
                 //재화 획득
                 var pc_blue = _dataManager.GetData(blueID) as PC_BlueChip;
