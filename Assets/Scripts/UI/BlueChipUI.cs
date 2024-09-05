@@ -10,6 +10,8 @@ public class BlueChipUI : MonoBehaviour
     [Inject] public DataManager _dataManager { get; }
     [Inject] Player Player;
 
+    [SerializeField] private BlueChipUI_SelectPanel _selectPanel;
+
     [Header("BlueChipUI")]
     [SerializeField] private GameObject _poisonBluechipUI;
     [SerializeField] private GameObject _explosionBluechipUI;
@@ -20,9 +22,12 @@ public class BlueChipUI : MonoBehaviour
     public Chest chest { get; set; }
     int _leftBlueChip = 0;
 
+    private bool isFirstReward = false;
+
     private void OnEnable()
     {
         UIEvent.SetActivePlayerControl(false);
+        isFirstReward = true;
         ResetBlueChipUI();
         _leftBlueChip++;
     }
@@ -64,20 +69,65 @@ public class BlueChipUI : MonoBehaviour
 
     void ResetBlueChipUI()
     {
-        for (int i = 0; i < blue_Select_Buttons.Length; i++)
+        if (isFirstReward)
         {
-            int rand;
-            if(i == 0)
+            int reward;
+
+            reward = Random.Range(0, 2);
+
+            if (reward == 0)
             {
-                rand =Random.Range(0, 2) == 0 ? Random.Range(1,5) : 5;
+                RewardBlueChipUI(reward);
             }
             else
             {
-                rand = Random.Range(1, 5);
+                RewardBlueChipUI(reward);
             }
-
-            blue_Select_Buttons[i].RefershButton($"G20{rand}");
+            isFirstReward = false;
         }
+        else
+        {
+            RewardBlueChipUI();
+            isFirstReward = false;
+
+        }
+    }
+    private void RewardBlueChipUI(int random = 1)
+    {
+        switch (random)
+        {
+            case 0:
+                blue_Select_Buttons[0].gameObject.SetActive(false);
+                blue_Select_Buttons[1].RefershButton("G205");
+                blue_Select_Buttons[2].gameObject.SetActive(false);
+                break;
+
+            case 1:
+                blue_Select_Buttons[0].gameObject.SetActive(true);
+                blue_Select_Buttons[2].gameObject.SetActive(true);
+
+                List<int> list = new List<int>();
+
+                for (int i = 1; i < 5; i++)
+                {
+                    list.Add(i);
+                }
+
+                int count = list.Count;
+                count = count <= 3 ? count : 3;
+                for (int i = 0; i < count; i++)
+                {
+                    int rand;
+
+                    rand = Random.Range(0,list.Count);
+                    int targetInt = list[rand];
+                    list.Remove(list[rand]);
+                    blue_Select_Buttons[i].RefershButton($"G20{targetInt}");
+                }
+                break;
+        }
+
+        _selectPanel.OnFocusBlueChipBtn();
     }
 
     public void OnCLick_BlueChip(string blueID)
