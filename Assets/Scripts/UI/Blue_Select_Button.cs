@@ -18,6 +18,7 @@ public class Blue_Select_Button : MonoBehaviour
     }
     public void RefershButton(string blueID)
     {
+        gameObject.SetActive(true);
         _blueID = blueID;
         var pc_blue = BlueChipUI._dataManager.GetData(blueID) as PC_BlueChip;
         BlueChip_Img.sprite = Resources.Load<Sprite>(pc_blue.Path);

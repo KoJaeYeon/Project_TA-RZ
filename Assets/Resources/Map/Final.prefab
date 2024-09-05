@@ -523,7 +523,7 @@ MonoBehaviour:
     _resourceB_Ratio: 0
     _resourceC_Ratio: 0
     _resourceCountArray: 
-  _chest: {fileID: 0}
+  _chest: {fileID: 7502965062224107422}
   _portal: {fileID: 8280067094134729118}
 --- !u!114 &6163774627334767518
 MonoBehaviour:
@@ -724,6 +724,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 389dfa8f5d211fc4d9ff72ea75b32ff6, type: 3}
+--- !u!1 &7502965062224107422 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7056811306867880285, guid: 389dfa8f5d211fc4d9ff72ea75b32ff6,
+    type: 3}
+  m_PrefabInstance: {fileID: 716413766909634243}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8763869927339128889 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8101610427305156346, guid: 389dfa8f5d211fc4d9ff72ea75b32ff6,
