@@ -27,8 +27,6 @@ public class PlayerInputSystem : MonoBehaviour
     public bool IsLockOn { get { return isLockOn; } }
     public bool IsSkill { get { return isSkill; } }
 
-    float clampDelta = 15f;
-    
     Player _player;
 
     private void Awake()
@@ -115,9 +113,10 @@ public class PlayerInputSystem : MonoBehaviour
     }
 
     private void SetLook(float delta)
-    {        
+    {
+        float clampDelta = _player.Rotate_Camera_Max;
         delta = Mathf.Clamp(delta, -clampDelta, clampDelta);
-        deltaLook += delta;
+        deltaLook += delta * _player.Rotate_Camera_Speed;
     }
 
     public void SetLockOn(bool isPressed)

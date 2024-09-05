@@ -93,7 +93,7 @@ public class Stage : MonoBehaviour
 
         Transform startTransform = _partitions[0]._centerPosition;
 
-        _player.transform.position = startTransform.position;
+        _player.transform.position = startTransform.position + new Vector3(-8,0,-8);
 
         StartCoroutine(SpawnObject());
     }
