@@ -156,8 +156,7 @@ public class BlueChipUI : MonoBehaviour
                 break;
             case "G203":
                 Player.BluechipSkillLevels[2]++;
-                string achieveText = _dataManager.GetString("UI_Achievement_Text_Content_4");
-                UIEvent.ActiveAchievementUI(achieveText);
+                Player.OnCalled_Achieve_RedChip();
                 break;
             case "G204":
                 Player.BluechipSkillLevels[3]++;
