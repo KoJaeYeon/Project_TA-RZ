@@ -85,6 +85,20 @@ public class Stage : MonoBehaviour
     public void StartStage(StageType newStage)
     {
         _currentStage = newStage;
+
+        ActiveQuest();
+
+        ClearStageObject();
+
+        Transform startTransform = _partitions[0]._centerPosition;
+
+        _player.transform.position = startTransform.position;
+
+        StartCoroutine(SpawnObject());
+    }
+
+    private void ActiveQuest()
+    {
         float chance = 0;
         if (_level == GameLevel.Middle)
         {
@@ -99,14 +113,6 @@ public class Stage : MonoBehaviour
         {
             _uiEvent.ActiveQuestUI();
         }
-
-        ClearStageObject();
-
-        Transform startTransform = _partitions[0]._centerPosition;
-
-        _player.transform.position = startTransform.position;
-
-        StartCoroutine(SpawnObject());
     }
 
     public void ClearStageObject()

@@ -108,6 +108,10 @@ public class Monster : MonoBehaviour, IHit
     /// <param name="monsterType"></param>
     public virtual void OnSetMonsterStat(float stat_Multiplier)
     {
+        for(int i = 0; i < 4; i++)
+        {
+            transform.GetChild(i).gameObject.SetActive(false);
+        }
         int rand = Random.Range(0, 4);
         transform.GetChild(rand).gameObject.SetActive(true);
         _Ability = (MonsterAbility)rand;
