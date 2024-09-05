@@ -188,12 +188,6 @@ public class BossController : MonoBehaviour, IHit
         _bt.SetVariableValue("ExplosionWaitTime", _explosionWaitTime);
         _bt.SetVariableValue("SwingWaitTime", _swingWaitTime);
 
-        #region 테스트
-
-        _maxHp = 3000;
-
-        #endregion 테스트
-
         StartCoroutine(LoadStat());
     }
 
@@ -216,6 +210,8 @@ public class BossController : MonoBehaviour, IHit
             _hp = 1000;
             _hpPercent = _hp / _maxHp * 100;
         }
+
+
     }
     #endregion 테스트
 
@@ -304,6 +300,7 @@ public class BossController : MonoBehaviour, IHit
         {
             explosion.transform.position = transform.position;
             SetYPosition(explosion.transform);
+            explosion.transform.position += Vector3.up * 0.05f;
             explosion.SetActive(true);
         }
     }
@@ -319,6 +316,7 @@ public class BossController : MonoBehaviour, IHit
 
         _secondExplosion.transform.position = transform.position;
         SetYPosition(_secondExplosion.transform);
+        _secondExplosion.transform.position += Vector3.up * 0.05f;
         _secondExplosion.SetActive(true);
     }
     //폭발 공격2 실행부
@@ -464,6 +462,8 @@ public class BossController : MonoBehaviour, IHit
     public bool CheckAllRoot()
     { 
         if (_playerTr == null) return false;
+
+        if (isGimmick) return false;    //기믹 중엔 생성 안 되게 예외 처리
 
         int count = 0;
 

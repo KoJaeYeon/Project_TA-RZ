@@ -10,6 +10,8 @@ public class BTA_Boss_MarkFirstExplosion : BossAction
 
     public override void OnStart()
     {
+        if (_owner.isGimmick) return;
+
         _anim.SetTrigger(_hashExplosion);
     }
 
