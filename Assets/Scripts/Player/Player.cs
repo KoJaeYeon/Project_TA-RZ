@@ -74,8 +74,8 @@ public class Player : MonoBehaviour, IHit
     {
         get
         {
-            float hp_mul = SavePlayerData.PassiveDieMode == 2 ? _attackMultiplier : 1;
-            return _currentAtk * _attackMultiplier;
+            float atk_mul = SavePlayerData.PassiveDieMode == 2 ? _attackMultiplier : 1;
+            return _currentAtk * atk_mul;
         }
         set
         {
