@@ -83,6 +83,18 @@ public class MapManager : MonoBehaviour
 
     #endregion
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            _currentMap.SetActive(false);
+
+            _mapName = GetMap(MapType.Boss);
+
+            StartCoroutine(LoadMap(_mapName));
+        }
+    }
+
     public void ChangeMap(StageType newStage)
     {
         _currentStageType = newStage;
