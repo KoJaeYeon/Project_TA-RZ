@@ -178,9 +178,9 @@ public class MapManager : MonoBehaviour
             return _dataManager.GetData("E241") == null;
         });
 
-        var data = _dataManager.GetData("P101") as Monster_Elite;
+        var data = _dataManager.GetData("E241") as Monster_Elite;
         EliteChance = data.Value;
-        Debug.Log("Elite의 스탯을 성공적으로 받아왔습니다.");
+        Debug.Log("Elite의 확률을 성공적으로 받아왔습니다.");
         yield break;
     }
 }
