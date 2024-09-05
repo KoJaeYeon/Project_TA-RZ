@@ -299,6 +299,7 @@ public class BossController : MonoBehaviour, IHit
         {
             explosion.transform.position = transform.position;
             SetYPosition(explosion.transform);
+            explosion.transform.position += Vector3.up * 0.05f;
             explosion.SetActive(true);
         }
     }
@@ -314,6 +315,7 @@ public class BossController : MonoBehaviour, IHit
 
         _secondExplosion.transform.position = transform.position;
         SetYPosition(_secondExplosion.transform);
+        _secondExplosion.transform.position += Vector3.up * 0.05f;
         _secondExplosion.SetActive(true);
     }
     //폭발 공격2 실행부
