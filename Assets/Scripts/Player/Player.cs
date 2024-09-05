@@ -69,7 +69,9 @@ public class Player : MonoBehaviour, IHit
     public int CurrentLevel { get; set; }
 
     //블루칩 기능
+    #region
     public bool IsPlayerFourthAttackDrainAvailable { get; set; } = false;
+    #endregion
     public float CurrentAtk
     {
         get
