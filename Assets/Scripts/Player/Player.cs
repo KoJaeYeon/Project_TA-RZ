@@ -58,7 +58,8 @@ public class Player : MonoBehaviour, IHit
     float _currentAtk;
     float _currentSpeed;
     float _passiveAtk_Power;
-
+    float _attackMultiplier = 1;
+    float _hpMultiplier = 1;
 
     public bool IsActiveStaminaRecovery { get; set; } = true;
     bool _isPlayerAlive = true;
@@ -71,7 +72,11 @@ public class Player : MonoBehaviour, IHit
     public bool IsPlayerFourthAttackDrainAvailable { get; set; } = false;
     public float CurrentAtk
     {
-        get { return _currentAtk; }
+        get
+        {
+            float hp_mul = SavePlayerData.PassiveDieMode == 2 ? _attackMultiplier : 1;
+            return _currentAtk * _attackMultiplier;
+        }
         set
         {
             if (_currentAtk == value)
@@ -198,7 +203,11 @@ public class Player : MonoBehaviour, IHit
     }
     public float HP
     {
-        get { return _playerStat.HP * PlayerPassiveData.AddHP; }
+        get
+        {
+            float hp_mul = SavePlayerData.PassiveDieMode == 2 ? _hpMultiplier : 1;
+            return _playerStat.HP * PlayerPassiveData.AddHP * hp_mul;
+        }
         set
         {
             if (_playerStat.HP == value)
@@ -501,12 +510,20 @@ public class Player : MonoBehaviour, IHit
     #region PlayerLoad
     void Load_SaveData()
     {
-        if (saveManager.saveIndex == -1) return;
         PlayerPassiveData._player = this;
+        if (saveManager.saveIndex == -1) return;
         SavePlayerData = saveManager.Load(saveManager.saveIndex);
     }
     IEnumerator LoadStat()
     {
+        // 패시브 스킬 데이터 로드
+        yield return new WaitWhile(() => {
+            return dataManager.GetData("G251") == null;
+        });
+        var data = dataManager.GetData("G251") as Passive2_Value;
+        _attackMultiplier = data.Value[0];
+        _hpMultiplier = data.Value[1];
+
         yield return new WaitWhile(() => {
             Debug.Log("Player의 데이터를 받아오는 중입니다.");
             return dataManager.GetStat("P101") == null;
@@ -523,6 +540,9 @@ public class Player : MonoBehaviour, IHit
         CurrentSkill = 0;
         CurrentAmmo = 0;
         PassiveAtk_Power = _playerStat.PassiveAtk_Power;
+
+
+
         OnPropertyChanged(nameof(CurrentResourceOwn));
         yield break;
     }

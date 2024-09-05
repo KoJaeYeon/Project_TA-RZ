@@ -11,6 +11,7 @@ public class UICanvas : MonoBehaviour
     [SerializeField] GameUI GameUI;
     [SerializeField] LoadingUI LoadUI;
     [SerializeField] ShopUI ShopUI;
+    [SerializeField] PassiveShopUI PassiveShopUI;
     [SerializeField] InteractUI InteractUI;
     [SerializeField] AchievementUI AchievementUI;
     [SerializeField] QuestUI QuestUI;
@@ -23,6 +24,7 @@ public class UICanvas : MonoBehaviour
         UIEvent.RegisterGameUI(GameUI);
         UIEvent.RegisterLoadUI(LoadUI);
         UIEvent.RegisterShopUI(ShopUI);
+        UIEvent.RegisterPassiveShopUI(PassiveShopUI);
         UIEvent.RegisterInteractUI(InteractUI);
         UIEvent.RegisterAchievementUI(AchievementUI);
         UIEvent.RegisterQuestUI(QuestUI);

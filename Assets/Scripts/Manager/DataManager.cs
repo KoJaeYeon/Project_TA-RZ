@@ -172,6 +172,9 @@ public class DataManager : MonoBehaviour
             case "_String_Value_URL":
                 Process_String_Value_Data(data);
                 break;
+            case "_Passive2_Value_URL":
+                Process_Passive2_Value_Data(data);
+                    break;
             default:
                 Debug.LogError($"Unknown URL name: {urlName}");
                 break;
@@ -502,6 +505,21 @@ public class DataManager : MonoBehaviour
 
             PC_BlueChip bluechip = new PC_BlueChip(idStr, path, stringPath, att_damage, att_damage_Lvup, chip_attackArea, interval_Time, chip_Lifetime, valueList);
             AddDataToDataDictionary(idStr, bluechip);
+        }
+    }
+
+    private void Process_Passive2_Value_Data(string data)
+    {
+        JArray jsonArray = JArray.Parse(data);
+
+        foreach (var item in jsonArray)
+        {
+            string idStr = item[nameof(Passive2_Value.ID)].ToString();
+            int purchase_Fee = ParseInt(item[nameof(Passive2_Value.Purchase_Fee)]);
+            List<float> valueList = parseList<float>(item[nameof(Passive2_Value.Value)]);
+
+            Passive2_Value passive2Value = new Passive2_Value(idStr, purchase_Fee, valueList);
+            AddDataToDataDictionary(idStr, passive2Value);
         }
     }
     #endregion
