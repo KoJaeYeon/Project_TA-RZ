@@ -88,7 +88,9 @@ public class BlueChipUI : MonoBehaviour
 
 
 
-
+            case "G204":
+                Player.IsPlayerFourthAttackDrainAvailable = true;
+                break;
 
             case "G205":
                 //재화 획득

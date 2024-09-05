@@ -69,13 +69,15 @@ public class Player : MonoBehaviour, IHit
     public int CurrentLevel { get; set; }
 
     //블루칩 기능
+    #region
     public bool IsPlayerFourthAttackDrainAvailable { get; set; } = false;
+    #endregion
     public float CurrentAtk
     {
         get
         {
-            float hp_mul = SavePlayerData.PassiveDieMode == 2 ? _attackMultiplier : 1;
-            return _currentAtk * _attackMultiplier;
+            float atk_mul = SavePlayerData.PassiveDieMode == 2 ? _attackMultiplier : 1;
+            return _currentAtk * atk_mul;
         }
         set
         {
