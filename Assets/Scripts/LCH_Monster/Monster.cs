@@ -65,6 +65,7 @@ public class Monster : MonoBehaviour, IHit, IStatusEffect
     protected string idStr = "E101";
 
     Coroutine _hitCoroutine;
+    Coroutine _poisonCoroutine;
 
    // [Header("개발자 인스펙터")]
     //[SerializeField] TextMeshProUGUI TempHPText;
@@ -263,8 +264,12 @@ public class Monster : MonoBehaviour, IHit, IStatusEffect
 
     public void Poison(float damage, float maxTime, float intervalTime)
     {
-        //독
-        StartCoroutine(TriggerPoison(damage, maxTime, intervalTime));
+        if(_poisonCoroutine != null)
+        {
+            StopCoroutine(TriggerPoison(damage, maxTime, intervalTime));
+        }
+
+        _poisonCoroutine = StartCoroutine(TriggerPoison(damage, maxTime, intervalTime));
     }
 
     private IEnumerator TriggerPoison(float damage, float maxTime, float intervalTime)
@@ -284,8 +289,14 @@ public class Monster : MonoBehaviour, IHit, IStatusEffect
                 timer += Time.deltaTime;
             }
             else
+            {
+                _poisonCoroutine = null;
+
                 yield break;
+            }
         }
+
+        _poisonCoroutine = null;
     }
 
     public void Ice()
@@ -293,7 +304,7 @@ public class Monster : MonoBehaviour, IHit, IStatusEffect
         //결빙
     }
 
-    public void Explosion()
+    public void Explosion(float damage)
     {
         //폭발
     }

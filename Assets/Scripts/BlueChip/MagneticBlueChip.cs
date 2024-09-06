@@ -9,12 +9,17 @@ public class MagneticBlueChip : BlueChip
         
     }
 
+    public override void ResetSystem()
+    {
+        
+    }
+
     public override void LevelUpBlueChip()
     {
         
     }
 
-    public override void UseBlueChip(Vector3 position, float currentPassivePower, AttackType currentAttackType)
+    public override void UseBlueChip(Vector3 position, AttackType currentAttackType)
     {
         
 

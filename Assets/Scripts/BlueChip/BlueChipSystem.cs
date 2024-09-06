@@ -16,7 +16,7 @@ public class BlueChipSystem : MonoBehaviour
 
     private Dictionary<string, PC_BlueChip> _dataDictionary;
     private Dictionary<string, IBlueChipSystem> _currentBlueChipDictionary = new Dictionary<string, IBlueChipSystem>();
-    public Action<Vector3, float, AttackType> _blueChipSystem;
+    public Action<Vector3, AttackType> _blueChipSystem;
 
     private void Awake()
     {
@@ -56,9 +56,9 @@ public class BlueChipSystem : MonoBehaviour
         }
     }
 
-    public void UseBlueChip(Vector3 position, float currentPassivePower, AttackType currentAttackType)
+    public void UseBlueChip(Vector3 position, AttackType currentAttackType)
     {
-        _blueChipSystem?.Invoke(position, currentPassivePower, currentAttackType);
+        _blueChipSystem?.Invoke(position, currentAttackType);
     }
 
     public void SetBlueChipSkill(string blueID)

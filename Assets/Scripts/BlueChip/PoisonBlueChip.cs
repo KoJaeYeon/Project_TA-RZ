@@ -12,6 +12,12 @@ public class PoisonBlueChip : BlueChip
         _blueChipSystem = blueChipSystem;
         _data = data;
         _monsterLayer = LayerMask.GetMask("Monster");
+        _currentPower = _data.Att_damage;
+    }
+
+    public override void ResetSystem()
+    {
+        
     }
 
     public override void LevelUpBlueChip()
@@ -24,14 +30,14 @@ public class PoisonBlueChip : BlueChip
         }
     }
 
-    public override void UseBlueChip(Vector3 position, float currentPassivePower, AttackType currentAttackType)
+    public override void UseBlueChip(Vector3 position, AttackType currentAttackType)
     {
         if(currentAttackType is AttackType.fourthAttack)
         {
             return;
         }
 
-        StartPoison(position, currentPassivePower);
+        StartPoison(position, _currentPower);
     }
 
     private void StartPoison(Vector3 position, float currentPassivePower)
@@ -48,7 +54,7 @@ public class PoisonBlueChip : BlueChip
             }
         }
 
-        _action?.Invoke(currentPassivePower * _currentPower, _data.Chip_Lifetime, _data.Interval_time);
+        _action?.Invoke(currentPassivePower, _data.Chip_Lifetime, _data.Interval_time);
 
         _action = null;
     }
