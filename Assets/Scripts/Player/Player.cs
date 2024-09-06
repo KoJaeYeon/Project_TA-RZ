@@ -22,6 +22,7 @@ public class Player : MonoBehaviour, IHit
     private PlayerStateMachine _state;
     private SFX_MotionCloner _cloner;
     private Camera _camera;
+    private BlueChipSystem _blueChipSystem;
 
 
     public IInteractable Interactable { get; set; }
@@ -30,6 +31,7 @@ public class Player : MonoBehaviour, IHit
     public Save_PlayerData SavePlayerData { get; set; } = new Save_PlayerData();
     public PC_Level _PC_Level { get; private set; } = new PC_Level();
     public Camera MainCamera { get { return _camera; } }
+    public BlueChipSystem BlueChipSystem { get { return _blueChipSystem; } } 
     #endregion
 
     #region PropChanged
@@ -338,6 +340,7 @@ public class Player : MonoBehaviour, IHit
         _cloner = gameObject.GetComponentInChildren<SFX_MotionCloner>();
         _state = gameObject.AddComponent<PlayerStateMachine>();
         _inputSystem = gameObject.AddComponent<PlayerInputSystem>();
+        _blueChipSystem = gameObject.GetComponentInChildren<BlueChipSystem>();
         _camera = Camera.main;
     }
 
