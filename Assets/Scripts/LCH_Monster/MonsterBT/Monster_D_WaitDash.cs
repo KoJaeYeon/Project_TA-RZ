@@ -28,7 +28,7 @@ public class Monster_D_WaitDash : Action
         {
             Monster.Value.dashUi.DashGauge.fillAmount = Mathf.Lerp(0, 1, elapsedTime / duration);
         }
-        else
+        else 
         {
             return TaskStatus.Success;
         }

@@ -20,7 +20,10 @@ public class MonsterD_OnAtk : Action
         {
             return TaskStatus.Success;
         }        
-         
+        else if (Monster.Value.isDashing == true)
+        {
+            return TaskStatus.Running;
+        } 
         return TaskStatus.Running;
     }
 
