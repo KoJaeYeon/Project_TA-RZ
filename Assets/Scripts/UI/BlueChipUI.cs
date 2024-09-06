@@ -6,17 +6,15 @@ using Zenject;
 
 public class BlueChipUI : MonoBehaviour
 {
+    #region InJect
     [Inject] UIEvent UIEvent;
     [Inject] public DataManager _dataManager { get; }
     [Inject] Player Player;
+    #endregion
 
+    [Header("SelectPanel")]
     [SerializeField] private BlueChipUI_SelectPanel _selectPanel;
-
-    [Header("BlueChipUI")]
-    [SerializeField] private GameObject _poisonBluechipUI;
-    [SerializeField] private GameObject _explosionBluechipUI;
-    [SerializeField] private GameObject _magneticBluechipUI;
-
+    [Header("BlueSelectButtons")]
     [SerializeField] Blue_Select_Button[] blue_Select_Buttons;
 
     public Chest chest { get; set; }
@@ -45,21 +43,6 @@ public class BlueChipUI : MonoBehaviour
     public void DeActiveBlueChipUI()
     {
         UIEvent.DeActiveBlueChipUI();
-    }
-
-    public void OnClickPoisonBlueChipUI()
-    {
-
-    }
-
-    public void OnClickExplosionBlueChipUI()
-    {
-
-    }
-
-    public void OnClickMagneticBlueChipUI()
-    {
-
     }
 
     public void QuestCleared()
@@ -150,17 +133,21 @@ public class BlueChipUI : MonoBehaviour
         {
             case "G201":
                 Player.BluechipSkillLevels[0]++;
+                Player.BlueChipSystem.SetBlueChipSkill(blueID);
                 break;
             case "G202":
                 Player.BluechipSkillLevels[1]++;
+                Player.BlueChipSystem.SetBlueChipSkill(blueID);
                 break;
             case "G203":
                 Player.BluechipSkillLevels[2]++;
                 Player.OnCalled_Achieve_RedChip();
+                Player.BlueChipSystem.SetBlueChipSkill(blueID);
                 break;
             case "G204":
                 Player.BluechipSkillLevels[3]++;
                 Player.IsPlayerFourthAttackDrainAvailable = true;
+                Player.BlueChipSystem.SetBlueChipSkill(blueID);
                 break;
             case "G205":
                 //재화 획득
