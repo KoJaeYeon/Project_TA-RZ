@@ -349,6 +349,23 @@ public class BossController : MonoBehaviour, IHit
     //Phase1 잔재 삭제
     public void ChangePhaseTwo()
     {
+        _gimmick.gameObject.SetActive(false);
+        _markRoot.SetActive(false);
+        foreach (var item in _firstExplosion)
+        {
+            item.SetActive(false);
+        }
+        _secondExplosion.SetActive(false);
+ 
+
+        _gimmickDamageBox.SetActive(false);
+        _rootDamageBox.SetActive(false);
+        foreach (var item in _firstExplosionDamageBox)
+        {
+            item.SetActive(false);
+        }
+        _secondExplosionDamageBox.SetActive(false);
+
         phase = BossPhase.Phase2;
         this.gameObject.tag = "Monster";
     }
