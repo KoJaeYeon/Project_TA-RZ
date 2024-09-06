@@ -6,8 +6,7 @@ using Zenject;
 public abstract class BlueChip : IBlueChipSystem
 {
     #region InJect
-    [Inject]
-    protected PoolManager _poolManager;
+    //인젝트 가능함.
     #endregion
 
     protected BlueChipSystem _blueChipSystem;

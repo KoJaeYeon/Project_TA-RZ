@@ -55,6 +55,8 @@ public class PlayerFirstComboAttack : PlayerComboAttack
     private void FirstAttack()
     {
         _forward = _player.transform.forward;
+        //테스트를 위해 임의로 설정.
+        _player.BlueChipSystem.UseBlueChip(_player.transform.position + new Vector3(0, 0, 2f), _player.CurrentAtk, AttackType.firstAttack);
 
         _boxPosition = _player.transform.position + _player.transform.TransformDirection(_additionalPosition) + _forward;
 

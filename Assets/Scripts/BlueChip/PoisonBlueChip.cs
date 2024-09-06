@@ -5,24 +5,23 @@ using UnityEngine;
 
 public class PoisonBlueChip : BlueChip
 {
-    private float _maxTime;
-
-    private WaitForSeconds _intervalTime;
-
-    private event Action _action;
+    private event Action<float, float, float> _action;
 
     public override void InitializeBlueChip(BlueChipSystem blueChipSystem, PC_BlueChip data)
     {
         _blueChipSystem = blueChipSystem;
         _data = data;
-        _maxTime = _data.Chip_Lifetime;
-        _intervalTime = new WaitForSeconds(_data.Interval_time);
         _monsterLayer = LayerMask.GetMask("Monster");
     }
 
     public override void LevelUpBlueChip()
     {
-        
+        _currentLevel++;
+
+        if(_currentLevel <= 2)
+        {
+            _currentPower += _data.Att_Damage_Lvup;
+        }
     }
 
     public override void UseBlueChip(Vector3 position, float currentPassivePower, AttackType currentAttackType)
@@ -32,34 +31,25 @@ public class PoisonBlueChip : BlueChip
             return;
         }
 
-        _blueChipSystem.StartCoroutine(Poison(position, currentPassivePower));
+        StartPoison(position, currentPassivePower);
     }
 
-    //private IEnumerator Poison(Vector3 position, float currentPassivePower)
-    //{
-    //    Collider[] colliders = Physics.OverlapSphere(position, _data.Chip_AttackArea, _monsterLayer);
+    private void StartPoison(Vector3 position, float currentPassivePower)
+    {
+        Collider[] colliders = Physics.OverlapSphere(position, _data.Chip_AttackArea, _monsterLayer);
 
-    //    float timer = 0;
+        foreach(var target in  colliders)
+        {
+            IStatusEffect statusEffect = target.GetComponent<IStatusEffect>();
 
-    //    //foreach(var monster in colliders)
-    //    //{
-    //    //    IHit hit = monster.GetComponent<IHit>();
+            if (statusEffect != null)
+            {
+                _action += (float passivePower, float maxTime, float intervalTime) => statusEffect.Poison(currentPassivePower, maxTime, intervalTime);
+            }
+        }
 
-    //    //    if(hit != null)
-    //    //    {
-    //    //        _action += hit.Hit;
-    //    //    }
-    //    //}
+        _action?.Invoke(currentPassivePower * _currentPower, _data.Chip_Lifetime, _data.Interval_time);
 
-    //    //while(timer < _maxTime)
-    //    //{
-    //    //    _action.Invoke();
-    //    //    yield return _intervalTime;
-    //    //    timer += Time.deltaTime;
-    //    //}
-
-        
-    //}
-
-    
+        _action = null;
+    }
 }
