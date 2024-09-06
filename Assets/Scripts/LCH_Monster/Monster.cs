@@ -18,7 +18,7 @@ public enum MonsterType
     Supply,
     Few
 }
-public class Monster : MonoBehaviour, IHit
+public class Monster : MonoBehaviour, IHit, IStatusEffect
 {
     [Header("디버깅용")]
     [SerializeField] bool test;
@@ -27,6 +27,7 @@ public class Monster : MonoBehaviour, IHit
     [SerializeField] protected MonsterAbility _Ability;
     [Inject] public Player Player { get;}
     [Inject] DataManager _dataManager;
+    [Inject] private PoolManager _poolManager;
     BehaviorTree _bt;
     NavMeshAgent Nav;
     Rigidbody _rigidbody;
@@ -260,4 +261,48 @@ public class Monster : MonoBehaviour, IHit
         Gizmos.DrawWireSphere(transform.position + transform.forward, Mon_Common_AttackArea);
     }
 
+    public void Poison(float damage, float maxTime, float intervalTime)
+    {
+        //독
+        StartCoroutine(TriggerPoison(damage, maxTime, intervalTime));
+    }
+
+    private IEnumerator TriggerPoison(float damage, float maxTime, float intervalTime)
+    {
+        float timer = 0;
+
+        while(timer < maxTime)
+        {
+            if (Mon_Common_Hp_Remain >= 0)
+            {
+                Mon_Common_Hp_Remain -= damage;
+
+                PrintDamageText(damage);
+
+                yield return new WaitForSeconds(intervalTime);
+
+                timer += Time.deltaTime;
+            }
+            else
+                yield break;
+        }
+    }
+
+    public void Ice()
+    {
+        //결빙
+    }
+
+    public void Explosion()
+    {
+        //폭발
+    }
+
+    private void PrintDamageText(float damage, DamageType damageType = DamageType.Poison)
+    {
+        var dmgTextObject = _poolManager.DequeueObject("DamageText");
+        var textComponent = dmgTextObject.GetComponentInChildren<DamageText>();
+        textComponent.gameObject.SetActive(true);
+        textComponent.OnSetData(damage, damageType, transform);
+    }
 }

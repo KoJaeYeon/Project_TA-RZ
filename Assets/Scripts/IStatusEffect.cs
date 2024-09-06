@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IStatusEffect
 {
-    public void Poison(float damage);
+    public void Poison(float damage, float maxTime, float intervalTime);
     public void Ice();
     public void Explosion();
 }
