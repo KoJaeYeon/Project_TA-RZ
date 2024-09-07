@@ -42,6 +42,10 @@ public class DamageText : MonoBehaviour
                 alpha = new Color(0, 176 / 255f, 80 / 255f);
                 transform.position = targetTrans.position + targetTrans.up;
                 break;
+            case DamageType.Explosive:
+                alpha = Color.red;
+                transform.position = targetTrans.position + targetTrans.up;
+                break;
         }
         text.color = alpha;
     }

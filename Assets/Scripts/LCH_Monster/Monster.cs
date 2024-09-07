@@ -65,6 +65,7 @@ public class Monster : MonoBehaviour, IHit, IStatusEffect
     protected string idStr = "E101";
 
     Coroutine _hitCoroutine;
+    Coroutine _poisonCoroutine;
 
    // [Header("개발자 인스펙터")]
     //[SerializeField] TextMeshProUGUI TempHPText;
@@ -263,8 +264,12 @@ public class Monster : MonoBehaviour, IHit, IStatusEffect
 
     public void Poison(float damage, float maxTime, float intervalTime)
     {
-        //독
-        StartCoroutine(TriggerPoison(damage, maxTime, intervalTime));
+        if(_poisonCoroutine != null)
+        {
+            StopCoroutine(TriggerPoison(damage, maxTime, intervalTime));
+        }
+
+        _poisonCoroutine = StartCoroutine(TriggerPoison(damage, maxTime, intervalTime));
     }
 
     private IEnumerator TriggerPoison(float damage, float maxTime, float intervalTime)
@@ -273,19 +278,23 @@ public class Monster : MonoBehaviour, IHit, IStatusEffect
 
         while(timer < maxTime)
         {
-            if (Mon_Common_Hp_Remain >= 0)
+            Mon_Common_Hp_Remain -= damage;
+
+            PrintDamageText(damage);
+
+            if(Mon_Common_Hp_Remain <= 0)
             {
-                Mon_Common_Hp_Remain -= damage;
+                _poisonCoroutine = null;
 
-                PrintDamageText(damage);
-
-                yield return new WaitForSeconds(intervalTime);
-
-                timer += Time.deltaTime;
-            }
-            else
                 yield break;
+            }
+
+            yield return new WaitForSeconds(intervalTime);
+
+            timer += intervalTime;
         }
+
+        _poisonCoroutine = null;
     }
 
     public void Ice()
@@ -293,9 +302,17 @@ public class Monster : MonoBehaviour, IHit, IStatusEffect
         //결빙
     }
 
-    public void Explosion()
+    public void Explosion(float damage)
     {
         //폭발
+        Mon_Common_Hp_Remain -= damage;
+
+        if(Mon_Common_Hp_Remain <= 0)
+        {
+            return;
+        }
+
+        PrintDamageText(damage, DamageType.Explosive);
     }
 
     private void PrintDamageText(float damage, DamageType damageType = DamageType.Poison)

@@ -14,9 +14,12 @@ public class BlueChipSystem : MonoBehaviour
     private DiContainer _diContainer;
     #endregion
 
+    [Header("Object")]
+    [SerializeField] private GameObject _poisonObject;
+
     private Dictionary<string, PC_BlueChip> _dataDictionary;
     private Dictionary<string, IBlueChipSystem> _currentBlueChipDictionary = new Dictionary<string, IBlueChipSystem>();
-    public Action<Vector3, float, AttackType> _blueChipSystem;
+    private Action<Vector3, AttackType> _blueChipSystem;
 
     private void Awake()
     {
@@ -56,9 +59,9 @@ public class BlueChipSystem : MonoBehaviour
         }
     }
 
-    public void UseBlueChip(Vector3 position, float currentPassivePower, AttackType currentAttackType)
+    public void UseBlueChip(Vector3 position, AttackType currentAttackType)
     {
-        _blueChipSystem?.Invoke(position, currentPassivePower, currentAttackType);
+        _blueChipSystem?.Invoke(position, currentAttackType);
     }
 
     public void SetBlueChipSkill(string blueID)
@@ -71,6 +74,7 @@ public class BlueChipSystem : MonoBehaviour
                     PoisonBlueChip poisonBlueChip = _diContainer.Instantiate<PoisonBlueChip>();
                     poisonBlueChip.InitializeBlueChip(this, GetBlueChipData(blueID));
                     RegisterBlueChip(poisonBlueChip, blueID);
+                    poisonBlueChip.SetEffectObject(_poisonObject);
                     Debug.Log("Poison 기능을 얻었습니다.");
                     break;
                 case "G202":
@@ -112,7 +116,12 @@ public class BlueChipSystem : MonoBehaviour
     {
         if (_currentBlueChipDictionary.ContainsKey(blueID))
         {
-            _blueChipSystem -= _currentBlueChipDictionary[blueID].UseBlueChip;
+            var blueChip = _currentBlueChipDictionary[blueID];
+
+            blueChip.ResetSystem();
+
+            _blueChipSystem -= blueChip.UseBlueChip;
+
             _currentBlueChipDictionary.Remove(blueID);
         }
     }
