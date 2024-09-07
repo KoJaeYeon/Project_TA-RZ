@@ -11,7 +11,7 @@ public class PoisonBlueChip : BlueChip
     {
         _blueChipSystem = blueChipSystem;
         _data = data;
-        _monsterLayer = LayerMask.GetMask("Monster");
+        _targetLayer = LayerMask.GetMask("Monster");
         _currentPower = _data.Att_damage;
     }
 
@@ -42,7 +42,7 @@ public class PoisonBlueChip : BlueChip
 
     private void StartPoison(Vector3 position, float currentPassivePower)
     {
-        Collider[] colliders = Physics.OverlapSphere(position, _data.Chip_AttackArea, _monsterLayer);
+        Collider[] colliders = Physics.OverlapSphere(position, _data.Chip_AttackArea, _targetLayer);
 
         foreach(var target in  colliders)
         {

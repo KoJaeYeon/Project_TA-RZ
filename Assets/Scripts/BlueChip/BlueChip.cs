@@ -6,14 +6,15 @@ using Zenject;
 public abstract class BlueChip : IBlueChipSystem
 {
     #region InJect
-    //인젝트 가능함.
+    [Inject]
+    protected PoolManager _poolManager;
     #endregion
 
     protected BlueChipSystem _blueChipSystem;
     protected PC_BlueChip _data;
     protected int _currentLevel;
     protected float _currentPower;
-    protected LayerMask _monsterLayer;
+    protected LayerMask _targetLayer;
 
     public abstract void UseBlueChip(Vector3 position, AttackType currentAttackType);
     public abstract void LevelUpBlueChip();

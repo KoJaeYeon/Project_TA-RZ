@@ -278,22 +278,20 @@ public class Monster : MonoBehaviour, IHit, IStatusEffect
 
         while(timer < maxTime)
         {
-            if (Mon_Common_Hp_Remain >= 0)
-            {
-                Mon_Common_Hp_Remain -= damage;
+            Mon_Common_Hp_Remain -= damage;
 
-                PrintDamageText(damage);
-
-                yield return new WaitForSeconds(intervalTime);
-
-                timer += Time.deltaTime;
-            }
-            else
+            if(Mon_Common_Hp_Remain <= 0)
             {
                 _poisonCoroutine = null;
 
                 yield break;
             }
+
+            PrintDamageText(damage);
+
+            yield return new WaitForSeconds(intervalTime);
+
+            timer += intervalTime;
         }
 
         _poisonCoroutine = null;
@@ -307,6 +305,14 @@ public class Monster : MonoBehaviour, IHit, IStatusEffect
     public void Explosion(float damage)
     {
         //폭발
+        Mon_Common_Hp_Remain -= damage;
+
+        if(Mon_Common_Hp_Remain <= 0)
+        {
+            return;
+        }
+
+        PrintDamageText(damage, DamageType.Explosive);
     }
 
     private void PrintDamageText(float damage, DamageType damageType = DamageType.Poison)

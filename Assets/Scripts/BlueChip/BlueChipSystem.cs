@@ -16,7 +16,7 @@ public class BlueChipSystem : MonoBehaviour
 
     private Dictionary<string, PC_BlueChip> _dataDictionary;
     private Dictionary<string, IBlueChipSystem> _currentBlueChipDictionary = new Dictionary<string, IBlueChipSystem>();
-    public Action<Vector3, AttackType> _blueChipSystem;
+    private Action<Vector3, AttackType> _blueChipSystem;
 
     private void Awake()
     {
@@ -112,7 +112,12 @@ public class BlueChipSystem : MonoBehaviour
     {
         if (_currentBlueChipDictionary.ContainsKey(blueID))
         {
-            _blueChipSystem -= _currentBlueChipDictionary[blueID].UseBlueChip;
+            var blueChip = _currentBlueChipDictionary[blueID];
+
+            blueChip.ResetSystem();
+
+            _blueChipSystem -= blueChip.UseBlueChip;
+
             _currentBlueChipDictionary.Remove(blueID);
         }
     }

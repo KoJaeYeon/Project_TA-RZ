@@ -12,7 +12,7 @@ public class ExplosionBlueChip : BlueChip
         _blueChipSystem = blueChipSystem;
         _data = data;
         _currentPower = _data.Att_damage;
-        _monsterLayer = LayerMask.GetMask("Monster");
+        _targetLayer = LayerMask.GetMask("Monster");
     }
 
     public override void ResetSystem()
@@ -42,7 +42,7 @@ public class ExplosionBlueChip : BlueChip
 
     private void StartExplosion(Vector3 position, float currentPassivePower)
     {
-        Collider[] colliders = Physics.OverlapSphere(position, _data.Chip_AttackArea, _monsterLayer);
+        Collider[] colliders = Physics.OverlapSphere(position, _data.Chip_AttackArea, _targetLayer);
 
         foreach(var target in  colliders)
         {
