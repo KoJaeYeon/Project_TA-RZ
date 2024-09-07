@@ -25,7 +25,7 @@ public class PoisonBlueChip : BlueChip
     public override void ResetSystem()
     {
         _currentLevel = 0;
-        _currentPower = 0;
+        _currentPower = 0f;
         _poolManager.AllDestroyObject(_effectObject);
     }
 
@@ -46,6 +46,11 @@ public class PoisonBlueChip : BlueChip
             return;
         }
 
+        SpawnPoison(position);
+    }
+
+    private void SpawnPoison(Vector3 position)
+    {
         GameObject poisonObject = _poolManager.DequeueObject(_effectObject);
 
         PoisonObject objectComponent = poisonObject.GetComponent<PoisonObject>();
@@ -57,6 +62,4 @@ public class PoisonBlueChip : BlueChip
 
         objectComponent.StartPoison();
     }
-
-    
 }

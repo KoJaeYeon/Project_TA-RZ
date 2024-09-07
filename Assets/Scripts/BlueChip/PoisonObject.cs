@@ -2,9 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class PoisonObject : MonoBehaviour
 {
+    [Inject]
+    private PoolManager _poolManager;
+
     private float _maxTime;
     private float _intervalTime;
     private float _radius;
@@ -46,6 +50,8 @@ public class PoisonObject : MonoBehaviour
                     _start = false;
 
                     this.gameObject.SetActive(false);
+
+                    _poolManager.EnqueueObject(this.gameObject);
                 }
             }
            
