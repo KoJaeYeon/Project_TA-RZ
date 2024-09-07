@@ -58,4 +58,9 @@ public class ExplosionBlueChip : BlueChip
 
         _explosionAction = null;
     }
+
+    public override void SetEffectObject(GameObject effectObject)
+    {
+        
+    }
 }

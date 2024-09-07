@@ -14,6 +14,9 @@ public class BlueChipSystem : MonoBehaviour
     private DiContainer _diContainer;
     #endregion
 
+    [Header("Object")]
+    [SerializeField] private GameObject _poisonObject;
+
     private Dictionary<string, PC_BlueChip> _dataDictionary;
     private Dictionary<string, IBlueChipSystem> _currentBlueChipDictionary = new Dictionary<string, IBlueChipSystem>();
     private Action<Vector3, AttackType> _blueChipSystem;
@@ -71,6 +74,7 @@ public class BlueChipSystem : MonoBehaviour
                     PoisonBlueChip poisonBlueChip = _diContainer.Instantiate<PoisonBlueChip>();
                     poisonBlueChip.InitializeBlueChip(this, GetBlueChipData(blueID));
                     RegisterBlueChip(poisonBlueChip, blueID);
+                    poisonBlueChip.SetEffectObject(_poisonObject);
                     Debug.Log("Poison 기능을 얻었습니다.");
                     break;
                 case "G202":

@@ -5,19 +5,28 @@ using UnityEngine;
 
 public class PoisonBlueChip : BlueChip
 {
-    private event Action<float, float, float> _action;
-
     public override void InitializeBlueChip(BlueChipSystem blueChipSystem, PC_BlueChip data)
     {
         _blueChipSystem = blueChipSystem;
+
         _data = data;
+
         _targetLayer = LayerMask.GetMask("Monster");
+
         _currentPower = _data.Att_damage;
+    }
+    public override void SetEffectObject(GameObject effectObject)
+    {
+        _effectObject = effectObject;
+
+        _poolManager.CreatePool(_effectObject);
     }
 
     public override void ResetSystem()
     {
-        
+        _currentLevel = 0;
+        _currentPower = 0;
+        _poolManager.AllDestroyObject(_effectObject);
     }
 
     public override void LevelUpBlueChip()
@@ -37,25 +46,17 @@ public class PoisonBlueChip : BlueChip
             return;
         }
 
-        StartPoison(position, _currentPower);
+        GameObject poisonObject = _poolManager.DequeueObject(_effectObject);
+
+        PoisonObject objectComponent = poisonObject.GetComponent<PoisonObject>();
+
+        objectComponent.SetObjectData(_data.Chip_Lifetime, _data.Chip_AttackArea
+            , _currentPower, _data.Interval_time, _targetLayer);
+
+        poisonObject.transform.position = position;
+
+        objectComponent.StartPoison();
     }
 
-    private void StartPoison(Vector3 position, float currentPassivePower)
-    {
-        Collider[] colliders = Physics.OverlapSphere(position, _data.Chip_AttackArea, _targetLayer);
-
-        foreach(var target in  colliders)
-        {
-            IStatusEffect statusEffect = target.GetComponent<IStatusEffect>();
-
-            if (statusEffect != null)
-            {
-                _action += (float passivePower, float maxTime, float intervalTime) => statusEffect.Poison(currentPassivePower, maxTime, intervalTime);
-            }
-        }
-
-        _action?.Invoke(currentPassivePower, _data.Chip_Lifetime, _data.Interval_time);
-
-        _action = null;
-    }
+    
 }

@@ -27,5 +27,8 @@ public class MagneticBlueChip : BlueChip
         }
     }
 
-    
+    public override void SetEffectObject(GameObject effectObject)
+    {
+        
+    }
 }

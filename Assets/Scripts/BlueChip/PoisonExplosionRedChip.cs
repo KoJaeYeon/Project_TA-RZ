@@ -23,4 +23,9 @@ public class PoisonExplosionRedChip : BlueChip
     {
         
     }
+
+    public override void SetEffectObject(GameObject effectObject)
+    {
+        
+    }
 }

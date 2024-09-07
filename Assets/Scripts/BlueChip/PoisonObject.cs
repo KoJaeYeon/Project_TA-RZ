@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class PoisonObject : MonoBehaviour
 {
-    private event Action<float, float, float> _poisonAction;
-
     private float _maxTime;
     private float _intervalTime;
     private float _radius;
@@ -24,7 +22,10 @@ public class PoisonObject : MonoBehaviour
         _currentDamage = damage;
         _intervalTime = intervalTime;
         _targetLayer = targetLayer;
+    }
 
+    public void StartPoison()
+    {
         _start = true;
         _startTime = Time.time;
         _lastTime = 0f;
@@ -34,36 +35,42 @@ public class PoisonObject : MonoBehaviour
     {
         if (_start)
         {
-            if(Time.time - _startTime > _maxTime)
+            if (Time.time - _lastTime >= 0.5)
             {
-                _start = false;
-
-                this.gameObject.SetActive(false);
-
-                return;
-            }
-
-            if(Time.time - _lastTime >= 0.2)
-            {
-                Collider[] colliders = Physics.OverlapSphere(transform.position, _radius, _targetLayer);
-
-                foreach (var target in colliders)
-                {
-                    IStatusEffect statusEffect = target.GetComponent<IStatusEffect>();
-
-                    if (statusEffect != null)
-                    {
-                        _poisonAction += (float currentDamage, float maxTime, float intervalTime) => statusEffect.Poison(currentDamage, maxTime, intervalTime);
-                    }
-                }
-
-                _poisonAction?.Invoke(_currentDamage, _maxTime, _intervalTime);
-
-                _poisonAction = null;
+                OnUpdatePoison();
 
                 _lastTime = Time.time;
-            }   
+
+                if(Time.time - _startTime > _maxTime)
+                {
+                    _start = false;
+
+                    this.gameObject.SetActive(false);
+                }
+            }
+           
         }
+    }
+
+    private void OnUpdatePoison()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _radius, _targetLayer);
+
+        foreach(var target in colliders)
+        {
+            IStatusEffect statusEffect = target.GetComponent<IStatusEffect>();
+
+            if(statusEffect != null)
+            {
+                statusEffect.Poison(_currentDamage, _maxTime, _intervalTime);
+            }
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, _radius);
     }
 
 }

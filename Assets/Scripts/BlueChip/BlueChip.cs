@@ -12,6 +12,7 @@ public abstract class BlueChip : IBlueChipSystem
 
     protected BlueChipSystem _blueChipSystem;
     protected PC_BlueChip _data;
+    protected GameObject _effectObject;
     protected int _currentLevel;
     protected float _currentPower;
     protected LayerMask _targetLayer;
@@ -20,4 +21,5 @@ public abstract class BlueChip : IBlueChipSystem
     public abstract void LevelUpBlueChip();
     public abstract void InitializeBlueChip(BlueChipSystem blueChipSystem, PC_BlueChip data);
     public abstract void ResetSystem();
+    public abstract void SetEffectObject(GameObject effectObject);
 }

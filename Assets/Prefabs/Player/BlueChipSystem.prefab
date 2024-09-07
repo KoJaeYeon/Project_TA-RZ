@@ -44,3 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 439334279524a6e4b8877ef442b50814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _poisonObject: {fileID: 5144486600298871786, guid: b0af84b4b197b1548bb5129affa40faa,
+    type: 3}

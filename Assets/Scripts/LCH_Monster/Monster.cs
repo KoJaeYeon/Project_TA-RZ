@@ -280,14 +280,14 @@ public class Monster : MonoBehaviour, IHit, IStatusEffect
         {
             Mon_Common_Hp_Remain -= damage;
 
+            PrintDamageText(damage);
+
             if(Mon_Common_Hp_Remain <= 0)
             {
                 _poisonCoroutine = null;
 
                 yield break;
             }
-
-            PrintDamageText(damage);
 
             yield return new WaitForSeconds(intervalTime);
 
