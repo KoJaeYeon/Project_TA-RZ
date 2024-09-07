@@ -151,6 +151,8 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
         _player.cameraRoot.StartCameraMovement();
 
+        _player.BlueChipSystem.UseBlueChip(_player.transform.position, AttackType.fourthAttack);
+
         if (_player.IsPlayerFourthAttackDrainAvailable)
         {
             _player.StartCoroutine(ChargeDrain());
