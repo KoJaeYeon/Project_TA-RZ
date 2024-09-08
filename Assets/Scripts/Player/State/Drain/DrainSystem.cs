@@ -28,7 +28,6 @@ public class DrainSystem : MonoBehaviour
             {
                 if(player.CurrentAmmo < 50)
                 {
-                    //item.velocity = Vector3.zero;
                     item.gameObject.SetActive(false);
                     player.CurrentAmmo += 1;
                     player.OnCalled_Achieve_ResourceGet();
