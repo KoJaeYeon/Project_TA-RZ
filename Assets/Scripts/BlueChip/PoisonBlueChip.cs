@@ -55,13 +55,13 @@ public class PoisonBlueChip : BlueChip
 
         PoisonObject objectComponent = poisonObject.GetComponent<PoisonObject>();
 
-        objectComponent.SetObjectData(_data.Chip_Lifetime, _data.Chip_AttackArea
-            , _currentPower, _data.Interval_time, _targetLayer);
+        objectComponent.SetObjectData(_data.Chip_AttackArea, _currentPower, _targetLayer,
+            _data.Chip_Lifetime, _data.Interval_time);
 
         Vector3 objectPosition = transform.position + transform.forward * 3f;
 
         poisonObject.transform.position = objectPosition;
 
-        objectComponent.StartPoison();
+        objectComponent.StartPoison(PoisonAttackType.Sustained);
     }
 }

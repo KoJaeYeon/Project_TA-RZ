@@ -25,12 +25,13 @@ public class MagneticBlueChip : BlueChip
     }
     public override void SetEffectObject(GameObject effectObject)
     {
-
+        _effectObject = effectObject;
     }
 
     public override void ResetSystem()
     {
-        
+        _currentLevel = 0;
+        _currentRadius = 0f;
     }
 
     public override void LevelUpBlueChip()

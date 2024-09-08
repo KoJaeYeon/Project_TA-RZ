@@ -305,12 +305,12 @@ public class Monster : MonoBehaviour, IHit, IStatusEffect
     public void Explosion(float damage)
     {
         //폭발
-        Mon_Common_Hp_Remain -= damage;
-
         if(Mon_Common_Hp_Remain <= 0)
         {
             return;
         }
+
+        Mon_Common_Hp_Remain -= damage;
 
         PrintDamageText(damage, DamageType.Explosive);
     }

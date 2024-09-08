@@ -4,10 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
+public enum PoisonAttackType
+{
+    Sustained,
+    Explosive
+}
+
 public class PoisonObject : MonoBehaviour
 {
     [Inject]
     private PoolManager _poolManager;
+    private event Action<float> _explosiveAction;
+    private event Action<float, float, float> _sustainedAction;
 
     private float _maxTime;
     private float _intervalTime;
@@ -19,7 +27,7 @@ public class PoisonObject : MonoBehaviour
     private LayerMask _targetLayer;
     private bool _start;
 
-    public void SetObjectData(float maxTime, float radius, float damage, float intervalTime, LayerMask targetLayer)
+    public void SetObjectData(float radius, float damage, LayerMask targetLayer, float maxTime = 0f, float intervalTime = 0f)
     {
         _maxTime = maxTime;
         _radius = radius;
@@ -28,7 +36,25 @@ public class PoisonObject : MonoBehaviour
         _targetLayer = targetLayer;
     }
 
-    public void StartPoison()
+    public void StartPoison(PoisonAttackType attackType)
+    {
+        switch (attackType)
+        {
+            case PoisonAttackType.Sustained:
+                Sustained();
+                break;
+            case PoisonAttackType.Explosive:
+                Explosive();
+                break;
+        }
+    }
+
+    private void Explosive()
+    {
+        StartCoroutine(ExplosivePoison());
+    }
+
+    private void Sustained()
     {
         _start = true;
         _startTime = Time.time;
@@ -71,6 +97,30 @@ public class PoisonObject : MonoBehaviour
                 statusEffect.Poison(_currentDamage, _maxTime, _intervalTime);
             }
         }
+    }
+
+    private IEnumerator ExplosivePoison()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _radius, _targetLayer);
+
+        foreach(var target in colliders)
+        {
+            IStatusEffect statusEffect = target.GetComponent<IStatusEffect>();
+
+            if(statusEffect != null)
+            {
+                _explosiveAction += (float passivePower) => statusEffect.Explosion(passivePower);
+                _sustainedAction += (float passivePower, float maxTime, float intervalTime) 
+                    => statusEffect.Poison(passivePower, maxTime, intervalTime);
+            }
+        }
+
+        yield return new WaitForSeconds(0.5f);
+
+        _explosiveAction?.Invoke(_currentDamage);
+        _sustainedAction?.Invoke(10f, 2f, 0.5f);
+
+        _poolManager.EnqueueObject(this.gameObject);
     }
 
     private void OnDrawGizmos()

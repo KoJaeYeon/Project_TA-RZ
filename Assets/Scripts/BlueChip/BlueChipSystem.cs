@@ -89,6 +89,7 @@ public class BlueChipSystem : MonoBehaviour
                     PoisonExplosionRedChip poisonExplosionRedChip = _diContainer.Instantiate<PoisonExplosionRedChip>();
                     poisonExplosionRedChip.InitializeBlueChip(this, GetBlueChipData(blueID));
                     RegisterBlueChip(poisonExplosionRedChip, blueID);
+                    poisonExplosionRedChip.SetEffectObject(_poisonObject);
                     Debug.Log("PoisonExplosion기능을 얻었습니다.");
                     break;
                 case "G204":

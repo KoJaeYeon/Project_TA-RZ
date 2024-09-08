@@ -6,6 +6,8 @@ using UnityEngine;
 public class ExplosionBlueChip : BlueChip
 {
     private event Action<float> _explosionAction;
+    private Vector3 _exploPosition;
+    private Vector3 _forward;
 
     public override void InitializeBlueChip(BlueChipSystem blueChipSystem, PC_BlueChip data)
     {
@@ -13,6 +15,8 @@ public class ExplosionBlueChip : BlueChip
         _data = data;
         _currentPower = _data.Att_damage;
         _targetLayer = LayerMask.GetMask("Monster");
+
+        _exploPosition = new Vector3(0f, 1f, 0.5f);
     }
 
     public override void SetEffectObject(GameObject effectObject)
@@ -48,7 +52,11 @@ public class ExplosionBlueChip : BlueChip
 
     private void StartExplosion(Transform transform, float currentPassivePower)
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, _data.Chip_AttackArea, _targetLayer);
+        _forward = transform.forward;
+
+        Vector3 explosionPosition = transform.position + transform.TransformDirection(_exploPosition) + _forward;
+
+        Collider[] colliders = Physics.OverlapSphere(explosionPosition, _data.Chip_AttackArea, _targetLayer);
 
         foreach(var target in  colliders)
         {
