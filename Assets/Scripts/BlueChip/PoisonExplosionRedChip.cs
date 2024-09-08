@@ -19,7 +19,7 @@ public class PoisonExplosionRedChip : BlueChip
         
     }
 
-    public override void UseBlueChip(Vector3 position, AttackType currentAttackType)
+    public override void UseBlueChip(Transform transform, AttackType currentAttackType, bool isStart = true)
     {
         
     }

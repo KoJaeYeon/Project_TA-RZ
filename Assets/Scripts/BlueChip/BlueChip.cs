@@ -17,7 +17,7 @@ public abstract class BlueChip : IBlueChipSystem
     protected float _currentPower;
     protected LayerMask _targetLayer;
 
-    public abstract void UseBlueChip(Vector3 position, AttackType currentAttackType);
+    public abstract void UseBlueChip(Transform transform, AttackType currentAttackType, bool isStart = true);
     public abstract void LevelUpBlueChip();
     public abstract void InitializeBlueChip(BlueChipSystem blueChipSystem, PC_BlueChip data);
     public abstract void ResetSystem();

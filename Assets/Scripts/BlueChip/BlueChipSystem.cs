@@ -19,7 +19,7 @@ public class BlueChipSystem : MonoBehaviour
 
     private Dictionary<string, PC_BlueChip> _dataDictionary;
     private Dictionary<string, IBlueChipSystem> _currentBlueChipDictionary = new Dictionary<string, IBlueChipSystem>();
-    private Action<Vector3, AttackType> _blueChipSystem;
+    private Action<Transform, AttackType, bool> _blueChipSystem;
 
     private void Awake()
     {
@@ -59,9 +59,9 @@ public class BlueChipSystem : MonoBehaviour
         }
     }
 
-    public void UseBlueChip(Vector3 position, AttackType currentAttackType)
+    public void UseBlueChip(Transform transform, AttackType currentAttackType, bool isStart = true)
     {
-        _blueChipSystem?.Invoke(position, currentAttackType);
+        _blueChipSystem?.Invoke(transform, currentAttackType, isStart);
     }
 
     public void SetBlueChipSkill(string blueID)
