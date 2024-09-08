@@ -137,7 +137,7 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
         _maxTime = 6f;
 
-        _player.drainSystem.OnSetDrainArea(0.7f);
+        _player.drainSystem.OnSetDrainArea(0.7f); 
 
     }
 
@@ -151,12 +151,12 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
         _player.cameraRoot.StartCameraMovement();
 
-        _player.BlueChipSystem.UseBlueChip(_player.transform.position, AttackType.fourthAttack);
+        _player.BlueChipSystem.UseBlueChip(_player.transform, AttackType.fourthAttack, true);
 
-        if (_player.IsPlayerFourthAttackDrainAvailable)
-        {
-            _player.StartCoroutine(ChargeDrain());
-        }
+        //if (_player.IsPlayerFourthAttackDrainAvailable) 
+        //{
+        //    _player.StartCoroutine(ChargeDrain());
+        //}
 
         float _elapsedTime = Time.time;
 
@@ -193,6 +193,8 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
                 _isCharge = false;
 
+                _player.BlueChipSystem.UseBlueChip(_player.transform, AttackType.fourthAttack, false);
+
                 _player.cameraRoot.EndCameraMovement();
 
                 _animator.speed = 1f;
@@ -209,6 +211,8 @@ public class PlayerFourthComboAttack : PlayerComboAttack
                 yield break;
             }
         }
+
+        _player.BlueChipSystem.UseBlueChip(_player.transform, AttackType.fourthAttack, false);
 
         _player.cameraRoot.EndCameraMovement();
 

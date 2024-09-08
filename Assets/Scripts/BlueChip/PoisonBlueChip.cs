@@ -39,17 +39,17 @@ public class PoisonBlueChip : BlueChip
         }
     }
 
-    public override void UseBlueChip(Vector3 position, AttackType currentAttackType)
+    public override void UseBlueChip(Transform transform, AttackType currentAttackType, bool isStart = true)
     {
         if(currentAttackType is AttackType.fourthAttack)
         {
             return;
         }
 
-        SpawnPoison(position);
+        SpawnPoison(transform);
     }
 
-    private void SpawnPoison(Vector3 position)
+    private void SpawnPoison(Transform transform)
     {
         GameObject poisonObject = _poolManager.DequeueObject(_effectObject);
 
@@ -58,7 +58,9 @@ public class PoisonBlueChip : BlueChip
         objectComponent.SetObjectData(_data.Chip_Lifetime, _data.Chip_AttackArea
             , _currentPower, _data.Interval_time, _targetLayer);
 
-        poisonObject.transform.position = position;
+        Vector3 objectPosition = transform.position + transform.forward * 3f;
+
+        poisonObject.transform.position = objectPosition;
 
         objectComponent.StartPoison();
     }

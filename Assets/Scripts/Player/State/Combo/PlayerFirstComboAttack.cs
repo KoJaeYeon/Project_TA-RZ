@@ -58,7 +58,7 @@ public class PlayerFirstComboAttack : PlayerComboAttack
 
         _boxPosition = _player.transform.position + _player.transform.TransformDirection(_additionalPosition) + _forward;
 
-        _player.BlueChipSystem.UseBlueChip(_boxPosition, AttackType.firstAttack);
+        _player.BlueChipSystem.UseBlueChip(_player.transform, AttackType.firstAttack);
 
         _enemyLayer = LayerMask.GetMask("Monster");
 

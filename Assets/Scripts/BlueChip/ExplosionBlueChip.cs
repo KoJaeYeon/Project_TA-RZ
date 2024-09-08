@@ -36,19 +36,19 @@ public class ExplosionBlueChip : BlueChip
         }
     }
 
-    public override void UseBlueChip(Vector3 position, AttackType currentAttackType)
+    public override void UseBlueChip(Transform transform, AttackType currentAttackType, bool isStart = true)
     {
         if(currentAttackType is AttackType.fourthAttack)
         {
             return;
         }
 
-        StartExplosion(position, _currentPower);
+        StartExplosion(transform, _currentPower);
     }
 
-    private void StartExplosion(Vector3 position, float currentPassivePower)
+    private void StartExplosion(Transform transform, float currentPassivePower)
     {
-        Collider[] colliders = Physics.OverlapSphere(position, _data.Chip_AttackArea, _targetLayer);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _data.Chip_AttackArea, _targetLayer);
 
         foreach(var target in  colliders)
         {
