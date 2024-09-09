@@ -77,7 +77,6 @@ public class PlayerFirstComboAttack : PlayerComboAttack
                 ChangeData(_player.CurrentLevel);
                 float damage = _player.CurrentAtk * _currentAtkMultiplier * _player._PC_Level.Level_Atk_Power_Multiplier;
                 hit.Hit(damage, _currentStiffT, _player.transform);
-                //Debug.Log($"player.CurrentAtk : {_player.CurrentAtk}, _currentAtkMultiplier : {_currentAtkMultiplier}, _player._PC_Level.Level_Atk_Power_Multiplier : {_player._PC_Level.Level_Atk_Power_Multiplier}");
                 isHit = true;
                 GameObject hitEffect = _effect.GetHitEffect();
                 ParticleSystem hitParticle = hitEffect.GetComponent<ParticleSystem>();

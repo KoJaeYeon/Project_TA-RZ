@@ -731,11 +731,11 @@ public class Player : MonoBehaviour, IHit
             _state.OnDamagedStateChange();
         }
     }
-        public void ApplyKnockback(float knockBackTime, Transform otherTrans)
+    public void ApplyKnockback(float knockBackTime, Transform otherTrans)
+    {
+        if (CheckAttackIsAvailable(otherTrans.position) == false)
         {
-            if (CheckAttackIsAvailable(otherTrans.position) == false)
-            {
-                return;
+            return;
         }
 
         PlayerKnockBack._knockBackPosition = otherTrans.position;

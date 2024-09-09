@@ -25,12 +25,13 @@ public class MagneticBlueChip : BlueChip
     }
     public override void SetEffectObject(GameObject effectObject)
     {
-
+        _effectObject = effectObject;
     }
 
     public override void ResetSystem()
     {
-        
+        _currentLevel = 0;
+        _currentRadius = 0f;
     }
 
     public override void LevelUpBlueChip()
@@ -85,20 +86,25 @@ public class MagneticBlueChip : BlueChip
         {
             foreach (var item in _itemList)
             {
-                Vector3 drainDirection = transform.position - item.transform.position;
+                float distance = Vector3.Distance(transform.position, item.transform.position);
 
-                float currentItemspeed = item.velocity.magnitude;
-
-                if(currentItemspeed > _speed)
+                if(distance > 0.7f)
                 {
-                    item.velocity = item.velocity.normalized * _speed;
-                }
+                    Vector3 drainDirection = transform.position - item.transform.position;
 
-                item.AddForce(drainDirection * Time.deltaTime * _force, ForceMode.Impulse);
+                    float currentItemspeed = item.velocity.magnitude;
 
-                if (!item.gameObject.activeSelf)
-                {
-                    _removeList.Add(item);
+                    if (currentItemspeed > _speed)
+                    {
+                        item.velocity = item.velocity.normalized * _speed;
+                    }
+
+                    item.AddForce(drainDirection * Time.deltaTime * _force, ForceMode.Impulse);
+
+                    if (!item.gameObject.activeSelf)
+                    {
+                        _removeList.Add(item);
+                    }
                 }
             } 
 
