@@ -107,7 +107,7 @@ public class PoisonObject : MonoBehaviour
         {
             IStatusEffect statusEffect = target.GetComponent<IStatusEffect>();
 
-            if(statusEffect != null)
+            if(statusEffect != null && target.gameObject.activeSelf)
             {
                 _explosiveAction += (float passivePower) => statusEffect.Explosion(passivePower);
                 _sustainedAction += (float passivePower, float maxTime, float intervalTime) 
@@ -119,6 +119,9 @@ public class PoisonObject : MonoBehaviour
 
         _explosiveAction?.Invoke(_currentDamage);
         _sustainedAction?.Invoke(10f, 2f, 0.5f);
+
+        _explosiveAction = null;
+        _sustainedAction = null;
 
         _poolManager.EnqueueObject(this.gameObject);
     }

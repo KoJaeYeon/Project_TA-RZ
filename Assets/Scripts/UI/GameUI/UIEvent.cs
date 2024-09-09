@@ -18,10 +18,10 @@ public class UIEvent
     public ShopUI ShopUI { get; private set; }
     public PassiveShopUI PassiveShopUI { get; private set; }
     public InteractUI InteractUI { get; private set; }
-
     public AchievementUI AchievementUI { get; private set; }
     public QuestUI QuestUI { get; private set; }
     public MenuUI MenuUI { get; private set; }
+    public PlayerBlueChipUI PlayerBlueChipUI { get; private set; }
 
     #region PlayerUIEvent
     public void RegisterPlayerUI(PlayerUIView playerUI)
@@ -209,7 +209,12 @@ public class UIEvent
         MenuUI.OutLobby();
     }
     #endregion
-
+    #region PlayerBlueChipUI
+    public void RegisterPlayerBlueChipUI(PlayerBlueChipUI playerBluechipUI)
+    {
+        PlayerBlueChipUI = playerBluechipUI;
+    }
+    #endregion
 
     #region PlayerControl
     public void SetActivePlayerControl(bool isActive)

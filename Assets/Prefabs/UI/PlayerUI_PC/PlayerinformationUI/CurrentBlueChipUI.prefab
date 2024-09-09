@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 9091634304017341578}
   - component: {fileID: 832002480798838763}
   m_Layer: 0
-  m_Name: Text (TMP) (1)
+  m_Name: BlueChipDescription
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -109,8 +109,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -151.99997, y: 48.524628}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 109.7543, y: 48.524628}
+  m_SizeDelta: {x: 723.5085, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9091634304017341578
 CanvasRenderer:
@@ -168,8 +168,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 33
-  m_fontSizeBase: 33
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -221,13 +221,14 @@ GameObject:
   - component: {fileID: 8690831213343495731}
   - component: {fileID: 2644399435673880412}
   - component: {fileID: 4023554911322032088}
+  - component: {fileID: 7247787519263186583}
   m_Layer: 0
   m_Name: CurrentBlueChipUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8690831213343495731
 RectTransform:
   m_ObjectHideFlags: 0
@@ -289,6 +290,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7247787519263186583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4797916677705168056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 525b25600a98dfa4fa5f33af1586f07e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _blueChipImage: {fileID: 5283718494639509510}
+  _name: {fileID: 3432468639689980130}
+  _description: {fileID: 832002480798838763}
 --- !u!1 &7383396478472694743
 GameObject:
   m_ObjectHideFlags: 0
@@ -301,7 +317,7 @@ GameObject:
   - component: {fileID: 3704271075342074307}
   - component: {fileID: 3432468639689980130}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: BlueChipName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -418,7 +434,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 4.969145, z: -11.180557, w: 0}
+  m_margin: {x: 0, y: 4.969145, z: -267.5669, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -436,7 +452,7 @@ GameObject:
   - component: {fileID: 1562034735025033426}
   - component: {fileID: 5283718494639509510}
   m_Layer: 0
-  m_Name: Image
+  m_Name: BlueChipImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
