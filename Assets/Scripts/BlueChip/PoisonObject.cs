@@ -105,9 +105,14 @@ public class PoisonObject : MonoBehaviour
 
         foreach(var target in colliders)
         {
+            if (!target.gameObject.activeSelf)
+            {
+                continue;
+            }
+
             IStatusEffect statusEffect = target.GetComponent<IStatusEffect>();
 
-            if(statusEffect != null && target.gameObject.activeSelf)
+            if(statusEffect != null)
             {
                 _explosiveAction += (float passivePower) => statusEffect.Explosion(passivePower);
                 _sustainedAction += (float passivePower, float maxTime, float intervalTime) 

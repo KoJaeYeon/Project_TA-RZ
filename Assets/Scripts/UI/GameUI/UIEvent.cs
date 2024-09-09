@@ -22,6 +22,7 @@ public class UIEvent
     public QuestUI QuestUI { get; private set; }
     public MenuUI MenuUI { get; private set; }
     public PlayerInfoUI PlayerInfo { get; private set; }
+    public CurrentPassiveUI CurrentPassiveUI { get; private set; }
 
 
     #region PlayerUIEvent
@@ -236,7 +237,17 @@ public class UIEvent
         }
     }
     #endregion
+    #region CurrentPassiveUI
+    public void RegisterCurrentPassiveUI(CurrentPassiveUI currentPassiveUI)
+    {
+        CurrentPassiveUI = currentPassiveUI;
+    }
 
+    public Player GetPlayer()
+    {
+        return player;
+    }
+    #endregion
     #region PlayerControl
     public void SetActivePlayerControl(bool isActive)
     {

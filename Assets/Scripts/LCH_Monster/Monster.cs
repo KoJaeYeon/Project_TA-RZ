@@ -77,6 +77,16 @@ public class Monster : MonoBehaviour, IHit, IStatusEffect
         Nav = GetComponent<NavMeshAgent>();
     }
 
+    private void OnDisable()
+    {
+        if(_poisonCoroutine != null)
+        {
+            StopCoroutine(_poisonCoroutine);
+
+            _poisonCoroutine = null;
+        }
+    }
+
     void Start()
     {
         if (Type == MonsterType.Supply)
@@ -264,12 +274,15 @@ public class Monster : MonoBehaviour, IHit, IStatusEffect
 
     public void Poison(float damage, float maxTime, float intervalTime)
     {
-        if(_poisonCoroutine != null)
+        if (gameObject.activeSelf)
         {
-            StopCoroutine(TriggerPoison(damage, maxTime, intervalTime));
-        }
+            if (_poisonCoroutine != null)
+            {
+                StopCoroutine(_poisonCoroutine);
+            }
 
-        _poisonCoroutine = StartCoroutine(TriggerPoison(damage, maxTime, intervalTime));
+            _poisonCoroutine = StartCoroutine(TriggerPoison(damage, maxTime, intervalTime));
+        }
     }
 
     private IEnumerator TriggerPoison(float damage, float maxTime, float intervalTime)
@@ -278,11 +291,6 @@ public class Monster : MonoBehaviour, IHit, IStatusEffect
 
         while(timer < maxTime)
         {
-            Hit(damage, 0, null);
-            //Mon_Common_Hp_Remain -= damage;
-
-            PrintDamageText(damage);
-
             if(Mon_Common_Hp_Remain <= 0)
             {
                 PrintDamageText(0);
@@ -291,6 +299,10 @@ public class Monster : MonoBehaviour, IHit, IStatusEffect
 
                 yield break;
             }
+
+            Hit(damage, 0, null);
+
+            PrintDamageText(damage);
 
             yield return new WaitForSeconds(intervalTime);
 
@@ -316,7 +328,6 @@ public class Monster : MonoBehaviour, IHit, IStatusEffect
         }
 
         Hit(damage, 0, null);
-        //Mon_Common_Hp_Remain -= damage;
 
         PrintDamageText(damage, DamageType.Explosive);
     }
