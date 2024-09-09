@@ -283,7 +283,7 @@ MonoBehaviour:
   AchievementUI: {fileID: 8368182222243579449}
   QuestUI: {fileID: 8322520675501765864}
   MenuUI: {fileID: 1145986346034904335}
-  PlayerBlueChipUI: {fileID: 5273752092680330745}
+  PlayerInfoUI: {fileID: 1018423960834715843}
 --- !u!1 &9001963172581413478
 GameObject:
   m_ObjectHideFlags: 0
@@ -504,24 +504,24 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 661f813bb5047a24d90d29cffe378c4c, type: 3}
---- !u!224 &3231583781769850041 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 2521208470929936520, guid: 661f813bb5047a24d90d29cffe378c4c,
-    type: 3}
-  m_PrefabInstance: {fileID: 1019438512303389745}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &5273752092680330745 stripped
+--- !u!114 &1018423960834715843 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5122251367223468488, guid: 661f813bb5047a24d90d29cffe378c4c,
+  m_CorrespondingSourceObject: {fileID: 2232964981099762, guid: 661f813bb5047a24d90d29cffe378c4c,
     type: 3}
   m_PrefabInstance: {fileID: 1019438512303389745}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8af907ecfc3fab48b00ece5fc3a2e01, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c8cea5ad475bb6418835b54447e2885, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &3231583781769850041 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2521208470929936520, guid: 661f813bb5047a24d90d29cffe378c4c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1019438512303389745}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1354826580201289770
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1374,6 +1374,12 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1831866135823618426, guid: 107da0325be6ea54b8f0d723c304c7ce,
+        type: 3}
+      propertyPath: infoAction
+      value: 
+      objectReference: {fileID: -2112356956896063325, guid: 364fca4c259fd5449893ce7bf8a12352,
+        type: 3}
     - target: {fileID: 3609169704219244471, guid: 107da0325be6ea54b8f0d723c304c7ce,
         type: 3}
       propertyPath: m_Pivot.x

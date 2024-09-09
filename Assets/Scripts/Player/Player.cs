@@ -76,6 +76,7 @@ public class Player : MonoBehaviour, IHit
     public float[] _skillCounption { get; private set; } = new float[4] { 25, 50, 75, 100 };
     public bool IsSkillAnimationEnd { get; set; } = true;
     public int CurrentLevel { get; set; }
+    public bool _playerReady { get; set; }
 
     //블루칩 기능
     #region
@@ -553,9 +554,10 @@ public class Player : MonoBehaviour, IHit
         CurrentAmmo = 0;
         PassiveAtk_Power = _playerStat.PassiveAtk_Power;
 
-
-
         OnPropertyChanged(nameof(CurrentResourceOwn));
+
+        _playerReady = true;
+
         yield break;
     }
 

@@ -20,6 +20,7 @@ public class MenuUI : MonoBehaviour
     }
     public void OnEnableMenuUI()
     {
+        UIEvent.PlayerInfoActiveSelf();
         UIEvent.SetActivePlayerControl(false);
         UIEvent.SetActivePlayerUI(false);
 

@@ -10,6 +10,7 @@ using Zenject;
 public class PlayerUIView : MonoBehaviour
 {
     [SerializeField] InputActionReference cancelAction;
+    [SerializeField] InputActionReference infoAction;
     [SerializeField] Slider HPSlider;
     [SerializeField] Slider SkillSlider;
     [SerializeField] Slider StaminaSlider;
@@ -31,6 +32,7 @@ public class PlayerUIView : MonoBehaviour
             RefreshView();
             cancelAction.action.Enable();
             cancelAction.action.performed += OnCancel;
+            InfoActionOnEnable();
         }
         else
         {
@@ -39,13 +41,30 @@ public class PlayerUIView : MonoBehaviour
     }
     private void OnDisable()
     {
+        InfoActionOnDisable();
         _player.PropertyChanged -= OnPropertyChanged;
         cancelAction.action.performed -= OnCancel;
+    }
+
+    private void InfoActionOnEnable()
+    {
+        infoAction.action.Enable();
+        infoAction.action.performed += OnInfo;
+    }
+
+    private void InfoActionOnDisable()
+    {
+        infoAction.action.performed -= OnInfo;
     }
 
     private void OnCancel(InputAction.CallbackContext context)
     {
         UIEvent.SetActiveMenuUI();
+    }
+
+    private void OnInfo(InputAction.CallbackContext context)
+    {
+        UIEvent.SetActiveInfoUI();
     }
 
     void RefreshView()
