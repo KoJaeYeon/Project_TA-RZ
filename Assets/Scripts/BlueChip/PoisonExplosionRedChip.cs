@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class PoisonExplosionRedChip : BlueChip
 {
-    private Vector3 _forward;
-    private Vector3 _additionalPosition;
-
     public override void InitializeBlueChip(BlueChipSystem blueChipSystem, PC_BlueChip data)
     {
         _blueChipSystem = blueChipSystem;
@@ -17,8 +14,6 @@ public class PoisonExplosionRedChip : BlueChip
         _currentPower = _data.Att_damage;
 
         _targetLayer = LayerMask.GetMask("Monster");
-
-        _additionalPosition = new Vector3(0f, 1f, 0.5f);
     }
     public override void SetEffectObject(GameObject effectObject)
     {
@@ -53,9 +48,7 @@ public class PoisonExplosionRedChip : BlueChip
 
         objectComponent.SetObjectData(_data.Chip_AttackArea, _currentPower, _targetLayer);
 
-        _forward = transform.forward;
-
-        Vector3 objectPosition = transform.position + transform.TransformDirection(_additionalPosition) + _forward;
+        Vector3 objectPosition = transform.position + transform.forward * 7f;
 
         poisonObject.transform.position = objectPosition;
 

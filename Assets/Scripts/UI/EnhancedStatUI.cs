@@ -5,8 +5,16 @@ using UnityEngine;
 
 public class EnhancedStatUI : MonoBehaviour
 {
-    [Header("TextMeshPro")]
-    [SerializeField] private TextMeshProUGUI[] _textArray;
+    [Header("StatNameText")]
+    [SerializeField] private TextMeshProUGUI[] _statNameText;
+    [Header("ValueText")]
+    [SerializeField] private TextMeshProUGUI[] _valueText;
+
+    private void OnEnable()
+    {
+        
+    }
+
 
 
 
