@@ -21,7 +21,8 @@ public class UIEvent
     public AchievementUI AchievementUI { get; private set; }
     public QuestUI QuestUI { get; private set; }
     public MenuUI MenuUI { get; private set; }
-    public PlayerBlueChipUI PlayerBlueChipUI { get; private set; }
+    public PlayerInfoUI PlayerInfo { get; private set; }
+
 
     #region PlayerUIEvent
     public void RegisterPlayerUI(PlayerUIView playerUI)
@@ -209,10 +210,30 @@ public class UIEvent
         MenuUI.OutLobby();
     }
     #endregion
-    #region PlayerBlueChipUI
-    public void RegisterPlayerBlueChipUI(PlayerBlueChipUI playerBluechipUI)
+    #region PlayerInfoUI
+    public void RegisterPlayerInfoUI(PlayerInfoUI playerInfoUI)
     {
-        PlayerBlueChipUI = playerBluechipUI;
+        PlayerInfo = playerInfoUI;
+    }
+
+    public void SetActiveInfoUI()
+    {
+        if (!player._playerReady)
+        {
+            return;
+        }
+
+        PlayerInfo.OnEnableInfoUI();
+    }
+
+    public void PlayerInfoActiveSelf()
+    {
+        GameObject child = PlayerInfo.transform.GetChild(0).gameObject;
+
+        if (child.activeSelf)
+        {
+            PlayerInfo.OnChildObject();
+        }
     }
     #endregion
 
