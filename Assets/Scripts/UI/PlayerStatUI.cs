@@ -19,16 +19,12 @@ public class PlayerStatUI : MonoBehaviour
     [Inject]
     private Player _player;
 
-    private void Start()
-    {
-        RefreshView();
-    }
-
     private void OnEnable()
     {
         if(_player != null)
         {
             _player.PropertyChanged += OnPropertyChangedUI;
+            RefreshView();
         }
     }
 
