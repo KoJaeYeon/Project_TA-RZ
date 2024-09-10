@@ -35,13 +35,13 @@ public class PlayerBlueChipUI : MonoBehaviour
         {
             if (_player.BluechipSkillLevels[i] > 0)
             {
-                AddUI(i);
+                AddUI(i, _player.BluechipSkillLevels[i]);
             }
 
         }
     }
 
-    private void AddUI(int index)
+    private void AddUI(int index, int blueLevel)
     {
         string id = index.ToString();
 
@@ -66,7 +66,16 @@ public class PlayerBlueChipUI : MonoBehaviour
 
             uiComponent.LoadBlueChipUI(blueID.ToString(), _dataManager);
 
+            uiComponent.RequestLevel(blueLevel);
+
             _currentBlueDictionary.Add(blueID, _currentBlueChipUI[index]);
         }
+        else
+        {
+            var component = _currentBlueDictionary[blueID].GetComponent<CurrentBlueChipUI>();
+
+            component.RequestLevel(blueLevel);
+        }
+
     }
 }

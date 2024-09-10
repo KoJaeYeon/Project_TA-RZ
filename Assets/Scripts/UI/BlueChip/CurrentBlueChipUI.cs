@@ -15,9 +15,17 @@ public class CurrentBlueChipUI : MonoBehaviour
     [Header("BlueChipDescription")]
     [SerializeField] private TextMeshProUGUI _description;
 
+    [Header("LevelText")]
+    [SerializeField] private TextMeshProUGUI _level;
+
     public void LoadBlueChipUI(string blueID, DataManager dataManager)
     {
         SetStringData(blueID, dataManager);
+    }
+
+    public void RequestLevel(int level)
+    {
+        _level.text = level.ToString();
     }
 
     private void SetStringData(string blueID, DataManager dataManager)
