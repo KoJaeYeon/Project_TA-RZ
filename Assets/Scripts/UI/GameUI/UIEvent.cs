@@ -9,6 +9,7 @@ public class UIEvent
     [Inject] Player player { get; }
 
     private Action<float> _progressCallBack;
+    private Action<string> _inhancedCallBack;
     private Action<StageType> _stageCallBack;
     private GameUI _gameUI;
     private MapManager _mapManager;
@@ -85,6 +86,23 @@ public class UIEvent
     {
         _progressCallBack -= viewModel.OnResponseChangeCurrentStage;
     }
+    #endregion
+    #region EnhancedUIEvent
+    public void RequestChangeEnhancedUI(string propertyName)
+    {
+        _inhancedCallBack?.Invoke(propertyName);
+    }
+
+    public void RegisterChangeEnhancedUI(EnhancedViewModel viewModel)
+    {
+        _inhancedCallBack += viewModel.OnResponsPropertyValue;
+    }
+
+    public void UnRegisterChangeEnhancedUI(EnhancedViewModel viewModel)
+    {
+        _inhancedCallBack -= viewModel.OnResponsPropertyValue;
+    }
+
     #endregion
     #region BlueChipEvent
     public void RegisterBlueChipUI(BlueChipUI blueChipUI)
