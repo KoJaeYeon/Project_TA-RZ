@@ -102,7 +102,7 @@ public class BossController : MonoBehaviour, IHit
 
     [SerializeField] private Slider _hpBar;
 
-    private readonly int _hashPhase = Animator.StringToHash("");
+    private readonly int _hashResetPhase = Animator.StringToHash("ChangePhase");
     private readonly int _hashAttack = Animator.StringToHash("");
     private readonly int _hashAttackPattern = Animator.StringToHash("");
     private readonly int _hashSkill = Animator.StringToHash("");
@@ -365,6 +365,8 @@ public class BossController : MonoBehaviour, IHit
             item.SetActive(false);
         }
         _secondExplosionDamageBox.SetActive(false);
+
+        _anim.SetTrigger(_hashResetPhase);
 
         phase = BossPhase.Phase2;
         this.gameObject.tag = "Monster";
