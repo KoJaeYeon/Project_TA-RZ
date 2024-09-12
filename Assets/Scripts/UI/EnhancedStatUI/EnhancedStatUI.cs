@@ -124,7 +124,15 @@ public class EnhancedStatUI : MonoBehaviour
 
         _statNameText[(int)enhancedList].text = splitArray[0];
 
-        _valueText[(int)enhancedList].text = " + " + string.Format(splitArray[1], (value - 1) * 100);
+        if ((int)enhancedList <= 3)
+        {
+            _valueText[(int)enhancedList].text = " + " + string.Format(splitArray[1], (value - 1) * 100);
+        }
+        else
+        {
+            _valueText[(int)enhancedList].text = " + " + string.Format(splitArray[1], value);
+        }
+
     }
 
     private void OnDisableEnhancedUI(EnhancedList enhancedList)

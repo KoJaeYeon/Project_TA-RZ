@@ -43,7 +43,7 @@ public class PlayerStatUI : MonoBehaviour
         _powerText.text = _player.CurrentAtk.ToString();
         _moveSpeedText.text = _player.CurrentSpeed.ToString();
         _resourceText.text = _player.CurrentAmmo.ToString();
-        _staminaText.text = _player._playerStat.Stamina_Gain.ToString();
+        _staminaText.text = _player.CurrentStaminaRecovery.ToString();
         _elementText.text = _player.PassiveAtk_Power.ToString();
     }
 

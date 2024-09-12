@@ -180,6 +180,12 @@ public class Player : MonoBehaviour, IHit
             OnPropertyChanged(nameof(CurrentStamina));
         }
     }
+
+    public float CurrentStaminaRecovery
+    {
+        get { return _currentStamina + PlayerPassiveData.AddStaRecovery; }
+    }
+
     public int CurrentAmmo
     {
         get { return _currentAmmo; }
@@ -381,7 +387,7 @@ public class Player : MonoBehaviour, IHit
     {
         if (IsActiveStaminaRecovery == true)
         {
-            CurrentStamina += (_playerStat.Stamina_Gain + PlayerPassiveData.AddStaRecovery) * Time.deltaTime;
+            CurrentStamina += CurrentStaminaRecovery * Time.deltaTime;
         }
     }
 
