@@ -38,6 +38,7 @@ public class Monster_D_WaitDash : Action
     public override void OnEnd()
     {
         Monster.Value.dashUi.DashGauge.fillAmount = 0;
+        Monster.Value.LastAttackTime = Time.time;
     }
 
 

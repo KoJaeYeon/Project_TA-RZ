@@ -62,6 +62,7 @@ public class BTA_Boss_RushAttack : BossAction
             if (collision.gameObject.CompareTag("Player"))
             {
                 _owner.player.Hit(_owner.rushDamage, 0f, _owner.transform);
+                _owner.isPlayerHit = true;
             }
 
             _isRush = false;
