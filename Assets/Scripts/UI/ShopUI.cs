@@ -108,11 +108,16 @@ public class ShopUI : MonoBehaviour
     void RenewPanel(GameObject selectGameObject)
     {
         Reinforce_Name.text = _dataManager.GetString($"{selectGameObject.name}_Text");
+        //G101
         string valueID = _dataManager.GetStringValue($"{selectGameObject.name}_Text_Explain");
+        //공격력+{0%}
         string valueText = _dataManager.GetString($"{selectGameObject.name}_Text_Explain");
 
         var passive_Value = _dataManager.GetData(valueID) as Passive_Value;
         char lastChar = selectGameObject.name[selectGameObject.name.Length - 1];
+
+        int passiveIndex = (valueID[valueID.Length - 1] - '1');
+        int lastidx = _player.SavePlayerData.passiveIndex[passiveIndex];
 
         switch (lastChar)
         {
@@ -124,14 +129,34 @@ public class ShopUI : MonoBehaviour
             case '2':
                 Reinforce_Description.text = string.Format(valueText, passive_Value.Status_UP[1]);
                 Reinforce_Need.text = passive_Value.Status_1to2_NeedResource.ToString();
-                Reinforce_Need_Image.SetActive(true);
-                Reinforce_Need.gameObject.SetActive(true);
+                Debug.Log("err");
+                //해금된 자원 이미지 비활성화
+                if (lastidx < 1)
+                {
+                    Reinforce_Need_Image.SetActive(true);
+                    Reinforce_Need.gameObject.SetActive(true);
+                }
+                else
+                {
+                    Reinforce_Need_Image.SetActive(false);
+                    Reinforce_Need.gameObject.SetActive(false);
+                }
+
                 break;
             case '3':
                 Reinforce_Description.text = string.Format(valueText, passive_Value.Status_UP[2]);
                 Reinforce_Need.text = passive_Value.Status_2to3_NeedResource.ToString();
-                Reinforce_Need_Image.SetActive(true);
-                Reinforce_Need.gameObject.SetActive(true);
+                //해금된 자원 이미지 비활성화
+                if (lastidx < 2)
+                {
+                    Reinforce_Need_Image.SetActive(true);
+                    Reinforce_Need.gameObject.SetActive(true);
+                }
+                else
+                {
+                    Reinforce_Need_Image.SetActive(false);
+                    Reinforce_Need.gameObject.SetActive(false);
+                }
                 break;
         }
     }
@@ -208,6 +233,8 @@ public class ShopUI : MonoBehaviour
             }
             index++;
         }
+
+        RenewPanel(currentGameObject);
 
         //업적 호출
         _player.OnCalled_Achieve_AllUnlockPassive();
