@@ -42,8 +42,8 @@ public class PlayerStatUI : MonoBehaviour
         _healthText.text = _player.HP.ToString();
         _powerText.text = _player.CurrentAtk.ToString();
         _moveSpeedText.text = _player.CurrentSpeed.ToString();
-        _resourceText.text = _player.CurrentAmmo.ToString();
-        _staminaText.text = _player._playerStat.Stamina_Gain.ToString();
+        _resourceText.text = _player.CurrentResourceOwn.ToString();
+        _staminaText.text = _player.CurrentStaminaRecovery.ToString();
         _elementText.text = _player.PassiveAtk_Power.ToString();
     }
 
@@ -60,8 +60,8 @@ public class PlayerStatUI : MonoBehaviour
             case nameof(_player.CurrentSpeed):
                 _moveSpeedText.text = _player.CurrentSpeed.ToString();
                 break;
-            case nameof(_player.CurrentAmmo):
-                _resourceText.text = _player.CurrentAmmo.ToString();
+            case nameof(_player.CurrentResourceOwn):
+                _resourceText.text = _player.CurrentResourceOwn.ToString();
                 break;
         }
     }

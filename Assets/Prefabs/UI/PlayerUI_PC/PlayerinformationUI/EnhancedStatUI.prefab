@@ -104,7 +104,7 @@ MonoBehaviour:
   - {fileID: 1593992994443051883}
   - {fileID: 5190647291137398992}
   - {fileID: 3390517876813755941}
-  - {fileID: 3390517876813755941}
+  - {fileID: 1805398930202908884}
   _enhancedName:
   - UI_EternityReinforce_BAttackP1_Text_Explain
   - UI_EternityReinforce_ElementalAttackP1_Text_Explain
@@ -455,6 +455,18 @@ PrefabInstance:
 --- !u!114 &1593992994443051883 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5317735242973210633, guid: 4108c80c866cb2440bd4a44de2f135bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 6904972783206476642}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1805398930202908884 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5106366107294266294, guid: 4108c80c866cb2440bd4a44de2f135bc,
     type: 3}
   m_PrefabInstance: {fileID: 6904972783206476642}
   m_PrefabAsset: {fileID: 0}

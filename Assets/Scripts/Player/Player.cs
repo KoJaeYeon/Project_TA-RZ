@@ -87,7 +87,7 @@ public class Player : MonoBehaviour, IHit
         get
         {
             float atk_mul = SavePlayerData.PassiveDieMode == 2 ? _attackMultiplier : 1;
-            return _currentAtk * atk_mul;
+            return _currentAtk * atk_mul * PlayerPassiveData.BAttack;
         }
         set
         {
@@ -180,6 +180,12 @@ public class Player : MonoBehaviour, IHit
             OnPropertyChanged(nameof(CurrentStamina));
         }
     }
+
+    public float CurrentStaminaRecovery
+    {
+        get { return _currentStamina + PlayerPassiveData.AddStaRecovery; }
+    }
+
     public int CurrentAmmo
     {
         get { return _currentAmmo; }
@@ -232,7 +238,7 @@ public class Player : MonoBehaviour, IHit
 
     public float PassiveAtk_Power
     {
-        get { return _passiveAtk_Power; }
+        get { return _passiveAtk_Power * PlayerPassiveData.EAttack; }
         set
         {
             if(_passiveAtk_Power == value)
@@ -381,7 +387,7 @@ public class Player : MonoBehaviour, IHit
     {
         if (IsActiveStaminaRecovery == true)
         {
-            CurrentStamina += (_playerStat.Stamina_Gain + PlayerPassiveData.AddStaRecovery) * Time.deltaTime;
+            CurrentStamina += CurrentStaminaRecovery * Time.deltaTime;
         }
     }
 
