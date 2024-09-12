@@ -28,7 +28,6 @@ public class PlayerInteractionTrigger : MonoBehaviour
         }
         else if(iInter == _player.Interactable)
         {
-            _player.Interactable = null;
             _UIEvent.DeActiveInteractUI();
         }
     }

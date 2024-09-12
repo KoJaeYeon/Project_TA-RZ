@@ -43,6 +43,7 @@ public class BlueChipUI : MonoBehaviour
     public void DeActiveBlueChipUI()
     {
         UIEvent.DeActiveBlueChipUI();
+        chest.SetActivePoratal();
     }
 
     public void QuestCleared()

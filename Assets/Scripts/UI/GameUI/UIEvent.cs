@@ -113,7 +113,7 @@ public class UIEvent
     public void ActiveBlueChipUI(Chest chest)
     {
         BlueChipUI.gameObject.SetActive(true);
-        InteractUI.gameObject.SetActive(false);
+        DeActiveInteractUI();
         BlueChipUI.chest = chest;
         if (QuestUI.isSuccess == true)
         {
@@ -124,8 +124,7 @@ public class UIEvent
 
     public void DeActiveBlueChipUI()
     {
-        BlueChipUI.gameObject.SetActive(false);
-        InteractUI.gameObject.SetActive(true);
+        BlueChipUI.gameObject.SetActive(false);        
     }
     #endregion
     #region ShopEvent
@@ -183,6 +182,7 @@ public class UIEvent
     public void DeActiveInteractUI()
     {
         InteractUI.gameObject.SetActive(false);
+        player.Interactable = null;
     }
     #endregion
     #region AchievementEvent
