@@ -368,6 +368,8 @@ public class BossController : MonoBehaviour, IHit
 
         _anim.SetTrigger(_hashResetPhase);
 
+        _boss_Particle.OnGimmickCancle();
+
         phase = BossPhase.Phase2;
         this.gameObject.tag = "Monster";
     }
