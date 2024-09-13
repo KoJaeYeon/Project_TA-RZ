@@ -35,6 +35,10 @@ public class Boss_ParticleManager : MonoBehaviour
         particle_GimmickExplosion.transform.position = tr.position;
         particle_GimmickExplosion.Play();
     }
+    public void OnGimmickCancle()
+    {
+        particle_Gimmick.Stop();
+    }
 
     public void OnRootAttack(Transform tr)
     { 
