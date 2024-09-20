@@ -457,6 +457,7 @@ MonoBehaviour:
     _resourceB_Ratio: 0
     _resourceC_Ratio: 0
     _resourceCountArray: 
+  _chest: {fileID: 0}
   _portal: {fileID: 7619135227284797805}
 --- !u!114 &746787071958692170
 MonoBehaviour:
@@ -478,6 +479,8 @@ MonoBehaviour:
   _chargeMonster: {fileID: 9120751004214810020, guid: 355fa6a2bad9b6c4da76b9e2bb909391,
     type: 3}
   _longRangeMonster: {fileID: 8860565670137976791, guid: e23a316ec0c2a0647ba4804afcdbb378,
+    type: 3}
+  _eliteMonster: {fileID: 8724858791255979016, guid: 7e92ad7976cdfe84885ff27cc6b8bab3,
     type: 3}
   _itemCount: 50
   _items:
