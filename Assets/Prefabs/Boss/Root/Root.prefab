@@ -888,8 +888,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 1.7.8
-  gizmoViewMode: 2
-  showBehaviorDesignerGizmo: 1
+  gizmoViewMode: 0
+  showBehaviorDesignerGizmo: 0
 --- !u!54 &3363098993795755062
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -928,7 +928,7 @@ PrefabInstance:
     - target: {fileID: 3109495033074282699, guid: ce41cb54e9f58a54dba1c43cb3082e3f,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 1278
+      value: 1341
       objectReference: {fileID: 0}
     - target: {fileID: 6331453426291835613, guid: ce41cb54e9f58a54dba1c43cb3082e3f,
         type: 3}
@@ -1018,7 +1018,7 @@ PrefabInstance:
     - target: {fileID: 2973343856186818796, guid: ea32a380d0dab0a44b00fad248d6d7d4,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 1278
+      value: 1341
       objectReference: {fileID: 0}
     - target: {fileID: 4033358507054554130, guid: ea32a380d0dab0a44b00fad248d6d7d4,
         type: 3}

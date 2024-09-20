@@ -31,6 +31,7 @@ public class DamageText : MonoBehaviour
 
     public void OnSetData(float damage, DamageType damageType, Transform targetTrans)
     {
+        if (targetTrans.CompareTag("BossPhase1")) return;
         text.text = ((int)damage).ToString();
         switch(damageType)
         {
