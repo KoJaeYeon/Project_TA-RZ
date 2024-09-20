@@ -99,6 +99,7 @@ public class BossController : MonoBehaviour, IHit
     private Transform _playerTr;
 
     public bool isGimmick;
+    public bool isPlayerHit = false;
 
     [SerializeField] private Slider _hpBar;
 

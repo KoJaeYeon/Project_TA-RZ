@@ -137,7 +137,7 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
         _maxTime = 6f;
 
-        _player.drainSystem.OnSetDrainArea(0.7f);
+        _player.drainSystem.OnSetDrainArea(0.7f); 
 
     }
 
@@ -151,10 +151,12 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
         _player.cameraRoot.StartCameraMovement();
 
-        if (_player.IsPlayerFourthAttackDrainAvailable)
-        {
-            _player.StartCoroutine(ChargeDrain());
-        }
+        _player.BlueChipSystem.UseBlueChip(_player.transform, AttackType.fourthAttack, true);
+
+        //if (_player.IsPlayerFourthAttackDrainAvailable) 
+        //{
+        //    _player.StartCoroutine(ChargeDrain());
+        //}
 
         float _elapsedTime = Time.time;
 
@@ -191,6 +193,8 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
                 _isCharge = false;
 
+                _player.BlueChipSystem.UseBlueChip(_player.transform, AttackType.fourthAttack, false);
+
                 _player.cameraRoot.EndCameraMovement();
 
                 _animator.speed = 1f;
@@ -207,6 +211,8 @@ public class PlayerFourthComboAttack : PlayerComboAttack
                 yield break;
             }
         }
+
+        _player.BlueChipSystem.UseBlueChip(_player.transform, AttackType.fourthAttack, false);
 
         _player.cameraRoot.EndCameraMovement();
 
@@ -288,5 +294,8 @@ public class PlayerFourthComboAttack : PlayerComboAttack
         }
 
         _player.CurrentAmmo -= _player.IsSkillAcitve[1] || _isLevel4 ? 0 : _index + 1;
+
+        //최초 4타 업적
+        _player.OnCalled_Achieve_Charged();
     }
 }

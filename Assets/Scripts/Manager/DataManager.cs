@@ -1,4 +1,5 @@
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ public class DataManager : MonoBehaviour
 {
     Dictionary<string, Data> _dataDictionary = new Dictionary<string, Data>();
     Dictionary<string, string> _stringDictionary = new Dictionary<string, string>();
+    Dictionary<string, string> _valueIDDictionary = new Dictionary<string, string>();
 
     public void AddDataToDataDictionary(string idStr, Data stat)
     {
@@ -18,6 +20,14 @@ public class DataManager : MonoBehaviour
     public void AddStringToStringDictionary(string idStr, string str)
     {
         if (!_stringDictionary.TryAdd(idStr, str))
+        {
+            Debug.LogError($"ID : {idStr}가 스트링 딕셔너리에 추가 실패했습니다.");
+        }
+    }
+
+    public void AddStringTovalueIDDictionary(string idStr, string str)
+    {
+        if (!_valueIDDictionary.TryAdd(idStr, str))
         {
             Debug.LogError($"ID : {idStr}가 스트링 딕셔너리에 추가 실패했습니다.");
         }
@@ -84,6 +94,19 @@ public class DataManager : MonoBehaviour
         }
     }
 
+    public string GetStringValue(string idStr)
+    {
+        if (_valueIDDictionary.TryGetValue(idStr, out string str))
+        {
+            return str;
+        }
+        else
+        {
+            Debug.LogWarning($"{idStr}을 딕셔너리에서 받아오는데 실패했습니다.");
+            return string.Empty;
+        }
+    }
+
     /// <summary>
     /// Json 데이터를 딕셔너리에 저장하기 위한 함수
     /// </summary>
@@ -96,23 +119,27 @@ public class DataManager : MonoBehaviour
             case "_PC_Stat_URL":
                 Process_PC_Stat_Data(data);
                 break;
-            case "_PC_Level_URL":
-                Process_PC_Level_Data(data);
-                break;
-            case "_PC_Skill_URL":
-                Process_PC_Skill_Data(data);
+            case "_PC_Melee_URL":
+                Process_PC_Melee_Data(data);
                 break;
             case "_PC_Attack_URL":
                 Process_PC_Atatck_Data(data);
                 break;
-            case "_PC_Melee_URL":
-                Process_PC_Melee_Data(data);
+            case "_PC_Skill_URL":
+                Process_PC_Skill_Data(data);
                 break;
+            case "_PC_Level_URL":
+                Process_PC_Level_Data(data);
+                break;
+
             case "_Monster_Stat_URL":
                 Process_Monster_Stat_Data(data);
                 break;
             case "_Monster_Ability_URL":
                 Process_Monster_Ability_Data(data);
+                break;
+            case "_Map_Monster_Mix_URL":
+                Process_Monster_Mix_Data(data);
                 break;
             case "_Boss_Skill_URL":
                 Process_Boss_Skill_Data(data);
@@ -123,15 +150,31 @@ public class DataManager : MonoBehaviour
             case "_Map_Stage_Level_URL":
                 Process_Map_Stage_Level_Data(data);
                 break;
-            case "_Map_Monster_Mix_URL":
-                Process_Monster_Mix_Data(data);
-                break;
+
             case "_Map_Resource_URL":
                 Process_Map_Resource_Data(data);
+                break;
+            case "_Monster_Elite_URL":
+                Process_Monster_Elite_Data(data);
                 break;
             case "_String_Data_URL":
                 Process_String_Data(data);
                 break;
+            case "_PC_BluechipData_URL":
+                Process_BlueChip_Data(data);
+                break;
+            case "_Passive_Value_URL":
+                Process_Passive_Value_Data(data);
+                break;
+            case "_Quest_URL":
+                Process_Quest_Value_Data(data);
+                break;
+            case "_String_Value_URL":
+                Process_String_Value_Data(data);
+                break;
+            case "_Passive2_Value_URL":
+                Process_Passive2_Value_Data(data);
+                    break;
             default:
                 Debug.LogError($"Unknown URL name: {urlName}");
                 break;
@@ -360,16 +403,123 @@ public class DataManager : MonoBehaviour
         }
     }
 
+    private void Process_Monster_Elite_Data(string data)
+    {
+        JArray jsonArray = JArray.Parse(data);
+
+        foreach (var item in jsonArray)
+        {
+            string idStr = item[nameof(Monster_Elite.ID)].ToString();
+            float value = ParseFloat(item[nameof(Monster_Elite.Value)]);
+
+            Monster_Elite mapStat = new Monster_Elite(idStr, value);
+            AddDataToDataDictionary(idStr, mapStat);
+        }
+    }
+
     private void Process_String_Data(string data)
     {
         JArray jsonArray = JArray.Parse(data);
 
         foreach (var item in jsonArray)
         {
-            string idStr = item[nameof(Map_Stat.ID)].ToString();
+            string idStr = item["ID"].ToString();
             string str = item["Korean"].ToString();
+            string strValue = item["ValueID"].ToString();
 
             AddStringToStringDictionary(idStr, str);
+            if(string.IsNullOrWhiteSpace(strValue) == false)
+            {
+                AddStringTovalueIDDictionary(idStr, strValue);
+            }
+        }
+    }
+
+    private void Process_Passive_Value_Data(string data)
+    {
+        JArray jsonArray = JArray.Parse(data);
+
+        foreach (var item in jsonArray)
+        {
+            string idStr = item[nameof(Passive_Value.ID)].ToString();
+            float status_UP_1 = ParseFloat(item["Status_UP_1"]);
+            float status_UP_2 = ParseFloat(item["Status_UP_2"]);
+            float status_UP_3 = ParseFloat(item["Status_UP_3"]);
+            int status_1to2_NeedResource = ParseInt(item[nameof(Passive_Value.Status_1to2_NeedResource)]);
+            int status_2to3_NeedResource = ParseInt(item[nameof(Passive_Value.Status_2to3_NeedResource)]);
+
+            Passive_Value passiveValue = new Passive_Value(idStr, new List<float> { status_UP_1, status_UP_2, status_UP_3 }, status_1to2_NeedResource, status_2to3_NeedResource);
+            AddDataToDataDictionary(idStr, passiveValue);
+        }
+    }
+
+    private void Process_Quest_Value_Data(string data)
+    {
+        JArray jsonArray = JArray.Parse(data);
+
+        foreach (var item in jsonArray)
+        {
+            string idStr = item["ID"].ToString();
+            string strValue = item["Probability"].ToString();
+
+            AddStringToStringDictionary(idStr, strValue);
+            if (string.IsNullOrWhiteSpace(strValue) == false)
+            {
+                AddStringTovalueIDDictionary(idStr, strValue);
+            }
+        }
+    }
+
+    private void Process_String_Value_Data(string data)
+    {
+        JArray jsonArray = JArray.Parse(data);
+
+        foreach (var item in jsonArray)
+        {
+            string idStr = item["ID"].ToString();
+            string strValue = item["Sdt_Variable"].ToString();
+
+            AddStringToStringDictionary(idStr, strValue);
+            if (string.IsNullOrWhiteSpace(strValue) == false)
+            {
+                AddStringTovalueIDDictionary(idStr, strValue);
+            }
+        }
+    }
+
+    private void Process_BlueChip_Data(string data)
+    {
+        JArray jsonArray = JArray.Parse(data);
+
+        foreach (var item in jsonArray)
+        {
+            string idStr = item[nameof(PC_BlueChip.ID)].ToString();
+            string path = item[nameof(PC_BlueChip.Path)].ToString();
+            string stringPath = item[nameof(PC_BlueChip.StringPath)].ToString();
+            float att_damage = ParseFloat(item[nameof(PC_BlueChip.Att_damage)]);
+            float att_damage_Lvup = ParseFloat(item[nameof(PC_BlueChip.Att_Damage_Lvup)]);
+            float chip_attackArea = ParseFloat(item[nameof(PC_BlueChip.Chip_AttackArea)]);
+            float interval_Time = ParseFloat(item[nameof(PC_BlueChip.Interval_time)]);
+            float chip_Lifetime = ParseFloat(item[nameof(PC_BlueChip.Chip_Lifetime)]);
+            List<float> valueList = parseList<float>(item[nameof(PC_BlueChip.ValueList)]);
+
+            PC_BlueChip bluechip = new PC_BlueChip(idStr, path, stringPath, att_damage, att_damage_Lvup, chip_attackArea, interval_Time, chip_Lifetime, valueList);
+            AddDataToDataDictionary(idStr, bluechip);
+        }
+    }
+
+    private void Process_Passive2_Value_Data(string data)
+    {
+        JArray jsonArray = JArray.Parse(data);
+
+        foreach (var item in jsonArray)
+        {
+            string idStr = item[nameof(Passive2_Value.ID)].ToString();
+            int purchase_Fee = ParseInt(item[nameof(Passive2_Value.Purchase_Fee)]);
+            List<float> valueList = parseList<float>(item[nameof(Passive2_Value.Value)]);
+
+            Passive2_Value passive2Value = new Passive2_Value(idStr, purchase_Fee, valueList);
+            AddDataToDataDictionary(idStr, passive2Value);
         }
     }
     #endregion

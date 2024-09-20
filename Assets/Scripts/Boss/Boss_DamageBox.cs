@@ -54,6 +54,7 @@ public class Boss_DamageBox : MonoBehaviour
                     break;
             }
             Debug.Log(this.gameObject.name + other.gameObject.name);
+            _boss.isPlayerHit = true;
         }
     }
 }

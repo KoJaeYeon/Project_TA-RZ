@@ -18,6 +18,7 @@ public class Boss_ExplosionDamageBox : MonoBehaviour
             {
                 Debug.Log($"데미박스디버그 {this.gameObject.name + other.gameObject.name}");
                 _player.Hit(_boss.explosionDamage, 1f, _boss.transform);
+                _boss.isPlayerHit = true;
             }
         }
     }

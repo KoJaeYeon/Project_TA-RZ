@@ -134,7 +134,6 @@ public class GameUI : MonoBehaviour
 
     private IEnumerator ChoiceStage()
     {
-     
         if (_currentProgressvalue <= 0.99f)
         {
             _currentUI = RandomUI();

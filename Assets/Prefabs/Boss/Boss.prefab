@@ -3823,6 +3823,7 @@ MonoBehaviour:
   _smashMark: {fileID: 0}
   _smashDamageBox: {fileID: 0}
   isGimmick: 0
+  isPlayerHit: 0
   _hpBar: {fileID: 0}
 --- !u!114 &7647888755775488580
 MonoBehaviour:
