@@ -14,6 +14,7 @@ public class PoisonObject : MonoBehaviour
 {
     [Inject]
     private PoolManager _poolManager;
+    private ParticleSystem _particleSystem;
     private event Action<float> _explosiveAction;
     private event Action<float, float, float> _sustainedAction;
 
@@ -22,7 +23,8 @@ public class PoisonObject : MonoBehaviour
     private float _radius;
     private float _startTime;
     private float _currentDamage;
-    private float _lastTime;
+    private float _lastTime;    
+    private float _particleTime;
 
     private LayerMask _targetLayer;
     private bool _start;
@@ -34,6 +36,8 @@ public class PoisonObject : MonoBehaviour
         _currentDamage = damage;
         _intervalTime = intervalTime;
         _targetLayer = targetLayer;
+
+        _particleSystem = gameObject.GetComponent<ParticleSystem>();
     }
 
     public void StartPoison(PoisonAttackType attackType)
@@ -63,9 +67,11 @@ public class PoisonObject : MonoBehaviour
 
     private void Update()
     {
-        if (_start)
+        _particleTime = _particleSystem.time;
+
+        if (_start && _particleTime >= 1.0f)
         {
-            if (Time.time - _lastTime >= 0.5)
+            if (Time.time - _lastTime >= 0.5f)
             {
                 OnUpdatePoison();
 
@@ -133,7 +139,7 @@ public class PoisonObject : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.green;
+        Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _radius);
     }
 

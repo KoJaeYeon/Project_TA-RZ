@@ -16,18 +16,22 @@ public class ExplosionBlueChip : BlueChip
         _currentPower = _data.Att_damage;
         _targetLayer = LayerMask.GetMask("Monster");
 
-        _exploPosition = new Vector3(0f, 1f, 0.5f);
+        _exploPosition = new Vector3(0f, 1f, 1f);
     }
 
     public override void SetEffectObject(GameObject effectObject)
     {
         _effectObject = effectObject;
+
+        _poolManager.CreatePool(_effectObject);
     }
 
     public override void ResetSystem()
     {
         _currentLevel = 0;
         _currentPower = 0f;
+
+        _poolManager.AllDestroyObject(_effectObject);
     }
 
     public override void LevelUpBlueChip()
@@ -56,6 +60,8 @@ public class ExplosionBlueChip : BlueChip
 
         Vector3 explosionPosition = transform.position + transform.TransformDirection(_exploPosition) + _forward;
 
+        OnExplosionParticle(explosionPosition);
+
         Collider[] colliders = Physics.OverlapSphere(explosionPosition, _data.Chip_AttackArea, _targetLayer);
 
         foreach(var target in  colliders)
@@ -71,6 +77,27 @@ public class ExplosionBlueChip : BlueChip
         _explosionAction?.Invoke(currentPassivePower);
 
         _explosionAction = null;
+    }
+
+    private void OnExplosionParticle(Vector3 explosionPosition)
+    {
+        GameObject explosionObject = _poolManager.DequeueObject(_effectObject);
+
+        explosionObject.transform.position = explosionPosition;
+
+        ParticleSystem system = explosionObject.GetComponent<ParticleSystem>();
+
+        _blueChipSystem.StartCoroutine(EndParticle(system, explosionObject));
+    }
+
+    private IEnumerator EndParticle(ParticleSystem system, GameObject particle)
+    {
+        yield return new WaitUntil(() =>
+        {
+            return system.time >= system.main.duration;
+        });
+
+        _poolManager.EnqueueObject(particle);
     }
 
 }
