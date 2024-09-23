@@ -4,6 +4,7 @@ using UnityEngine;
 using Zenject;
 using UnityEngine.UI;
 using System.ComponentModel;
+using UnityEngine.InputSystem;
 
 public class GameUI : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class GameUI : MonoBehaviour
     [Header("ProgressUI")]
     [SerializeField] private GameObject _progressUI;
     [SerializeField] private Image _progressImage;
+
+    [SerializeField] InputActionReference cancelAction;
 
     [Inject] private UIEvent _uiEvent;    
     [Inject]
@@ -58,10 +61,14 @@ public class GameUI : MonoBehaviour
 
         ActiveChoiceUI();
         _uiEvent.SetActivePlayerControl(false);
+        cancelAction.action.Enable();
+        cancelAction.action.performed += OnCancel;
     }
 
     private void OnDisable()
     {
+        cancelAction.action.performed -= OnCancel;
+        cancelAction.action.Disable();
         _blockingImage.SetActive(false);
     }
 
@@ -115,6 +122,13 @@ public class GameUI : MonoBehaviour
 
     #endregion
 
+    private void OnCancel(InputAction.CallbackContext context)
+    {
+        Debug.Log("cancel");
+        gameObject.SetActive(false);
+        _uiEvent.SetActivePlayerControl(true);
+    }
+
     private void ChangeProgressBar(object sender, PropertyChangedEventArgs args)
     {
         if (args.PropertyName == nameof(_progressView.CurrentProgress))
@@ -134,13 +148,17 @@ public class GameUI : MonoBehaviour
 
     private IEnumerator ChoiceStage()
     {
-        if (_currentProgressvalue <= 0.99f)
+        //활성화된 선택지가 없는 경우
+        if (_currentUI == null)
         {
-            _currentUI = RandomUI();
-        }
-        else
-        {
-            _currentUI = BossUI();
+            if (_currentProgressvalue <= 0.99f)
+            {
+                _currentUI = RandomUI();
+            }
+            else
+            {
+                _currentUI = BossUI();
+            }
         }
 
         ActiveUI(true);

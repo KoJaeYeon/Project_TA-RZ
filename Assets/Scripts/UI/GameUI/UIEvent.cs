@@ -11,8 +11,8 @@ public class UIEvent
     private Action<float> _progressCallBack;
     private Action<string> _inhancedCallBack;
     private Action<StageType> _stageCallBack;
-    private GameUI _gameUI;
     private MapManager _mapManager;
+    public GameUI _gameUI { get; private set; }
     public PlayerUIView PlayerUIView { get; private set; }
     public LoadingUI _loadUI { get; private set; }
     public BlueChipUI BlueChipUI { get; private set; }
