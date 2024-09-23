@@ -153,11 +153,6 @@ public class PlayerFourthComboAttack : PlayerComboAttack
 
         _player.BlueChipSystem.UseBlueChip(_player.transform, AttackType.fourthAttack, true);
 
-        //if (_player.IsPlayerFourthAttackDrainAvailable) 
-        //{
-        //    _player.StartCoroutine(ChargeDrain());
-        //}
-
         float _elapsedTime = Time.time;
 
         while (_isCharge)

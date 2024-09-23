@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 using Zenject;
+using ModestTree;
 
 public class DamageText : MonoBehaviour
 {
@@ -33,6 +34,9 @@ public class DamageText : MonoBehaviour
     {
         if (targetTrans.CompareTag("BossPhase1")) return;
         text.text = ((int)damage).ToString();
+
+        int randomPosX = Random.Range(-2, 3);
+
         switch(damageType)
         {
             case DamageType.Normal:
@@ -41,11 +45,12 @@ public class DamageText : MonoBehaviour
                 break;
             case DamageType.Poison:
                 alpha = new Color(0, 176 / 255f, 80 / 255f);
-                transform.position = targetTrans.position + targetTrans.up;
+                transform.position = targetTrans.position + new Vector3(randomPosX, 0, 0) + targetTrans.up;
+      
                 break;
             case DamageType.Explosive:
                 alpha = Color.red;
-                transform.position = targetTrans.position + targetTrans.up;
+                transform.position = targetTrans.position + new Vector3(randomPosX, 0, 0) + targetTrans.up;
                 break;
         }
         text.color = alpha;

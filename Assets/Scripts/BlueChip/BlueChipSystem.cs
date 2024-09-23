@@ -14,8 +14,13 @@ public class BlueChipSystem : MonoBehaviour
     private DiContainer _diContainer;
     #endregion
 
-    [Header("Object")]
+    [Header("ParticlePrefab")]
+    [Header("Poison")]
     [SerializeField] private GameObject _poisonObject;
+    [Header("Explosion")]
+    [SerializeField] private GameObject _exploObject;
+    [Header("PoisonExplosion")]
+    [SerializeField] private GameObject _poisonExObject;
 
     private Dictionary<string, PC_BlueChip> _dataDictionary;
     private Dictionary<string, IBlueChipSystem> _currentBlueChipDictionary = new Dictionary<string, IBlueChipSystem>();
@@ -81,15 +86,17 @@ public class BlueChipSystem : MonoBehaviour
                     ExplosionBlueChip explosionBlueChip = _diContainer.Instantiate<ExplosionBlueChip>();
                     explosionBlueChip.InitializeBlueChip(this, GetBlueChipData(blueID));
                     RegisterBlueChip(explosionBlueChip, blueID);
+                    explosionBlueChip.SetEffectObject(_exploObject);
                     Debug.Log("Explosion 기능을 얻었습니다.");
                     break;
                 case "G203":
                     UnRegisterBlueChip("G201");
                     UnRegisterBlueChip("G202");
+
                     PoisonExplosionRedChip poisonExplosionRedChip = _diContainer.Instantiate<PoisonExplosionRedChip>();
                     poisonExplosionRedChip.InitializeBlueChip(this, GetBlueChipData(blueID));
                     RegisterBlueChip(poisonExplosionRedChip, blueID);
-                    poisonExplosionRedChip.SetEffectObject(_poisonObject);
+                    poisonExplosionRedChip.SetEffectObject(_poisonExObject);
                     Debug.Log("PoisonExplosion기능을 얻었습니다.");
                     break;
                 case "G204":
