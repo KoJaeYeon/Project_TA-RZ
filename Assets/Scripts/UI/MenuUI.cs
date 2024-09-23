@@ -50,6 +50,10 @@ public class MenuUI : MonoBehaviour
 
     private void OnCancel(InputAction.CallbackContext context)
     {
+        if(UIEvent._gameUI.gameObject.activeSelf)
+        {
+            return;
+        }
         Debug.Log("cancel");
         if(MenuUI_Child[index].activeSelf)
         {
