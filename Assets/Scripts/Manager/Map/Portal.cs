@@ -18,8 +18,6 @@ public class Portal : MonoBehaviour
             {
                 _uiEvent.OnGameUI();
             }
-            
-            this.gameObject.SetActive(false);
         }
     }
 }

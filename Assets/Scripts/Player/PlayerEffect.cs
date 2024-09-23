@@ -105,7 +105,7 @@ public class PlayerEffect : MonoBehaviour
 
         secondEffect.transform.localPosition = Vector3.zero;
         secondEffect.transform.localRotation = Quaternion.identity;
-        secondEffect.transform.localScale = Vector3.one;
+        secondEffect.transform.localScale = Vector3.one * 1.5f;
         secondEffect.transform.localScale *= _player.CurrentLevel != 4 ? 1 : 2;
         secondEffect.transform.parent = null;
         effectParticle.Play();

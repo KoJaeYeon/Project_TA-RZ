@@ -1126,6 +1126,8 @@ MonoBehaviour:
   - 1
   knockback_Horizontal_Distance: 1
   knockback_Vertical_Distance: 1
+  rotate_Camera_Speed: 1
+  rotate_Camera_Max: 15
 --- !u!114 &1707387346318436322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1262,7 +1264,7 @@ MonoBehaviour:
   _effectPosition: {fileID: 1096371256798846863}
   _attackEffectArray:
   - {fileID: 1893033738566276, guid: 3e04efdf8ee665d48962b33b06e8e3d3, type: 3}
-  - {fileID: 1893033738566276, guid: 3e04efdf8ee665d48962b33b06e8e3d3, type: 3}
+  - {fileID: 1893033738566276, guid: c9f5e8ea97672d847ac5b4b9615d5abf, type: 3}
   - {fileID: 1130446560849736, guid: c4d564b5d4682ad46b8621f0fa6f40d9, type: 3}
   - {fileID: 111730, guid: 24c9c019834754547bed7a5da7659696, type: 3}
   - {fileID: 3946140628572098603, guid: 230d5948f7f21664b8286d5fc398b986, type: 3}

@@ -85,9 +85,20 @@ public class Stage : MonoBehaviour
 
         ClearStageObject();
 
-        Transform startTransform = _partitions[0]._centerPosition;
+        if(_level == GameLevel.Boss)
+        {
+            Transform startTransform = _partitions[3]._centerPosition;
 
-        _player.transform.position = startTransform.position + new Vector3(-8,0,-8);
+            _player.transform.position = startTransform.position;
+        }
+        else
+        {
+            Transform startTransform = _partitions[0]._centerPosition;
+
+            _player.transform.position = startTransform.position + new Vector3(-8, 0, -8);
+        }
+
+
 
         StartCoroutine(SpawnObject());
     }
