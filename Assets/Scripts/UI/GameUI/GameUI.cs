@@ -169,6 +169,8 @@ public class GameUI : MonoBehaviour
 
         _uiEvent.RequestChangeStage(_currentStage);
 
+        _currentUI = null;
+
         this.gameObject.SetActive(false);
     }
 
@@ -176,9 +178,7 @@ public class GameUI : MonoBehaviour
     {
         _progressUI.SetActive(active);
 
-        _currentUI.SetActive(active);
-
-        _currentUI = null;
+        _currentUI.SetActive(active);        
     }
 
     private GameObject BossUI()
