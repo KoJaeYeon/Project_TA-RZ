@@ -14,6 +14,7 @@ public enum BossPhase
 public class BossController : MonoBehaviour, IHit
 {
     private GameObject _bossPrefab;
+    [SerializeField] GameObject BossChest;
     [SerializeField] Boss_MarkManager markManager;
     [SerializeField] Boss_DamageBoxManager damageBoxManager;
     [Inject] DataManager dataManager { get; }
@@ -169,6 +170,7 @@ public class BossController : MonoBehaviour, IHit
         _smashDamageBox.SetActive(false);
 
         _bt.SetVariableValue("BossPrefab", _bossPrefab);
+        _bt.SetVariableValue("BossChest", BossChest);
 
         _bt.SetVariableValue("Phase1_Per", _phaseOnePer);
         _bt.SetVariableValue("Phase2_Per", _phaseTwoPer);

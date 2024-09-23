@@ -183,7 +183,7 @@ public class Player : MonoBehaviour, IHit
 
     public float CurrentStaminaRecovery
     {
-        get { return _currentStamina + PlayerPassiveData.AddStaRecovery; }
+        get { return _playerStat.Stamina_Gain + PlayerPassiveData.AddStaRecovery; }
     }
 
     public int CurrentAmmo

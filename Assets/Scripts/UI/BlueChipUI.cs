@@ -57,8 +57,17 @@ public class BlueChipUI : MonoBehaviour
         {
             int reward;
 
-            reward = Random.Range(0, 2);
+            //보스 스테이지 보상 설정
+            if (chest.MapType == MapType.Boss)
+            {
+                reward = 0;
+            }
+            else
+            {
+                reward = Random.Range(0, 2);
+            }
 
+            //랜덤 보상 설정
             if (reward == 0)
             {
                 RewardBlueChipUI(reward);
