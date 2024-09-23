@@ -1,7 +1,8 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Zenject;
 
-public class Portal : MonoBehaviour
+public class Portal_Boss : MonoBehaviour
 {
     #region InJect
     [Inject] private UIEvent _uiEvent;
@@ -15,7 +16,7 @@ public class Portal : MonoBehaviour
 
             if(player != null)
             {
-                _uiEvent.OnGameUI();
+                SceneManager.LoadScene(1);
             }
             
             this.gameObject.SetActive(false);

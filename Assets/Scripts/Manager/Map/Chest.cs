@@ -5,6 +5,8 @@ public class Chest : MonoBehaviour, IInteractable
 {
     [Inject] UIEvent UIEvent;
     [SerializeField] GameObject Portal;
+    [SerializeField] MapType _mapType;
+    public MapType MapType { get { return _mapType; } }
     public void Interact()
     {
         UIEvent.ActiveBlueChipUI(this);

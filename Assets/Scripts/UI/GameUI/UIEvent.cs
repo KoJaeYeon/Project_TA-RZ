@@ -112,9 +112,9 @@ public class UIEvent
 
     public void ActiveBlueChipUI(Chest chest)
     {
+        BlueChipUI.chest = chest;
         BlueChipUI.gameObject.SetActive(true);
         DeActiveInteractUI();
-        BlueChipUI.chest = chest;
         if (QuestUI.isSuccess == true)
         {
             BlueChipUI.QuestCleared();
