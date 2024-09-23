@@ -24,6 +24,7 @@ public class Boss_SwingDamageBox : MonoBehaviour
             if(angle <= _angle) 
             {
                 _player.Hit(_boss.explosionDamage, 1f, _boss.transform);
+                _boss.isPlayerHit = true;
             }
         }
     }

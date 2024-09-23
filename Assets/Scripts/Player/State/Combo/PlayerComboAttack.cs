@@ -1,10 +1,12 @@
+using System;
 using System.Collections;
 using UnityEngine;
+
 
 public class PlayerComboAttack : PlayerState
 {
     public PlayerComboAttack(Player player) : base(player) { }
-
+    
     protected PC_Attack _comboData;
     protected float _currentAtkMultiplier;
     protected int _currentGetSkillGauge;
@@ -125,4 +127,5 @@ public class PlayerComboAttack : PlayerState
             _state.ChangeState(State.Skill);
         }
     }
+
 }

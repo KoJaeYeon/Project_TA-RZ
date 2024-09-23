@@ -54,6 +54,8 @@ public class PlayerThirdComboAttack : PlayerComboAttack
     {
         _enemyLayer = LayerMask.GetMask("Monster");
 
+        _player.BlueChipSystem.UseBlueChip(_player.transform, AttackType.thirdAttack);
+
         Collider[] colliders = Physics.OverlapSphere(_player.transform.position, _range, _enemyLayer);
 
         bool isHit = false;

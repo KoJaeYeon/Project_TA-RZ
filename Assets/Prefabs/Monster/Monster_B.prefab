@@ -6751,6 +6751,7 @@ MonoBehaviour:
   Knockback_Horizontal_Distance: 4
   Knockback_Vertical_Distance: 2
   IsFirstAtk: 0
+  LastAttackTime: 0
 --- !u!195 &6643401399047252378
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6963,7 +6964,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2036722526376663656, guid: d925f291981decc479b39b84103d2a8e, type: 3}
+    - {fileID: 2524027233888448495, guid: d925f291981decc479b39b84103d2a8e, type: 3}
+    - {fileID: 7739591162682787326, guid: d925f291981decc479b39b84103d2a8e, type: 3}
+    - {fileID: 175445102976115375, guid: d925f291981decc479b39b84103d2a8e, type: 3}
+    - {fileID: 2444760024111282628, guid: d925f291981decc479b39b84103d2a8e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

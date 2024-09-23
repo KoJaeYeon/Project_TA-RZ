@@ -20,6 +20,7 @@ public class MapManager : MonoBehaviour
     private Dictionary<MapType, string> _mapNameDictionary;
 
     public float ProgressValue { get; set; }
+    public float EliteChance { get; set; }
 
     private StageType _currentStageType;
     private string _mapName;
@@ -29,6 +30,8 @@ public class MapManager : MonoBehaviour
     public DiContainer _di;
     [Inject]
     private UIEvent _uiEvent;
+    [Inject]
+    private DataManager _dataManager;
     
 
     private void Awake()
@@ -65,6 +68,8 @@ public class MapManager : MonoBehaviour
         };
 
         AddMap(map, _mapNameDictionary);
+
+        StartCoroutine(LoadElite());
     }
 
     private void AddMap((MapType, string)[] map,
@@ -77,6 +82,18 @@ public class MapManager : MonoBehaviour
     }
 
     #endregion
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            _currentMap.SetActive(false);
+
+            _mapName = GetMap(MapType.Boss);
+
+            StartCoroutine(LoadMap(_mapName));
+        }
+    }
 
     public void ChangeMap(StageType newStage)
     {
@@ -161,7 +178,21 @@ public class MapManager : MonoBehaviour
         if(currentStage != null)
         {
             currentStage.StartStage(_currentStageType);
+            _uiEvent.OutLobbyMenuUI();
         }
     }
- 
+
+    IEnumerator LoadElite()
+    {
+        yield return new WaitWhile(() =>
+        {
+            Debug.Log("Elite의 데이터를 받아오는 중입니다.");
+            return _dataManager.GetData("E241") == null;
+        });
+
+        var data = _dataManager.GetData("E241") as Monster_Elite;
+        EliteChance = data.Value;
+        Debug.Log("Elite의 확률을 성공적으로 받아왔습니다.");
+        yield break;
+    }
 }

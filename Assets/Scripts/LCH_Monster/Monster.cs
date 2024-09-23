@@ -10,6 +10,7 @@ public enum MonsterAbility
     Speed,
     Power,
     Shield,
+    Elite
 }
 public enum MonsterType
 {
@@ -17,15 +18,16 @@ public enum MonsterType
     Supply,
     Few
 }
-public class Monster : MonoBehaviour, IHit
+public class Monster : MonoBehaviour, IHit, IStatusEffect
 {
     [Header("디버깅용")]
     [SerializeField] bool test;
     [Header("몬스터 타입")]
     [SerializeField] MonsterType Type;
-    [SerializeField] MonsterAbility _Ability;
+    [SerializeField] protected MonsterAbility _Ability;
     [Inject] public Player Player { get;}
     [Inject] DataManager _dataManager;
+    [Inject] private PoolManager _poolManager;
     BehaviorTree _bt;
     NavMeshAgent Nav;
     Rigidbody _rigidbody;
@@ -63,6 +65,7 @@ public class Monster : MonoBehaviour, IHit
     protected string idStr = "E101";
 
     Coroutine _hitCoroutine;
+    Coroutine _poisonCoroutine;
 
    // [Header("개발자 인스펙터")]
     //[SerializeField] TextMeshProUGUI TempHPText;
@@ -72,6 +75,16 @@ public class Monster : MonoBehaviour, IHit
         _rigidbody = GetComponent<Rigidbody>();
         _bt = GetComponent<BehaviorTree>();
         Nav = GetComponent<NavMeshAgent>();
+    }
+
+    private void OnDisable()
+    {
+        if(_poisonCoroutine != null)
+        {
+            StopCoroutine(_poisonCoroutine);
+
+            _poisonCoroutine = null;
+        }
     }
 
     void Start()
@@ -107,7 +120,11 @@ public class Monster : MonoBehaviour, IHit
     /// <param name="monsterType"></param>
     public virtual void OnSetMonsterStat(float stat_Multiplier)
     {
-        int rand = Random.Range(0, 3);
+        for(int i = 0; i < 4; i++)
+        {
+            transform.GetChild(i).gameObject.SetActive(false);
+        }
+        int rand = Random.Range(0, 4);
         transform.GetChild(rand).gameObject.SetActive(true);
         _Ability = (MonsterAbility)rand;
         Anim = GetComponentInChildren<Animator>();
@@ -115,7 +132,7 @@ public class Monster : MonoBehaviour, IHit
         StartCoroutine(LoadStat(stat_Multiplier));
     }
 
-    IEnumerator LoadStat(float stat_Multiplier)
+    protected IEnumerator LoadStat(float stat_Multiplier)
     {
         while (true)
         {
@@ -178,6 +195,8 @@ public class Monster : MonoBehaviour, IHit
 
                 _stage.UnRegisterMonster(this.gameObject);
             }
+
+            Player.OnCalled_Achieve_MonsterKilled();
             gameObject.SetActive(false);
         }
     }
@@ -253,4 +272,71 @@ public class Monster : MonoBehaviour, IHit
         Gizmos.DrawWireSphere(transform.position + transform.forward, Mon_Common_AttackArea);
     }
 
+    public void Poison(float damage, float maxTime, float intervalTime)
+    {
+        if (gameObject.activeSelf)
+        {
+            if (_poisonCoroutine != null)
+            {
+                StopCoroutine(_poisonCoroutine);
+            }
+
+            _poisonCoroutine = StartCoroutine(TriggerPoison(damage, maxTime, intervalTime));
+        }
+    }
+
+    private IEnumerator TriggerPoison(float damage, float maxTime, float intervalTime)
+    {
+        float timer = 0;
+
+        while(timer < maxTime)
+        {
+            if(Mon_Common_Hp_Remain <= 0)
+            {
+                PrintDamageText(0);
+
+                _poisonCoroutine = null;
+
+                yield break;
+            }
+
+            Hit(damage, 0, null);
+
+            PrintDamageText(damage);
+
+            yield return new WaitForSeconds(intervalTime);
+
+            timer += intervalTime;
+        }
+
+        _poisonCoroutine = null;
+    }
+
+    public void Ice()
+    {
+        //결빙
+    }
+
+    public void Explosion(float damage)
+    {
+        //폭발
+        if(Mon_Common_Hp_Remain <= 0)
+        {
+            PrintDamageText(0, DamageType.Explosive);
+
+            return;
+        }
+
+        Hit(damage, 0, null);
+
+        PrintDamageText(damage, DamageType.Explosive);
+    }
+
+    private void PrintDamageText(float damage, DamageType damageType = DamageType.Poison)
+    {
+        var dmgTextObject = _poolManager.DequeueObject("DamageText");
+        var textComponent = dmgTextObject.GetComponentInChildren<DamageText>();
+        textComponent.gameObject.SetActive(true);
+        textComponent.OnSetData(damage, damageType, transform);
+    }
 }

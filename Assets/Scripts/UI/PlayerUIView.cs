@@ -1,11 +1,16 @@
+using System;
 using System.ComponentModel;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Zenject;
 
 public class PlayerUIView : MonoBehaviour
 {
+    [SerializeField] InputActionReference cancelAction;
+    [SerializeField] InputActionReference infoAction;
     [SerializeField] Slider HPSlider;
     [SerializeField] Slider SkillSlider;
     [SerializeField] Slider StaminaSlider;
@@ -16,7 +21,8 @@ public class PlayerUIView : MonoBehaviour
     [Header("Panel")]
     [SerializeField] GameOverPanel GameOverPanel;
 
-    [Inject] private Player _player;
+    [Inject] Player _player;
+    [Inject] UIEvent UIEvent;
         
     private void OnEnable()
     {
@@ -24,6 +30,9 @@ public class PlayerUIView : MonoBehaviour
         {
             _player.PropertyChanged += OnPropertyChanged;
             RefreshView();
+            cancelAction.action.Enable();
+            cancelAction.action.performed += OnCancel;
+            InfoActionOnEnable();
         }
         else
         {
@@ -32,7 +41,30 @@ public class PlayerUIView : MonoBehaviour
     }
     private void OnDisable()
     {
+        InfoActionOnDisable();
         _player.PropertyChanged -= OnPropertyChanged;
+        cancelAction.action.performed -= OnCancel;
+    }
+
+    private void InfoActionOnEnable()
+    {
+        infoAction.action.Enable();
+        infoAction.action.performed += OnInfo;
+    }
+
+    private void InfoActionOnDisable()
+    {
+        infoAction.action.performed -= OnInfo;
+    }
+
+    private void OnCancel(InputAction.CallbackContext context)
+    {
+        UIEvent.SetActiveMenuUI();
+    }
+
+    private void OnInfo(InputAction.CallbackContext context)
+    {
+        UIEvent.SetActiveInfoUI();
     }
 
     void RefreshView()
@@ -41,7 +73,7 @@ public class PlayerUIView : MonoBehaviour
         StaminaSlider.value = _player.CurrentStamina / 100f;
         SkillSlider.value = _player.CurrentSkill / 100f;
         CurrenAmmoText.text = _player.CurrentAmmo.ToString("000");
-        Resource_OwnNum_Text.text = _player._playerStat.Resource_Own_Num.ToString("000");
+        Resource_OwnNum_Text.text = _player.CurrentResourceOwn.ToString("000");
     }
 
     private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -62,8 +94,8 @@ public class PlayerUIView : MonoBehaviour
             case nameof(_player.CurrentAmmo):
                 CurrenAmmoText.text = _player.CurrentAmmo.ToString("000");
                 break;
-            case nameof(_player._playerStat.Resource_Own_Num):
-                Resource_OwnNum_Text.text = _player._playerStat.Resource_Own_Num.ToString("000");
+            case nameof(_player.CurrentResourceOwn):
+                Resource_OwnNum_Text.text = _player.CurrentResourceOwn.ToString("000");
                 break;
             case nameof(PlayerDeath):
                 GameOverPanel.gameObject.SetActive(true);

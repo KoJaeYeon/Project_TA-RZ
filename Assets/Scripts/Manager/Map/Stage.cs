@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using System;
 using Zenject;
-using Unity.VisualScripting;
+using static Stage;
 
 [System.Serializable]
 public enum GameLevel
@@ -45,6 +44,8 @@ public class Stage : MonoBehaviour
     private PoolManager _poolManager;
     [Inject]
     private Player _player;
+    [Inject]
+    private UIEvent _uiEvent;
     #endregion
 
     [Header("GameLevel")]
@@ -52,6 +53,9 @@ public class Stage : MonoBehaviour
 
     [Header("PartitionList")]
     [SerializeField] private List<Partition> _partitions; //각 구역 리스트.
+
+    [Header("ChestObject")]
+    [SerializeField] private GameObject _chest;
 
     [Header("PortalObject")]
     [SerializeField] private GameObject _portal;
@@ -83,6 +87,8 @@ public class Stage : MonoBehaviour
     {
         _currentStage = newStage;
 
+        ActiveQuest();
+
         ClearStageObject();
 
         if(_level == GameLevel.Boss)
@@ -101,6 +107,24 @@ public class Stage : MonoBehaviour
 
 
         StartCoroutine(SpawnObject());
+    }
+
+    private void ActiveQuest()
+    {
+        float chance = 0;
+        if (_level == GameLevel.Middle)
+        {
+            chance = float.Parse(_dataManager.GetStringValue("L500"));
+        }
+        else if (_level == GameLevel.Final)
+        {
+            chance = float.Parse(_dataManager.GetStringValue("L501"));
+        }
+
+        if (chance >= Random.Range(0, 1f))
+        {
+            _uiEvent.ActiveQuestUI();
+        }
     }
 
     public void ClearStageObject()
@@ -331,6 +355,7 @@ public class Stage : MonoBehaviour
                 }
             }
         }
+        SpawnElite();
     }
 
     private void SpawnItem()
@@ -375,6 +400,27 @@ public class Stage : MonoBehaviour
         Debug.Log(_spawnItems.Count);
     }
 
+    private void SpawnElite()
+    {
+        if (_level != GameLevel.Middle && _level != GameLevel.Final) return;
+
+        if (_mapManager.EliteChance >= Random.Range(0, 1f))
+        {
+            var partition = _selectMonsterArea[Random.Range(0, _selectMonsterArea.Count - 1)];
+
+            Vector3 spawnPosition = GetRandomSpawnPosition(partition._centerPosition, partition._mapSizeX, partition._mapSizeZ);
+
+            if (spawnPosition != null)
+            {
+                GameObject monster = _object.GetMonster(MonsterList._eliteMosnter);
+
+                monster.transform.position = spawnPosition;
+
+                RegisterMonster(monster);
+            }
+        }
+    }
+
     private void RegisterMonster(GameObject monster)
     {
         Monster monsterComponent = monster.GetComponent<Monster>();
@@ -402,12 +448,24 @@ public class Stage : MonoBehaviour
 
     private void StageClear()
     {
-        bool setactive = _portal != null;
+        bool setactive = _chest != null;
 
         if (setactive)
         {
-            _portal.SetActive(true);
+            _chest.SetActive(true);
+
+            bool questClear = _player.ClearQuest();
+
+            EliteChanceUp();
         }
+    }
+
+    private void EliteChanceUp()
+    {
+        if (_level != GameLevel.Middle && _level != GameLevel.Final) return;
+        string idStr = _level == GameLevel.Middle ? "E242" : "E243";
+        var data = _dataManager.GetData(idStr) as Monster_Elite;
+        _mapManager.EliteChance += data.Value;
     }
 
     private Vector3 GetRandomSpawnPosition(Transform centerPosition, float mapSizeX, float mapSizeZ)

@@ -1,73 +1,50 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 using Zenject;
 
 public class PlayerInfoUI : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _nameText;
-    [SerializeField] private TextMeshProUGUI _powerText;
-    [SerializeField] private TextMeshProUGUI _healthText;
-    [SerializeField] private TextMeshProUGUI _moveSpeedText;
-    [SerializeField] private TextMeshProUGUI _resourceText;
-    [SerializeField] private TextMeshProUGUI _staminaText;
-    [SerializeField] private TextMeshProUGUI _elementText;
-
     [Inject]
-    private Player _player;
+    private UIEvent _uiEvent;
 
-    private void Start()
-    {
-        RefreshView();
-    }
+    [SerializeField] private InputActionReference _tabAction;
+    [SerializeField] private GameObject[] _childObject;
 
     private void OnEnable()
     {
-        if(_player != null)
-        {
-            _player.PropertyChanged += OnPropertyChangedUI;
-        }
+        _tabAction.action.Enable();
+        _tabAction.action.performed += OnInfoUI;
     }
 
     private void OnDisable()
     {
-        if(_player != null )
+        _tabAction.action.performed -= OnInfoUI;
+        _tabAction.action.Disable();
+    }
+
+    public void OnEnableInfoUI()
+    {
+        _uiEvent.SetActivePlayerUI(false);
+        OnChildObject();
+    }
+    
+    private void OnInfoUI(InputAction.CallbackContext callbackContext)
+    {
+        if (_childObject[0].activeSelf)
         {
-            _player.PropertyChanged -= OnPropertyChangedUI;
+            OnChildObject();
+            _uiEvent.SetActivePlayerUI(true);
         }
     }
 
-    private void RefreshView()
+    public void OnChildObject()
     {
-        _nameText.text = "로이";
-        _healthText.text = _player.HP.ToString();
-        _powerText.text = _player.CurrentAtk.ToString();
-        _moveSpeedText.text = _player.CurrentSpeed.ToString();
-        _resourceText.text = _player.CurrentAmmo.ToString();
-        _staminaText.text = _player._playerStat.Stamina_Gain.ToString();
-        _elementText.text = "아직없음";
-    }
-
-    private void OnPropertyChangedUI(object sender, PropertyChangedEventArgs arg)
-    {
-        switch(arg.PropertyName)
+        for (int i = 0; i < _childObject.Length; i++)
         {
-            case nameof(_player.CurrentAtk):
-                _powerText.text = _player.CurrentAtk.ToString();
-                break;
-            case nameof(_player.HP):
-                _healthText.text = _player.HP.ToString();
-                break;
-            case nameof(_player.CurrentSpeed):
-                _moveSpeedText.text = _player.CurrentSpeed.ToString();
-                break;
-            case nameof(_player.CurrentAmmo):
-                _resourceText.text = _player.CurrentAmmo.ToString();
-                break;
+            _childObject[i].SetActive(!_childObject[i].activeSelf);
         }
     }
-
 }
