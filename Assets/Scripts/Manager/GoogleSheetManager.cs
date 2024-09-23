@@ -161,7 +161,7 @@ public class GoogleSheetManager : MonoBehaviour
 
     public IEnumerator CountJsonLoadData()
     {
-        const string url = "https://script.google.com/macros/s/AKfycby-XbpUpXvOGRGxgRm2aKNbRbvbl9r8N-D7_Y6QtGHvHayaYGbkYKsk_So9aARsRjgd/exec";
+        const string url = "https://script.google.com/macros/s/AKfycbzGAroD_aKyuEn1taF1WzzfyVuFX8p_7V4lVblBmED382-nMgLnN6u-knOZIm2Vpy4/exec";
         UnityWebRequest www = UnityWebRequest.Get(url);
         yield return www.SendWebRequest();
 
