@@ -798,6 +798,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5349711823280107107, guid: 107da0325be6ea54b8f0d723c304c7ce,
+        type: 3}
+      propertyPath: _restartButton
+      value: 
+      objectReference: {fileID: 7261658175371040623}
     - target: {fileID: 5500597777751182627, guid: 107da0325be6ea54b8f0d723c304c7ce,
         type: 3}
       propertyPath: m_Name
@@ -849,6 +854,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 2336572076221290511}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7261658175371040623 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4948255661005279072, guid: 107da0325be6ea54b8f0d723c304c7ce,
+    type: 3}
+  m_PrefabInstance: {fileID: 2336572076221290511}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3331278091245221197
 PrefabInstance:
   m_ObjectHideFlags: 0
