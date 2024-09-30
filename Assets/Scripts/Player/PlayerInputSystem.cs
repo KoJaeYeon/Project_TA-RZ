@@ -75,14 +75,14 @@ public class PlayerInputSystem : MonoBehaviour
     private void OnDrain(InputValue input)
     {
         bool isPressed = input.isPressed;
-
+        Debug.Log(isPressed);
         SetDrain(isPressed);
     }
 
     private void OnAttack(InputValue input)
     {
         bool isPressed = input.isPressed;
-
+        Debug.Log(isPressed);
         SetAttack(isPressed);
     }
 

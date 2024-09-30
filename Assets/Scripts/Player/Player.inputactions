@@ -155,7 +155,7 @@
                 {
                     "name": "",
                     "id": "8e752803-aaba-44e0-8547-817291a0fcc4",
-                    "path": "<OculusTouchController>{LeftHand}/{Primary2DAxis}",
+                    "path": "<XRController>{LeftHand}/{Primary2DAxis}",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -168,6 +168,17 @@
                     "id": "d2ca7c87-5e38-469d-bdfb-0cbd7bac7c2d",
                     "path": "<Keyboard>/space",
                     "interactions": "Press(behavior=2)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4f784bb0-ed8c-485d-ba27-4687b5a64dba",
+                    "path": "<XRController>{RightHand}/{TriggerButton}",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Dash",
@@ -190,6 +201,17 @@
                     "id": "3a565a4d-fbfb-49e8-bf77-26979c30ab35",
                     "path": "<Mouse>/leftButton",
                     "interactions": "Press(behavior=2)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9d122839-a947-425f-8eb9-92e55887b230",
+                    "path": "<XRController>{RightHand}/{PrimaryButton}",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Attack",
@@ -259,6 +281,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "InfoUI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e53f40a4-df1b-40ab-be6f-e879da2add08",
+                    "path": "<XRController>{LeftHand}/{GripButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LockOn",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

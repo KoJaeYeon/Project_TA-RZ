@@ -7,6 +7,6 @@ public class SphereMove : MonoBehaviour
 {
     private void OnMove(InputValue inputValue)
     {
-        Debug.Log(inputValue.Get<Vector2>());
+        Debug.Log(inputValue);
     }
 }
