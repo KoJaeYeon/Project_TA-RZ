@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
@@ -29,14 +30,39 @@ public class PlayerInputSystem : MonoBehaviour
 
     Player _player;
 
+    private float leftStopTime;
+    Coroutine _coroutine;
     private void Awake()
     {
         _player = GetComponent<Player>();
     }
 
+    IEnumerator Stop()
+    {        
+        while(true)
+        {
+            if(leftStopTime < Time.time)
+            {
+                SetMove(Vector2.zero);
+                yield break;
+            }
+            yield return null;
+        }
+    }
+
     private void OnMove(InputValue input)
     {
-        SetMove(input.Get<Vector2>());  
+        Vector2 inputVec = input.Get<Vector2>();
+        if (inputVec != Vector2.zero)
+            SetMove(inputVec);
+        else
+        {
+            leftStopTime = Time.time + 0.03f;
+            if(_coroutine == null)
+            {
+                StartCoroutine(Stop());
+            }
+        }
     }
 
     private void OnDash(InputValue input)

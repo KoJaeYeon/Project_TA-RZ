@@ -154,6 +154,17 @@
                 },
                 {
                     "name": "",
+                    "id": "8e752803-aaba-44e0-8547-817291a0fcc4",
+                    "path": "<OculusTouchController>{LeftHand}/{Primary2DAxis}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "d2ca7c87-5e38-469d-bdfb-0cbd7bac7c2d",
                     "path": "<Keyboard>/space",
                     "interactions": "Press(behavior=2)",
@@ -266,6 +277,17 @@
                 },
                 {
                     "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "Oculus",
+            "bindingGroup": "Oculus",
+            "devices": [
+                {
+                    "devicePath": "<XRController>",
                     "isOptional": false,
                     "isOR": false
                 }
