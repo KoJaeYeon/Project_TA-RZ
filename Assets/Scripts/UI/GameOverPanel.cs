@@ -19,6 +19,6 @@ public class GameOverPanel : MonoBehaviour
 
     public void Restart()
     {
-        SceneManager.LoadSceneAsync(0, LoadSceneMode.Single);
+        SceneManager.LoadSceneAsync(1, LoadSceneMode.Single);
     }
 }
