@@ -58,6 +58,8 @@ public class PlayerSecondComboAttack : PlayerComboAttack
 
         _boxPosition = _player.transform.position + _player.transform.TransformDirection(_additionalPosition) + _forward;
 
+        _player.BlueChipSystem.UseBlueChip(_player.transform, AttackType.secondAttack);
+
         _enemyLayer = LayerMask.GetMask("Monster");
 
         Collider[] colliders = Physics.OverlapBox(_boxPosition, _boxSize / 2f * _attackRange_Multiplier, _player.transform.rotation, _enemyLayer);

@@ -22,14 +22,15 @@ public class DrainSystem : MonoBehaviour
         foreach (var item in DrainItemList)
         {
             Vector3 drainDir = transform.position - item.transform.position;
-            item.AddForce(drainDir * Time.deltaTime * 1000 * player._playerStat.Pull_Speed);
+            item.AddForce(drainDir * Time.deltaTime * 1000 * player._playerStat.Pull_Speed); 
             float distance = Vector3.Distance(transform.position, item.position);
-            if(distance < 1.5f)
+            if(distance < 1.5f) 
             {
                 if(player.CurrentAmmo < 50)
                 {
                     item.gameObject.SetActive(false);
                     player.CurrentAmmo += 1;
+                    player.OnCalled_Achieve_ResourceGet();
                     DrainedItemList.Add(item);
                 }
                 else
@@ -40,7 +41,7 @@ public class DrainSystem : MonoBehaviour
 
             }
         }
-
+        
         if(DrainedItemList.Count > 0)
         {
             foreach(var item in DrainedItemList)

@@ -19,10 +19,6 @@ public class StringData : MonoBehaviour
         }
     }
 
-    private void Awake()
-    {
-        
-    }
     private void Start()
     {
         StartCoroutine(LoadString());
@@ -30,6 +26,10 @@ public class StringData : MonoBehaviour
 
     IEnumerator LoadString()
     {
+        if(string.IsNullOrWhiteSpace(IDStr))
+        {
+            idStr = gameObject.name;
+        }
         yield return new WaitWhile(() => (_dataManager.GetString(IDStr).Equals(string.Empty)));
         var tmp = GetComponent<TextMeshProUGUI>();
         if(tmp != null)

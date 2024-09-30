@@ -317,6 +317,8 @@ MonoBehaviour:
   _blockingImage: {fileID: 0}
   _progressUI: {fileID: 3977003261179552722}
   _progressImage: {fileID: 6797966918045175935}
+  cancelAction: {fileID: 7727032971491509709, guid: 364fca4c259fd5449893ce7bf8a12352,
+    type: 3}
 --- !u!1 &3586060816745245606
 GameObject:
   m_ObjectHideFlags: 0

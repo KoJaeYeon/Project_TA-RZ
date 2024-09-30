@@ -58,6 +58,8 @@ public class PlayerFirstComboAttack : PlayerComboAttack
 
         _boxPosition = _player.transform.position + _player.transform.TransformDirection(_additionalPosition) + _forward;
 
+        _player.BlueChipSystem.UseBlueChip(_player.transform, AttackType.firstAttack);
+
         _enemyLayer = LayerMask.GetMask("Monster");
 
         Collider[] colliders = Physics.OverlapBox(_boxPosition, _boxSize / 2f * _attackRange_Multiplier, _player.transform.rotation, _enemyLayer);
@@ -75,7 +77,6 @@ public class PlayerFirstComboAttack : PlayerComboAttack
                 ChangeData(_player.CurrentLevel);
                 float damage = _player.CurrentAtk * _currentAtkMultiplier * _player._PC_Level.Level_Atk_Power_Multiplier;
                 hit.Hit(damage, _currentStiffT, _player.transform);
-                //Debug.Log($"player.CurrentAtk : {_player.CurrentAtk}, _currentAtkMultiplier : {_currentAtkMultiplier}, _player._PC_Level.Level_Atk_Power_Multiplier : {_player._PC_Level.Level_Atk_Power_Multiplier}");
                 isHit = true;
                 GameObject hitEffect = _effect.GetHitEffect();
                 ParticleSystem hitParticle = hitEffect.GetComponent<ParticleSystem>();
