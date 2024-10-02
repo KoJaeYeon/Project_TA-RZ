@@ -37,7 +37,12 @@ public class PlayerInputSystem : MonoBehaviour
     private float leftAttackStopTime;
     Coroutine attack_coroutine;
 
-    private bool beforeDrainPressed;
+    private float leftDrainStopTime;
+    Coroutine drain_coroutine;
+
+    private float leftLockOnStopTime;
+    Coroutine lockOn_coroutine;
+
     private bool beforeAttackPressed;
     private void Awake()
     {
@@ -58,6 +63,20 @@ public class PlayerInputSystem : MonoBehaviour
         }
     }
 
+    IEnumerator DrainStop()
+    {
+        while (true)
+        {
+            if (leftDrainStopTime < Time.time)
+            {
+                SetDrain(false);
+                drain_coroutine = null;
+                yield break;
+            }
+            yield return null;
+        }
+    }
+
     IEnumerator AttackStop()
     {
         while (true)
@@ -67,6 +86,20 @@ public class PlayerInputSystem : MonoBehaviour
                 SetAttack(false);
                 beforeAttackPressed = false;
                 attack_coroutine = null;
+                yield break;
+            }
+            yield return null;
+        }
+    }
+
+    IEnumerator LockOnStop()
+    {
+        while (true)
+        {
+            if (leftLockOnStopTime < Time.time)
+            {
+                SetLockOn(false);
+                lockOn_coroutine = null;
                 yield break;
             }
             yield return null;
@@ -97,19 +130,15 @@ public class PlayerInputSystem : MonoBehaviour
 
     private void OnDrain(InputValue input)
     {
-        if (beforeDrainPressed == true)
-        {
-            beforeDrainPressed = false;
-            return;
-        }
         bool isPressed = input.isPressed;
         Debug.Log(isPressed);
-        SetDrain(isPressed);
-        if (isPressed)
-        {
-            beforeDrainPressed = true;
-        }
 
+        SetDrain(true);
+        leftDrainStopTime = Time.time + 0.03f;
+        if (drain_coroutine == null)
+        {
+            drain_coroutine = StartCoroutine(DrainStop());
+        }
     }
 
     private void OnAttack(InputValue input)
@@ -143,8 +172,14 @@ public class PlayerInputSystem : MonoBehaviour
     private void OnLockOn(InputValue input)
     {
         bool isPressed = input.isPressed;
+        Debug.Log(isPressed);
 
-        SetLockOn(isPressed);
+        SetLockOn(true);
+        leftLockOnStopTime = Time.time + 0.03f;
+        if (lockOn_coroutine == null)
+        {
+            lockOn_coroutine = StartCoroutine(LockOnStop());
+        }
     }
 
     private void OnLockOnFix(InputValue input)
