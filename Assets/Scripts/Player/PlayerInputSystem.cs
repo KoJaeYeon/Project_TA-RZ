@@ -31,13 +31,14 @@ public class PlayerInputSystem : MonoBehaviour
     Player _player;
 
     private float leftMoveStopTime;
+    private float lastAttackTime;
     Coroutine move_coroutine;
 
     private float leftAttackStopTime;
     Coroutine attack_coroutine;
 
-    public bool beforeDrainPressed;
-    public bool beforeAttackPressed;
+    private bool beforeDrainPressed;
+    private bool beforeAttackPressed;
     private void Awake()
     {
         _player = GetComponent<Player>();
@@ -64,6 +65,7 @@ public class PlayerInputSystem : MonoBehaviour
             if (leftAttackStopTime < Time.time)
             {
                 SetAttack(false);
+                beforeAttackPressed = false;
                 attack_coroutine = null;
                 yield break;
             }
@@ -112,13 +114,18 @@ public class PlayerInputSystem : MonoBehaviour
 
     private void OnAttack(InputValue input)
     {
+        if(beforeAttackPressed == true)
+        {
+            leftAttackStopTime = Time.time + 0.03f;
+            return;
+        }
         bool isPressed = input.isPressed;
         Debug.Log(isPressed);
         if (isPressed)
         {
             SetAttack(isPressed);
+            beforeAttackPressed = true;
         }
-
         leftAttackStopTime = Time.time + 0.03f;
         if (attack_coroutine == null)
         {

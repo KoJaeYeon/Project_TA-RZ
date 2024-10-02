@@ -182,8 +182,10 @@ public class CameraRoot : MonoBehaviour
 
     private void UpdateLockOnUI()
     {
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(_target.position + Vector3.up);
-        _lockOnUI.transform.position = screenPos;
+        Vector3 targetPos = _target.position;
+        targetPos = targetPos + (player.transform.position - targetPos).normalized;
+        targetPos.y = 1;
+        _lockOnUI.transform.parent.position = targetPos;
 
     }
 

@@ -52,12 +52,12 @@
                 },
                 {
                     "name": "LockOn",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "6c6ad9d0-6e58-4e1f-9646-3f3626733bcb",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Press(behavior=2)",
-                    "initialStateCheck": false
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "LockOnFix",
@@ -177,7 +177,7 @@
                 {
                     "name": "",
                     "id": "4f784bb0-ed8c-485d-ba27-4687b5a64dba",
-                    "path": "<XRController>{RightHand}/{TriggerButton}",
+                    "path": "<XRController>{LeftHand}/{TriggerButton}",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -264,6 +264,17 @@
                 },
                 {
                     "name": "",
+                    "id": "7626d3be-d66f-454f-ba07-21fec0522c05",
+                    "path": "<XRController>{RightHand}/{SecondaryButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LockOnFix",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "a0f2ee48-b2c4-4c2e-b644-043e44936370",
                     "path": "<Mouse>/rightButton",
                     "interactions": "Press(behavior=2)",
@@ -286,6 +297,17 @@
                 },
                 {
                     "name": "",
+                    "id": "7a90df08-eaf6-4d06-b0f1-6d2db928c68d",
+                    "path": "<XRController>{LeftHand}/{PrimaryButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "dc8c7ff6-bf96-4469-894c-4832f7621dd5",
                     "path": "<Keyboard>/tab",
                     "interactions": "Press",
@@ -298,11 +320,22 @@
                 {
                     "name": "",
                     "id": "e53f40a4-df1b-40ab-be6f-e879da2add08",
-                    "path": "<XRController>{LeftHand}/{GripButton}",
+                    "path": "<XRController>{RightHand}/{Grip}",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "LockOn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ac24515c-30f0-4b4b-a355-30963ad49838",
+                    "path": "<XRController>{RightHand}/{TriggerButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Skill",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
