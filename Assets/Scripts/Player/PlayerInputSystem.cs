@@ -37,12 +37,11 @@ public class PlayerInputSystem : MonoBehaviour
     private float leftAttackStopTime;
     Coroutine attack_coroutine;
 
-    private float leftDrainStopTime;
-    Coroutine drain_coroutine;
 
     private float leftLockOnStopTime;
     Coroutine lockOn_coroutine;
 
+    private bool beforeDrainPressed;
     private bool beforeAttackPressed;
     private void Awake()
     {
@@ -57,20 +56,6 @@ public class PlayerInputSystem : MonoBehaviour
             {
                 SetMove(Vector2.zero);
                 move_coroutine = null;
-                yield break;
-            }
-            yield return null;
-        }
-    }
-
-    IEnumerator DrainStop()
-    {
-        while (true)
-        {
-            if (leftDrainStopTime < Time.time)
-            {
-                SetDrain(false);
-                drain_coroutine = null;
                 yield break;
             }
             yield return null;
@@ -106,6 +91,12 @@ public class PlayerInputSystem : MonoBehaviour
         }
     }
 
+    IEnumerator SkillStop()
+    {
+        yield return new WaitForSeconds(0.1f);
+        SetSkill(false);
+    }
+
     private void OnMove(InputValue input)
     {
         Vector2 inputVec = input.Get<Vector2>();
@@ -130,15 +121,19 @@ public class PlayerInputSystem : MonoBehaviour
 
     private void OnDrain(InputValue input)
     {
+        if (beforeDrainPressed == true)
+        {
+            beforeDrainPressed = false;
+            return;
+        }
         bool isPressed = input.isPressed;
         Debug.Log(isPressed);
-
-        SetDrain(true);
-        leftDrainStopTime = Time.time + 0.03f;
-        if (drain_coroutine == null)
+        SetDrain(isPressed);
+        if (isPressed)
         {
-            drain_coroutine = StartCoroutine(DrainStop());
+            beforeDrainPressed = true;
         }
+
     }
 
     private void OnAttack(InputValue input)
@@ -191,8 +186,10 @@ public class PlayerInputSystem : MonoBehaviour
     private void OnSkill(InputValue input)
     {
         bool isPressed = input.isPressed;
+        Debug.Log(isPressed);
 
         SetSkill(isPressed);
+        StartCoroutine(SkillStop());
     }
 
     private void OnInteract(InputValue input)
