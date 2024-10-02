@@ -7,7 +7,7 @@ public class SphereMove : MonoBehaviour
 {
     private void OnMove(InputValue inputValue)
     {
-        Debug.Log(inputValue);
+        Debug.Log(inputValue.Get<Vector2>());
     }
 
     private void OnFire(InputValue inputValue)

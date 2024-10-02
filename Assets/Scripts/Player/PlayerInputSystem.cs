@@ -157,6 +157,25 @@ public class PlayerInputSystem : MonoBehaviour
         }
     }
 
+    private void OnXRCameraLook(InputValue input)
+    {
+        if (input == null) return;
+        Debug.Log(input.Get<Vector2>());
+
+        Vector2 deltaVec = input.Get<Vector2>();
+        if (deltaVec.x != 0)
+        {
+            if (deltaVec.x > 0)
+            {
+                SetLook(3);
+            }
+            else
+            {
+                SetLook(-3);
+            }
+        }
+    }
+
     private void OnLook(InputValue input)
     {
         float delta = input.Get<float>();
