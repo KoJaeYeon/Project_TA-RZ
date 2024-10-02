@@ -30,20 +30,41 @@ public class PlayerInputSystem : MonoBehaviour
 
     Player _player;
 
-    private float leftStopTime;
-    Coroutine _coroutine;
+    private float leftMoveStopTime;
+    Coroutine move_coroutine;
+
+    private float leftAttackStopTime;
+    Coroutine attack_coroutine;
+
+    public bool beforeDrainPressed;
+    public bool beforeAttackPressed;
     private void Awake()
     {
         _player = GetComponent<Player>();
     }
 
-    IEnumerator Stop()
+    IEnumerator MoveStop()
     {        
         while(true)
         {
-            if(leftStopTime < Time.time)
+            if(leftMoveStopTime < Time.time)
             {
                 SetMove(Vector2.zero);
+                move_coroutine = null;
+                yield break;
+            }
+            yield return null;
+        }
+    }
+
+    IEnumerator AttackStop()
+    {
+        while (true)
+        {
+            if (leftAttackStopTime < Time.time)
+            {
+                SetAttack(false);
+                attack_coroutine = null;
                 yield break;
             }
             yield return null;
@@ -57,10 +78,10 @@ public class PlayerInputSystem : MonoBehaviour
             SetMove(inputVec);
         else
         {
-            leftStopTime = Time.time + 0.03f;
-            if(_coroutine == null)
+            leftMoveStopTime = Time.time + 0.03f;
+            if(move_coroutine == null)
             {
-                StartCoroutine(Stop());
+                move_coroutine = StartCoroutine(MoveStop());
             }
         }
     }
@@ -74,16 +95,35 @@ public class PlayerInputSystem : MonoBehaviour
 
     private void OnDrain(InputValue input)
     {
+        if (beforeDrainPressed == true)
+        {
+            beforeDrainPressed = false;
+            return;
+        }
         bool isPressed = input.isPressed;
         Debug.Log(isPressed);
         SetDrain(isPressed);
+        if (isPressed)
+        {
+            beforeDrainPressed = true;
+        }
+
     }
 
     private void OnAttack(InputValue input)
     {
         bool isPressed = input.isPressed;
         Debug.Log(isPressed);
-        SetAttack(isPressed);
+        if (isPressed)
+        {
+            SetAttack(isPressed);
+        }
+
+        leftAttackStopTime = Time.time + 0.03f;
+        if (attack_coroutine == null)
+        {
+            attack_coroutine = StartCoroutine(AttackStop());
+        }
     }
 
     private void OnLook(InputValue input)

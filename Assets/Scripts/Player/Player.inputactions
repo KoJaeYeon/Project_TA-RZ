@@ -25,21 +25,21 @@
                 },
                 {
                     "name": "Drain",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "a568a0b5-5d82-4610-9c84-bc5e0ab0a90f",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Press(behavior=2)",
-                    "initialStateCheck": false
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Attack",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "c8681970-ce3a-487e-97fb-08dba7538c92",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Look",
@@ -189,6 +189,17 @@
                     "name": "",
                     "id": "bb21535e-a2d7-469b-bc11-e9aef5fb8d17",
                     "path": "<Keyboard>/leftCtrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Drain",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "567dd5dd-0034-482c-834c-733346366d44",
+                    "path": "<XRController>{LeftHand}/{Grip}",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

@@ -9,4 +9,10 @@ public class SphereMove : MonoBehaviour
     {
         Debug.Log(inputValue);
     }
+
+    private void OnFire(InputValue inputValue)
+    {
+        Debug.Log(inputValue.isPressed);
+        
+    }
 }
