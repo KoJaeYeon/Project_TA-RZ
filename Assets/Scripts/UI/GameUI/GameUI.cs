@@ -38,7 +38,7 @@ public class GameUI : MonoBehaviour
     #endregion
 
     #region ChoiceUI
-    private List<GameObject> _normalList;
+    [SerializeField] List<GameObject> _normalList;
     private List<GameObject> _bossList;
     private GameObject _currentUI;
     private StageType _currentStage;
@@ -90,21 +90,7 @@ public class GameUI : MonoBehaviour
     }
 
     private void InitializeChoiceUIOnEnable()
-    {
-        if(_normalList == null)
-        {
-            _normalList = new List<GameObject>();
-
-            foreach (Transform normalChild in _normalStageUI.transform)
-            {
-                if (_normalStageUI != null)
-                {
-                    normalChild.gameObject.SetActive(false);
-                    _normalList.Add(normalChild.gameObject);
-                }
-            }
-        }
-        
+    {        
         if(_bossList == null)
         {
             _bossList = new List<GameObject>();
