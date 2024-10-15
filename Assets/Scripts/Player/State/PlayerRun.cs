@@ -11,7 +11,6 @@ public class PlayerRun : PlayerState
     }
    
     #region RunValue
-    private float _runSpeed = 5f;
     private float _targetSpeed;
     private float _speedOffset = 0.1f;
     private float _currentSpeed;

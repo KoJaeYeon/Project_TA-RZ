@@ -1127,7 +1127,7 @@ MonoBehaviour:
   - 1
   knockback_Horizontal_Distance: 1
   knockback_Vertical_Distance: 1
-  rotate_Camera_Speed: 1
+  rotate_Camera_Speed: 0.5
   rotate_Camera_Max: 15
 --- !u!114 &1707387346318436322
 MonoBehaviour:
