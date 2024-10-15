@@ -60,6 +60,10 @@ public class MenuUI : MonoBehaviour
             Debug.Log("cancelif");
             Continue();
         }
+        else if (MenuUI_Child[2].activeSelf)
+        {
+            ConfigOut();
+        }
         else
         {
             Debug.Log("cancelelse");
@@ -71,6 +75,20 @@ public class MenuUI : MonoBehaviour
     {
         transform.GetChild(index).gameObject.SetActive(false);
         OnDisableMenuUI();
+    }
+
+    public void Config()
+    {
+        MenuUI_Child[2].SetActive(true);
+        MenuUI_Child[index].SetActive(false);
+        EventSystem.current.SetSelectedGameObject(initial_Select_GameObject[2]);
+    }
+
+    public void ConfigOut()
+    {
+        MenuUI_Child[2].SetActive(false);
+        MenuUI_Child[index].SetActive(true);
+        EventSystem.current.SetSelectedGameObject(initial_Select_GameObject[index]);
     }
 
     public void Lobby()
