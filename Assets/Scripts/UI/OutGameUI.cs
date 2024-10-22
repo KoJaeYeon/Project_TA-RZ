@@ -14,6 +14,11 @@ public class OutGameUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI[] continueText;
     [SerializeField] TextMeshProUGUI[] newText;
 
+    private void Awake()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
     void OnEnable()
     {
         cancelAction.action.Enable();

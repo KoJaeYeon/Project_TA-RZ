@@ -6,7 +6,6 @@ using ModestTree;
 
 public class DamageText : MonoBehaviour
 {
-    private float moveSpeed;
     private float alphaSpeed;
     private float destroyTime;
     TextMeshProUGUI text;
@@ -18,7 +17,6 @@ public class DamageText : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        moveSpeed = 2.0f;
         alphaSpeed = 2.0f;
         destroyTime = 2.0f;
 
