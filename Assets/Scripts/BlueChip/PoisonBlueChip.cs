@@ -55,7 +55,7 @@ public class PoisonBlueChip : BlueChip
 
         PoisonObject objectComponent = poisonObject.GetComponent<PoisonObject>();
 
-        objectComponent.SetObjectData(_data.Chip_AttackArea, _currentPower, _targetLayer,
+        objectComponent.SetObjectData(_data.Chip_AttackArea, _currentPower * (1 +_player.PassiveAtk_Power/ 100), _targetLayer,
             _data.Chip_Lifetime, _data.Interval_time);
 
         Vector3 objectPosition = transform.position + transform.forward * 5f;

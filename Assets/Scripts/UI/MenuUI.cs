@@ -48,17 +48,72 @@ public class MenuUI : MonoBehaviour
         index = 1;
     }
 
+    //private void Update()
+    //{
+    //    if(Input.GetKeyDown(KeyCode.K))
+    //    {
+    //        if (UIEvent._gameUI.gameObject.activeSelf)
+    //        {
+    //            return;
+    //        }
+    //        Debug.Log($"cancel : {GetInstanceID()}");
+    //        if (MenuUI_Child[index].gameObject.activeSelf)
+    //        {
+    //            Debug.Log($"cancelif : {MenuUI_Child[index].GetInstanceID()}");
+    //            Continue();
+    //        }
+    //        else if (MenuUI_Child[2].gameObject.activeSelf)
+    //        {
+    //            Debug.Log($"cancelelif : {MenuUI_Child[2].GetInstanceID()}");
+    //            ConfigOut();
+    //        }
+    //        else
+    //        {
+    //            Debug.Log($"cancelelse : {MenuUI_Child[index].GetInstanceID()}");
+    //            OnEnableMenuUI();
+    //        }
+    //    }
+    //    else if(Input.GetKeyDown(KeyCode.G))
+    //    {
+    //        foreach(var obj in MenuUI_Child)
+    //        {
+    //            obj.gameObject.SetActive(true);
+    //        }
+    //    }
+    //    else if (Input.GetKeyDown(KeyCode.H))
+    //    {
+    //        foreach (var obj in MenuUI_Child)
+    //        {
+    //            obj.gameObject.SetActive(false);
+    //        }
+    //    }
+    //    else if (Input.GetKeyDown(KeyCode.J))
+    //    {
+    //        foreach (var obj in MenuUI_Child)
+    //        {
+    //            Debug.Log(obj.gameObject.activeSelf);
+    //        }
+
+    //        Debug.Log(MenuUI_Child[index].activeSelf);
+    //        Debug.Log(MenuUI_Child[index].gameObject.activeSelf);
+    //    }
+    //}
+
     private void OnCancel(InputAction.CallbackContext context)
     {
-        if(UIEvent._gameUI.gameObject.activeSelf)
+        if (UIEvent._gameUI.gameObject.activeSelf)
         {
             return;
         }
-        Debug.Log("cancel");
-        if(MenuUI_Child[index].activeSelf)
+        if (MenuUI_Child[index].activeSelf)
         {
             Debug.Log("cancelif");
             Continue();
+        }
+        else if (MenuUI_Child[2].activeSelf)
+        {
+            Debug.Log("cancelelif");
+            ConfigOut();
         }
         else
         {
@@ -71,6 +126,20 @@ public class MenuUI : MonoBehaviour
     {
         transform.GetChild(index).gameObject.SetActive(false);
         OnDisableMenuUI();
+    }
+
+    public void Config()
+    {
+        MenuUI_Child[2].SetActive(true);
+        MenuUI_Child[index].SetActive(false);
+        EventSystem.current.SetSelectedGameObject(initial_Select_GameObject[2]);
+    }
+
+    public void ConfigOut()
+    {
+        MenuUI_Child[2].SetActive(false);
+        MenuUI_Child[index].SetActive(true);
+        EventSystem.current.SetSelectedGameObject(initial_Select_GameObject[index]);
     }
 
     public void Lobby()

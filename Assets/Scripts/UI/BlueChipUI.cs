@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using Zenject;
 
@@ -12,6 +13,8 @@ public class BlueChipUI : MonoBehaviour
     [Inject] Player Player;
     #endregion
 
+    [Header("UpBar")]
+    [SerializeField] TextMeshProUGUI Money_Text;
     [Header("SelectPanel")]
     [SerializeField] private BlueChipUI_SelectPanel _selectPanel;
     [Header("BlueSelectButtons")]
@@ -84,6 +87,8 @@ public class BlueChipUI : MonoBehaviour
             isFirstReward = false;
 
         }
+
+        Money_Text.text = Player.SavePlayerData.money.ToString();
     }
     private void RewardBlueChipUI(int random = 1)
     {

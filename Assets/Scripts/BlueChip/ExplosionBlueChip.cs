@@ -51,7 +51,7 @@ public class ExplosionBlueChip : BlueChip
             return;
         }
 
-        StartExplosion(transform, _currentPower);
+        StartExplosion(transform, _currentPower * (1 + _player.PassiveAtk_Power / 100));
     }
 
     private void StartExplosion(Transform transform, float currentPassivePower)

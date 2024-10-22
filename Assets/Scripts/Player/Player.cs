@@ -55,7 +55,7 @@ public class Player : MonoBehaviour, IHit
     [Header("카메라 감도 조절")]
     [Range(0,1f)][SerializeField] float rotate_Camera_Speed = 1f;
     [Range(0,15F)][SerializeField] float rotate_Camera_Max = 15f;
-    public float Rotate_Camera_Speed { get { return rotate_Camera_Speed; } }
+    public float Rotate_Camera_Speed { get { return rotate_Camera_Speed; } set { rotate_Camera_Speed = value; } }
     public float Rotate_Camera_Max { get { return rotate_Camera_Max; } }
 
     public SFX_MotionCloner Cloner { get { return _cloner; } }
@@ -238,10 +238,14 @@ public class Player : MonoBehaviour, IHit
 
     public float PassiveAtk_Power
     {
-        get { return _passiveAtk_Power * PlayerPassiveData.EAttack; }
+        get
+        {
+            float atk_mul = SavePlayerData.PassiveDieMode == 2 ? _attackMultiplier : 1;
+            return _passiveAtk_Power * PlayerPassiveData.EAttack * atk_mul;
+        }
         set
         {
-            if(_passiveAtk_Power == value)
+            if (_passiveAtk_Power == value)
             {
                 return;
             }
