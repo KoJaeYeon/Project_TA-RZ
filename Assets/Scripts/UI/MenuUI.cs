@@ -93,11 +93,11 @@ public class MenuUI : MonoBehaviour
 
     public void Lobby()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("Project");
     }
 
     public void Exit()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Title");
     }
 }

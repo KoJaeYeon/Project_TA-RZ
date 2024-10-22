@@ -331,7 +331,7 @@ public class Player : MonoBehaviour, IHit
         }
         else if (Input.GetKeyDown(KeyCode.F12))
         {
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene("Project");
         }
     }
 

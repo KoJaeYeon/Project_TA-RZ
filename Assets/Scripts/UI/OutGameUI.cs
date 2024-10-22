@@ -52,14 +52,14 @@ public class OutGameUI : MonoBehaviour
     {
         if (continueText[index].text.Equals("Empty")) return;
         _saveManager.saveIndex = index;
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("Project");
     }
 
     public void OnSubmit_NewGame(int index)
     {
         _saveManager.saveIndex = index;
         _saveManager.Save(new Save_PlayerData());
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("Project");
     }
 
     public void OnSubmit_ContinueBox()
