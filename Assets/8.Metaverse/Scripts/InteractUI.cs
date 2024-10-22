@@ -10,11 +10,9 @@ namespace Meta
         [Header("MetatNetworkManager")]
         public MetaNetworkManager MetaNetworkManager;
 
-        [SerializeField] private string Str_GameStartSceneName;
-
         public void OnClick_StartGame()
         {
-            SceneManager.LoadScene(Str_GameStartSceneName);
+            MetaNetworkManager.ReqStopClient();
         }
 
         public void OnClick_CloseGame()
