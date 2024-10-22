@@ -61,14 +61,12 @@ public class GameUI : MonoBehaviour
 
         ActiveChoiceUI();
         _uiEvent.SetActivePlayerControl(false);
-        cancelAction.action.Enable();
         cancelAction.action.performed += OnCancel;
     }
 
     private void OnDisable()
     {
         cancelAction.action.performed -= OnCancel;
-        cancelAction.action.Disable();
         _blockingImage.SetActive(false);
     }
 
