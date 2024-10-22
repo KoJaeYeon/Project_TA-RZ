@@ -1,7 +1,7 @@
 public class Save_PlayerData
 {
     public string saveTime { get; set; }
-    public int money { get; set; } = 10000;
+    public int money { get; set; } = 0;
     public bool BossKilled { get; set; } = false;
     public bool Charged { get; set; } = false;
     public bool NoHitBossKilled { get; set; } = false;

@@ -238,10 +238,14 @@ public class Player : MonoBehaviour, IHit
 
     public float PassiveAtk_Power
     {
-        get { return _passiveAtk_Power * PlayerPassiveData.EAttack; }
+        get
+        {
+            float atk_mul = SavePlayerData.PassiveDieMode == 2 ? _attackMultiplier : 1;
+            return _passiveAtk_Power * PlayerPassiveData.EAttack * atk_mul;
+        }
         set
         {
-            if(_passiveAtk_Power == value)
+            if (_passiveAtk_Power == value)
             {
                 return;
             }

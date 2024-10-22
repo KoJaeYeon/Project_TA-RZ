@@ -52,9 +52,7 @@ public class PlayerThirdComboAttack : PlayerComboAttack
     //세 번째 공격로직
     private void ThirdAttack()
     {
-        _enemyLayer = LayerMask.GetMask("Monster");
-
-        _player.BlueChipSystem.UseBlueChip(_player.transform, AttackType.thirdAttack);
+        _enemyLayer = LayerMask.GetMask("Monster");        
 
         Collider[] colliders = Physics.OverlapSphere(_player.transform.position, _range, _enemyLayer);
 
@@ -69,6 +67,7 @@ public class PlayerThirdComboAttack : PlayerComboAttack
         }
         if (isHit)
         {
+            _player.BlueChipSystem.UseBlueChip(_player.transform, AttackType.thirdAttack);
             _player.CurrentSkill += _currentGetSkillGauge;
         }
 
