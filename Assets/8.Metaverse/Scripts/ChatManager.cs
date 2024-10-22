@@ -21,6 +21,7 @@ public class MetaNetworkManager : NetworkBehaviour
     //임시
     private NetPlayer _localPlayer = null;
     private string _changeSceneName = "Title";
+    public bool IsDisableClientConnectTry { get; set; }
 
     private void OnDestroy()
     {
@@ -34,6 +35,7 @@ public class MetaNetworkManager : NetworkBehaviour
     {
         if (NetManager != null)
         {
+            IsDisableClientConnectTry = true;
             NetManager.StopClient();
         }
     }
