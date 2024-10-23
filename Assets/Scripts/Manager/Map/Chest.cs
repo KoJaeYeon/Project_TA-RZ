@@ -15,7 +15,7 @@ public class Chest : MonoBehaviour, IInteractable
 
     public string GetText()
     {
-        return "블루칩 획득";
+        return "보상 획득";
     }
 
     public void SetActivePoratal()
