@@ -26,7 +26,7 @@ public class DrainSystem : MonoBehaviour
             float distance = Vector3.Distance(transform.position, item.position);
             if(distance < 1.5f) 
             {
-                if(player.CurrentAmmo < 50)
+                if(player.CurrentAmmo < player.CurrentResourceOwn)
                 {
                     item.gameObject.SetActive(false);
                     player.CurrentAmmo += 1;

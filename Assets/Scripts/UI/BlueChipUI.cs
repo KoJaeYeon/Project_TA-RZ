@@ -41,6 +41,7 @@ public class BlueChipUI : MonoBehaviour
         {
             chest.gameObject.SetActive(false);
         }
+        Player.OnSave_PlayerData();
     }
 
     public void DeActiveBlueChipUI()

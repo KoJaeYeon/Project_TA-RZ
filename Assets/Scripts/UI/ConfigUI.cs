@@ -7,31 +7,45 @@ using Zenject;
 public class ConfigUI : MonoBehaviour
 {
     [Inject] Player Player;
-    int index = 2;
     [SerializeField] Image[] images;
+
+    private void OnEnable()
+    {
+        for(int i = 0; i < images.Length; i++)
+        {
+            if(i == Player.SavePlayerData.mouseIndex)
+            {
+                images[i].color = new Color(200 / 255f, 177 / 255f, 15 / 255f);
+            }
+            else
+            {
+                images[i].color = new Color(100 / 255f, 100 / 255f, 100 / 255f);
+            }
+        }
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A) && index > 0)
+        if (Input.GetKeyDown(KeyCode.A) && Player.SavePlayerData.mouseIndex > 0)
         {
-            images[index--].color = new Color(100 / 255f, 100 / 255f, 100 / 255f);
-            images[index].color = new Color(200 / 255f, 177 / 255f, 15 / 255f);
+            images[Player.SavePlayerData.mouseIndex--].color = new Color(100 / 255f, 100 / 255f, 100 / 255f);
+            images[Player.SavePlayerData.mouseIndex].color = new Color(200 / 255f, 177 / 255f, 15 / 255f);
             
-            if(index == 0)
+            if(Player.SavePlayerData.mouseIndex == 0)
             {
                 Player.Rotate_Camera_Speed = 0.1f;
             }
             else
             {
-                Player.Rotate_Camera_Speed = 0.25f * index;
+                Player.Rotate_Camera_Speed = 0.25f * Player.SavePlayerData.mouseIndex;
             }
         }
-        else if (Input.GetKeyDown(KeyCode.D) && index < 4)
+        else if (Input.GetKeyDown(KeyCode.D) && Player.SavePlayerData.mouseIndex < 4)
         {
-            images[index++].color = new Color(100 / 255f, 100 / 255f, 100 / 255f);
-            images[index].color = new Color(200 / 255f, 177 / 255f, 15 / 255f);
-            Player.Rotate_Camera_Speed = 0.25f * index;
+            images[Player.SavePlayerData.mouseIndex++].color = new Color(100 / 255f, 100 / 255f, 100 / 255f);
+            images[Player.SavePlayerData.mouseIndex].color = new Color(200 / 255f, 177 / 255f, 15 / 255f);
+            Player.Rotate_Camera_Speed = 0.25f * Player.SavePlayerData.mouseIndex;
         }
     }
 }
