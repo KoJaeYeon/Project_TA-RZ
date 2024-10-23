@@ -536,6 +536,14 @@ public class Player : MonoBehaviour, IHit
         PlayerPassiveData._player = this;
         if (saveManager.saveIndex == -1) return;
         SavePlayerData = saveManager.Load(saveManager.saveIndex);
+        if (SavePlayerData.mouseIndex == 0)
+        {
+            Rotate_Camera_Speed = 0.1f;
+        }
+        else
+        {
+            Rotate_Camera_Speed = 0.25f * SavePlayerData.mouseIndex;
+        }
     }
     IEnumerator LoadStat()
     {

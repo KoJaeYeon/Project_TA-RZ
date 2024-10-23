@@ -1456,6 +1456,8 @@ MonoBehaviour:
   - {fileID: 8272548692467686916}
   - {fileID: 6893510719375424466}
   - {fileID: 3666765216811894477}
+  cancelAction: {fileID: 7727032971491509709, guid: 364fca4c259fd5449893ce7bf8a12352,
+    type: 3}
 --- !u!1001 &1191193426991706271
 PrefabInstance:
   m_ObjectHideFlags: 0

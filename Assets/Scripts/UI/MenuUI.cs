@@ -105,6 +105,10 @@ public class MenuUI : MonoBehaviour
         {
             return;
         }
+        else if(UIEvent.BlueChipUI.gameObject.activeSelf)
+        {
+            return;
+        }
         if (MenuUI_Child[index].activeSelf)
         {
             Debug.Log("cancelif");

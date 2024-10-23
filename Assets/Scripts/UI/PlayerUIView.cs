@@ -58,6 +58,7 @@ public class PlayerUIView : MonoBehaviour
     private void OnCancel(InputAction.CallbackContext context)
     {
         if (UIEvent._gameUI.gameObject.activeSelf == true) return;
+        if(UIEvent.BlueChipUI.gameObject.activeSelf == true) return;
         UIEvent.SetActiveMenuUI();
     }
 

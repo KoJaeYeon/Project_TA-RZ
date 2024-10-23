@@ -14,6 +14,8 @@ public class Save_PlayerData
     public int Kill { get; set; } = 0;
     public int Resource { get; set; } = 0;
 
+    public int mouseIndex = 2;
+
     public override string ToString()
     {
         return $"saveTime: {saveTime}, " +
