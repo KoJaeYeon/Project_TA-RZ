@@ -38,7 +38,6 @@ public class Monster_A_atkEx : MonoBehaviour
             yield return null;
         }
 
-        transform.parent.SetParent(monsterA.transform);
         yield break;
 
     }

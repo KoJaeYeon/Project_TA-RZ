@@ -59,9 +59,12 @@ MonoBehaviour:
   Knockback_Horizontal_Distance: 4
   Knockback_Vertical_Distance: 2
   IsFirstAtk: 0
+  LastAttackTime: 0
   atkPrefab: {fileID: 2910783068188579864}
   explosionPrefab: {fileID: 8320320633247869136}
   targetPrefab: {fileID: 9216599740974299155}
+  monA_Ex: {fileID: 7784652257394448304}
+  atkEx: {fileID: 4449000470524368567}
   growDuration: 2
   targetScale: {x: 3, y: 0.1, z: 3}
 --- !u!136 &6655467494370940687
@@ -434,6 +437,30 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8733699735027414168}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4449000470524368567 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4938852274070741551, guid: e23a316ec0c2a0647ba4804afcdbb378,
+    type: 3}
+  m_PrefabInstance: {fileID: 8733699735027414168}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9216599740974299155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 252107adf7a3a1a44ae016fe07d62084, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7784652257394448304 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1530368837605335848, guid: e23a316ec0c2a0647ba4804afcdbb378,
+    type: 3}
+  m_PrefabInstance: {fileID: 8733699735027414168}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8320320633247869136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e763b4951a514b14c81f386ae059f88a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8320320633247869136 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 739683436975676488, guid: e23a316ec0c2a0647ba4804afcdbb378,
