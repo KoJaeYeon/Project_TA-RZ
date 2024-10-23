@@ -57,8 +57,7 @@ public class PlayerSecondComboAttack : PlayerComboAttack
         _forward = _player.transform.forward;
 
         _boxPosition = _player.transform.position + _player.transform.TransformDirection(_additionalPosition) + _forward;
-
-        _player.BlueChipSystem.UseBlueChip(_player.transform, AttackType.secondAttack);
+               
 
         _enemyLayer = LayerMask.GetMask("Monster");
 
@@ -94,6 +93,7 @@ public class PlayerSecondComboAttack : PlayerComboAttack
         }
         if (isHit)
         {
+            _player.BlueChipSystem.UseBlueChip(_player.transform, AttackType.secondAttack);
             _player.CurrentSkill += _currentGetSkillGauge;
         }
 

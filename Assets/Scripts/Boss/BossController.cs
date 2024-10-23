@@ -11,7 +11,7 @@ public enum BossPhase
     Phase1, Phase2
 }
 
-public class BossController : MonoBehaviour, IHit
+public class BossController : MonoBehaviour, IHit, IStatusEffect
 {
     private GameObject _bossPrefab;
     [SerializeField] GameObject BossChest;
@@ -20,6 +20,7 @@ public class BossController : MonoBehaviour, IHit
     [Inject] DataManager dataManager { get; }
     [Inject] public Player player { get; }
     [Inject] private Boss_ParticleManager _boss_Particle;
+    [Inject] PoolManager _poolManager;
 
     [Header("기본 정보")]
     [Tooltip("현재 페이즈")] public BossPhase phase;
@@ -109,6 +110,7 @@ public class BossController : MonoBehaviour, IHit
     private readonly int _hashAttackPattern = Animator.StringToHash("");
     private readonly int _hashSkill = Animator.StringToHash("");
 
+    Coroutine _poisonCoroutine;
     public enum Pattern
     {
         gimmick,
@@ -750,6 +752,84 @@ public class BossController : MonoBehaviour, IHit
     public void ApplyKnockback(float knockBackTime, Transform otherPosition)
     { 
 
+    }
+
+    public void Poison(float damage, float maxTime, float intervalTime)
+    {
+        if (phase == BossPhase.Phase1)
+        {
+            return;
+        }
+
+        if (gameObject.activeSelf)
+        {
+            if (_poisonCoroutine != null)
+            {
+                StopCoroutine(_poisonCoroutine);
+            }
+
+            _poisonCoroutine = StartCoroutine(TriggerPoison(damage, maxTime, intervalTime));
+        }
+    }
+
+    private IEnumerator TriggerPoison(float damage, float maxTime, float intervalTime)
+    {
+        float timer = 0;
+
+        while (timer < maxTime)
+        {
+            if (_hp <= 0)
+            {
+                PrintDamageText(0);
+
+                _poisonCoroutine = null;
+
+                yield break;
+            }
+
+            Hit(damage, 0, null);
+
+            PrintDamageText(damage);
+
+            yield return new WaitForSeconds(intervalTime);
+
+            timer += intervalTime;
+        }
+
+        _poisonCoroutine = null;
+    }
+
+    public void Ice()
+    {
+        //결빙
+    }
+
+    public void Explosion(float damage)
+    {
+        if (phase == BossPhase.Phase1)
+        {
+            return;
+        }
+
+        //폭발
+        if (_hp <= 0)
+        {
+            PrintDamageText(0, DamageType.Explosive);
+
+            return;
+        }
+
+        Hit(damage, 0, null);
+
+        PrintDamageText(damage, DamageType.Explosive);
+    }
+
+    private void PrintDamageText(float damage, DamageType damageType = DamageType.Poison)
+    {
+        var dmgTextObject = _poolManager.DequeueObject("DamageText");
+        var textComponent = dmgTextObject.GetComponentInChildren<DamageText>();
+        textComponent.gameObject.SetActive(true);
+        textComponent.OnSetData(damage, damageType, transform);
     }
 
     //데이터 드리븐

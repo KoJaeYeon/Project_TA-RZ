@@ -9,7 +9,7 @@ public enum RootState
     Die
 }
 
-public class RootContoller : MonoBehaviour, IHit
+public class RootContoller : MonoBehaviour, IHit, IStatusEffect
 {
     [SerializeField] private float _hp;
     [SerializeField] private float _maxHp;
@@ -28,13 +28,16 @@ public class RootContoller : MonoBehaviour, IHit
     [SerializeField] private GameObject _attackMark;
     [SerializeField] private GameObject _attackDamageBox;
 
-    [Inject] private Boss_ParticleManager _boss_particle;
+    [Inject] private Boss_ParticleManager _boss_particle;    
     [SerializeField] private Transform[] _particlePoint;
 
     private readonly int _hashActive = Animator.StringToHash("isActive");
     private readonly int _hashAttackReady = Animator.StringToHash("AttackReady");
     private readonly int _hashAttack = Animator.StringToHash("Attack");
     private readonly int _hashDie = Animator.StringToHash("Die");
+
+    [Inject] PoolManager _poolManager;
+    Coroutine _poisonCoroutine;
 
     private void Awake()
     {
@@ -168,6 +171,74 @@ public class RootContoller : MonoBehaviour, IHit
     public void ApplyKnockback(float knockBackTime, Transform otherPosition)
     {
 
+    }
+
+    public void Poison(float damage, float maxTime, float intervalTime)
+    {
+        if (gameObject.activeSelf)
+        {
+            if (_poisonCoroutine != null)
+            {
+                StopCoroutine(_poisonCoroutine);
+            }
+
+            _poisonCoroutine = StartCoroutine(TriggerPoison(damage, maxTime, intervalTime));
+        }
+    }
+
+    private IEnumerator TriggerPoison(float damage, float maxTime, float intervalTime)
+    {
+        float timer = 0;
+
+        while (timer < maxTime)
+        {
+            if (_hp <= 0)
+            {
+                PrintDamageText(0);
+
+                _poisonCoroutine = null;
+
+                yield break;
+            }
+
+            Hit(damage, 0, null);
+
+            PrintDamageText(damage);
+
+            yield return new WaitForSeconds(intervalTime);
+
+            timer += intervalTime;
+        }
+
+        _poisonCoroutine = null;
+    }
+
+    public void Ice()
+    {
+        //결빙
+    }
+
+    public void Explosion(float damage)
+    {
+        //폭발
+        if (_hp <= 0)
+        {
+            PrintDamageText(0, DamageType.Explosive);
+
+            return;
+        }
+
+        Hit(damage, 0, null);
+
+        PrintDamageText(damage, DamageType.Explosive);
+    }
+
+    private void PrintDamageText(float damage, DamageType damageType = DamageType.Poison)
+    {
+        var dmgTextObject = _poolManager.DequeueObject("DamageText");
+        var textComponent = dmgTextObject.GetComponentInChildren<DamageText>();
+        textComponent.gameObject.SetActive(true);
+        textComponent.OnSetData(damage, damageType, transform);
     }
 
     //데미지 박스 활성화 (애니메이션 이벤트로 실행)

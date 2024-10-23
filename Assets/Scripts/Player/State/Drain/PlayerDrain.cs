@@ -42,6 +42,7 @@ public class PlayerDrain : PlayerState
         _drainSystem.OnSetActiveDraintEffect(true);
         _drainSystem.OnSetDrainArea(_currentDrainRadius);
         _player.IsActiveStaminaRecovery = false;
+        _rigidBody.mass = 100;
     }
 
     void UpdateDrain()
@@ -57,6 +58,7 @@ public class PlayerDrain : PlayerState
         _drainSystem.OnSetActiveDraintEffect(false);
         _drainSystem.OnSetDrainArea(_currentDrainRadius);
         _inputSystem.SetDrain(false);
+        _rigidBody.mass = 1;
         if (_player.CurrentStamina > 0) _player.IsActiveStaminaRecovery = true;
     }
 

@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
 
@@ -12,11 +15,13 @@ public class BlueChipUI : MonoBehaviour
     [Inject] Player Player;
     #endregion
 
+    [Header("UpBar")]
+    [SerializeField] TextMeshProUGUI Money_Text;
     [Header("SelectPanel")]
     [SerializeField] private BlueChipUI_SelectPanel _selectPanel;
     [Header("BlueSelectButtons")]
     [SerializeField] Blue_Select_Button[] blue_Select_Buttons;
-
+    [SerializeField] InputActionReference cancelAction;
     public Chest chest { get; set; }
     int _leftBlueChip = 0;
 
@@ -28,6 +33,7 @@ public class BlueChipUI : MonoBehaviour
         isFirstReward = true;
         ResetBlueChipUI();
         _leftBlueChip++;
+        cancelAction.action.performed += OnCancel;
     }
 
     private void OnDisable()
@@ -38,6 +44,14 @@ public class BlueChipUI : MonoBehaviour
         {
             chest.gameObject.SetActive(false);
         }
+        Player.OnSave_PlayerData();
+        cancelAction.action.performed -= OnCancel;
+    }
+
+    private void OnCancel(InputAction.CallbackContext context)
+    {
+        Debug.Log("cancel");
+        gameObject.SetActive(false);
     }
 
     public void DeActiveBlueChipUI()
@@ -84,6 +98,8 @@ public class BlueChipUI : MonoBehaviour
             isFirstReward = false;
 
         }
+
+        Money_Text.text = Player.SavePlayerData.money.ToString();
     }
     private void RewardBlueChipUI(int random = 1)
     {

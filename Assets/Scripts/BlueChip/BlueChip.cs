@@ -8,6 +8,8 @@ public abstract class BlueChip : IBlueChipSystem
     #region InJect
     [Inject]
     protected PoolManager _poolManager;
+    [Inject]
+    protected Player _player;
     #endregion
 
     protected BlueChipSystem _blueChipSystem;

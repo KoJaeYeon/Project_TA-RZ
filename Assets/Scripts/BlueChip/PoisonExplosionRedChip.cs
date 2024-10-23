@@ -50,7 +50,7 @@ public class PoisonExplosionRedChip : BlueChip
 
         PoisonObject objectComponent = poisonObject.GetComponent<PoisonObject>();
 
-        objectComponent.SetObjectData(_data.Chip_AttackArea, _currentPower, _targetLayer);
+        objectComponent.SetObjectData(_data.Chip_AttackArea, _currentPower * (1 + _player.PassiveAtk_Power / 100), _targetLayer);
 
         Vector3 objectPosition = transform.position + transform.TransformDirection(_poisonExploPosition)
             + _forward;

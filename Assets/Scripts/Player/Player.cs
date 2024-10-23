@@ -238,10 +238,14 @@ public class Player : MonoBehaviour, IHit
 
     public float PassiveAtk_Power
     {
-        get { return _passiveAtk_Power * PlayerPassiveData.EAttack; }
+        get
+        {
+            float atk_mul = SavePlayerData.PassiveDieMode == 2 ? _attackMultiplier : 1;
+            return _passiveAtk_Power * PlayerPassiveData.EAttack * atk_mul;
+        }
         set
         {
-            if(_passiveAtk_Power == value)
+            if (_passiveAtk_Power == value)
             {
                 return;
             }
@@ -532,6 +536,14 @@ public class Player : MonoBehaviour, IHit
         PlayerPassiveData._player = this;
         if (saveManager.saveIndex == -1) return;
         SavePlayerData = saveManager.Load(saveManager.saveIndex);
+        if (SavePlayerData.mouseIndex == 0)
+        {
+            Rotate_Camera_Speed = 0.1f;
+        }
+        else
+        {
+            Rotate_Camera_Speed = 0.25f * SavePlayerData.mouseIndex;
+        }
     }
     IEnumerator LoadStat()
     {

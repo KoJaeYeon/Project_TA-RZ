@@ -8,6 +8,8 @@ public class Monster_A : Monster, IHit
     [SerializeField] private GameObject atkPrefab;
     [SerializeField] private GameObject explosionPrefab;
     [SerializeField] private GameObject targetPrefab;
+    [SerializeField] private MonsterA_Ex monA_Ex;
+    [SerializeField] private Monster_A_atkEx atkEx;
     [Header("공격 발동까지 걸리는 시간")]
     [SerializeField] public float growDuration;  // 커지는 데 걸리는 시간
     public float GrowDuration { get { return growDuration; } }
@@ -37,22 +39,22 @@ public class Monster_A : Monster, IHit
             atkPrefab.transform.position = playerPosition;
             atkPrefab.SetActive(true);
             atkPrefab.transform.parent = null;
-
-            StartCoroutine(GrowOverTime(atkPrefab));
+                        
+            atkEx.StartCoroutine(GrowOverTime(atkPrefab));
         }
     }
 
     public override void Hit(float damage, float paralysisTime, Transform transform)
     {
         base.Hit(damage, paralysisTime, transform);
-        if (Mon_Common_Hp_Remain <= 0)
-        {
-            atkPrefab.transform.parent = this.transform;
-            explosionPrefab.transform.parent = this.transform;
-            atkPrefab.SetActive(true);
-            explosionPrefab.SetActive(false);
-            targetPrefab.SetActive(false);
-        }
+        //if (Mon_Common_Hp_Remain <= 0)
+        //{
+        //    atkPrefab.transform.parent = this.transform;
+        //    explosionPrefab.transform.parent = this.transform;
+        //    atkPrefab.SetActive(true);
+        //    explosionPrefab.SetActive(false);
+        //    targetPrefab.SetActive(false);
+        //}
     }
     
 
@@ -68,10 +70,10 @@ public class Monster_A : Monster, IHit
             var particle = explosionPrefab.GetComponent<ParticleSystem>();
 
                 particle.Play();
-                StartCoroutine(WaitForParticleToFinish(particle, explosionPrefab));
+                monA_Ex.StartCoroutine(WaitForParticleToFinish(particle, explosionPrefab));
 
             
-        }
+        }        
     }
 
     private IEnumerator GrowOverTime(GameObject atkObject)
@@ -80,16 +82,13 @@ public class Monster_A : Monster, IHit
 
         while (timeElapsed < growDuration)
         {
+            Debug.Log("asd");
             timeElapsed += Time.deltaTime;
             yield return null;
         }
-
-        if (timeElapsed >= growDuration)
-        {
-            atkObject.SetActive(false);
-            PlayExplosion(atkObject.transform);
-
-        }
+        Debug.Log("cdf");
+        PlayExplosion(atkObject.transform);
+        atkObject.SetActive(false);
     }
 
     private IEnumerator WaitForParticleToFinish(ParticleSystem particle, GameObject explosion)

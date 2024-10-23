@@ -95,7 +95,7 @@ public class GoogleSheetManager : MonoBehaviour
             RequestJsonRead(nameof(_String_Value_URL));
             RequestJsonRead(nameof(_Passive2_Value_URL));
 
-            //StartCoroutine(CountJsonLoadData());
+            StartCoroutine(CountJsonLoadData());
         }
         else
         {
