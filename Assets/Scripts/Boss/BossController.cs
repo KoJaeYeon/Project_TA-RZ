@@ -5,7 +5,6 @@ using UnityEngine.AI;
 using BehaviorDesigner.Runtime;
 using Zenject;
 using UnityEngine.UI;
-using UnityEditor.EditorTools;
 
 public enum BossPhase
 { 
